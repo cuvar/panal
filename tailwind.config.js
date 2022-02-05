@@ -22,7 +22,7 @@ module.exports = {
           900: '#F3F3F3',
           DEFAULT: '#F3F3F3'
         },
-        pdarkblue: {
+        pdarkgreen: {
           100: '#27353A',
           200: '#27353A',
           300: '#27353A',
@@ -34,7 +34,7 @@ module.exports = {
           900: '#27353A',
           DEFAULT: '#27353A'
         },
-        plightblue: {
+        pblue: {
           100: '#A8CEE0',
           200: '#A8CEE0',
           300: '#A8CEE0',
@@ -46,7 +46,7 @@ module.exports = {
           900: '#A8CEE0',
           DEFAULT: '#A8CEE0'
         },
-        pgreen: {
+        plightgreen: {
           100: '#00E38C',
           200: '#00E38C',
           300: '#00E38C',
