@@ -1,5 +1,5 @@
 <template>
-  <SiteWrapper contentComponent="IndexContent"></SiteWrapper>
+  <SiteWrapper contentComponent="WidgetContainer"></SiteWrapper>
 </template>
 
 <script lang="ts">

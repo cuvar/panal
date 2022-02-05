@@ -12,7 +12,7 @@
 import { defineComponent } from "vue";
 import Navbar from "./Navbar.vue";
 import Footer from "./Footer.vue";
-import IndexContent from "../PageContent/IndexContent.vue";
+import IndexContent from "../PageContent/WidgetContainer.vue";
 
 const SiteWrapper = defineComponent({
   components: {

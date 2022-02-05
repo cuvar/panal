@@ -8,7 +8,6 @@
 import { defineComponent } from "vue";
 
 const Navbar = defineComponent({
-  props: ["customProp"],
   data() {
     return {
       title: "panal" as string,
