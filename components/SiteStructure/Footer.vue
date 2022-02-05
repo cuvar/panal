@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex justify-center">
+  <div class="w-full flex justify-center py-10">
     <p>{{ title }}</p>
   </div>
 </template>

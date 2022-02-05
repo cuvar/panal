@@ -1,5 +1,7 @@
 <template>
-  <div class="w-full flex">{{ title }}</div>
+  <div class="w-full flex justify-center py-10 shadow-md">
+    <p>{{ title }}</p>
+  </div>
 </template>
 
 <script lang="ts">
@@ -9,7 +11,7 @@ const Navbar = defineComponent({
   props: ["customProp"],
   data() {
     return {
-      title: "Navbar" as string,
+      title: "panal" as string,
     };
   },
 });
