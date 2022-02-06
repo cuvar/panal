@@ -1,15 +1,14 @@
 <template>
-  <SiteWrapper contentComponent="WidgetContainer"></SiteWrapper>
+  <NuxtLayout>
+    <div>Hello world</div>
+  </NuxtLayout>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import SiteWrapper from "../components/SiteStructure/SiteWrapper.vue";
 
 const IndexPage = defineComponent({
-  components: {
-    SiteWrapper,
-  },
+  components: {},
 });
 export default IndexPage;
 </script>
