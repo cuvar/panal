@@ -3,7 +3,10 @@
     class="w-screen min-h-screen flex flex-col justify-between bg-pdarkgreen text-pwhite"
   >
     <Navbar></Navbar>
-    <slot />
+    <div class="my-10 sm:my-16 lg:my-16 mx-10 sm:mx-24 md:mx-10 lg:mx-20">
+      <!-- //TODO: CENTER SLOT or at least the widgetview -->
+      <slot />
+    </div>
     <Footer></Footer>
   </div>
 </template>
