@@ -1,5 +1,0 @@
-user-agent: *
-allow: /
-
-# specify your sitemap location
-# Sitemap: https:/example.dev/sitemap.xml
