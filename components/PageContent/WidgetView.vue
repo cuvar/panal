@@ -1,8 +1,6 @@
 <template>
-  <div
-    class="h-full grid gap-x-8 gap-y-8 max-w-screen-2xl"
-    :class="[getRowClass, getColClass]"
-  >
+  <!-- //TODO: max-w-screen-2xl sorgt für fehler in side margin -->
+  <div class="h-full grid gap-x-8 gap-y-8" :class="[getRowClass, getColClass]">
     <WidgetContainer
       v-for="(widget, index) in widgetData"
       :key="index"
@@ -44,7 +42,7 @@ const WidgetView = defineComponent({
       return "auto-rows-min";
     },
     getColClass() {
-      return "grid-cols-3 md:grid-cols-6 lg:grid-cols-6 xl:grid-cols-9";
+      return "grid-cols-3 md:grid-cols-6 lg:grid-cols-6 xl:grid-cols-8";
     },
   },
 });
