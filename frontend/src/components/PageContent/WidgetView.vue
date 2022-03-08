@@ -42,7 +42,7 @@ const WidgetView = defineComponent({
       return "auto-rows-min";
     },
     getColClass() {
-      return "grid-cols-3 md:grid-cols-6 lg:grid-cols-6 xl:grid-cols-8";
+      return "grid-cols-3 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-8";
     },
   },
 });
