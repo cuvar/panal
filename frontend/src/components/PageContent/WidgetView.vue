@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { defineComponent } from "vue";
+// import { defineComponent } from "vue";
 import WidgetContainer from "./WidgetContainer.vue";
 import type { IWidgetData } from "../../../utils/types/WidgetData.vue";
 
-interface IProps {
+export interface IProps {
   widgetData: IWidgetData[];
 }
 const props = defineProps<IProps>();
