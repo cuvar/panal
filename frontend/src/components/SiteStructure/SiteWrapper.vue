@@ -3,6 +3,7 @@ import Navbar from "./Navbar.vue";
 import Footer from "./Footer.vue";
 
 const title: string = "panal";
+const website: string = "cuvar.dev";
 </script>
 
 <template>
@@ -15,6 +16,6 @@ const title: string = "panal";
     >
       <slot />
     </div>
-    <Footer :title="title"></Footer>
+    <Footer :title="website"></Footer>
   </div>
 </template>

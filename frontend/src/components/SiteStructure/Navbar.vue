@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="w-full flex justify-center py-10 shadow-md">
-    <p>{{ title ?? "panal" }}</p>
+  <div class="w-full flex justify-begin py-10">
+    <h1 class="text-2xl ml-10">{{ title ?? "panal" }}</h1>
   </div>
 </template>
