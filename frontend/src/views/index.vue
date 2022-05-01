@@ -3,6 +3,7 @@ import SiteWrapper from "@/components/SiteStructure/SiteWrapper.vue";
 import WidgetView from "../components/PageContent/WidgetView.vue";
 import { mockWidgetData } from "../../utils/mockdata/WidgetData.vue";
 import type { IWidgetData } from "../../utils/types/WidgetData.vue";
+import { getCurrentDateHumanReadable } from "../../utils/datetime.vue";
 
 const widgetData: IWidgetData[] = validateWidgetData(mockWidgetData);
 
@@ -19,6 +20,9 @@ function validateWidgetData(widgetData: IWidgetData[]): IWidgetData[] {
 
 <template>
   <SiteWrapper>
-    <WidgetView :widgetData="widgetData"></WidgetView>
+    <!-- <WidgetView :widgetData="widgetData"></WidgetView> -->
+    <div class="h-full flex flex-col items-center justify-between">
+      <p class="text-center text-3xl">{{ getCurrentDateHumanReadable() }}</p>
+    </div>
   </SiteWrapper>
 </template>
