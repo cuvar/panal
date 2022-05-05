@@ -1,9 +1,18 @@
-FROM node:18.0.0-alpine3.15
+# syntax=docker/dockerfile:1
+# FROM node:12.18.1
+FROM node:16-alpine3.14
+# ENV NODE_ENV=production
 
-WORKDIR /panal
-COPY . .
+RUN mkdir -p /app/ && chown -R node:node /app
+WORKDIR /app
+COPY --chown=node:node . .
+# COPY . .
+
+USER node
 
 RUN npm install
 RUN npm run build
 
-EXPOSE 3000
+EXPOSE 5050
+
+CMD [ "npm", "run", "preview" ]
