@@ -20,9 +20,8 @@ function validateWidgetData(widgetData: IWidgetData[]): IWidgetData[] {
 
 <template>
   <SiteWrapper>
-    <!-- <WidgetView :widgetData="widgetData"></WidgetView> -->
-    <div class="h-full flex flex-col items-center justify-between">
-      <p class="text-center text-3xl">{{ getCurrentDateHumanReadable() }}</p>
+    <div class="h-full">
+      <WidgetView :widgetData="widgetData"></WidgetView>
     </div>
   </SiteWrapper>
 </template>
