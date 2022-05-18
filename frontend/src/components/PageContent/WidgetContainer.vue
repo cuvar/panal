@@ -1,7 +1,13 @@
 <template>
   <div
     class="h-full bg-plightgreen text-pdarkgreen flex justify-center py-10 px-2"
-    :class="[getRowSpanClass, getColSpanClass, getOrderClass]"
+    :class="[
+      getRowSpanClass,
+      getColSpanClass,
+      getRowStartClass,
+      getColStartClass,
+      getOrderClass,
+    ]"
   >
     {{ title }}
   </div>
@@ -51,6 +57,36 @@ const colClasses: string[] = [
   "col-span-11",
   "col-span-12",
 ];
+const rowStartClasses: string[] = [
+  "row-start-1",
+  "row-start-2",
+  "row-start-3",
+  "row-start-4",
+  "row-start-5",
+  "row-start-6",
+  "row-start-7",
+  "row-start-8",
+  "row-start-9",
+  "row-start-10",
+  "row-start-11",
+  "row-start-12",
+  "row-start-13",
+];
+const colStartClasses: string[] = [
+  "col-start-1",
+  "col-start-2",
+  "col-start-3",
+  "col-start-4",
+  "col-start-5",
+  "col-start-6",
+  "col-start-7",
+  "col-start-8",
+  "col-start-9",
+  "col-start-10",
+  "col-start-11",
+  "col-start-12",
+  "col-start-13",
+];
 
 const WidgetContainer = defineComponent({
   props: {
@@ -66,6 +102,14 @@ const WidgetContainer = defineComponent({
       type: Number,
       default: 1,
     },
+    rowStart: {
+      type: Number,
+      default: 1,
+    },
+    colStart: {
+      type: Number,
+      default: 1,
+    },
     order: {
       type: Number,
       default: 1,
@@ -77,6 +121,12 @@ const WidgetContainer = defineComponent({
     },
     getColSpanClass() {
       return colClasses[this.colSpan - 1];
+    },
+    getRowStartClass() {
+      return rowStartClasses[this.rowStart - 1];
+    },
+    getColStartClass() {
+      return colStartClasses[this.colStart - 1];
     },
     getOrderClass() {
       return orderClasses[this.order - 1];
