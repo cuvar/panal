@@ -4,7 +4,6 @@ declare interface IWidgetData {
   colSpan: number;
   rowStart: number;
   colStart: number;
-  order: number;
   title: string;
   placeholder?: string;
 }
