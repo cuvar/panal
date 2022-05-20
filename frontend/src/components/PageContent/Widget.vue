@@ -1,12 +1,11 @@
 <template>
   <div
-    class="h-full bg-plightgreen text-pdarkgreen flex justify-center py-10 px-2"
+    class="h-full bg-plightgreen text-pdarkgreen flex justify-center py-10 px-2 rounded-md"
     :class="[
       getRowSpanClass,
       getColSpanClass,
       getRowStartClass,
       getColStartClass,
-      getOrderClass,
     ]"
   >
     {{ title }}
@@ -15,20 +14,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-const orderClasses: string[] = [
-  "order-1",
-  "order-2",
-  "order-3",
-  "order-4",
-  "order-5",
-  "order-6",
-  "order-7",
-  "order-8",
-  "order-9",
-  "order-10",
-  "order-11",
-  "order-12",
-];
 const rowClasses: string[] = [
   "row-span-1",
   "row-span-2",
@@ -110,10 +95,6 @@ const WidgetContainer = defineComponent({
       type: Number,
       default: 1,
     },
-    order: {
-      type: Number,
-      default: 1,
-    },
   },
   computed: {
     getRowSpanClass() {
@@ -127,9 +108,6 @@ const WidgetContainer = defineComponent({
     },
     getColStartClass() {
       return colStartClasses[this.colStart - 1];
-    },
-    getOrderClass() {
-      return orderClasses[this.order - 1];
     },
   },
 });
