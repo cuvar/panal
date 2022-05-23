@@ -2,7 +2,7 @@
 // import { defineComponent } from "vue";
 import Widget from "./Widget.vue";
 import type { IWidgetData } from "../../../utils/types/WidgetData.vue";
-import { mockWidgetData } from "utils/mockdata/WidgetData.vue";
+// import { mockWidgetData } from "utils/mockdata/WidgetData.vue";
 
 export interface IProps {
   widgetData: IWidgetData[];
