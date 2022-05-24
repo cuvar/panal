@@ -1,4 +1,3 @@
-<script lang="ts">
 declare interface IWidgetData {
   rowSpan: number;
   colSpan: number;
@@ -9,4 +8,3 @@ declare interface IWidgetData {
 }
 
 export { IWidgetData };
-</script>

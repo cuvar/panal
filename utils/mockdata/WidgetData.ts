@@ -1,6 +1,5 @@
-<script lang="ts">
-import { getCurrentDateHumanReadable } from "../datetime.vue";
-import { IWidgetData } from "../types/WidgetData.vue";
+import { getCurrentDateHumanReadable } from "../datetime";
+import { IWidgetData } from "../types/WidgetData";
 const singleMockWidgetData: IWidgetData[] = [
   {
     rowSpan: 1,
@@ -10,7 +9,6 @@ const singleMockWidgetData: IWidgetData[] = [
     title: `${getCurrentDateHumanReadable()}`,
   },
 ];
-
 const mockWidgetData: IWidgetData[] = [
   {
     rowStart: 1,
@@ -69,6 +67,4 @@ const mockWidgetData: IWidgetData[] = [
     title: `${getCurrentDateHumanReadable()}`,
   },
 ];
-
 export { mockWidgetData, singleMockWidgetData };
-</script>

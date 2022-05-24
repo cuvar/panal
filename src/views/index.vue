@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import SiteWrapper from "@/components/SiteStructure/SiteWrapper.vue";
 import WidgetView from "../components/PageContent/WidgetView.vue";
-import { mockWidgetData } from "../../utils/mockdata/WidgetData.vue";
-import type { IWidgetData } from "../../utils/types/WidgetData.vue";
-import { getCurrentDateHumanReadable } from "../../utils/datetime.vue";
+import { mockWidgetData } from "../../utils/mockdata/WidgetData";
+import type { IWidgetData } from "../../utils/types/WidgetData";
+// import { getCurrentDateHumanReadable } from "../../utils/datetime.js";
 
 const widgetData: IWidgetData[] = validateWidgetData(mockWidgetData);
 
