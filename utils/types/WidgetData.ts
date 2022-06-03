@@ -5,6 +5,7 @@ declare interface IWidgetData {
   rowStart: number;
   colStart: number;
   placeholder?: boolean;
+  children: any;
 }
 
 declare interface IWidgetPositionData {

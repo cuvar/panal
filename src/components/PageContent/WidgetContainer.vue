@@ -8,7 +8,7 @@
       getColStartClass,
     ]"
   >
-    {{ title }}
+    {{ children }}
   </div>
 </template>
 
@@ -75,7 +75,7 @@ const colStartClasses: string[] = [
 
 const WidgetContainer = defineComponent({
   props: {
-    title: {
+    children: {
       type: String,
       default: "",
     },
