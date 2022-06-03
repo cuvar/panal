@@ -8,7 +8,7 @@
       getColStartClass,
     ]"
   >
-    {{ children }}
+    <slot />
   </div>
 </template>
 

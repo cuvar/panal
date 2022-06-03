@@ -1,26 +1,15 @@
-declare interface IWidgetData {
-  id: string;
-  rowSpan: number;
-  colSpan: number;
-  rowStart: number;
-  colStart: number;
-  placeholder?: boolean;
-  children: any;
-}
-
 declare interface IWidgetPositionData {
   rowSpan: number;
   colSpan: number;
   rowStart: number;
   colStart: number;
 }
-declare interface IWidgetConfig {
+declare interface IWidgetData {
   id: string;
   sm: IWidgetPositionData;
   md: IWidgetPositionData;
   lg: IWidgetPositionData;
+  children: any;
 }
 
-export { IWidgetData, IWidgetConfig, IWidgetPositionData };
-
-//todo: current work: get widgetData from config file and work with it
+export { IWidgetData, IWidgetPositionData };

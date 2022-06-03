@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import WidgetContainer from "./WidgetContainer.vue";
 import type { IWidgetData } from "../../../utils/types/WidgetData";
-// import { mockWidgetData } from "utils/mockdata/WidgetData";
 
 export interface IProps {
   widgetData: IWidgetData[];
@@ -19,11 +18,11 @@ const colClass = "grid-cols-3 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-8";
     <WidgetContainer
       v-for="(widget, index) in widgetData"
       :key="index"
-      :children="widget.children"
-      :row-span="widget.rowSpan"
-      :col-span="widget.colSpan"
-      :row-start="widget.rowStart"
-      :col-start="widget.colStart"
-    ></WidgetContainer>
+      :row-span="widget.lg.rowSpan"
+      :col-span="widget.lg.colSpan"
+      :row-start="widget.lg.rowStart"
+      :col-start="widget.lg.colStart"
+      >{{ widget.children }}</WidgetContainer
+    >
   </div>
 </template>
