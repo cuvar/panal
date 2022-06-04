@@ -4,10 +4,29 @@ module.exports = {
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}"
   ],
+  safelist: [
+    {
+      pattern: /grid-cols-.+/,
+      variants: ['sm', 'md', 'lg', 'xl'],
+    },
+    {
+      pattern: /row-start-.+/,
+      variants: ['sm', 'md', 'lg', 'xl'],
+    },
+    {
+      pattern: /row-span-.+/,
+      variants: ['sm', 'md', 'lg', 'xl'],
+    },
+    {
+      pattern: /col-start-.+/,
+      variants: ['sm', 'md', 'lg', 'xl'],
+    },
+    {
+      pattern: /col-span-.+/,
+      variants: ['sm', 'md', 'lg', 'xl'],
+    },
+  ],
   theme: {
-    corePlugins: [
-      "gridColumns",
-    ],
     extend: {
       colors: {
         pwhite: {
