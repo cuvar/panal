@@ -1,5 +1,4 @@
-<script lang="ts">
-import { padNumber } from "./string.vue";
+import { padNumber } from "./string";
 
 function getCurrentDateHumanReadable(): string {
   const date: Date = new Date();
@@ -11,4 +10,3 @@ function getCurrentDateHumanReadable(): string {
 }
 
 export { getCurrentDateHumanReadable };
-</script>

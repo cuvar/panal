@@ -4,6 +4,28 @@ module.exports = {
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}"
   ],
+  safelist: [
+    {
+      pattern: /grid-cols-.+/,
+      variants: ['sm', 'md', 'lg', 'xl'],
+    },
+    {
+      pattern: /row-start-.+/,
+      variants: ['sm', 'md', 'lg', 'xl'],
+    },
+    {
+      pattern: /row-span-.+/,
+      variants: ['sm', 'md', 'lg', 'xl'],
+    },
+    {
+      pattern: /col-start-.+/,
+      variants: ['sm', 'md', 'lg', 'xl'],
+    },
+    {
+      pattern: /col-span-.+/,
+      variants: ['sm', 'md', 'lg', 'xl'],
+    },
+  ],
   theme: {
     extend: {
       colors: {
@@ -55,6 +77,23 @@ module.exports = {
           900: '#00E38C',
           DEFAULT: '#00E38C'
         }
+      },
+      gridRowStart: {
+        '8': '8',
+        '9': '9',
+        '10': '10',
+        '11': '11',
+        '12': '12',
+        '13': '13',
+      },
+      gridTemplateRows: {
+        'auto-4': 'repeat(4, 100px) auto',
+        'auto-5': 'repeat(5, 100px) auto',
+        'auto-6': 'repeat(6, 100px) auto',
+        'auto-7': 'repeat(7, 100px) auto',
+        'auto-8': 'repeat(8, 100px) auto',
+        'auto-9': 'repeat(9, 100px) auto',
+        'auto-10': 'repeat(10, 100px) auto',
       }
     },
   },
