@@ -1,9 +1,9 @@
 <script lang="ts">
 import WidgetContainer from "./WidgetContainer.vue";
-import type { IWidgetData } from "../../../utils/types/WidgetData";
+import type { IWidgetData } from "../../utils/types/WidgetData";
 import { defineComponent } from "vue";
 import type { PropType } from "vue";
-import { getGridColConfig } from "../../../utils/config/load";
+import { getGridColConfig } from "../../utils/config/load";
 
 const WidgetView = defineComponent({
   components: {
