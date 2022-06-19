@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "docker:build": "docker build -t panal:latest .",
+    "docker:run": "docker run panal -p [5050]:[5000]",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

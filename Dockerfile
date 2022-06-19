@@ -15,4 +15,4 @@ RUN npm run build
 
 EXPOSE 5050
 
-CMD [ "npm", "run", "preview" ]
+CMD [ "npm", "run", "start" ]
