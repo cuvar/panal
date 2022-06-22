@@ -54,6 +54,8 @@ export default [
     config: {
       type: "datetime",
       time: true,
+      timemode: "12",
+      datemode: "de"
     },
     lg: {
       rowStart: 3,

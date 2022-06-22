@@ -12,10 +12,10 @@ function DateTimeWidget(props: IProps) {
 export default DateTimeWidget;
 
 function getDateTimeContent(config: IDateTimeWidgetConfig): string {
-  let time: string = config.time ? getHumanReadableTime() : '';
-  let date: string = config.date ? getHumanReadableDate() : '';
+  let time: string = config.time ? getHumanReadableTime(config.timemode ?? null) : '';
+  let date: string = config.date ? getHumanReadableDate(config.datemode ?? null) : '';
 
-  const dateTime: string = time + date === '' ? `${getHumanReadableDate()}` : `${date}\n${time} `;
+  const dateTime: string = time + date === '' ? `${getHumanReadableDate(config.datemode ?? null)}` : `${date}\n${time} `;
 
   return dateTime;
 }

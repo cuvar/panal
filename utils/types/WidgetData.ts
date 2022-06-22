@@ -19,10 +19,13 @@ declare interface IWidgetData {
 
 // widget config types
 
+type TDateMode = 'gb' | 'us' | 'de';
+type TTimeMode = '12' | '24';
 declare interface IDateTimeWidgetConfig extends IWidgetConfig {
   time?: boolean;
   date?: boolean;
-  mode?: '12' | '24';
+  timemode?: TTimeMode;
+  datemode?: TDateMode;
 }
 
-export type { IWidgetData, IWidgetPositionData, IWidgetConfig, TType, IDateTimeWidgetConfig };
+export type { IWidgetData, IWidgetPositionData, IWidgetConfig, TType, IDateTimeWidgetConfig, TDateMode, TTimeMode };
