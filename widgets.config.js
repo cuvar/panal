@@ -3,7 +3,11 @@
 
 export default [
   {
-    id: "cjld2cyuq0000t3rmniod1foy",
+    config: {
+      type: "datetime",
+      time: true,
+      date: true
+    },
     lg: {
       rowStart: 1,
       colStart: 1,
@@ -24,7 +28,9 @@ export default [
     }
   },
   {
-    id: "cjld2cyuq0000t3rmniod1kqi",
+    config: {
+      type: "datetime"
+    },
     lg: {
       rowStart: 1,
       colStart: 2,
@@ -45,7 +51,9 @@ export default [
     }
   },
   {
-    id: "cjld2cyuq0000t3rmniod1kqi",
+    config: {
+      type: "datetime"
+    },
     lg: {
       rowStart: 3,
       colStart: 1,
