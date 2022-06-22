@@ -1,5 +1,4 @@
 import { getHumanReadableDate, getHumanReadableTime } from '../../utils/datetime';
-import { IDateTimeWidgetConfig, IWidgetConfig } from '../../utils/types/WidgetData';
 
 interface IProps {
   widgetConfig: IWidgetConfig;

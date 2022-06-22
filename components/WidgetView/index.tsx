@@ -1,5 +1,4 @@
 import WidgetContainer from '../WidgetContainer';
-import type { IWidgetConfig, IWidgetData } from '../../utils/types/WidgetData';
 import { getGridColConfig } from '../../utils/config/load';
 import { ReactNode } from 'react';
 import DateTimeWidget from '../widgets/DateTime';

@@ -1,5 +1,4 @@
 import { padNumber } from './string';
-import { TDateMode, TTimeMode } from './types/WidgetData';
 
 function getHumanReadableDate(mode: TDateMode | null): string {
   const date: Date = new Date();
@@ -16,8 +15,6 @@ function getHumanReadableDate(mode: TDateMode | null): string {
   return `${day}.${month}.${year}`;
 }
 
-// todo: outsource types for DateTime from /utils/types/WidgetData.ts in separate file
-// todo: fix issue with size of outer leftmost widget if only time is shown
 function getHumanReadableTime(mode: TTimeMode | null): string {
   const date: Date = new Date();
   let hours: number = date.getHours();

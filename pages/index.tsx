@@ -1,7 +1,6 @@
 import { NextPage } from 'next';
 import SiteWrapper from '../components/SiteWrapper';
 import WidgetView from '../components/WidgetView';
-import { IWidgetData } from '../utils/types/WidgetData';
 import widgetConfig from '../widgets.config';
 
 interface IProps {
