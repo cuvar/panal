@@ -52,7 +52,8 @@ export default [
   },
   {
     config: {
-      type: "datetime"
+      type: "datetime",
+      time: true,
     },
     lg: {
       rowStart: 3,

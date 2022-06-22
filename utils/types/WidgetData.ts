@@ -8,15 +8,13 @@ declare interface IWidgetPositionData {
 }
 
 declare type TType = 'datetime' | 'gcalendar';
-declare interface IWidgetConfig {
-  type: TType;
-}
+
+declare type IWidgetConfig = { type: TType } & IWidgetPositionData;
 declare interface IWidgetData {
   sm: IWidgetPositionData;
   md: IWidgetPositionData;
   lg: IWidgetPositionData;
   config: IWidgetConfig;
-  children: React.ReactNode;
 }
 
 // widget config types
@@ -24,6 +22,7 @@ declare interface IWidgetData {
 declare interface IDateTimeWidgetConfig extends IWidgetConfig {
   time?: boolean;
   date?: boolean;
+  mode?: '12' | '24';
 }
 
 export type { IWidgetData, IWidgetPositionData, IWidgetConfig, TType, IDateTimeWidgetConfig };
