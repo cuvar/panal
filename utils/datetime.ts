@@ -1,12 +1,18 @@
-import { padNumber } from "./string";
+import { padNumber } from './string';
 
-function getCurrentDateHumanReadable(): string {
+function getHumanReadableDate(): string {
   const date: Date = new Date();
   const year: number = date.getFullYear();
-  //@ts-ignore
   const month: string = padNumber(date.getMonth() + 1);
   const day: string = padNumber(date.getDate());
   return `${day}.${month}.${year}`;
 }
 
-export { getCurrentDateHumanReadable };
+function getHumanReadableTime(): string {
+  const date: Date = new Date();
+  const hours: number = date.getHours();
+  const minutes: number = date.getMinutes();
+  return `${padNumber(hours)}:${padNumber(minutes)}`;
+}
+
+export { getHumanReadableDate, getHumanReadableTime };
