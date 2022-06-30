@@ -1,10 +1,4 @@
-import {
-  colXSmall,
-  colSmall,
-  colMedium,
-  colLarge,
-  colXLarge,
-} from "../../panal.config";
+import { colXSmall, colSmall, colMedium, colLarge, colXLarge } from '../../../panal.config';
 
 const defaultValues = {
   xs: 3,
