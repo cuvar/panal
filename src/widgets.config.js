@@ -6,7 +6,7 @@ export default [
     config: {
       type: "datetime",
       time: true,
-      date: true
+      // date: true
     },
     lg: {
       rowStart: 1,
@@ -52,7 +52,7 @@ export default [
   },
   {
     config: {
-      type: "datetime",
+      type: "gcalendar",
       time: true,
       timemode: "12",
       datemode: "de"
