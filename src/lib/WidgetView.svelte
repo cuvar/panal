@@ -31,7 +31,7 @@
   {#each widgetData as widget}
     <WidgetContainer rowSpan={widget.lg.rowSpan} colSpan={widget.lg.colSpan} rowStart={widget.lg.rowStart} colStart={widget.lg.colStart}>
       {#if widget.config.type == 'datetime'}
-        <DateTimeWidget widgetConfig={widget.config} />;
+        <DateTimeWidget widgetConfig={widget.config} />
       {:else if widget.config.type == 'gcalendar'}
         <div>Google Calendar</div>
       {:else}
