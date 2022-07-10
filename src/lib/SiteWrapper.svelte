@@ -8,7 +8,7 @@
 
 <div class="w-screen min-h-screen flex flex-col items-center bg-pdarkgreen text-pwhite">
   <Navbar {title} />
-  <div class="my-8 sm:my-16 lg:my-16 mx-4 sm:mx-24 md:mx-10 lg:mx-20 xl:mx-36 flex flex-col flex-auto">
+  <div class="w-full my-8 sm:my-16 lg:my-16 px-4 sm:px-24 md:px-10 lg:px-20 xl:px-36 flex flex-col flex-auto">
     <slot />
   </div>
   <Footer title={website} />
