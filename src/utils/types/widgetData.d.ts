@@ -7,7 +7,7 @@ declare interface IWidgetPositionData {
 
 declare type TType = 'datetime' | 'gcalendar';
 
-declare type IWidgetConfig = { type: TType } & IWidgetPositionData;
+declare type IWidgetConfig = { type: TType };
 declare interface IWidgetData {
   sm: IWidgetPositionData;
   md: IWidgetPositionData;
