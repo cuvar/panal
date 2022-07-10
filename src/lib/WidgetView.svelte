@@ -27,7 +27,7 @@
   }
 </script>
 
-<div class={'h-full max-w-screen-2xl grid gap-x-4 sm:gap-x-8 gap-y-4 sm:gap-y-8' + ' ' + gridRowClass + ' ' + gridColClass}>
+<div class={'h-full w-full max-w-screen-2xl grid gap-x-4 sm:gap-x-8 gap-y-4 sm:gap-y-8' + ' ' + gridRowClass + ' ' + gridColClass}>
   {#each widgetData as widget}
     <WidgetContainer rowSpan={widget.lg.rowSpan} colSpan={widget.lg.colSpan} rowStart={widget.lg.rowStart} colStart={widget.lg.colStart}>
       {#if widget.config.type == 'datetime'}
