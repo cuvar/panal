@@ -35,6 +35,7 @@
     const widgetToRemove = widgetData.find((widget) => widget[currentScreenSize].rowStart === rowStart && widget[currentScreenSize].colStart === colStart);
     console.log(widgetToRemove);
     // todo: remove this widget
+    // todo: fill all other with placeholders
   }
 </script>
 
