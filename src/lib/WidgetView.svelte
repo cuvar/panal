@@ -46,7 +46,7 @@
       {#if widget.config.type == 'datetime'}
         <DateTimeWidget widgetConfig={widget.config} />
       {:else if widget.config.type == 'link'}
-        <LinkStoreWidget widgetConfig={widget.config}>Google Calendar</LinkStoreWidget>
+        <LinkStoreWidget widgetConfig={widget.config} colspan={{ sm: widget.sm.colSpan, md: widget.md.colSpan, lg: widget.lg.colSpan }}>Google Calendar</LinkStoreWidget>
       {:else if widget.config.type == 'gcalendar'}
         <div>Google Calendar</div>
       {:else}

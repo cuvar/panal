@@ -7,6 +7,30 @@ export default [
       type: "link",
       links: [
         {
+          href: "https://www.notion.so/cuvar/Life-Wiki-1e73fe78fc034bc3ac12d06928db3831",
+          title: "Notion LifeWiki",
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS sametab",
+          sametab: true
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+        {
           href: "https://nextjs.org/",
           title: "NextJS",
           sametab: false
