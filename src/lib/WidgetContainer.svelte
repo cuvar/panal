@@ -31,6 +31,6 @@
   }
 </script>
 
-<div class={'h-full bg-plightgreen text-pdarkgreen flex justify-center items-center py-10 px-2 rounded-md w-full' + ' ' + gridClasses} draggable="true" on:dragstart={onDragStart} on:dragend|preventDefault={onDragEnd}>
+<div class={'h-full bg-plightgreen text-pdarkgreen flex justify-center items-center rounded-md w-full' + ' ' + gridClasses} draggable="true" on:dragstart={onDragStart} on:dragend|preventDefault={onDragEnd}>
   <slot />
 </div>
