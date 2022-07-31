@@ -1,5 +1,5 @@
 declare interface ILinkWidgetConfig extends IWidgetConfig {
-  title: string;
-  href: string;
+  title?: string;
+  href?: string;
   sametab?: boolean;
 }

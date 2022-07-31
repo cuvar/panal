@@ -2,6 +2,7 @@
   import WidgetContainer from '$lib/WidgetContainer.svelte';
   import WidgetPlaceholder from '$lib/WidgetPlaceholder.svelte';
   import DateTimeWidget from '$lib/widgets/DateTime.svelte';
+  import LinkStoreWidget from '$lib/widgets/LinkStore.svelte';
   import { getGridColConfig } from '../utils/config/load';
   import { getCurrentScreenSize } from '../utils/screen';
 
@@ -44,6 +45,8 @@
     <WidgetContainer rowSpan={widget.lg.rowSpan} colSpan={widget.lg.colSpan} rowStart={widget.lg.rowStart} colStart={widget.lg.colStart} on:movewidget={onMoveWidget}>
       {#if widget.config.type == 'datetime'}
         <DateTimeWidget widgetConfig={widget.config} />
+      {:else if widget.config.type == 'link'}
+        <LinkStoreWidget widgetConfig={widget.config}>Google Calendar</LinkStoreWidget>
       {:else if widget.config.type == 'gcalendar'}
         <div>Google Calendar</div>
       {:else}
