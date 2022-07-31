@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+  import WidgetPlaceholder from '$lib/WidgetPlaceholder.svelte';
 
   export let rowSpan: number;
   export let colSpan: number;
@@ -9,8 +10,8 @@
   const gridClasses: string = `col-start-${colStart} ` + `row-start-${rowStart} ` + `col-span-${colSpan} ` + `row-span-${rowSpan}`;
 
   const dispatch = createEventDispatcher();
-  function triggerRemoveWidget() {
-    dispatch('removewidget', {
+  function fireMoveWidget() {
+    dispatch('movewidget', {
       rowStart,
       colStart,
     });
@@ -25,7 +26,7 @@
   function onDragEnd(oEvent: DragEvent) {
     if (oEvent.dataTransfer?.dropEffect == 'move') {
       console.log('dragend');
-      triggerRemoveWidget();
+      fireMoveWidget();
     }
   }
 </script>

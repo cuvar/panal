@@ -28,12 +28,12 @@
     };
   }
 
-  function onRemoveWidget(oEvent: RemoveWidgetEvent) {
+  function onMoveWidget(oEvent: MoveWidgetEvent) {
     const { rowStart, colStart } = oEvent.detail;
     const currentScreenSize = getCurrentScreenSize();
 
-    const widgetToRemove = widgetData.find((widget) => widget[currentScreenSize].rowStart === rowStart && widget[currentScreenSize].colStart === colStart);
-    console.log(widgetToRemove);
+    const widgetToMove = widgetData.find((widget) => widget[currentScreenSize].rowStart === rowStart && widget[currentScreenSize].colStart === colStart);
+    console.log(widgetToMove);
     // todo: remove this widget
     // todo: fill all other with placeholders
   }
@@ -41,7 +41,7 @@
 
 <div class={'h-full w-full max-w-screen-2xl grid gap-x-4 sm:gap-x-8 gap-y-4 sm:gap-y-8' + ' ' + gridRowClass + ' ' + gridColClass}>
   {#each widgetData as widget}
-    <WidgetContainer rowSpan={widget.lg.rowSpan} colSpan={widget.lg.colSpan} rowStart={widget.lg.rowStart} colStart={widget.lg.colStart} on:removewidget={onRemoveWidget}>
+    <WidgetContainer rowSpan={widget.lg.rowSpan} colSpan={widget.lg.colSpan} rowStart={widget.lg.rowStart} colStart={widget.lg.colStart} on:movewidget={onMoveWidget}>
       {#if widget.config.type == 'datetime'}
         <DateTimeWidget widgetConfig={widget.config} />
       {:else if widget.config.type == 'gcalendar'}

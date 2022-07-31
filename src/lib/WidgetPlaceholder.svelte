@@ -14,11 +14,11 @@
   function onDrop(oEvent: DragEvent) {
     console.log('drop');
 
-    const innerHTML = oEvent.dataTransfer?.getData('text/html');
-    if (innerHTML) {
-      //@ts-ignore
-      oEvent.target.innerHTML = innerHTML;
-    }
+    // const innerHTML = oEvent.dataTransfer?.getData('text/html');
+    // if (innerHTML) {
+    //   //@ts-ignore
+    //   oEvent.target.innerHTML = innerHTML;
+    // }
   }
 </script>
 
