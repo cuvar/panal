@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getHumanReadableDate, getHumanReadableTime } from '../../utils/datetime';
-  export let widgetConfig: IWidgetConfig;
+  export let widgetConfig: IDateTimeWidgetConfig;
 
   function getDateTimeContent(config: IDateTimeWidgetConfig): string {
     let time: string = config.time ? getHumanReadableTime(config.timemode ?? null) : '';

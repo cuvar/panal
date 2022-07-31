@@ -5,9 +5,10 @@ declare interface IWidgetPositionData {
   colStart: number;
 }
 
-declare type TType = 'datetime' | 'gcalendar';
+declare type TType = 'datetime' | 'link' | 'gcalendar';
 
-declare type IWidgetConfig = { type: TType } & IWidgetPositionData;
+// declare type IWidgets = IDateTimeWidgetConfig | ILinkWidgetConfig;
+declare type IWidgetConfig = { type: TType };
 declare interface IWidgetData {
   sm: IWidgetPositionData;
   md: IWidgetPositionData;

@@ -4,6 +4,80 @@
 export default [
   {
     config: {
+      type: "link",
+      links: [
+        {
+          href: "https://www.notion.so/cuvar/Life-Wiki-1e73fe78fc034bc3ac12d06928db3831",
+          title: "Notion LifeWiki",
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS sametab",
+          sametab: true
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+      ]
+    },
+    lg: {
+      rowStart: 1,
+      colStart: 3,
+      rowSpan: 2,
+      colSpan: 2,
+    },
+    md: {
+      rowStart: 1,
+      colStart: 3,
+      rowSpan: 1,
+      colSpan: 1,
+    },
+    sm: {
+      rowStart: 1,
+      colStart: 3,
+      rowSpan: 1,
+      colSpan: 1,
+    }
+  },
+  {
+    config: {
       type: "datetime",
       time: true,
       // date: true
@@ -11,41 +85,18 @@ export default [
     lg: {
       rowStart: 1,
       colStart: 1,
-      rowSpan: 1,
-      colSpan: 1,
-    },
-    md: {
-      rowStart: 1,
-      colStart: 1,
-      rowSpan: 1,
-      colSpan: 1,
-    },
-    sm: {
-      rowStart: 1,
-      colStart: 1,
-      rowSpan: 1,
-      colSpan: 1,
-    }
-  },
-  {
-    config: {
-      type: "datetime"
-    },
-    lg: {
-      rowStart: 1,
-      colStart: 2,
       rowSpan: 2,
       colSpan: 2,
     },
     md: {
       rowStart: 1,
-      colStart: 2,
+      colStart: 1,
       rowSpan: 2,
       colSpan: 2,
     },
     sm: {
       rowStart: 1,
-      colStart: 2,
+      colStart: 1,
       rowSpan: 2,
       colSpan: 2,
     }
