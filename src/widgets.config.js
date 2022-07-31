@@ -4,9 +4,10 @@
 export default [
   {
     config: {
-      type: "datetime",
-      time: true,
-      // date: true
+      type: "link",
+      href: "https://nextjs.org/",
+      title: "NextJS",
+      sametab: false
     },
     lg: {
       rowStart: 1,
@@ -29,7 +30,9 @@ export default [
   },
   {
     config: {
-      type: "datetime"
+      type: "datetime",
+      time: true,
+      // date: true
     },
     lg: {
       rowStart: 1,
