@@ -5,25 +5,49 @@ export default [
   {
     config: {
       type: "link",
-      href: "https://nextjs.org/",
-      title: "NextJS",
-      sametab: false
+      links: [
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+        {
+          href: "https://nextjs.org/",
+          title: "NextJS",
+          sametab: false
+        },
+      ]
     },
     lg: {
       rowStart: 1,
-      colStart: 1,
-      rowSpan: 1,
-      colSpan: 1,
+      colStart: 3,
+      rowSpan: 2,
+      colSpan: 2,
     },
     md: {
       rowStart: 1,
-      colStart: 1,
+      colStart: 3,
       rowSpan: 1,
       colSpan: 1,
     },
     sm: {
       rowStart: 1,
-      colStart: 1,
+      colStart: 3,
       rowSpan: 1,
       colSpan: 1,
     }
@@ -36,19 +60,19 @@ export default [
     },
     lg: {
       rowStart: 1,
-      colStart: 2,
+      colStart: 1,
       rowSpan: 2,
       colSpan: 2,
     },
     md: {
       rowStart: 1,
-      colStart: 2,
+      colStart: 1,
       rowSpan: 2,
       colSpan: 2,
     },
     sm: {
       rowStart: 1,
-      colStart: 2,
+      colStart: 1,
       rowSpan: 2,
       colSpan: 2,
     }
