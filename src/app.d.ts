@@ -7,3 +7,9 @@ declare namespace App {
 	// interface Error {}
 	// interface Platform {}
 }
+
+interface LinkData {
+	text: string;
+	href: string;
+	tab: 'new' | 'same';
+}
