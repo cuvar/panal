@@ -1,3 +1,7 @@
+<script>
+	import Link from './Link.svelte';
+</script>
+
 <div class="w-full bg-panal-700 py-5 px-5 flex justify-center">
-	<div>Footer</div>
+	<Link href="https://github.com/cuvar/panal">GitHub</Link>
 </div>
