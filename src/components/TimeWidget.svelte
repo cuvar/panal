@@ -14,4 +14,4 @@
 	}
 </script>
 
-<div class="text-6xl flex justify-center items-center">{formatedDate}</div>
+<div class="text-6xl flex justify-center items-center my-2">{formatedDate}</div>

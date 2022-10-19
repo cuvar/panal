@@ -10,19 +10,17 @@
 			tab: 'new'
 		},
 		{
-			text: 'Google',
-			href: 'https://google.com',
+			text: 'GCalendar',
+			href: 'https://calendar.google.com/',
 			tab: 'new'
 		}
 	];
 </script>
 
-<div>
-	<SearchWidget />
-	<div class="grid grid-flow-col auto-cols-max gap-4">
-		<TimeWidget />
-		{#each data as link}
-			<LinkWidget text={link.text} href={link.href} tab={link.tab} />
-		{/each}
-	</div>
+<TimeWidget />
+<SearchWidget />
+<div class="grid grid-flow-col auto-cols-max gap-4 my-2">
+	{#each data as link}
+		<LinkWidget text={link.text} href={link.href} tab={link.tab} />
+	{/each}
 </div>

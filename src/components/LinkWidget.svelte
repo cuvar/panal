@@ -2,6 +2,18 @@
 	export let text: string = 'Link';
 	export let href: string = '#';
 	export let tab: 'new' | 'same' = 'same';
+
+	// ! this needs a web scraper from the backend
+	// function getFavicon() {
+	// 	const linkTags = document.querySelectorAll("[rel='icon']");
+	// 	const faviconRefs = linkTags.forEach((linkTag) => {
+	// 		if (linkTag.getAttribute('href') !== null) {
+	// 			return linkTag.getAttribute('href');
+	// 		}
+	// 	});
+
+	// 	console.log(faviconRefs);
+	// }
 </script>
 
 {#if tab === 'new'}
