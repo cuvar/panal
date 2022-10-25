@@ -47,6 +47,14 @@
 		if (engineLink === searchString) console.warn('No search string provided');
 	}
 
+	window.addEventListener('keydown', (e) => {
+		if (e.metaKey && e.key === 'k') {
+			const input: HTMLInputElement | null = document.querySelector('#searchbar');
+			if (!input) return;
+			input.focus();
+		}
+	});
+
 	function handleKeyDown(event: KeyboardEvent) {
 		if (event.key === 'Enter') {
 			handleSearch();
@@ -78,20 +86,14 @@
 	}
 </script>
 
-<div class="flex flex-col my-2 w-fit">
+<div class="flex flex-col mt-2 mb-8 w-fit">
 	<div class="bg-white rounded-full flex justify-between items-center my-2">
-		<input
-			type="text"
-			class="rounded-full w-full px-4 py-2 text-black focus:outline-none"
-			placeholder="Search"
-			on:keydown={handleKeyDown}
-		/>
 		<a
 			href={searchString}
 			target="_blank"
 			id="searchButton"
 			rel="noopener noreferrer"
-			class="text-black px-2"
+			class="text-black pl-2"
 			on:click={handleSearch}
 		>
 			<svg
@@ -109,6 +111,16 @@
 				/>
 			</svg>
 		</a>
+		<input
+			type="text"
+			id="searchbar"
+			class="rounded-r-full w-full pr-1 py-2 text-black focus:outline-none"
+			placeholder="Search"
+			on:keydown={handleKeyDown}
+		/>
+		<kbd class="font-sans font-semibold text-slate-500 pl-2 text-xs flex pr-4">
+			<abbr title="Command" class="no-underline">⌘</abbr> K
+		</kbd>
 	</div>
 	<div class="flex space-x-2">
 		{#each engines as singleEngine}
