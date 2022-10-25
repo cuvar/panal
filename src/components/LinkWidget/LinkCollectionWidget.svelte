@@ -21,6 +21,7 @@
 	];
 
 	function addLink(e: MouseEvent) {
+		// <!-- todo functionality
 		data = [
 			...data,
 			{

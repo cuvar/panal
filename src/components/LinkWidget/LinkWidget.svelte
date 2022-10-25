@@ -11,7 +11,7 @@
 	// 			return linkTag.getAttribute('href');
 	// 		}
 	// 	});
-	// todo: look in brave dev tools for how they do it
+	// <!-- todo: look in brave dev tools for how they do it
 
 	// 	console.log(faviconRefs);
 	// }
