@@ -94,8 +94,8 @@
 			inputContainer.classList.add('outline-panal-100');
 		} else {
 			inputContainer.classList.remove('outline');
-			inputContainer.classList.add('outline');
-			inputContainer.classList.add('outline-2');
+			inputContainer.classList.remove('outline-2');
+			inputContainer.classList.remove('outline-panal-100');
 		}
 	}
 </script>
