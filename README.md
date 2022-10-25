@@ -7,7 +7,7 @@ No matter how you want to deploy this application, you need to specify the follo
 USER_HASH: SHA256 hash of the username
 PASSWORD_HASH: SHA256 hash of the password
 JWT_SECRET: A secret for the JWT token
-TOKEN_PERIOD: Amount hours an auth token is valid
+TOKEN_PERIOD: Amount of hours an auth token is valid
 ````
 
 ### Deploy with Vercel

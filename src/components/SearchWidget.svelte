@@ -84,16 +84,33 @@
 		currentEngine = chosenEngine;
 		updateEngine();
 	}
+
+	function setOutline(useOutline: boolean) {
+		const inputContainer: HTMLDivElement | null = document.querySelector('#searchbar-container');
+		if (!inputContainer) return;
+		if (useOutline) {
+			inputContainer.classList.add('outline');
+			inputContainer.classList.add('outline-2');
+			inputContainer.classList.add('outline-panal-100');
+		} else {
+			inputContainer.classList.remove('outline');
+			inputContainer.classList.add('outline');
+			inputContainer.classList.add('outline-2');
+		}
+	}
 </script>
 
 <div class="flex flex-col mt-2 mb-8 w-fit">
-	<div class="bg-white rounded-full flex justify-between items-center my-2">
+	<div
+		class="bg-white rounded-full flex justify-between items-center my-2"
+		id="searchbar-container"
+	>
 		<a
 			href={searchString}
 			target="_blank"
 			id="searchButton"
 			rel="noopener noreferrer"
-			class="text-black pl-2"
+			class="text-black pl-2 "
 			on:click={handleSearch}
 		>
 			<svg
@@ -117,6 +134,8 @@
 			class="rounded-r-full w-full pr-1 py-2 text-black focus:outline-none"
 			placeholder="Search"
 			on:keydown={handleKeyDown}
+			on:focusout={() => setOutline(false)}
+			on:focusin={() => setOutline(true)}
 		/>
 		<kbd class="font-sans font-semibold text-slate-500 pl-2 text-xs flex pr-4">
 			<abbr title="Command" class="no-underline">⌘</abbr> K
