@@ -13,3 +13,7 @@ interface LinkData {
 	href: string;
 	tab: 'new' | 'same';
 }
+
+interface WidgetViewData {
+	calendarData: {};
+}

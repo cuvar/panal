@@ -4,6 +4,13 @@
 	import WidgetView from 'comp/WidgetView.svelte';
 	import { onMount } from 'svelte';
 	import { getTokenFromCookie, verifyPassword, verifyToken } from '../utils/auth';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
+
+	const widgetData: WidgetViewData = {
+		calendarData: data.calendarData
+	};
 
 	let user = '';
 	let pwd = '';
@@ -67,7 +74,7 @@
 			</svg>
 		</Button>
 	</div>
-	<WidgetView />
+	<WidgetView data={widgetData} />
 {:else}
 	<div class="flex flex-col space-y-2 justify-center h-full">
 		<input
