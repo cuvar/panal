@@ -1,20 +1,20 @@
+import { useState } from "react";
+
 export default function TimeWidget() {
-  let formatedDate: string = "";
-  updateDate();
+  const [formatedTime, setFormatedTime] = useState<string>("");
 
   setInterval(function () {
-    updateDate();
+    setFormatedTime(
+      Intl.DateTimeFormat("de-DE", {
+        hour: "numeric",
+        minute: "numeric",
+      }).format(Date.now())
+    );
   }, 1000);
 
-  function updateDate() {
-    formatedDate = Intl.DateTimeFormat("de-DE", {
-      hour: "numeric",
-      minute: "numeric",
-    }).format(Date.now());
-  }
   return (
     <div className="text-6xl flex justify-center items-center my-2">
-      {formatedDate}
+      {formatedTime}
     </div>
   );
 }
