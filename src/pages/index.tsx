@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Footer from "../components/Footer";
-import Navbar from "../components/Footer";
+import Navbar from "../components/Navbar";
 import Button from "../components/Button";
 import Toast from "../components/Toast";
 import WidgetView from "../components/WidgetView";
@@ -18,6 +18,10 @@ const Home: NextPage = () => {
   const [showToast, setShowToast] = useState<boolean>(false);
   const [barText, setBarText] = useState<string>("");
 
+  const widgetData: WidgetViewData = {
+    calendarData: [],
+  };
+
   useEffect(() => {
     async function authorize(): Promise<boolean> {
       const token = getTokenFromCookie(COOKIE_NAME);
@@ -28,22 +32,27 @@ const Home: NextPage = () => {
     });
   }, []);
 
-  const widgetData: WidgetViewData = {
-    calendarData: {},
-  };
-
   const { data, isLoading, error } = useQuery(["calendarData"], () => {
     return fetch("/api/calendar").then((res) => res.json());
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <p>Loading...</p>
+      </>
+    );
   }
   if (error) {
-    return <div>Error...</div>;
+    return (
+      <>
+        <p>Error...</p>
+      </>
+    );
   }
+
   if (data) {
-    console.log(data);
+    widgetData.calendarData = data.calendarData;
   }
 
   function toggleMessageToast(msg: string) {
@@ -96,7 +105,7 @@ const Home: NextPage = () => {
       <Head>
         <title>panal</title>
       </Head>
-      <div className="min-h-screen h-screen flex flex-col justify-between text-gray-100 ">
+      <div className="min-h-screen h-full flex flex-col justify-between text-gray-100 ">
         <Navbar />
         <main className="bg-panal-500 h-full px-5 flex flex-col items-center">
           {sesh ? (
@@ -123,7 +132,7 @@ const Home: NextPage = () => {
             </>
           ) : (
             <>
-              <div className="flex flex-col space-y-2 justify-center h-full">
+              <div className="flex flex-col space-y-2 justify-center h-screen">
                 <input
                   placeholder="username"
                   value={user}

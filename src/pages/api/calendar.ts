@@ -1,41 +1,65 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import ical from "ical";
 
+// const LINK =
+//   "https://calendar.google.com/calendar/ical/luca-mueller%40gmx.net/public/basic.ics";
 const LINK =
-  "https://calendar.google.com/calendar/ical/luca-mueller%40gmx.net/public/basic.ics";
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  // await getCalendar();
-  res.status(200).send({ message: "success" });
+  "https://rapla.dhbw-karlsruhe.de/rapla?page=ical&user=braun&file=TINF20B2";
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  try {
+    const data = await getCalendar();
+    const futureDates = data.filter(
+      (item) => new Date(item.start) > new Date()
+    );
+    const groupedData = groupCalendarDataByDay(futureDates);
+    groupedData.sort((a, b) => {
+      return new Date(a[0]!.start).getTime() - new Date(b[0]!.start).getTime();
+    });
+
+    res.status(200).send({ calendarData: groupedData });
+    return;
+  } catch (error) {
+    console.log(error);
+  }
+
+  res.status(500).send({ message: "Internal server error" });
   return;
 }
 
-// function getCalendar() {
-// 	fetch(LINK)
-// 		.then((response) => response.text())
-// 		.then((data) => {
-// 			const parser = new DOMParser();
-// 			const doc = parser.parseFromString(data, 'text/xml');
-// 			const events = doc.querySelectorAll('event');
-// 			const eventList: any[] = [];
-// 			events.forEach((event) => {
-// 				const eventObject = {
-// 					title: event.querySelector('summary').textContent,
-// 					start: event.querySelector('dtstart').textContent,
-// 					end: event.querySelector('dtend').textContent,
-// 					location: event.querySelector('location').textContent,
-// 					description: event.querySelector('description').textContent
-// 				};
-// 				eventList.push(eventObject);
-// 			});
-// 			console.log(eventList);
-// 		});
-// }
+async function getCalendar(): Promise<CalendarData[]> {
+  const res = await fetch(LINK).then((res) => res.text());
+  const data = ical.parseICS(res);
+  const dataArr = Object.values(data);
 
-// (async () => {
-// 	await getCalendarGoogle();
-// })();
+  const eventArray = dataArr.map((item) => {
+    return {
+      title: item.summary,
+      start: item.start?.toString(),
+      end: item.end?.toString(),
+    } as CalendarData;
+  });
 
-// async function getCalendarGoogle() {
-// 	const response = await fetch(link);
-// 	const text = await response.text();
-// 	console.log(text);
-// }
+  return eventArray;
+}
+
+function groupCalendarDataByDay(data: CalendarData[]) {
+  const grouped: CalendarData[][] = [];
+
+  const days = new Set(
+    data.map((item) => {
+      return new Date(item.start).toDateString();
+    })
+  );
+
+  days.forEach((day) => {
+    const dayData = data.filter(
+      (item) => new Date(item.start).toDateString() === day
+    );
+    grouped.push(dayData);
+  });
+
+  return grouped;
+}
