@@ -16,6 +16,7 @@ interface SearchEngineData {
 
 interface CalendarData {
   title: string;
-  start: string;
-  end: string;
+  start: Date;
+  end: Date;
+  duration: number;
 }

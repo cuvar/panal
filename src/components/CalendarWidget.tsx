@@ -2,19 +2,6 @@ interface IProps {
   calendarData: CalendarData[][];
 }
 
-function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-
-  return Intl.DateTimeFormat("de-DE", {
-    hour: "numeric",
-    minute: "numeric",
-  }).format(date);
-}
-
-// todo: 1. überlagernde termine von rapla werden nicht angezeigt (z.b. mittwochs)
-// todo: 2. restrict width of calendar widget
-// todo: 3. make unified size for all widgets
-
 export default function CalendarWidget(props: IProps) {
   return (
     <div className="mb-4">
@@ -22,8 +9,8 @@ export default function CalendarWidget(props: IProps) {
       <div className="h-60 overflow-y-scroll bg-white p-2 rounded-md">
         {props.calendarData.map((entry, index) => (
           <div key={index} className="mb-4">
-            <p className="text-black">
-              {new Date(entry[0]?.start as string).toDateString()}
+            <p className="text-black text-sm leading-none">
+              {new Date(entry[0]?.start ?? "").toDateString()}
             </p>
             {entry.map((e, index) => (
               <div
@@ -43,4 +30,17 @@ export default function CalendarWidget(props: IProps) {
       </div>
     </div>
   );
+}
+
+function dateIsValid(date: Date) {
+  return !Number.isNaN(new Date(date).getTime());
+}
+
+function formatDate(date: Date): string {
+  if (!dateIsValid(date)) return "-";
+
+  return Intl.DateTimeFormat("de-DE", {
+    hour: "numeric",
+    minute: "numeric",
+  }).format(new Date(date));
 }

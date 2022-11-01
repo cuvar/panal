@@ -8,6 +8,8 @@ import WidgetView from "../components/WidgetView";
 import { getTokenFromCookie, verifyPassword, verifyToken } from "../utils/auth";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../components/Loading";
+import ErrorPage from "../components/Error";
 
 const COOKIE_NAME = "panal_s";
 
@@ -32,27 +34,32 @@ const Home: NextPage = () => {
     });
   }, []);
 
-  const { data, isLoading, error } = useQuery(["calendarData"], () => {
-    return fetch("/api/calendar").then((res) => res.json());
+  const { data, isLoading, error } = useQuery(["calendarData"], async () => {
+    const response = await fetch("/api/calendar", {
+      method: "POST",
+      body: JSON.stringify({
+        link: "https://rapla.dhbw-karlsruhe.de/rapla?page=ical&user=braun&file=TINF20B2",
+        daysInAdvance: 7,
+      }),
+    }).then((res) => res.json());
+
+    if (typeof response.error !== "undefined") {
+      throw new Error(response.error);
+    } else {
+      return response;
+    }
   });
 
-  if (isLoading) {
-    return (
-      <>
-        <p>Loading...</p>
-      </>
-    );
-  }
   if (error) {
-    return (
-      <>
-        <p>Error...</p>
-      </>
-    );
+    return <ErrorPage error={""} />;
   }
 
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
   if (data) {
     widgetData.calendarData = data.calendarData;
+    console.log(data);
   }
 
   function toggleMessageToast(msg: string) {
