@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function TimeWidget() {
-  const [formatedTime, setFormatedTime] = useState<string>("");
+  const [formatedTime, setFormatedTime] = useState<string>(
+    Intl.DateTimeFormat("de-DE", {
+      hour: "numeric",
+      minute: "numeric",
+    }).format(Date.now())
+  );
 
   setInterval(function () {
     setFormatedTime(
