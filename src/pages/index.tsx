@@ -1,13 +1,15 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Footer from "../components/Footer";
-import Navbar from "../components/Footer";
+import Navbar from "../components/Navbar";
 import Button from "../components/Button";
 import Toast from "../components/Toast";
 import WidgetView from "../components/WidgetView";
 import { getTokenFromCookie, verifyPassword, verifyToken } from "../utils/auth";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../components/Loading";
+import ErrorPage from "../components/Error";
 
 const COOKIE_NAME = "panal_s";
 
@@ -17,6 +19,10 @@ const Home: NextPage = () => {
   const [sesh, setSesh] = useState<boolean>(false);
   const [showToast, setShowToast] = useState<boolean>(false);
   const [barText, setBarText] = useState<string>("");
+
+  const widgetData: WidgetViewData = {
+    calendarData: [],
+  };
 
   useEffect(() => {
     async function authorize(): Promise<boolean> {
@@ -28,21 +34,31 @@ const Home: NextPage = () => {
     });
   }, []);
 
-  const widgetData: WidgetViewData = {
-    calendarData: {},
-  };
+  const { data, isLoading, error } = useQuery(["calendarData"], async () => {
+    const response = await fetch("/api/calendar", {
+      method: "POST",
+      body: JSON.stringify({
+        link: "https://rapla.dhbw-karlsruhe.de/rapla?page=ical&user=braun&file=TINF20B2",
+        daysInAdvance: 7,
+      }),
+    }).then((res) => res.json());
 
-  const { data, isLoading, error } = useQuery(["calendarData"], () => {
-    return fetch("/api/calendar").then((res) => res.json());
+    if (typeof response.error !== "undefined") {
+      throw new Error(response.error);
+    } else {
+      return response;
+    }
   });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
   if (error) {
-    return <div>Error...</div>;
+    return <ErrorPage error={""} />;
+  }
+
+  if (isLoading) {
+    return <LoadingSpinner />;
   }
   if (data) {
+    widgetData.calendarData = data.calendarData;
     console.log(data);
   }
 
@@ -96,7 +112,7 @@ const Home: NextPage = () => {
       <Head>
         <title>panal</title>
       </Head>
-      <div className="min-h-screen h-screen flex flex-col justify-between text-gray-100 ">
+      <div className="min-h-screen h-full flex flex-col justify-between text-gray-100 ">
         <Navbar />
         <main className="bg-panal-500 h-full px-5 flex flex-col items-center">
           {sesh ? (
@@ -123,7 +139,7 @@ const Home: NextPage = () => {
             </>
           ) : (
             <>
-              <div className="flex flex-col space-y-2 justify-center h-full">
+              <div className="flex flex-col space-y-2 justify-center h-screen">
                 <input
                   placeholder="username"
                   value={user}

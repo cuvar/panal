@@ -5,7 +5,7 @@ interface LinkData {
 }
 
 interface WidgetViewData {
-  calendarData: {};
+  calendarData: CalendarData[][];
 }
 
 interface SearchEngineData {
@@ -14,4 +14,9 @@ interface SearchEngineData {
   url: string;
 }
 
-interface CalendarData {}
+interface CalendarData {
+  title: string;
+  start: Date;
+  end: Date;
+  duration: number;
+}
