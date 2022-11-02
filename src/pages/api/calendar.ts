@@ -35,11 +35,16 @@ export default async function handler(
     todayPlusNDays.setDate(new Date().getDate() + DAYS);
 
     // filter only next `DAYS` days
-    const futureDates = calendarData.filter(
-      (item) =>
-        item.start.getTime() >= new Date().getTime() &&
-        item.start.getTime() < todayPlusNDays.getTime()
-    );
+
+    const futureDates = calendarData.filter((item) => {
+      const thisDate = new Date().toISOString().split("T")[0];
+      const now = new Date().getTime();
+      return (
+        (item.start.getTime() >= now &&
+          item.start.getTime() < todayPlusNDays.getTime()) || // following events
+        (item.start.getTime() <= now && item.end.getTime() >= now) // currently running event
+      );
+    });
 
     const groupedData = groupCalendarDataByDay(futureDates);
 
