@@ -74,7 +74,7 @@ const Home: NextPage = () => {
       <Head>
         <title>panal</title>
       </Head>
-      <div className="min-h-screen h-full flex flex-col justify-between text-gray-100 ">
+      <div className="min-h-screen h-screen flex flex-col justify-between text-gray-100 ">
         <Navbar />
         <main className="bg-panal-500 h-full px-5 flex flex-col items-center">
           <div className="w-full flex justify-end mt-4">
