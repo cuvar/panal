@@ -16,8 +16,6 @@ import Login from "../components/Login";
 const COOKIE_NAME = "panal_s";
 
 const Home: NextPage = () => {
-  // % info: working on useAtom and sesh / auth in general
-
   const [sesh, setSesh] = useAtom(seshAtom);
 
   const widgetData: WidgetViewData = {
