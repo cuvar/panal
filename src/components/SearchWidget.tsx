@@ -28,10 +28,10 @@ const engines: SearchEngineData[] = [
 ];
 
 export default function SearchWidget(props: IProps) {
-  const [searchString, setSearchString] = useState("");
   const [engineLink, setEngineLink] = useState(
     engines.find((e) => e.key === props.currentEngine)?.url || engines[0]?.url
   );
+  const [searchString, setSearchString] = useState(engineLink);
   const [currentEngine, setCurrentEngine] = useState<SearchEngineData["key"]>(
     props.currentEngine ?? "ecosia"
   );
@@ -49,7 +49,7 @@ export default function SearchWidget(props: IProps) {
     if (!input) return false;
 
     setSearchString(engineLink + input.value.trim());
-    if (engineLink === searchString) {
+    if (engineLink === engineLink + input.value.trim()) {
       // if empty
       console.warn("No search string provided");
       return false;
