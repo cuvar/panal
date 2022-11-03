@@ -36,19 +36,26 @@ export default function SearchWidget(props: IProps) {
     props.currentEngine ?? "ecosia"
   );
 
-  function updateEngine() {
+  function updateEngine(curEngine: SearchEngineData["key"]) {
+    setCurrentEngine(curEngine);
     const selectedEngine =
-      engines.find((e) => e.key === currentEngine) ?? engines[0]?.url;
+      engines.find((e) => e.key === curEngine) ?? engines[0]?.url;
     // @ts-ignore
     setEngineLink(selectedEngine?.url); // todo: rework
   }
 
-  function handleSearch() {
+  function handleSearch(): boolean {
     const input = document.querySelector("input");
-    if (!input) return;
+    if (!input) return false;
 
     setSearchString(engineLink + input.value.trim());
-    if (engineLink === searchString) console.warn("No search string provided");
+    if (engineLink === searchString) {
+      // if empty
+      console.warn("No search string provided");
+      return false;
+    }
+
+    return true;
   }
 
   window.addEventListener("keydown", (e) => {
@@ -62,7 +69,8 @@ export default function SearchWidget(props: IProps) {
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Enter") {
-      handleSearch();
+      if (!handleSearch()) return;
+
       setTimeout(() => {
         document.getElementById("searchButton")?.click();
       }, 50);
@@ -81,13 +89,13 @@ export default function SearchWidget(props: IProps) {
   function selectNextEngine() {
     const index = engines.findIndex((e) => e.key === currentEngine);
     const nextIndex = index + 1 >= engines.length ? 0 : index + 1;
-    setCurrentEngine(engines[nextIndex]?.key ?? "ecosia"); // todo rework
-    updateEngine();
+    const nextEngine = engines[nextIndex]?.key ?? "ecosia";
+
+    updateEngine(nextEngine);
   }
 
   function searchWithEngine(chosenEngine: SearchEngineData["key"]) {
-    setCurrentEngine(chosenEngine);
-    updateEngine();
+    updateEngine(chosenEngine);
   }
 
   function setOutline(useOutline: boolean) {
