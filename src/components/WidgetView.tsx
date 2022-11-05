@@ -15,9 +15,9 @@ function PlaceholderWidget() {
 export default function WidgetView(props: IProps) {
   return (
     <div
-      className={`h-full grid ${styles["auto-rows"]} ${styles["sm-cols-3"]} ${styles["md-cols-6"]} ${styles["xl-cols-10"]} gap-4 sm:gap-6 bg-green-500`}
+      className={`h-full grid ${styles["auto-rows"]} ${styles["sm-cols-3"]} ${styles["md-cols-6"]} ${styles["xl-cols-10"]} gap-4 sm:gap-6 `}
     >
-      <WidgetContainer colspan={2} rowstart={1}>
+      <WidgetContainer colspan={3} rowstart={1}>
         <TimeWidget />
       </WidgetContainer>
       <WidgetContainer colspan={3} rowstart={2}>
@@ -33,6 +33,11 @@ export default function WidgetView(props: IProps) {
     </div>
   );
 }
+// todo: what happes in resize?
+// todo: adapt size of linkwidget
+// todo: adapt sizing of searchwidget if smaller
+// todo: add parameter, which doesnt allows for resizing below 3 cols
+// todo: siehe notes
 
 // grid-cols-3 md:grid-cols-6 xl:grid-cols-10
 
