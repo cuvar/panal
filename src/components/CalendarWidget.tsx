@@ -4,7 +4,7 @@ interface IProps {
 
 export default function CalendarWidget(props: IProps) {
   return (
-    <div className="mb-4">
+    <div className="">
       <div>Calendar with {props.calendarData.length} entries</div>
       <div className="h-60 overflow-y-scroll bg-white p-2 rounded-md">
         {props.calendarData.map((entry, index) => (

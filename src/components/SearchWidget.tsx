@@ -115,7 +115,7 @@ export default function SearchWidget(props: IProps) {
   }
 
   return (
-    <div className="flex flex-col mt-2 mb-8 w-fit">
+    <div className="flex flex-col w-full">
       <div
         className="bg-white rounded-full flex justify-between items-center my-2"
         id="searchbar-container"

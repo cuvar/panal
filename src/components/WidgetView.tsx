@@ -1,33 +1,36 @@
+import styles from "./WidgetView.module.css";
 import SearchWidget from "./SearchWidget";
 import TimeWidget from "./TimeWidget";
 import CalendarWidget from "./CalendarWidget";
 import LinkCollectionWidget from "./LinkWidget/LinkCollectionWidget";
-import styles from "./WidgetView.module.css";
+import WidgetContainer from "./WidgetContainer";
 
 interface IProps {
   data: WidgetViewData;
 }
 
+function PlaceholderWidget() {
+  return <div className="bg-yellow-500">Hello</div>;
+}
 export default function WidgetView(props: IProps) {
   return (
-    <>
-      <div
-        className={`h-full grid ${styles["auto-rows"]} ${styles["sm-cols-3"]} ${styles["md-cols-6"]} ${styles["xl-cols-10"]} gap-4 sm:gap-6 bg-green-500`}
-      >
-        <div className=" bg-blue-500">Hello</div>
-        <div className="bg-yellow-500">Hello</div>
-        <div className="bg-red-500 col-span-3 row-span-3">Hello</div>
-        {/* <div className=" bg-blue-500">Hello</div>
-        <div className="bg-yellow-500">Hello</div>
-        <div className="bg-red-500">Hello</div>
-        <div className=" bg-blue-500">Hello</div>
-        <div className="bg-yellow-500">Hello</div>
-        <div className="bg-red-500">Hello</div>
-        <div className=" bg-blue-500">Hello</div>
-        <div className="bg-yellow-500">Hello</div>
-        <div className="bg-red-500">Hello</div> */}
-      </div>
-    </>
+    <div
+      className={`h-full grid ${styles["auto-rows"]} ${styles["sm-cols-3"]} ${styles["md-cols-6"]} ${styles["xl-cols-10"]} gap-4 sm:gap-6 bg-green-500`}
+    >
+      <WidgetContainer colspan={2} rowstart={1}>
+        <TimeWidget />
+      </WidgetContainer>
+      <WidgetContainer colspan={3} rowstart={2}>
+        <SearchWidget />
+      </WidgetContainer>
+      <WidgetContainer colspan={3} rowspan={3}>
+        <CalendarWidget calendarData={props.data.calendarData} />
+      </WidgetContainer>
+      <WidgetContainer colspan={4} rowspan={4}>
+        <LinkCollectionWidget />
+      </WidgetContainer>
+      {/* <PlaceholderWidget /> */}
+    </div>
   );
 }
 
