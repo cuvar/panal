@@ -37,9 +37,7 @@ export default function WidgetContainer(props: IProps) {
   }
 
   return (
-    <div
-      className={`flex justify-center items-center ${gridClasses} bg-red-300`}
-    >
+    <div className={`flex justify-center items-center ${gridClasses}`}>
       {props.children}
     </div>
   );
