@@ -33,18 +33,3 @@ export default function WidgetView(props: IProps) {
     </div>
   );
 }
-// todo: set size to max 3 cols in sm
-// todo: siehe notes
-
-// grid-cols-3 md:grid-cols-6 xl:grid-cols-10
-
-// <div>
-//   {/* w200xh100 */}
-//   <TimeWidget />
-//   {/* w300xh100 */}
-//   <SearchWidget />
-//   {/* w400xh400 */}
-//   <LinkCollectionWidget />
-//   {/* w300xh300 */}
-//   <CalendarWidget calendarData={props.data.calendarData} />
-// </div>
