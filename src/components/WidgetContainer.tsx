@@ -7,13 +7,15 @@ interface IProps extends WidgetConfig {
 }
 
 export default function WidgetContainer(props: IProps) {
+  const minimumColSpan = Math.min(props.minColSpan ?? 3, 3);
+
   const tempColSpan = props.colspan ?? 1;
   const tempRowSpan = props.rowspan ?? 1;
 
   const col =
-    typeof props.minColSpan === "undefined"
+    typeof minimumColSpan === "undefined"
       ? tempColSpan
-      : Math.max(tempColSpan, props.minColSpan);
+      : Math.max(tempColSpan, minimumColSpan);
 
   const row =
     typeof props.minRowSpan === "undefined"
@@ -23,7 +25,10 @@ export default function WidgetContainer(props: IProps) {
   const colStart = props.colstart ?? 1;
   const rowStart = props.rowstart ?? 1;
 
-  let gridClasses = `col-span-${col} row-span-${row}`;
+  let gridClasses = `col-span-${Math.min(
+    3,
+    col
+  )} md:col-span-${col} row-span-${row}`;
   if (colStart > 1) {
     gridClasses += ` col-start-${colStart}`;
   }

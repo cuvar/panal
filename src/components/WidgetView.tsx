@@ -33,7 +33,8 @@ export default function WidgetView(props: IProps) {
     </div>
   );
 }
-// todo: what happes in resize?
+// todo: what happes in resize with linkwidget
+// todo: set size to 3 cols in sm
 // todo: siehe notes
 
 // grid-cols-3 md:grid-cols-6 xl:grid-cols-10

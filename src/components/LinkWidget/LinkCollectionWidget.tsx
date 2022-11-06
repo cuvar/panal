@@ -43,14 +43,19 @@ export default function LinkCollectionWidget(props: IProps) {
   return (
     // <div className="grid grid-cols-3 grid-rows-4 md:grid-cols-4 md:grid-rows-3 lg:grid-cols-6 lg:grid-rows-2 xl:grid-cols-6 xl:grid-rows-2 gap-4">
     <div
-      className={`grid w-full h-full grid-cols-${props.colCount} grid-rows-${props.rowCount} place-items-center`}
+      className={`grid w-full h-full grid-cols-${Math.min(
+        props.colCount,
+        3
+      )} md:grid-cols-${props.colCount} grid-rows-${
+        props.rowCount
+      } place-items-center`}
     >
       {data.map((link, index) => (
         <LinkContainer key={index}>
           <LinkWidget text={link.text} href={link.href} tab={link.tab} />
         </LinkContainer>
       ))}
-      {data.length < props.colCount * props.rowCount && ( // todo: make this dynamic
+      {data.length < props.colCount * props.rowCount && (
         <LinkContainer>
           <button
             className="bg-gray-200 text-black rounded-md w-full h-20 flex justify-center items-center"
