@@ -26,15 +26,14 @@ export default function WidgetView(props: IProps) {
       <WidgetContainer colspan={3} rowspan={3}>
         <CalendarWidget calendarData={props.data.calendarData} />
       </WidgetContainer>
-      <WidgetContainer colspan={4} rowspan={4}>
-        <LinkCollectionWidget />
+      <WidgetContainer colspan={4} rowspan={1}>
+        <LinkCollectionWidget colCount={4} rowCount={1} />
       </WidgetContainer>
       {/* <PlaceholderWidget /> */}
     </div>
   );
 }
 // todo: what happes in resize?
-// todo: adapt size of linkwidget
 // todo: adapt sizing of searchwidget if smaller
 // todo: add parameter, which doesnt allows for resizing below 3 cols
 // todo: siehe notes

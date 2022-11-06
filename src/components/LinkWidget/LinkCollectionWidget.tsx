@@ -2,6 +2,11 @@ import LinkWidget from "./LinkWidget";
 import LinkContainer from "./LinkContainer";
 import { useState } from "react";
 
+interface IProps {
+  colCount: number;
+  rowCount: number;
+}
+
 const predefinedLinks: LinkData[] = [
   {
     text: "GitHub",
@@ -20,7 +25,7 @@ const predefinedLinks: LinkData[] = [
   },
 ];
 
-export default function LinkCollectionWidget() {
+export default function LinkCollectionWidget(props: IProps) {
   const [data, setData] = useState<LinkData[]>(predefinedLinks);
 
   function addLink(e: React.MouseEvent<HTMLButtonElement>) {
@@ -36,13 +41,16 @@ export default function LinkCollectionWidget() {
   }
 
   return (
-    <div className="grid grid-cols-3 grid-rows-4 md:grid-cols-4 md:grid-rows-3 lg:grid-cols-6 lg:grid-rows-2 xl:grid-cols-6 xl:grid-rows-2 gap-4">
+    // <div className="grid grid-cols-3 grid-rows-4 md:grid-cols-4 md:grid-rows-3 lg:grid-cols-6 lg:grid-rows-2 xl:grid-cols-6 xl:grid-rows-2 gap-4">
+    <div
+      className={`grid w-full h-full grid-cols-${props.colCount} grid-rows-${props.rowCount} place-items-center`}
+    >
       {data.map((link, index) => (
         <LinkContainer key={index}>
           <LinkWidget text={link.text} href={link.href} tab={link.tab} />
         </LinkContainer>
       ))}
-      {data.length < 12 && (
+      {data.length < props.colCount * props.rowCount && ( // todo: make this dynamic
         <LinkContainer>
           <button
             className="bg-gray-200 text-black rounded-md w-full h-20 flex justify-center items-center"
