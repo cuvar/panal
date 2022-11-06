@@ -1,0 +1,21 @@
+.sm-cols-3 {
+  grid-template-columns: repeat(3, 100px);
+}
+
+/* md */
+@media (min-width: 768px) {
+  .md-cols-6 {
+    grid-template-columns: repeat(6, 100px);
+  }
+}
+
+/* xl */
+@media (min-width: 1280px) {
+  .xl-cols-10 {
+    grid-template-columns: repeat(10, 100px);
+  }
+}
+
+.auto-rows {
+  grid-auto-rows: minmax(0, 100px);
+}

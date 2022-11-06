@@ -4,9 +4,8 @@ interface IProps {
 
 export default function CalendarWidget(props: IProps) {
   return (
-    <div className="mb-4">
-      <div>Calendar with {props.calendarData.length} entries</div>
-      <div className="h-60 overflow-y-scroll bg-white p-2 rounded-md">
+    <div className="h-full w-full">
+      <div className="h-full w-full overflow-y-scroll bg-white p-2 rounded-md">
         {props.calendarData.map((entry, index) => (
           <div key={index} className="mb-4">
             <p className="text-black text-sm leading-none">
@@ -28,6 +27,7 @@ export default function CalendarWidget(props: IProps) {
           </div>
         ))}
       </div>
+      {/* <div>Calendar with {props.calendarData.length} entries</div> */}
     </div>
   );
 }

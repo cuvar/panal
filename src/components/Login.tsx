@@ -5,7 +5,7 @@ import { useAtom } from "jotai";
 import { verifyPassword } from "../utils/auth";
 import Button from "./Button";
 import Head from "next/head";
-import Navbar from "./Footer";
+import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 // todo: this is also in index.tsx -> only single place

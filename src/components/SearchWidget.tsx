@@ -115,9 +115,9 @@ export default function SearchWidget(props: IProps) {
   }
 
   return (
-    <div className="flex flex-col mt-2 mb-8 w-fit">
+    <div className="flex flex-col w-full">
       <div
-        className="bg-white rounded-full flex justify-between items-center my-2"
+        className="bg-white rounded-full flex justify-between items-center mb-2"
         id="searchbar-container"
       >
         <a
@@ -159,7 +159,7 @@ export default function SearchWidget(props: IProps) {
           K
         </kbd>
       </div>
-      <div className="flex space-x-2">
+      <div className="flex justify-center space-x-2 ">
         {engines.map((singleEngine, index) =>
           singleEngine.key === currentEngine ? (
             <button

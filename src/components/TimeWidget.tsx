@@ -18,7 +18,7 @@ export default function TimeWidget() {
   }, 1000);
 
   return (
-    <div className="text-6xl flex justify-center items-center my-2">
+    <div className="text-6xl flex justify-center items-center">
       {formatedTime}
     </div>
   );

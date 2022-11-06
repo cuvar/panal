@@ -4,6 +4,7 @@ interface LinkData {
   tab: "new" | "same";
 }
 
+// data that needs to be passed to the WidgetView component -> all data for all widgets
 interface WidgetViewData {
   calendarData: CalendarData[][];
 }
@@ -19,4 +20,9 @@ interface CalendarData {
   start: Date;
   end: Date;
   duration: number;
+}
+
+interface WidgetConfig {
+  minColSpan?: number;
+  minRowSpan?: number;
 }
