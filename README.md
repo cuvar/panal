@@ -1,5 +1,21 @@
+⚠️ This project is still work in progress.  
 # panal
-simple linkstorage
+widget-based dashboard for managing life
+
+## Idea
+I wanted to have a simple self-hosted dashboard application for viewing every service that is relevant for my daily life:
+- Calendar
+- Todos
+- a simple link storage
+- search field with various search engines
+- etc
+
+Each service should be a customizable widget on the dashboard. A widget engine (currently working on [that one](https://github.com/cuvar/rswe)) should be used for managing widgets more easily.
+
+[dashy](https://github.com/Lissy93/dashy) solves some of the problems and is doing great at that (so maybe that's something for you). However, it is missing some of the functionality I wanted. That's why we're here.
+
+## Current state
+This project is still in early development. If you have any ideas for other features, just open an issue!
 
 ## Deployment
 No matter how you want to deploy this application, you need to specify the following environment variables:
