@@ -11,66 +11,68 @@ import ErrorPage from "../components/Error";
 import { seshAtom } from "../utils/state";
 import { useAtom } from "jotai";
 import Login from "../components/Login";
-
-const COOKIE_NAME = "panal_s";
+import { useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
-  const [sesh, setSesh] = useAtom(seshAtom);
+  const user = useSession();
 
-  const widgetData: WidgetViewData = {
-    calendarData: [],
-  };
+  // const [sesh, setSesh] = useAtom(seshAtom);
 
-  useEffect(() => {
-    async function authorize(): Promise<boolean> {
-      const token = getTokenFromCookie(COOKIE_NAME);
-      return token == "" ? false : await verifyToken(token);
-    }
-    authorize().then((sesh) => {
-      setSesh(sesh);
-    });
-  }, []);
+  // const widgetData: WidgetViewData = {
+  //   calendarData: [],
+  // };
 
-  const { data, isLoading, error } = useQuery(["calendarData"], async () => {
-    const response = await fetch("/api/calendar", {
-      method: "POST",
-      body: JSON.stringify({
-        link: "https://rapla.dhbw-karlsruhe.de/rapla?page=ical&user=braun&file=TINF20B2",
-        daysInAdvance: 7,
-      }),
-    }).then((res) => res.json());
+  // useEffect(() => {
+  //   async function authorize(): Promise<boolean> {
+  //     const token = getTokenFromCookie(COOKIE_NAME);
+  //     return token == "" ? false : await verifyToken(token);
+  //   }
+  //   authorize().then((sesh) => {
+  //     setSesh(sesh);
+  //   });
+  // }, []);
 
-    if (typeof response.error !== "undefined") {
-      throw new Error(response.error);
-    } else {
-      return response;
-    }
-  });
+  // const { data, isLoading, error } = useQuery(["calendarData"], async () => {
+  //   const response = await fetch("/api/calendar", {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       link: "https://rapla.dhbw-karlsruhe.de/rapla?page=ical&user=braun&file=TINF20B2",
+  //       daysInAdvance: 7,
+  //     }),
+  //   }).then((res) => res.json());
 
-  if (!sesh) {
-    return <Login />;
-  }
+  //   if (typeof response.error !== "undefined") {
+  //     throw new Error(response.error);
+  //   } else {
+  //     return response;
+  //   }
+  // });
 
-  if (error) {
-    return <ErrorPage error={""} />;
-  }
+  // if (!sesh) {
+  //   return <Login />;
+  // }
 
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
-  if (data) {
-    widgetData.calendarData = data.calendarData;
-  }
+  // if (error) {
+  //   return <ErrorPage error={""} />;
+  // }
+
+  // if (isLoading) {
+  //   return <LoadingSpinner />;
+  // }
+  // if (data) {
+  //   widgetData.calendarData = data.calendarData;
+  // }
 
   return (
     <>
       <Head>
         <title>panal</title>
       </Head>
-      <div className="min-h-screen h-screen flex flex-col justify-between text-gray-100 ">
+      <div className="flex h-screen min-h-screen flex-col justify-between text-gray-100 ">
         <Navbar />
-        <main className="bg-panal-500 h-full px-5 py-5 md:py-10 flex flex-col items-center">
-          <WidgetView data={widgetData} />
+        <main className="bg-panal-500 flex h-full flex-col items-center px-5 py-5 md:py-10">
+          Hello world
+          {/* <WidgetView data={widgetData} /> */}
         </main>
         <Footer />
       </div>
