@@ -1,17 +1,15 @@
 import styles from "./WidgetView.module.css";
-import SearchWidget from "./SearchWidget";
-import TimeWidget from "./TimeWidget";
-import CalendarWidget from "./CalendarWidget";
-import LinkCollectionWidget from "./LinkWidget/LinkCollectionWidget";
+import SearchWidget from "~/widgets/SearchWidget";
+import TimeWidget from "~/widgets/TimeWidget";
+import CalendarWidget from "~/widgets/CalendarWidget";
+import PlaceholderWidget from "~/widgets/PlaceholderWidget";
+import LinkCollectionWidget from "../widgets/LinkWidget/LinkCollectionWidget";
 import WidgetContainer from "./WidgetContainer";
 
 type Props = {
   data: WidgetViewData;
 };
 
-function PlaceholderWidget() {
-  return <div className="bg-yellow-500">Hello</div>;
-}
 export default function WidgetView(props: Props) {
   return (
     <div

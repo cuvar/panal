@@ -2,7 +2,7 @@ import LinkWidget from "./LinkWidget";
 import LinkContainer from "./LinkContainer";
 import { useState } from "react";
 import { useDetectMobile } from "~/utils/hooks";
-import { linkIcon, plusIcon } from "~/utils/icons";
+import { plusIcon } from "~/utils/icons";
 
 type Props = {
   colCount: number;
