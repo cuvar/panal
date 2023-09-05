@@ -16,7 +16,6 @@
     "@trpc/react-query": "^10.34.0",
     "@trpc/server": "^10.34.0",
     "ical": "^0.8.0",
-    "jotai": "^2.4.1",
     "next": "^13.4.13",
     "next-auth": "^4.22.4",
     "react": "18.2.0",

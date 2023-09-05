@@ -1,7 +1,7 @@
 import LinkWidget from "./LinkWidget";
 import LinkContainer from "./LinkContainer";
 import { useState } from "react";
-import { useDetectMobile } from "../../utils/hooks";
+import { useDetectMobile } from "~/utils/hooks";
 
 interface IProps {
   colCount: number;
@@ -48,7 +48,7 @@ export default function LinkCollectionWidget(props: IProps) {
   return (
     // <div className="grid grid-cols-3 grid-rows-4 md:grid-cols-4 md:grid-rows-3 lg:grid-cols-6 lg:grid-rows-2 xl:grid-cols-6 xl:grid-rows-2 gap-4">
     <div
-      className={`grid w-full h-full grid-cols-${SMALL_COL_COUNT} md:grid-cols-${props.colCount} grid-rows-${props.rowCount} place-items-center`}
+      className={`grid h-full w-full grid-cols-${SMALL_COL_COUNT} md:grid-cols-${props.colCount} grid-rows-${props.rowCount} place-items-center`}
     >
       {useDetectMobile() ? (
         <>
@@ -62,7 +62,7 @@ export default function LinkCollectionWidget(props: IProps) {
           {data.length < SMALL_COL_COUNT * props.rowCount && (
             <LinkContainer>
               <button
-                className="bg-gray-200 text-black rounded-md w-full h-20 flex justify-center items-center"
+                className="flex h-20 w-full items-center justify-center rounded-md bg-gray-200 text-black"
                 onClick={addLink}
               >
                 <svg
@@ -71,7 +71,7 @@ export default function LinkCollectionWidget(props: IProps) {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="h-6 w-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -80,7 +80,7 @@ export default function LinkCollectionWidget(props: IProps) {
                   />
                 </svg>
               </button>
-              <span className="text-sm w-full text-center">Add Link</span>
+              <span className="w-full text-center text-sm">Add Link</span>
             </LinkContainer>
           )}
         </>
@@ -94,7 +94,7 @@ export default function LinkCollectionWidget(props: IProps) {
           {data.length < props.colCount * props.rowCount && (
             <LinkContainer>
               <button
-                className="bg-gray-200 text-black rounded-md w-full h-20 flex justify-center items-center"
+                className="flex h-20 w-full items-center justify-center rounded-md bg-gray-200 text-black"
                 onClick={addLink}
               >
                 <svg
@@ -103,7 +103,7 @@ export default function LinkCollectionWidget(props: IProps) {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="h-6 w-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -112,7 +112,7 @@ export default function LinkCollectionWidget(props: IProps) {
                   />
                 </svg>
               </button>
-              <span className="text-sm w-full text-center">Add Link</span>
+              <span className="w-full text-center text-sm">Add Link</span>
             </LinkContainer>
           )}
         </>

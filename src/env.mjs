@@ -19,6 +19,9 @@ export const env = createEnv({
       // VERCEL_URL doesn't include `https` so it cant be validated as a URL
       process.env.VERCEL ? z.string().min(1) : z.string().url()
     ),
+    USERNAME: z.string().min(1),
+    PASSWORD: z.string().min(1),
+    EMAIL: z.string().email(),
   },
 
   /**
@@ -27,14 +30,16 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_COOKIE_NAME: z.string().min(1),
+    // NEXT_PUBLIC_COOKIE_NAME: z.string().min(1),
   },
 
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    NEXT_PUBLIC_COOKIE_NAME: process.env.NEXT_PUBLIC_COOKIE_NAME,
+    USERNAME: process.env.USERNAME,
+    PASSWORD: process.env.PASSWORD,
+    EMAIL: process.env.EMAIL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
