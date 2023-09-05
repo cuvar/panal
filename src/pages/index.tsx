@@ -19,9 +19,12 @@ const Home: NextPage = () => {
       }),
     });
     const response = res.json();
+    if (typeof response === "undefined" || typeof response !== "object") {
+      throw new Error("No response");
+    }
 
-    if (typeof response.error !== "undefined") {
-      throw new Error(response.error);
+    if ("error" in response && typeof response.error !== "undefined") {
+      throw response.error;
     } else {
       return response;
     }
@@ -34,8 +37,12 @@ const Home: NextPage = () => {
   if (queryData.isLoading) {
     return <LoadingSpinner />;
   }
-  if (queryData.data) {
-    widgetData.calendarData = queryData.data.calendarData;
+  if (
+    typeof queryData.data == "object" &&
+    queryData.data !== null &&
+    "calendarData" in queryData.data
+  ) {
+    widgetData.calendarData = queryData.data.calendarData as CalendarData[][];
   }
 
   return (
