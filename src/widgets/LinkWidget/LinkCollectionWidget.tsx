@@ -30,7 +30,7 @@ const predefinedLinks: LinkData[] = [
 export default function LinkCollectionWidget(props: Props) {
   const [data, setData] = useState<LinkData[]>(predefinedLinks);
 
-  function addLink(e: React.MouseEvent<HTMLButtonElement>) {
+  function addLink(_e: React.MouseEvent<HTMLButtonElement>) {
     // todo functionality
     setData([
       ...data,

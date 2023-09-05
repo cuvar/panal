@@ -2,7 +2,7 @@ import styles from "./WidgetView.module.css";
 import SearchWidget from "~/widgets/SearchWidget";
 import TimeWidget from "~/widgets/TimeWidget";
 import CalendarWidget from "~/widgets/CalendarWidget";
-import PlaceholderWidget from "~/widgets/PlaceholderWidget";
+// import PlaceholderWidget from "~/widgets/PlaceholderWidget";
 import LinkCollectionWidget from "../widgets/LinkWidget/LinkCollectionWidget";
 import WidgetContainer from "./WidgetContainer";
 
