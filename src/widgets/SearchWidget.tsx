@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { searchIcon } from "~/utils/icons";
 
-interface IProps {
+type Props = {
   currentEngine?: SearchEngineData["key"];
-}
+};
 
 const engines: SearchEngineData[] = [
   {
@@ -27,20 +28,19 @@ const engines: SearchEngineData[] = [
   },
 ];
 
-export default function SearchWidget(props: IProps) {
-  const [engineLink, setEngineLink] = useState(
-    engines.find((e) => e.key === props.currentEngine)?.url || engines[0]?.url
+export default function SearchWidget(props: Props) {
+  const [engineLink, setEngineLink] = useState<string>(
+    engines.find((e) => e.key === props.currentEngine)?.url ?? engines[0]!.url,
   );
   const [searchString, setSearchString] = useState(engineLink);
   const [currentEngine, setCurrentEngine] = useState<SearchEngineData["key"]>(
-    props.currentEngine ?? "ecosia"
+    props.currentEngine ?? "ecosia",
   );
 
   function updateEngine(curEngine: SearchEngineData["key"]) {
     setCurrentEngine(curEngine);
     const selectedEngine =
-      engines.find((e) => e.key === curEngine) ?? engines[0]?.url;
-    // @ts-ignore
+      engines.find((e) => e.key === curEngine) ?? engines[0]!;
     setEngineLink(selectedEngine?.url); // todo: rework
   }
 
@@ -100,7 +100,7 @@ export default function SearchWidget(props: IProps) {
 
   function setOutline(useOutline: boolean) {
     const inputContainer: HTMLDivElement | null = document.querySelector(
-      "#searchbar-container"
+      "#searchbar-container",
     );
     if (!inputContainer) return;
     if (useOutline) {
@@ -115,9 +115,9 @@ export default function SearchWidget(props: IProps) {
   }
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex w-full flex-col">
       <div
-        className="bg-white rounded-full flex justify-between items-center mb-2"
+        className="mb-2 flex items-center justify-between rounded-full bg-white"
         id="searchbar-container"
       >
         <a
@@ -125,34 +125,21 @@ export default function SearchWidget(props: IProps) {
           target="_blank"
           id="searchButton"
           rel="noopener noreferrer"
-          className="text-black pl-2 "
+          className="pl-2 text-black "
           onClick={handleSearch}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-8 h-8 pr-2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-            />
-          </svg>
+          {searchIcon}
         </a>
         <input
           type="text"
           id="searchbar"
-          className="rounded-r-full w-full pr-1 py-2 text-black focus:outline-none"
+          className="w-full rounded-r-full py-2 pr-1 text-black focus:outline-none"
           placeholder="Search"
           onKeyDown={(event) => handleKeyDown(event)}
           onFocus={() => setOutline(true)}
           onBlur={() => setOutline(false)}
         />
-        <kbd className="font-sans font-semibold text-slate-500 pl-2 text-xs flex pr-4">
+        <kbd className="flex pl-2 pr-4 font-sans text-xs font-semibold text-slate-500">
           <abbr title="Command" className="no-underline">
             ⌘
           </abbr>{" "}
@@ -164,7 +151,7 @@ export default function SearchWidget(props: IProps) {
           singleEngine.key === currentEngine ? (
             <button
               key={index}
-              className="rounded-md p-1 px-2 text-xs text-white bg-panal-200 hover:bg-panal-300 active:bg-panal-400"
+              className="rounded-md bg-panal-200 p-1 px-2 text-xs text-white hover:bg-panal-300 active:bg-panal-400"
               onClick={() => searchWithEngine(singleEngine.key)}
             >
               {singleEngine.displayName}
@@ -172,12 +159,12 @@ export default function SearchWidget(props: IProps) {
           ) : (
             <button
               key={index}
-              className="rounded-md p-1 px-2 text-xs text-black bg-gray-100 hover:bg-gray-300 active:bg-gray-400"
+              className="rounded-md bg-gray-100 p-1 px-2 text-xs text-black hover:bg-gray-300 active:bg-gray-400"
               onClick={() => searchWithEngine(singleEngine.key)}
             >
               {singleEngine.displayName}
             </button>
-          )
+          ),
         )}
       </div>
     </div>

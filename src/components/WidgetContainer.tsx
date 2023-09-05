@@ -1,12 +1,12 @@
-interface IProps extends WidgetConfig {
+type Props = WidgetConfig & {
   children: React.ReactNode;
   colspan?: number;
   rowspan?: number;
   colstart?: number;
   rowstart?: number;
-}
+};
 
-export default function WidgetContainer(props: IProps) {
+export default function WidgetContainer(props: Props) {
   const minimumColSpan = Math.min(props.minColSpan ?? 3, 3);
 
   const tempColSpan = props.colspan ?? 1;
@@ -27,7 +27,7 @@ export default function WidgetContainer(props: IProps) {
 
   let gridClasses = `col-span-${Math.min(
     3,
-    col
+    col,
   )} md:col-span-${col} row-span-${row}`;
   if (colStart > 1) {
     gridClasses += ` col-start-${colStart}`;
@@ -37,7 +37,7 @@ export default function WidgetContainer(props: IProps) {
   }
 
   return (
-    <div className={`flex justify-center items-center ${gridClasses}`}>
+    <div className={`flex items-center justify-center ${gridClasses}`}>
       {props.children}
     </div>
   );
