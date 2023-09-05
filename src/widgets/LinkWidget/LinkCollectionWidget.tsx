@@ -43,7 +43,7 @@ export default function LinkCollectionWidget(props: Props) {
   }
   // const isMobile = useDetectMobile();
 
-  const SMALL_MAX_COL_COUNT = 3;
+  const SMALL_MAX_COL_COUNT = 4;
   const SMALL_COL_COUNT = Math.min(props.colCount, SMALL_MAX_COL_COUNT);
 
   return (
