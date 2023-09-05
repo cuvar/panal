@@ -10,7 +10,7 @@ const Home: NextPage = () => {
     calendarData: [],
   };
 
-  const { data, isLoading, error } = useQuery(["calendarData"], async () => {
+  const queryData = useQuery(["calendarData"], async () => {
     const res = await fetch("/api/calendar", {
       method: "POST",
       body: JSON.stringify({
@@ -27,15 +27,15 @@ const Home: NextPage = () => {
     }
   });
 
-  if (error) {
+  if (queryData.error) {
     return <ErrorPage error={""} />;
   }
 
-  if (isLoading) {
+  if (queryData.isLoading) {
     return <LoadingSpinner />;
   }
-  if (data) {
-    widgetData.calendarData = data.calendarData;
+  if (queryData.data) {
+    widgetData.calendarData = queryData.data.calendarData;
   }
 
   return (
