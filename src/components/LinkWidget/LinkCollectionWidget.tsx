@@ -2,6 +2,7 @@ import LinkWidget from "./LinkWidget";
 import LinkContainer from "./LinkContainer";
 import { useState } from "react";
 import { useDetectMobile } from "~/utils/hooks";
+import { linkIcon, plusIcon } from "~/utils/icons";
 
 interface IProps {
   colCount: number;
@@ -65,20 +66,7 @@ export default function LinkCollectionWidget(props: IProps) {
                 className="flex h-20 w-full items-center justify-center rounded-md bg-gray-200 text-black"
                 onClick={addLink}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="h-6 w-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 4.5v15m7.5-7.5h-15"
-                  />
-                </svg>
+                {plusIcon}
               </button>
               <span className="w-full text-center text-sm">Add Link</span>
             </LinkContainer>
@@ -97,20 +85,7 @@ export default function LinkCollectionWidget(props: IProps) {
                 className="flex h-20 w-full items-center justify-center rounded-md bg-gray-200 text-black"
                 onClick={addLink}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="h-6 w-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 4.5v15m7.5-7.5h-15"
-                  />
-                </svg>
+                {plusIcon}
               </button>
               <span className="w-full text-center text-sm">Add Link</span>
             </LinkContainer>
