@@ -29,8 +29,8 @@ const engines: SearchEngineData[] = [
 ];
 
 export default function SearchWidget(props: Props) {
-  const [engineLink, setEngineLink] = useState(
-    engines.find((e) => e.key === props.currentEngine)?.url || engines[0]?.url,
+  const [engineLink, setEngineLink] = useState<string>(
+    engines.find((e) => e.key === props.currentEngine)?.url ?? engines[0]!.url,
   );
   const [searchString, setSearchString] = useState(engineLink);
   const [currentEngine, setCurrentEngine] = useState<SearchEngineData["key"]>(
@@ -40,8 +40,7 @@ export default function SearchWidget(props: Props) {
   function updateEngine(curEngine: SearchEngineData["key"]) {
     setCurrentEngine(curEngine);
     const selectedEngine =
-      engines.find((e) => e.key === curEngine) ?? engines[0]?.url;
-    // @ts-ignore
+      engines.find((e) => e.key === curEngine) ?? engines[0]!;
     setEngineLink(selectedEngine?.url); // todo: rework
   }
 

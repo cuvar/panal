@@ -51,7 +51,7 @@ export const authOptions: NextAuthOptions = {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
-      authorize(credentials, req) {
+      authorize(credentials, _req) {
         if (credentials?.username != env.USERNAME) {
           return null;
         }

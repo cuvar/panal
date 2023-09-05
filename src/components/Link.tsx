@@ -4,7 +4,7 @@ type Props = {
   children: React.ReactNode;
 };
 export default function Link(props: Props) {
-  let tab = typeof props.tab === undefined ? "new" : props.tab;
+  const tab = typeof props.tab === undefined ? "new" : props.tab;
 
   if (tab === "new") {
     return (
