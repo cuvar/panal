@@ -1,33 +1,44 @@
-import styles from "./WidgetView.module.css";
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
+import { Responsive, WidthProvider } from "react-grid-layout";
+import { getLayouts } from "~/utils/grid";
+import { BREAKPOINTS } from "~/utils/const";
+
 import SearchWidget from "~/widgets/SearchWidget";
 import TimeWidget from "~/widgets/TimeWidget";
 import CalendarWidget from "~/widgets/CalendarWidget";
-// import PlaceholderWidget from "~/widgets/PlaceholderWidget";
 import LinkCollectionWidget from "../widgets/LinkWidget/LinkCollectionWidget";
-import WidgetContainer from "./WidgetContainer";
 
 type Props = {
   data: WidgetViewData;
 };
 
+const ResponsiveGridLayout = WidthProvider(Responsive);
 export default function WidgetView(props: Props) {
   return (
-    <div
-      className={`grid h-full ${styles["auto-rows"]} ${styles["sm-cols-3"]} ${styles["md-cols-6"]} ${styles["xl-cols-10"]} gap-4 sm:gap-6 `}
-    >
-      <WidgetContainer colspan={3} rowstart={1} minColSpan={2}>
-        <TimeWidget />
-      </WidgetContainer>
-      <WidgetContainer colspan={3} rowstart={2} minColSpan={3}>
-        <SearchWidget />
-      </WidgetContainer>
-      <WidgetContainer colspan={3} rowspan={2} minColSpan={2}>
-        <CalendarWidget calendarData={props.data.calendarData} />
-      </WidgetContainer>
-      <WidgetContainer colspan={4} rowspan={1}>
-        <LinkCollectionWidget colCount={4} rowCount={1} />
-      </WidgetContainer>
-      {/* <PlaceholderWidget /> */}
+    <div className="h-full bg-green-500">
+      <ResponsiveGridLayout
+        className="layout"
+        breakpoints={{ ...BREAKPOINTS }}
+        cols={{ xl: 10, lg: 10, md: 6, sm: 3, xs: 3, xss: 1 }}
+        rowHeight={100}
+        layouts={getLayouts()}
+        maxRows={10}
+        autoSize={false}
+      >
+        <div className="flex items-center justify-center bg-black" key="time">
+          <TimeWidget />
+        </div>
+        <div className="flex items-center justify-center bg-black" key="search">
+          <SearchWidget />
+        </div>
+        <div className="flex items-center justify-center bg-black" key="link">
+          <LinkCollectionWidget colCount={4} rowCount={1} />
+        </div>
+        <div className="flex items-center justify-center bg-black" key="cal">
+          <CalendarWidget calendarData={props.data.calendarData} />
+        </div>
+      </ResponsiveGridLayout>
     </div>
   );
 }

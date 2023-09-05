@@ -22,7 +22,9 @@ type CalendarData = {
   duration: number;
 };
 
-type WidgetConfig = {
+declare type WidgetConfig = {
   minColSpan?: number;
   minRowSpan?: number;
 };
+
+type ScreenSize = "xss" | "xs" | "sm" | "md" | "lg" | "xl";

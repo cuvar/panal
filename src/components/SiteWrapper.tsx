@@ -21,7 +21,7 @@ export default function SiteWrapper(props: Props) {
       </Head>
       <div className="flex h-screen min-h-screen flex-col justify-between text-gray-100 ">
         <Navbar sesh={data} />
-        <main className="flex h-full flex-col items-center bg-panal-500 px-5 py-5 md:py-10">
+        <main className="flex h-full flex-col bg-panal-500 px-5 py-5 md:py-10">
           {props.children}
         </main>
         <Footer />
