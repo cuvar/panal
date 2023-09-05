@@ -1,10 +1,10 @@
 import { linkIcon } from "~/utils/icons";
 
-interface IProps {
+type Props = {
   text: string;
   href: string;
   tab?: "new" | "same";
-}
+};
 
 // ! this needs a web scraper from the backend
 // function getFavicon() {
@@ -22,7 +22,7 @@ interface IProps {
 const LINK_CLASS =
   "bg-teal-200 hover:bg-teal-300 text-black p-5 rounded-md w-full h-20 flex justify-center items-center";
 
-export default function LinkWidget(props: IProps) {
+export default function LinkWidget(props: Props) {
   return (
     <>
       <a

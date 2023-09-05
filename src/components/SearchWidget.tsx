@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { searchIcon } from "~/utils/icons";
 
-interface IProps {
+type Props = {
   currentEngine?: SearchEngineData["key"];
-}
+};
 
 const engines: SearchEngineData[] = [
   {
@@ -28,7 +28,7 @@ const engines: SearchEngineData[] = [
   },
 ];
 
-export default function SearchWidget(props: IProps) {
+export default function SearchWidget(props: Props) {
   const [engineLink, setEngineLink] = useState(
     engines.find((e) => e.key === props.currentEngine)?.url || engines[0]?.url,
   );

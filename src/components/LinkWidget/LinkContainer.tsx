@@ -1,9 +1,9 @@
-interface IProps {
+type Props = {
   children: React.ReactNode;
-}
-export default function LinkContainer(props: IProps) {
+};
+export default function LinkContainer(props: Props) {
   return (
-    <div className="flex flex-col justify-center w-20 text-ellipsis whitespace-nowrap overflow-hidden">
+    <div className="flex w-20 flex-col justify-center overflow-hidden text-ellipsis whitespace-nowrap">
       {props.children}
     </div>
   );

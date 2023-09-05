@@ -5,17 +5,17 @@ import CalendarWidget from "./CalendarWidget";
 import LinkCollectionWidget from "./LinkWidget/LinkCollectionWidget";
 import WidgetContainer from "./WidgetContainer";
 
-interface IProps {
+type Props = {
   data: WidgetViewData;
-}
+};
 
 function PlaceholderWidget() {
   return <div className="bg-yellow-500">Hello</div>;
 }
-export default function WidgetView(props: IProps) {
+export default function WidgetView(props: Props) {
   return (
     <div
-      className={`h-full grid ${styles["auto-rows"]} ${styles["sm-cols-3"]} ${styles["md-cols-6"]} ${styles["xl-cols-10"]} gap-4 sm:gap-6 `}
+      className={`grid h-full ${styles["auto-rows"]} ${styles["sm-cols-3"]} ${styles["md-cols-6"]} ${styles["xl-cols-10"]} gap-4 sm:gap-6 `}
     >
       <WidgetContainer colspan={3} rowstart={1} minColSpan={2}>
         <TimeWidget />

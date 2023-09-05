@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useDetectMobile } from "~/utils/hooks";
 import { linkIcon, plusIcon } from "~/utils/icons";
 
-interface IProps {
+type Props = {
   colCount: number;
   rowCount: number;
-}
+};
 
 const predefinedLinks: LinkData[] = [
   {
@@ -27,7 +27,7 @@ const predefinedLinks: LinkData[] = [
   },
 ];
 
-export default function LinkCollectionWidget(props: IProps) {
+export default function LinkCollectionWidget(props: Props) {
   const [data, setData] = useState<LinkData[]>(predefinedLinks);
 
   function addLink(e: React.MouseEvent<HTMLButtonElement>) {
