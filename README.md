@@ -1,28 +1,30 @@
-# Create T3 App
+⚠️ This project is still work in progress.  
+# panal
+widget-based dashboard for managing life
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Idea
+I wanted to have a simple self-hosted dashboard application for viewing every service that is relevant for my daily life:
+- Calendar
+- Todos
+- a simple link storage
+- search field with various search engines
+- etc
 
-## What's next? How do I make an app with this?
+Each service should be a customizable widget on the dashboard. A widget engine (currently working on [that one](https://github.com/cuvar/rswe)) should be used for managing widgets more easily.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+[dashy](https://github.com/Lissy93/dashy) solves some of the problems and is doing great at that (so maybe that's something for you). However, it is missing some of the functionality I wanted. That's why we're here.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Current state
+This project is still in early development. If you have any ideas for other features, just open an issue!
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Deployment
+No matter how you want to deploy this application, you need to specify the following environment variables:
+````
+USER_HASH: SHA256 hash of the username
+PASSWORD_HASH: SHA256 hash of the password
+JWT_SECRET: A secret for the JWT token
+TOKEN_PERIOD: Amount of hours an auth token is valid
+````
 
-## Learn More
-
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+### Deploy with Vercel
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fcuvar%2Fpanal)
