@@ -22,9 +22,20 @@ type CalendarData = {
   duration: number;
 };
 
-declare type WidgetConfig = {
-  minColSpan?: number;
-  minRowSpan?: number;
+type Positioning = {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+};
+
+type Layout = Positioning | Record<ScreenSize, Positioning>;
+
+type WidgetConfig = {
+  type: WidgetType;
+  layout: Layout;
 };
 
 type ScreenSize = "xss" | "xs" | "sm" | "md" | "lg" | "xl";
+
+type WidgetType = "calendar" | "search" | "links" | "time";
