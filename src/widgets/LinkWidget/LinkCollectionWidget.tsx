@@ -9,7 +9,7 @@ type Props = {
   rowCount: number;
 };
 
-const predefinedLinks: LinkData[] = [
+const predefinedLinks: LinkWidget[] = [
   {
     text: "GitHub",
     href: "https://github.com/cuvar",
@@ -28,7 +28,7 @@ const predefinedLinks: LinkData[] = [
 ];
 
 export default function LinkCollectionWidget(props: Props) {
-  const [data, setData] = useState<LinkData[]>(predefinedLinks);
+  const [data, setData] = useState<LinkWidget[]>(predefinedLinks);
 
   function addLink(_e: React.MouseEvent<HTMLButtonElement>) {
     // todo functionality

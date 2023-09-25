@@ -42,7 +42,7 @@ const Home: NextPage = () => {
     queryData.data !== null &&
     "calendarData" in queryData.data
   ) {
-    widgetData.calendarData = queryData.data.calendarData as CalendarData[][];
+    widgetData.calendarData = queryData.data.calendarData as CalendarWidget[][];
   }
 
   return (

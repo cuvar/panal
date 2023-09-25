@@ -1,5 +1,5 @@
 type Props = {
-  calendarData: CalendarData[][];
+  calendarData: CalendarWidget[][];
 };
 
 export default function CalendarWidget(props: Props) {

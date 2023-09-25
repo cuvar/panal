@@ -15,7 +15,7 @@ export default async function getCalendar(link: string, daysInAdvance: number) {
   const data = ical.parseICS(res);
   const calendarData = getDatesWithRecurrences(data, daysInAdvance);
   const futureDates = filterFutureEvents(calendarData, daysInAdvance);
-  const groupedData = groupCalendarDataByDay(futureDates);
+  const groupedData = groupCalendarWidgetByDay(futureDates);
 
   return groupedData;
 }
@@ -27,9 +27,9 @@ export default async function getCalendar(link: string, daysInAdvance: number) {
  * @returns filtered calendar data
  */
 function filterFutureEvents(
-  calendarData: CalendarData[],
+  calendarData: CalendarWidget[],
   days: number,
-): CalendarData[] {
+): CalendarWidget[] {
   calendarData.sort((a, b) => {
     return a.start.getTime() - new Date(b.start).getTime();
   });
@@ -55,8 +55,8 @@ function filterFutureEvents(
 function getDatesWithRecurrences(
   data: FullCalendar,
   daysInAdvance: number,
-): CalendarData[] {
-  const datesWithRecurrences: CalendarData[] = [];
+): CalendarWidget[] {
+  const datesWithRecurrences: CalendarWidget[] = [];
 
   for (const k in data) {
     const rangeStart = new Date(); // today
@@ -80,7 +80,7 @@ function getDatesWithRecurrences(
     const duration = endDate.getTime() - startDate.getTime();
 
     if (typeof event.rrule === "undefined") {
-      const newEvent: CalendarData = {
+      const newEvent: CalendarWidget = {
         title: title ?? "*No data*",
         start: startDate,
         end: endDate,
@@ -156,7 +156,7 @@ function getDatesWithRecurrences(
       }
 
       if (showRecurrence === true) {
-        const newEvent: CalendarData = {
+        const newEvent: CalendarWidget = {
           title: recurrenceTitle ?? "*No data*",
           start: startDate,
           end: endDate,
@@ -176,8 +176,8 @@ function getDatesWithRecurrences(
  * @param data all events from the calendar
  * @returns grouped calendar data by day
  */
-function groupCalendarDataByDay(data: CalendarData[]): CalendarData[][] {
-  const grouped: CalendarData[][] = [];
+function groupCalendarWidgetByDay(data: CalendarWidget[]): CalendarWidget[][] {
+  const grouped: CalendarWidget[][] = [];
 
   const days = new Set(
     data.map((item) => {

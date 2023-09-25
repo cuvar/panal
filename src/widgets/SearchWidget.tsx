@@ -2,10 +2,10 @@ import { useState } from "react";
 import { searchIcon } from "~/utils/icons";
 
 type Props = {
-  currentEngine?: SearchEngineData["key"];
+  currentEngine?: SearchEngineWidget["key"];
 };
 
-const engines: SearchEngineData[] = [
+const engines: SearchEngineWidget[] = [
   {
     key: "ecosia",
     displayName: "Ecosia",
@@ -33,11 +33,11 @@ export default function SearchWidget(props: Props) {
     engines.find((e) => e.key === props.currentEngine)?.url ?? engines[0]!.url,
   );
   const [searchString, setSearchString] = useState(engineLink);
-  const [currentEngine, setCurrentEngine] = useState<SearchEngineData["key"]>(
+  const [currentEngine, setCurrentEngine] = useState<SearchEngineWidget["key"]>(
     props.currentEngine ?? "ecosia",
   );
 
-  function updateEngine(curEngine: SearchEngineData["key"]) {
+  function updateEngine(curEngine: SearchEngineWidget["key"]) {
     setCurrentEngine(curEngine);
     const selectedEngine =
       engines.find((e) => e.key === curEngine) ?? engines[0]!;
@@ -94,7 +94,7 @@ export default function SearchWidget(props: Props) {
     updateEngine(nextEngine);
   }
 
-  function searchWithEngine(chosenEngine: SearchEngineData["key"]) {
+  function searchWithEngine(chosenEngine: SearchEngineWidget["key"]) {
     updateEngine(chosenEngine);
   }
 
