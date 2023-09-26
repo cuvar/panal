@@ -9,17 +9,6 @@ import {
 import { getWidgets, saveWidgets } from "~/server/repository/widgetRepository";
 
 export const widgetRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
   getWidgetData: protectedProcedure.query(async () => {
     try {
       const data = await getWidgets();
