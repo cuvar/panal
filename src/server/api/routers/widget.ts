@@ -1,12 +1,9 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { getWidgets, saveWidgets } from "~/server/repository/widgetRepository";
+import getCalendar from "~/server/widgets/calendar";
 
 export const widgetRouter = createTRPCRouter({
   getWidgetData: protectedProcedure.query(async () => {
@@ -20,7 +17,6 @@ export const widgetRouter = createTRPCRouter({
       });
     }
   }),
-
   setWidgetData: protectedProcedure
     .input(
       z.object({
@@ -30,6 +26,24 @@ export const widgetRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       try {
         await saveWidgets(input.widgets);
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: error instanceof Error ? error?.message : "",
+        });
+      }
+    }),
+  getCalendarData: protectedProcedure
+    .input(
+      z.object({
+        link: z.string(),
+        daysInAdvance: z.number(),
+      }),
+    )
+    .query(async ({ input }) => {
+      try {
+        const data = await getCalendar(input.link, input.daysInAdvance);
+        return data;
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",

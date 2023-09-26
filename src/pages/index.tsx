@@ -4,45 +4,41 @@ import LoadingSpinner from "~/sites/Loading";
 import ErrorPage from "~/sites/Error";
 import SiteWrapper from "~/components/SiteWrapper";
 import { useQuery } from "@tanstack/react-query";
+import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
   const widgetData: WidgetViewData = {
     calendarData: [],
   };
 
-  const queryData = useQuery(["calendarData"], async () => {
-    const res = await fetch("/api/calendar", {
-      method: "POST",
-      body: JSON.stringify({
-        link: "https://rapla.dhbw-karlsruhe.de/rapla?page=ical&user=braun&file=TINF20B2",
-        daysInAdvance: 7,
-      }),
-    });
-    const response = res.json();
-    if (typeof response === "undefined" || typeof response !== "object") {
-      throw new Error("No response");
-    }
-
-    if ("error" in response && typeof response.error !== "undefined") {
-      throw response.error;
-    } else {
-      return response;
-    }
+  const calendarDataQuery = api.widget.getCalendarData.useQuery({
+    link: "https://rapla.dhbw-karlsruhe.de/rapla?page=ical&user=braun&file=TINF20B2",
+    daysInAdvance: 7,
   });
 
-  if (queryData.error) {
+  const widgetDataQuery = api.widget.getWidgetData.useQuery(undefined, {
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
+
+  // todo: load data --> pass to widgetview --> render based on that
+  // todo: also load calendar data
+
+  if (calendarDataQuery.error) {
     return <ErrorPage error={""} />;
   }
 
-  if (queryData.isLoading) {
+  if (calendarDataQuery.isLoading) {
     return <LoadingSpinner />;
   }
   if (
-    typeof queryData.data == "object" &&
-    queryData.data !== null &&
-    "calendarData" in queryData.data
+    typeof calendarDataQuery.data == "object" &&
+    calendarDataQuery.data !== null &&
+    "calendarData" in calendarDataQuery.data
   ) {
-    widgetData.calendarData = queryData.data.calendarData as CalendarWidget[][];
+    widgetData.calendarData = calendarDataQuery.data
+      .calendarData as CalendarWidget[][];
   }
 
   return (
