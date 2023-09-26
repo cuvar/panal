@@ -22,6 +22,19 @@ export const env = createEnv({
     USERNAME: z.string().min(1),
     PASSWORD: z.string().min(1),
     EMAIL: z.string().email(),
+    WIDGET_STORE: z.enum(["upstash", "file"]),
+    UPSTASH_ENDPOINT:
+      process.env.WIDGET_STORE === "upstash"
+        ? z.string().url()
+        : z.string().url().optional(),
+    UPSTASH_TOKEN:
+      process.env.WIDGET_STORE === "upstash"
+        ? z.string().min(1)
+        : z.string().min(1).optional(),
+    UPSTASH_KEY:
+      process.env.WIDGET_STORE === "upstash"
+        ? z.string().min(1)
+        : z.string().min(1).optional(),
   },
 
   /**
@@ -40,6 +53,10 @@ export const env = createEnv({
     USERNAME: process.env.USERNAME,
     PASSWORD: process.env.PASSWORD,
     EMAIL: process.env.EMAIL,
+    WIDGET_STORE: process.env.WIDGET_STORE,
+    UPSTASH_ENDPOINT: process.env.UPSTASH_ENDPOINT,
+    UPSTASH_TOKEN: process.env.UPSTASH_TOKEN,
+    UPSTASH_KEY: process.env.UPSTASH_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
