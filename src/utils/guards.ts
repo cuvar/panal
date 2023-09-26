@@ -36,10 +36,26 @@ export function isLayout(layout: unknown): layout is Layout {
   if (!isObject(layout)) {
     return false;
   }
-  if (!isPositioning(layout)) {
-    return false;
-  }
+
+  Object.entries(layout).forEach(([key, value]) => {
+    if (!isScreenSize(key)) {
+      return false;
+    }
+    if (!isPositioning(value)) {
+      return false;
+    }
+  });
   return true;
+}
+
+export function isScreenSize(screenSize: unknown): screenSize is ScreenSize {
+  return (
+    screenSize === "xs" ||
+    screenSize === "sm" ||
+    screenSize === "md" ||
+    screenSize === "lg" ||
+    screenSize === "xl"
+  );
 }
 
 export function isPositioning(
