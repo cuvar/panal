@@ -1,14 +1,15 @@
-export function isObject(data: unknown): data is Record<string, string> {
-  return typeof data === "object" && data !== null;
-}
-
-export function isString(data: unknown): data is string {
-  return typeof data === "string";
-}
-
-export function isNumber(data: unknown): data is number {
-  return typeof data === "number";
-}
+import { isNumber, isObject } from "./base";
+import { isLinkWidgetConfig } from "~/server/widgets/links/guards";
+import { isSearchWidgetConfig } from "~/server/widgets/search/guards";
+import { isCalendarWidgetConfig } from "~/server/widgets/calendar/guards";
+import { isTimeWidgetConfig } from "~/server/widgets/time/guards";
+import type {
+  Layout,
+  Positioning,
+  WidgetConfig,
+  WidgetType,
+} from "../types/widget";
+import { isScreenSize } from "./other";
 
 export function isWidgetConfig(input: unknown): input is WidgetConfig {
   if (!isObject(input)) {
@@ -20,7 +21,29 @@ export function isWidgetConfig(input: unknown): input is WidgetConfig {
   if (!isLayout(input.layout)) {
     return false;
   }
+  if (!isFittingDataPaylod(input.data, input.type)) {
+    return false;
+  }
+
   return true;
+}
+
+export function isFittingDataPaylod(
+  data: unknown,
+  type: WidgetType,
+): data is WidgetConfig["data"] {
+  switch (type) {
+    case "calendar":
+      return isCalendarWidgetConfig(data);
+    case "search":
+      return isSearchWidgetConfig(data);
+    case "links":
+      return isLinkWidgetConfig(data);
+    case "time":
+      return isTimeWidgetConfig(data);
+    default:
+      return false;
+  }
 }
 
 export function isWidgetType(type: unknown): type is WidgetType {
@@ -46,16 +69,6 @@ export function isLayout(layout: unknown): layout is Layout {
     }
   });
   return true;
-}
-
-export function isScreenSize(screenSize: unknown): screenSize is ScreenSize {
-  return (
-    screenSize === "xs" ||
-    screenSize === "sm" ||
-    screenSize === "md" ||
-    screenSize === "lg" ||
-    screenSize === "xl"
-  );
 }
 
 export function isPositioning(

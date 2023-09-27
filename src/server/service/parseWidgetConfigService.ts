@@ -1,4 +1,5 @@
-import { isWidgetConfig } from "~/utils/guards";
+import { isWidgetConfig } from "~/utils/guards/widgets";
+import type { WidgetConfig } from "~/utils/types/widget";
 
 export default function parseWidgetConfig(
   input: string,

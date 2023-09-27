@@ -3,13 +3,14 @@ import LinkContainer from "./LinkContainer";
 import { useState } from "react";
 import { useDetectMobile } from "~/utils/hooks";
 import { plusIcon } from "~/utils/icons";
+import { LinkWidgetData } from "../types";
 
 type Props = {
   colCount: number;
   rowCount: number;
 };
 
-const predefinedLinks: LinkWidget[] = [
+const predefinedLinks: LinkWidgetData[] = [
   {
     text: "GitHub",
     href: "https://github.com/cuvar",
@@ -28,7 +29,7 @@ const predefinedLinks: LinkWidget[] = [
 ];
 
 export default function LinkCollectionWidget(props: Props) {
-  const [data, setData] = useState<LinkWidget[]>(predefinedLinks);
+  const [data, setData] = useState<LinkWidgetData[]>(predefinedLinks);
 
   function addLink(_e: React.MouseEvent<HTMLButtonElement>) {
     // todo functionality

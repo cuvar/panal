@@ -2,6 +2,7 @@ import { Redis } from "@upstash/redis";
 import { env } from "~/env.mjs";
 import parseWidgetConfig from "../service/parseWidgetConfigService";
 import type { WidgetRepository } from "./widgetRepository";
+import type { WidgetConfig } from "~/utils/types/widget";
 
 export class WidgetUpstashRepository implements WidgetRepository {
   private redis;
@@ -21,7 +22,7 @@ export class WidgetUpstashRepository implements WidgetRepository {
     });
   }
 
-  async getWidgets(): Promise<WidgetConfig[]> {
+  async getWidgetsConfig(): Promise<WidgetConfig[]> {
     if (!env.UPSTASH_KEY) {
       throw new Error("UPSTASH_KEY is not set");
     }
@@ -41,7 +42,7 @@ export class WidgetUpstashRepository implements WidgetRepository {
     return config;
   }
 
-  async saveWidgets(widgets: WidgetConfig[]): Promise<void> {
+  async setWidgetsConfig(widgets: WidgetConfig[]): Promise<void> {
     if (!env.UPSTASH_KEY) {
       throw new Error("UPSTASH_KEY is not set");
     }

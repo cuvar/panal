@@ -1,6 +1,9 @@
 import type GridLayout from "react-grid-layout";
+import type { WidgetData } from "~/utils/types/widget";
 
-export function getLayouts(): GridLayout.Layouts {
+export default function transformLayoutsForGrid(
+  data: WidgetData[],
+): GridLayout.Layouts {
   const layouts: GridLayout.Layouts = {
     lg: [
       { i: "time", x: 0, y: 1, w: 2, h: 1, minW: 2 },

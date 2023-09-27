@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { searchIcon } from "~/utils/icons";
+import type { SearchEngine, SearchWidgetData } from "./types";
 
-type Props = {
-  currentEngine?: SearchEngineWidget["key"];
-};
-
-const engines: SearchEngineWidget[] = [
+const engines: SearchEngine[] = [
   {
     key: "ecosia",
     displayName: "Ecosia",
@@ -28,16 +25,16 @@ const engines: SearchEngineWidget[] = [
   },
 ];
 
-export default function SearchWidget(props: Props) {
-  const [engineLink, setEngineLink] = useState<string>(
-    engines.find((e) => e.key === props.currentEngine)?.url ?? engines[0]!.url,
-  );
+export default function SearchWidget(props: SearchWidgetData) {
+  // todo: check length of array and have a fallback to ecosia
+
+  const [engineLink, setEngineLink] = useState<string>(engines[0]!.url);
   const [searchString, setSearchString] = useState(engineLink);
-  const [currentEngine, setCurrentEngine] = useState<SearchEngineWidget["key"]>(
-    props.currentEngine ?? "ecosia",
+  const [currentEngine, setCurrentEngine] = useState<SearchEngine["key"]>(
+    engines[0]!.key,
   );
 
-  function updateEngine(curEngine: SearchEngineWidget["key"]) {
+  function updateEngine(curEngine: SearchEngine["key"]) {
     setCurrentEngine(curEngine);
     const selectedEngine =
       engines.find((e) => e.key === curEngine) ?? engines[0]!;
@@ -94,7 +91,7 @@ export default function SearchWidget(props: Props) {
     updateEngine(nextEngine);
   }
 
-  function searchWithEngine(chosenEngine: SearchEngineWidget["key"]) {
+  function searchWithEngine(chosenEngine: SearchEngine["key"]) {
     updateEngine(chosenEngine);
   }
 

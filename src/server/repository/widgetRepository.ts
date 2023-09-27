@@ -1,13 +1,27 @@
 import { env } from "~/env.mjs";
 import { WidgetUpstashRepository } from "./widgetUpstashRepository";
 import parseWidgetConfig from "../service/parseWidgetConfigService";
+import type { WidgetConfig } from "~/utils/types/widget";
 
 export interface WidgetRepository {
-  getWidgets(): Promise<WidgetConfig[]>;
-  saveWidgets(widgets: WidgetConfig[]): Promise<void>;
+  getWidgetsConfig(): Promise<WidgetConfig[]>;
+  setWidgetsConfig(widgets: WidgetConfig[]): Promise<void>;
 }
 
-export async function saveWidgets(data: object) {
+export async function getWidgetsConfig(): Promise<WidgetConfig[]> {
+  let repo: WidgetRepository | null = null;
+  if (env.WIDGET_STORE == "upstash") {
+    repo = new WidgetUpstashRepository();
+  }
+  if (!repo) {
+    throw new Error("Invalid widget store");
+  }
+
+  const config = await repo.getWidgetsConfig();
+  return config;
+}
+
+export async function saveWidgetsConfig(data: object) {
   let repo: WidgetRepository | null = null;
   if (env.WIDGET_STORE == "upstash") {
     repo = new WidgetUpstashRepository();
@@ -20,19 +34,6 @@ export async function saveWidgets(data: object) {
     throw new Error("Invalid widget config");
   }
 
-  const config = await repo.saveWidgets(parsed);
-  return config;
-}
-
-export async function getWidgets(): Promise<WidgetConfig[]> {
-  let repo: WidgetRepository | null = null;
-  if (env.WIDGET_STORE == "upstash") {
-    repo = new WidgetUpstashRepository();
-  }
-  if (!repo) {
-    throw new Error("Invalid widget store");
-  }
-
-  const config = await repo.getWidgets();
+  const config = await repo.setWidgetsConfig(parsed);
   return config;
 }

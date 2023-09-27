@@ -1,23 +1,30 @@
 import ical from "ical";
 import type { FullCalendar } from "ical";
+import type {
+  CalendarEntry,
+  CalendarWidgetConfig,
+  CalendarWidgetData,
+} from "./types";
 
 export const DAYS = 7;
 
-export default async function getCalendar(link: string, daysInAdvance: number) {
+export default async function computeCalendarWidgetData(
+  config: CalendarWidgetConfig,
+): Promise<CalendarWidgetData> {
   let res = null;
   try {
-    res = await fetch(link).then((res) => res.text());
+    res = await fetch(config.url).then((res) => res.text());
   } catch (error) {
     console.log(error);
     throw error;
   }
 
   const data = ical.parseICS(res);
-  const calendarData = getDatesWithRecurrences(data, daysInAdvance);
-  const futureDates = filterFutureEvents(calendarData, daysInAdvance);
+  const calendarData = getDatesWithRecurrences(data, config.daysInAdvance);
+  const futureDates = filterFutureEvents(calendarData, config.daysInAdvance);
   const groupedData = groupCalendarWidgetByDay(futureDates);
 
-  return groupedData;
+  return { entries: groupedData };
 }
 
 /**
@@ -27,9 +34,9 @@ export default async function getCalendar(link: string, daysInAdvance: number) {
  * @returns filtered calendar data
  */
 function filterFutureEvents(
-  calendarData: CalendarWidget[],
+  calendarData: CalendarEntry[],
   days: number,
-): CalendarWidget[] {
+): CalendarEntry[] {
   calendarData.sort((a, b) => {
     return a.start.getTime() - new Date(b.start).getTime();
   });
@@ -55,8 +62,8 @@ function filterFutureEvents(
 function getDatesWithRecurrences(
   data: FullCalendar,
   daysInAdvance: number,
-): CalendarWidget[] {
-  const datesWithRecurrences: CalendarWidget[] = [];
+): CalendarEntry[] {
+  const datesWithRecurrences: CalendarEntry[] = [];
 
   for (const k in data) {
     const rangeStart = new Date(); // today
@@ -80,7 +87,7 @@ function getDatesWithRecurrences(
     const duration = endDate.getTime() - startDate.getTime();
 
     if (typeof event.rrule === "undefined") {
-      const newEvent: CalendarWidget = {
+      const newEvent: CalendarEntry = {
         title: title ?? "*No data*",
         start: startDate,
         end: endDate,
@@ -156,7 +163,7 @@ function getDatesWithRecurrences(
       }
 
       if (showRecurrence === true) {
-        const newEvent: CalendarWidget = {
+        const newEvent: CalendarEntry = {
           title: recurrenceTitle ?? "*No data*",
           start: startDate,
           end: endDate,
@@ -176,8 +183,8 @@ function getDatesWithRecurrences(
  * @param data all events from the calendar
  * @returns grouped calendar data by day
  */
-function groupCalendarWidgetByDay(data: CalendarWidget[]): CalendarWidget[][] {
-  const grouped: CalendarWidget[][] = [];
+function groupCalendarWidgetByDay(data: CalendarEntry[]): CalendarEntry[][] {
+  const grouped: CalendarEntry[][] = [];
 
   const days = new Set(
     data.map((item) => {

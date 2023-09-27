@@ -1,11 +1,12 @@
 import { useState } from "react";
+import type { TimeWidgetData } from "./types";
 
-export default function TimeWidget() {
+export default function TimeWidget(props: TimeWidgetData) {
   const [formatedTime, setFormatedTime] = useState<string>(
     Intl.DateTimeFormat("de-DE", {
       hour: "numeric",
       minute: "numeric",
-    }).format(Date.now())
+    }).format(Date.now()),
   );
 
   setInterval(function () {
@@ -13,12 +14,12 @@ export default function TimeWidget() {
       Intl.DateTimeFormat("de-DE", {
         hour: "numeric",
         minute: "numeric",
-      }).format(Date.now())
+      }).format(Date.now()),
     );
   }, 1000);
 
   return (
-    <div className="text-6xl flex justify-center items-center">
+    <div className="flex items-center justify-center text-6xl">
       {formatedTime}
     </div>
   );
