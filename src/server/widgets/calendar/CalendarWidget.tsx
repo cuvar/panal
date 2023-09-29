@@ -6,8 +6,8 @@ type Props = {
   layout: Layout;
 };
 
+// todo: load calendar data
 export default function CalendarWidget(props: Props) {
-  console.log(props);
   return (
     <div className="h-full w-full">
       <div className="h-full w-full overflow-y-scroll rounded-md bg-white p-2">

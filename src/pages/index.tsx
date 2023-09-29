@@ -12,9 +12,6 @@ const Home: NextPage = () => {
     },
   });
 
-  // todo: load data --> pass to widgetview --> render based on that
-  // todo: also load calendar data
-
   if (widgetDataQuery.error) {
     return <ErrorPage error={""} />;
   }
