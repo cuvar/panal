@@ -1,7 +1,13 @@
 import { useState } from "react";
 import type { TimeWidgetData } from "./types";
+import type { Layout } from "~/utils/types/widget";
 
-export default function TimeWidget(props: TimeWidgetData) {
+type Props = {
+  data: TimeWidgetData;
+  layout: Layout;
+};
+
+export default function TimeWidget(props: Props) {
   const [formatedTime, setFormatedTime] = useState<string>(
     Intl.DateTimeFormat("de-DE", {
       hour: "numeric",

@@ -1,11 +1,17 @@
 import type { CalendarWidgetData } from "~/server/widgets/calendar/types";
+import type { Layout } from "~/utils/types/widget";
 
-export default function CalendarWidget(props: CalendarWidgetData) {
+type Props = {
+  data: CalendarWidgetData;
+  layout: Layout;
+};
+
+export default function CalendarWidget(props: Props) {
   console.log(props);
   return (
     <div className="h-full w-full">
       <div className="h-full w-full overflow-y-scroll rounded-md bg-white p-2">
-        {props.entries.map((entry, index) => (
+        {props.data.entries.map((entry, index) => (
           <div key={index} className="mb-4">
             <p className="text-sm leading-none text-black">
               {new Date(entry[0]?.start ?? "").toDateString()}

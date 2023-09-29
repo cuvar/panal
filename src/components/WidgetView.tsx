@@ -37,35 +37,31 @@ export default function WidgetView(props: Props) {
             key={widget.type}
           >
             {widget.type === "time" && (
-              <TimeWidget {...(widget.data as TimeWidgetData)} />
+              <TimeWidget
+                data={widget.data as TimeWidgetData}
+                layout={widget.layout}
+              />
             )}
             {widget.type === "search" && (
-              <SearchWidget {...(widget.data as SearchWidgetData)} />
+              <SearchWidget
+                data={widget.data as SearchWidgetData}
+                layout={widget.layout}
+              />
             )}
             {widget.type === "links" && (
               <LinkCollectionWidget
-                colCount={4}
-                rowCount={1}
-                {...(widget.data as LinkWidgetData)}
+                data={widget.data as LinkWidgetData}
+                layout={widget.layout}
               />
             )}
             {widget.type === "calendar" && (
-              <CalendarWidget {...(widget.data as CalendarWidgetData)} /> // todo: not quite working
+              <CalendarWidget
+                data={widget.data as CalendarWidgetData}
+                layout={widget.layout}
+              />
             )}
           </div>
         ))}
-        {/* <div className="flex items-center justify-center bg-black" key="time">
-          <TimeWidget />
-        </div>
-        <div className="flex items-center justify-center bg-black" key="search">
-          <SearchWidget />
-        </div>
-        <div className="flex items-center justify-center bg-black" key="link">
-          <LinkCollectionWidget colCount={4} rowCount={1} />
-        </div>
-        <div className="flex items-center justify-center bg-black" key="cal">
-          <CalendarWidget calendarData={props.data.calendarData} />
-        </div> */}
       </ResponsiveGridLayout>
     </div>
   );
