@@ -1,6 +1,7 @@
 import { isWidgetConfig } from "~/utils/guards/widgets";
 import type { WidgetConfig } from "~/utils/types/widget";
 
+// todo: write tests
 export default function parseWidgetConfig(
   input: string,
 ): WidgetConfig[] | null {

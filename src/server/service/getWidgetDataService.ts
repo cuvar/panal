@@ -9,6 +9,7 @@ import computeLinkWidgetData from "../widgets/links/data";
 import computeSearchWidgetData from "../widgets/search/data";
 import computeTimeWidgetData from "../widgets/time/data";
 
+// todo: write tests
 export default async function getWidgetData(): Promise<WidgetData[]> {
   const widgetsConfig = await getWidgetsConfig();
   const widgetData: WidgetData[] = [];
