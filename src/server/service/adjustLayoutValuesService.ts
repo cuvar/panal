@@ -1,4 +1,10 @@
+import { isScreenSize } from "~/utils/guards/other";
 import {
+  isPartialScreenSizePositioning,
+  isPositioning,
+  isWidgetConfig,
+} from "~/utils/guards/widgets";
+import type {
   PartialScreenSizePositioning,
   Positioning,
   WidgetConfig,
@@ -6,12 +12,6 @@ import {
   WidgetType,
 } from "~/utils/types/widget";
 import { getMinHeightForWidget } from "./computeSizeForWidgetService";
-import {
-  isPartialScreenSizePositioning,
-  isPositioning,
-  isWidgetConfig,
-} from "~/utils/guards/widgets";
-import { isScreenSize } from "~/utils/guards/other";
 
 export default function adjustLayoutValues<T extends WidgetData | WidgetConfig>(
   widgets: WidgetData[] | WidgetConfig[],

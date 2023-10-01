@@ -1,13 +1,13 @@
 import { describe, expect, test } from "@jest/globals";
-import addMissingLayouts, {
-  getReplacementScreenSize,
-} from "./addMissingLayoutsService";
+import type { ScreenSize } from "~/utils/types/types";
 import type {
   Layout,
   PartialScreenSizePositioning,
-  Positioning,
   ScreenSizePositioning,
 } from "~/utils/types/widget";
+import addMissingLayouts, {
+  getReplacementScreenSize,
+} from "./addMissingLayoutsService";
 
 describe("addMissingLayoutservice", () => {
   test("works for single Positioning input", () => {

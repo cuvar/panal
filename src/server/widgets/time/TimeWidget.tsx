@@ -1,6 +1,6 @@
 import { useState } from "react";
+import type { Layout } from "react-grid-layout";
 import type { TimeWidgetData } from "./types";
-import type { Layout } from "~/utils/types/widget";
 
 type Props = {
   data: TimeWidgetData;

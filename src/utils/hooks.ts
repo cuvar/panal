@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { BREAKPOINTS } from "./const";
+import type { ScreenSize } from "./types/types";
 
 export function useDetectMobile() {
   const [isMobile, setIsMobile] = useState(false);

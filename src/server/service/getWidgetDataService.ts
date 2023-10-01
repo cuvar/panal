@@ -1,14 +1,14 @@
+import { generateUniqueID } from "~/utils/helper";
 import type { WidgetData } from "~/utils/types/widget";
 import { getWidgetsConfig } from "../repository/widgetRepository";
-import { isCalendarWidgetConfig } from "../widgets/calendar/guards";
-import { isLinkWidgetConfig } from "../widgets/links/guards";
-import { isSearchWidgetConfig } from "../widgets/search/guards";
-import { isTimeWidgetConfig } from "../widgets/time/guards";
 import computeCalendarWidgetData from "../widgets/calendar/data";
+import { isCalendarWidgetConfig } from "../widgets/calendar/guards";
 import computeLinkWidgetData from "../widgets/links/data";
+import { isLinkWidgetConfig } from "../widgets/links/guards";
 import computeSearchWidgetData from "../widgets/search/data";
+import { isSearchWidgetConfig } from "../widgets/search/guards";
 import computeTimeWidgetData from "../widgets/time/data";
-import { generateUniqueID } from "~/utils/helper";
+import { isTimeWidgetConfig } from "../widgets/time/guards";
 
 // todo: write tests
 export default async function getWidgetData(): Promise<WidgetData[]> {

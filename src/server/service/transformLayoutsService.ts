@@ -1,12 +1,12 @@
 import type GridLayout from "react-grid-layout";
+import { isScreenSize } from "~/utils/guards/other";
 import type { WidgetData } from "~/utils/types/widget";
+import addMissingLayouts from "./addMissingLayoutsService";
+import adjustLayoutValues from "./adjustLayoutValuesService";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
 } from "./computeSizeForWidgetService";
-import { isScreenSize } from "~/utils/guards/other";
-import addMissingLayouts from "./addMissingLayoutsService";
-import adjustLayoutValues from "./adjustLayoutValuesService";
 
 // todo: write tests
 export default function transformLayoutsForGrid(

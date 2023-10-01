@@ -14,6 +14,7 @@ import type {
   TimeWidgetConfig,
   TimeWidgetData,
 } from "~/server/widgets/time/types";
+import type { ScreenSize } from "./types";
 
 // general
 export type WidgetType = "calendar" | "search" | "links" | "time";

@@ -1,3 +1,5 @@
+import type { ScreenSize } from "../types/types";
+
 export function isScreenSize(screenSize: unknown): screenSize is ScreenSize {
   return (
     screenSize === "xss" ||

@@ -1,3 +1,5 @@
+import type { ScreenSize } from "./types/types";
+
 export const BREAKPOINTS: Readonly<Record<ScreenSize, number>> = {
   xss: 0,
   xs: 350,

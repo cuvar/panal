@@ -1,18 +1,18 @@
+import { Responsive, WidthProvider } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import { Responsive, WidthProvider } from "react-grid-layout";
 import { BREAKPOINTS } from "~/utils/const";
 
-import SearchWidget from "~/server/widgets/search/SearchWidget";
-import TimeWidget from "~/server/widgets/time/TimeWidget";
-import CalendarWidget from "~/server/widgets/calendar/CalendarWidget";
-import LinkCollectionWidget from "../server/widgets/links/LinkWidget/LinkCollectionWidget";
-import type { CalendarWidgetData } from "~/server/widgets/calendar/types";
-import type { SearchWidgetData } from "~/server/widgets/search/types";
-import type { WidgetData } from "~/utils/types/widget";
-import type { TimeWidgetData } from "~/server/widgets/time/types";
-import type { LinkWidgetData } from "~/server/widgets/links/types";
 import transformLayoutsForGrid from "~/server/service/transformLayoutsService";
+import CalendarWidget from "~/server/widgets/calendar/CalendarWidget";
+import type { CalendarWidgetData } from "~/server/widgets/calendar/types";
+import type { LinkWidgetData } from "~/server/widgets/links/types";
+import SearchWidget from "~/server/widgets/search/SearchWidget";
+import type { SearchWidgetData } from "~/server/widgets/search/types";
+import TimeWidget from "~/server/widgets/time/TimeWidget";
+import { TimeWidgetData } from "~/server/widgets/time/types";
+import type { WidgetData } from "~/utils/types/widget";
+import LinkCollectionWidget from "../server/widgets/links/LinkWidget/LinkCollectionWidget";
 
 type Props = {
   data: WidgetData[];

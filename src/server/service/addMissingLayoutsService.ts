@@ -3,6 +3,7 @@ import {
   isPartialScreenSizePositioning,
   isScreenSizePositioning,
 } from "~/utils/guards/widgets";
+import type { ScreenSize } from "~/utils/types/types";
 import type { Layout, ScreenSizePositioning } from "~/utils/types/widget";
 
 export default function addMissingLayouts(
@@ -10,7 +11,7 @@ export default function addMissingLayouts(
 ): ScreenSizePositioning {
   // todo
   if (isScreenSizePositioning(layout)) {
-    return layout as ScreenSizePositioning;
+    return layout;
   } else if (isPartialScreenSizePositioning(layout)) {
     const exisitingScreenSizes = Object.keys(layout) as ScreenSize[];
     const missingScreenSizes = BREAKPOINTS_ORDER.filter(
@@ -18,7 +19,7 @@ export default function addMissingLayouts(
     );
 
     const missingLayouts = missingScreenSizes.map((mss) => {
-      let replacementScreen = getReplacementScreenSize(
+      const replacementScreen = getReplacementScreenSize(
         exisitingScreenSizes,
         mss,
       );
