@@ -2,6 +2,7 @@ import { env } from "~/env.mjs";
 import { WidgetUpstashRepository } from "./widgetUpstashRepository";
 import parseWidgetConfig from "../service/parseWidgetConfigService";
 import type { WidgetConfig } from "~/utils/types/widget";
+import adjustLayoutValues from "../service/adjustLayoutValuesService";
 
 export interface WidgetRepository {
   getWidgetsConfig(): Promise<WidgetConfig[]>;
@@ -33,7 +34,8 @@ export async function saveWidgetsConfig(data: object) {
   if (parsed === null) {
     throw new Error("Invalid widget config");
   }
+  const adjusted = adjustLayoutValues<WidgetConfig>(parsed);
 
-  const config = await repo.setWidgetsConfig(parsed);
+  const config = await repo.setWidgetsConfig(adjusted);
   return config;
 }

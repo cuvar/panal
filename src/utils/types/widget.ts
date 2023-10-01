@@ -50,6 +50,6 @@ export type WidgetConfig = {
 export type WidgetData = {
   id: string;
   type: WidgetType;
-  layout: Layout;
+  layout: ScreenSizePositioning;
   data: LinkWidgetData | SearchWidgetData | CalendarWidgetData | TimeWidgetData;
 };
