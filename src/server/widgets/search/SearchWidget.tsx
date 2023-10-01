@@ -1,47 +1,34 @@
 import { useState } from "react";
 import { searchIcon } from "~/utils/icons";
+import type { ScreenSizePositioning } from "~/utils/types/widget";
+import type { SearchEngine, SearchWidgetData } from "./types";
 
-type Props = {
-  currentEngine?: SearchEngineData["key"];
+const fallbackEngine: SearchEngine = {
+  key: "ecosia",
+  displayName: "Ecosia",
+  url: "https://www.ecosia.org/search?q=",
 };
 
-const engines: SearchEngineData[] = [
-  {
-    key: "ecosia",
-    displayName: "Ecosia",
-    url: "https://www.ecosia.org/search?q=",
-  },
-  {
-    key: "google",
-    displayName: "Google",
-    url: "https://google.com/search?q=",
-  },
-  {
-    key: "duckduckgo",
-    displayName: "DuckDuckGo",
-    url: "https://duckduckgo.com/?q=",
-  },
-  {
-    key: "gdrive",
-    displayName: "Google Drive",
-    url: "https://drive.google.com/drive/search?q=",
-  },
-];
+type Props = {
+  data: SearchWidgetData;
+  layout: ScreenSizePositioning;
+};
 
 export default function SearchWidget(props: Props) {
-  const [engineLink, setEngineLink] = useState<string>(
-    engines.find((e) => e.key === props.currentEngine)?.url ?? engines[0]!.url,
-  );
+  const startEngine = props.data.searchEngines[0]
+    ? props.data.searchEngines[0]
+    : fallbackEngine;
+  const [engineLink, setEngineLink] = useState<string>(startEngine.url);
   const [searchString, setSearchString] = useState(engineLink);
-  const [currentEngine, setCurrentEngine] = useState<SearchEngineData["key"]>(
-    props.currentEngine ?? "ecosia",
+  const [currentEngine, setCurrentEngine] = useState<SearchEngine["key"]>(
+    startEngine.key,
   );
 
-  function updateEngine(curEngine: SearchEngineData["key"]) {
+  function updateEngine(curEngine: SearchEngine["key"]) {
     setCurrentEngine(curEngine);
     const selectedEngine =
-      engines.find((e) => e.key === curEngine) ?? engines[0]!;
-    setEngineLink(selectedEngine?.url); // todo: rework
+      props.data.searchEngines.find((e) => e.key === curEngine) ?? startEngine;
+    setEngineLink(selectedEngine.url ?? startEngine.url);
   }
 
   function handleSearch(): boolean {
@@ -87,14 +74,17 @@ export default function SearchWidget(props: Props) {
   }
 
   function selectNextEngine() {
-    const index = engines.findIndex((e) => e.key === currentEngine);
-    const nextIndex = index + 1 >= engines.length ? 0 : index + 1;
-    const nextEngine = engines[nextIndex]?.key ?? "ecosia";
+    const index = props.data.searchEngines.findIndex(
+      (e) => e.key === currentEngine,
+    );
+    const nextIndex =
+      index + 1 >= props.data.searchEngines.length ? 0 : index + 1;
+    const nextEngine = props.data.searchEngines[nextIndex]?.key ?? "ecosia";
 
     updateEngine(nextEngine);
   }
 
-  function searchWithEngine(chosenEngine: SearchEngineData["key"]) {
+  function searchWithEngine(chosenEngine: SearchEngine["key"]) {
     updateEngine(chosenEngine);
   }
 
@@ -147,24 +137,25 @@ export default function SearchWidget(props: Props) {
         </kbd>
       </div>
       <div className="flex justify-center space-x-2 ">
-        {engines.map((singleEngine, index) =>
-          singleEngine.key === currentEngine ? (
-            <button
-              key={index}
-              className="rounded-md bg-panal-200 p-1 px-2 text-xs text-white hover:bg-panal-300 active:bg-panal-400"
-              onClick={() => searchWithEngine(singleEngine.key)}
-            >
-              {singleEngine.displayName}
-            </button>
-          ) : (
-            <button
-              key={index}
-              className="rounded-md bg-gray-100 p-1 px-2 text-xs text-black hover:bg-gray-300 active:bg-gray-400"
-              onClick={() => searchWithEngine(singleEngine.key)}
-            >
-              {singleEngine.displayName}
-            </button>
-          ),
+        {(props.data.searchEngines || [fallbackEngine]).map(
+          (singleEngine, index) =>
+            singleEngine.key === currentEngine ? (
+              <button
+                key={index}
+                className="rounded-md bg-panal-200 p-1 px-2 text-xs text-white hover:bg-panal-300 active:bg-panal-400"
+                onClick={() => searchWithEngine(singleEngine.key)}
+              >
+                {singleEngine.displayName}
+              </button>
+            ) : (
+              <button
+                key={index}
+                className="rounded-md bg-gray-100 p-1 px-2 text-xs text-black hover:bg-gray-300 active:bg-gray-400"
+                onClick={() => searchWithEngine(singleEngine.key)}
+              >
+                {singleEngine.displayName}
+              </button>
+            ),
         )}
       </div>
     </div>

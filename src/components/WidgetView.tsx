@@ -1,33 +1,65 @@
-import styles from "./WidgetView.module.css";
-import SearchWidget from "~/widgets/SearchWidget";
-import TimeWidget from "~/widgets/TimeWidget";
-import CalendarWidget from "~/widgets/CalendarWidget";
-// import PlaceholderWidget from "~/widgets/PlaceholderWidget";
-import LinkCollectionWidget from "../widgets/LinkWidget/LinkCollectionWidget";
-import WidgetContainer from "./WidgetContainer";
+import { Responsive, WidthProvider } from "react-grid-layout";
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
+import { BREAKPOINTS } from "~/utils/const";
+
+import transformLayoutsForGrid from "~/server/service/transformLayoutsService";
+import CalendarWidget from "~/server/widgets/calendar/CalendarWidget";
+import type { CalendarWidgetData } from "~/server/widgets/calendar/types";
+import type { LinkWidgetData } from "~/server/widgets/links/types";
+import SearchWidget from "~/server/widgets/search/SearchWidget";
+import type { SearchWidgetData } from "~/server/widgets/search/types";
+import TimeWidget from "~/server/widgets/time/TimeWidget";
+import type { TimeWidgetData } from "~/server/widgets/time/types";
+import type { WidgetData } from "~/utils/types/widget";
+import LinkCollectionWidget from "../server/widgets/links/LinkWidget/LinkCollectionWidget";
 
 type Props = {
-  data: WidgetViewData;
+  data: WidgetData[];
 };
 
+const ResponsiveGridLayout = WidthProvider(Responsive);
 export default function WidgetView(props: Props) {
   return (
-    <div
-      className={`grid h-full ${styles["auto-rows"]} ${styles["sm-cols-3"]} ${styles["md-cols-6"]} ${styles["xl-cols-10"]} gap-4 sm:gap-6 `}
-    >
-      <WidgetContainer colspan={3} rowstart={1} minColSpan={2}>
-        <TimeWidget />
-      </WidgetContainer>
-      <WidgetContainer colspan={3} rowstart={2} minColSpan={3}>
-        <SearchWidget />
-      </WidgetContainer>
-      <WidgetContainer colspan={3} rowspan={2} minColSpan={2}>
-        <CalendarWidget calendarData={props.data.calendarData} />
-      </WidgetContainer>
-      <WidgetContainer colspan={4} rowspan={1}>
-        <LinkCollectionWidget colCount={4} rowCount={1} />
-      </WidgetContainer>
-      {/* <PlaceholderWidget /> */}
+    <div className="h-full">
+      <ResponsiveGridLayout
+        className="layout"
+        breakpoints={{ ...BREAKPOINTS }}
+        cols={{ xl: 10, lg: 10, md: 6, sm: 3, xs: 3, xss: 1 }}
+        rowHeight={100}
+        layouts={transformLayoutsForGrid(props.data)}
+        maxRows={10}
+        autoSize={false}
+      >
+        {props.data.map((widget) => (
+          <div className="flex items-center justify-center" key={widget.id}>
+            {widget.type === "time" && (
+              <TimeWidget
+                data={widget.data as TimeWidgetData}
+                layout={widget.layout}
+              />
+            )}
+            {widget.type === "search" && (
+              <SearchWidget
+                data={widget.data as SearchWidgetData}
+                layout={widget.layout}
+              />
+            )}
+            {widget.type === "links" && (
+              <LinkCollectionWidget
+                data={widget.data as LinkWidgetData}
+                layout={widget.layout}
+              />
+            )}
+            {widget.type === "calendar" && (
+              <CalendarWidget
+                data={widget.data as CalendarWidgetData}
+                layout={widget.layout}
+              />
+            )}
+          </div>
+        ))}
+      </ResponsiveGridLayout>
     </div>
   );
 }

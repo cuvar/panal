@@ -1,12 +1,17 @@
+import type { CalendarWidgetData } from "~/server/widgets/calendar/types";
+import type { ScreenSizePositioning } from "~/utils/types/widget";
+
 type Props = {
-  calendarData: CalendarData[][];
+  data: CalendarWidgetData;
+  layout: ScreenSizePositioning;
 };
 
+// todo: load calendar data
 export default function CalendarWidget(props: Props) {
   return (
     <div className="h-full w-full">
       <div className="h-full w-full overflow-y-scroll rounded-md bg-white p-2">
-        {props.calendarData.map((entry, index) => (
+        {props.data.entries.map((entry, index) => (
           <div key={index} className="mb-4">
             <p className="text-sm leading-none text-black">
               {new Date(entry[0]?.start ?? "").toDateString()}
