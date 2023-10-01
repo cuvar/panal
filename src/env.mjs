@@ -44,7 +44,7 @@ export const env = createEnv({
    */
   client: {
     // NEXT_PUBLIC_COOKIE_NAME: z.string().min(1),
-    NEXT_PUBLIC_PANAL_DEBUG: z.enum(["true", "false"]),
+    NEXT_PUBLIC_PANAL_DEBUG: z.enum(["true", "false"]).optional(),
   },
 
   runtimeEnv: {
