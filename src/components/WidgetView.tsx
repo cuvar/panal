@@ -21,7 +21,7 @@ type Props = {
 const ResponsiveGridLayout = WidthProvider(Responsive);
 export default function WidgetView(props: Props) {
   return (
-    <div className="h-full bg-green-500">
+    <div className="h-full">
       <ResponsiveGridLayout
         className="layout"
         breakpoints={{ ...BREAKPOINTS }}
