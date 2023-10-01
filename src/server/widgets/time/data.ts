@@ -1,7 +1,7 @@
-import type { TimeWidgetData, TimeWidgetConfig } from "./types";
+import type { TimeWidgetConfig, TimeWidgetData } from "./types";
 
 export default function computeTimeWidgetData(
   config: TimeWidgetConfig,
 ): TimeWidgetData {
-  return {};
+  return {} as TimeWidgetData;
 }

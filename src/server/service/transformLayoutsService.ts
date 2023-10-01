@@ -1,8 +1,6 @@
 import type GridLayout from "react-grid-layout";
 import { isScreenSize } from "~/utils/guards/other";
 import type { WidgetData } from "~/utils/types/widget";
-import addMissingLayouts from "./addMissingLayoutsService";
-import adjustLayoutValues from "./adjustLayoutValuesService";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
@@ -21,18 +19,7 @@ export default function transformLayoutsForGrid(
     xss: [],
   };
 
-  // todo: problem 2: wie hide ich widgets auf bestimmten screen sizes? -> im jeweiligen widget über "hidden" tw class regeln für jede screen size
-  const completeLayouts: WidgetData[] = data.map((widget) => {
-    const newLayout = addMissingLayouts(widget.layout);
-    return {
-      ...widget,
-      layout: newLayout,
-    };
-  });
-
-  const adjustedLayouts = adjustLayoutValues<WidgetData>(completeLayouts);
-
-  adjustedLayouts.forEach((widget) => {
+  data.forEach((widget) => {
     Object.entries(widget.layout).forEach(([key, value]) => {
       const layout = {
         ...value,

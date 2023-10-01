@@ -1,10 +1,10 @@
 import { useState } from "react";
-import type { Layout } from "react-grid-layout";
+import type { ScreenSizePositioning } from "~/utils/types/widget";
 import type { TimeWidgetData } from "./types";
 
 type Props = {
   data: TimeWidgetData;
-  layout: Layout;
+  layout: ScreenSizePositioning;
 };
 
 export default function TimeWidget(props: Props) {

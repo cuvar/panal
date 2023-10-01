@@ -9,6 +9,8 @@ import computeSearchWidgetData from "../widgets/search/data";
 import { isSearchWidgetConfig } from "../widgets/search/guards";
 import computeTimeWidgetData from "../widgets/time/data";
 import { isTimeWidgetConfig } from "../widgets/time/guards";
+import addMissingLayouts from "./addMissingLayoutsService";
+import adjustLayoutValues from "./adjustLayoutValuesService";
 
 // todo: write tests
 export default async function getWidgetData(): Promise<WidgetData[]> {
@@ -29,11 +31,16 @@ export default async function getWidgetData(): Promise<WidgetData[]> {
       data = {};
     }
 
-    widgetData.push({
+    const newLayout = addMissingLayouts(widget.layout);
+
+    const newWidget = {
       ...widget,
+      layout: newLayout,
       id: generateUniqueID(),
       data: data,
-    });
+    };
+
+    widgetData.push(adjustLayoutValues<WidgetData>(newWidget));
   }
 
   return widgetData;

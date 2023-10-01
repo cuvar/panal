@@ -1,9 +1,9 @@
 import type { CalendarWidgetData } from "~/server/widgets/calendar/types";
-import type { Layout } from "~/utils/types/widget";
+import type { ScreenSizePositioning } from "~/utils/types/widget";
 
 type Props = {
   data: CalendarWidgetData;
-  layout: Layout;
+  layout: ScreenSizePositioning;
 };
 
 // todo: load calendar data

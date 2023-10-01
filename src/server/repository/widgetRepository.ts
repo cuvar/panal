@@ -34,7 +34,7 @@ export async function saveWidgetsConfig(data: object) {
   if (parsed === null) {
     throw new Error("Invalid widget config");
   }
-  const adjusted = adjustLayoutValues<WidgetConfig>(parsed);
+  const adjusted = adjustLayoutValues<WidgetConfig[]>(parsed);
 
   const config = await repo.set(adjusted);
   return config;

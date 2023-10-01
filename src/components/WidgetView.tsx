@@ -10,7 +10,7 @@ import type { LinkWidgetData } from "~/server/widgets/links/types";
 import SearchWidget from "~/server/widgets/search/SearchWidget";
 import type { SearchWidgetData } from "~/server/widgets/search/types";
 import TimeWidget from "~/server/widgets/time/TimeWidget";
-import { TimeWidgetData } from "~/server/widgets/time/types";
+import type { TimeWidgetData } from "~/server/widgets/time/types";
 import type { WidgetData } from "~/utils/types/widget";
 import LinkCollectionWidget from "../server/widgets/links/LinkWidget/LinkCollectionWidget";
 

@@ -1,15 +1,15 @@
-import LinkWidget from "./LinkWidget";
-import LinkContainer from "./LinkContainer";
 import { useState } from "react";
+import { isPositioning } from "~/utils/guards/widgets";
 import { useDetectMobile, useDetectScreenSize } from "~/utils/hooks";
 import { plusIcon } from "~/utils/icons";
+import type { ScreenSizePositioning } from "~/utils/types/widget";
 import type { LinkWidgetData } from "../types";
-import type { Layout } from "~/utils/types/widget";
-import { isPositioning } from "~/utils/guards/widgets";
+import LinkContainer from "./LinkContainer";
+import LinkWidget from "./LinkWidget";
 
 type Props = {
   data: LinkWidgetData;
-  layout: Layout;
+  layout: ScreenSizePositioning;
 };
 
 export default function LinkCollectionWidget(props: Props) {
