@@ -1,15 +1,16 @@
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { ellipsisIcon, penIcon, signOutIcon } from "~/utils/icons";
+import { cogIcon, ellipsisIcon, signOutIcon } from "~/utils/icons";
 
 export default function Menu() {
   const [showMenu, setShowMenu] = useState(false);
   const popoverRef = useRef(null);
+  const menuButtonRef = useRef(null);
 
   useEffect(() => {
     if (popoverRef.current && showMenu) {
       (popoverRef.current as HTMLDivElement).focus();
-      console.log("focussing");
     }
   }, [showMenu]);
 
@@ -23,18 +24,32 @@ export default function Menu() {
     setShowMenu(true);
   }
 
-  function handleBlur() {
-    setShowMenu(false);
-  }
+  document.addEventListener("click", function (event) {
+    if (popoverRef.current == null) return;
+    if (menuButtonRef.current == null) return;
+    if (
+      (menuButtonRef.current as HTMLButtonElement).contains(
+        event.target as HTMLElement,
+      )
+    ) {
+      setShowMenu(true);
+      return;
+    }
+    if (
+      !(popoverRef.current as HTMLDivElement).contains(
+        event.target as HTMLElement,
+      )
+    ) {
+      setShowMenu(false);
+    }
+  });
 
-  function handleEdit() {
-    // todo:
-  }
   return (
     <div className="space-x-2">
-      <button onClick={onHandleEllipsisClick}>{ellipsisIcon}</button>
+      <button onClick={onHandleEllipsisClick} ref={menuButtonRef}>
+        {ellipsisIcon}
+      </button>
       <div
-        onBlur={() => handleBlur()}
         tabIndex={0}
         ref={popoverRef}
         className={`absolute right-4 flex flex-col space-y-2 rounded-lg bg-slate-900 px-2 py-2 shadow-xl ${
@@ -44,18 +59,20 @@ export default function Menu() {
         <button
           className="flex justify-start space-x-2 rounded-md px-4 py-2 hover:bg-slate-700 active:bg-slate-800"
           onClick={() => handleLogout()}
+          onFocus={() => setShowMenu(true)}
         >
           <span>{signOutIcon}</span>
           <span>Sign Out</span>
         </button>
         <hr className="border-slate-700" />
-        <button
+        <Link
           className="flex justify-start space-x-2 rounded-md px-4 py-2 hover:bg-slate-700 active:bg-slate-800"
-          onClick={() => handleEdit()}
+          href="/settings"
+          onFocus={() => setShowMenu(true)}
         >
-          <span>{penIcon}</span>
-          <span>Edit</span>
-        </button>
+          <span>{cogIcon}</span>
+          <span>Settings</span>
+        </Link>
       </div>
     </div>
   );
