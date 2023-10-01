@@ -1,7 +1,7 @@
 import { describe, expect, test } from "@jest/globals";
-import adjustLayouts, {
+import addMissingLayouts, {
   getReplacementScreenSize,
-} from "./adjustLayoutsService";
+} from "./addMissingLayoutsService";
 import type {
   Layout,
   PartialScreenSizePositioning,
@@ -9,7 +9,7 @@ import type {
   ScreenSizePositioning,
 } from "~/utils/types/widget";
 
-describe("adjustLayoutService", () => {
+describe("addMissingLayoutservice", () => {
   test("works for single Positioning input", () => {
     // arrange
     const input: Layout = {
@@ -27,7 +27,7 @@ describe("adjustLayoutService", () => {
       xss: input,
     };
     // act
-    const result = adjustLayouts(input);
+    const result = addMissingLayouts(input);
     // assert
     expect(result).toEqual(expected);
   });
@@ -75,7 +75,7 @@ describe("adjustLayoutService", () => {
 
     const expected: ScreenSizePositioning = input;
     // act
-    const result = adjustLayouts(input);
+    const result = addMissingLayouts(input);
     // assert
     expect(result).toEqual(expected);
   });
@@ -146,13 +146,13 @@ describe("adjustLayoutService", () => {
     // -> xl = lg, xs = sm, xss = sm
 
     // act
-    const result = adjustLayouts(input);
+    const result = addMissingLayouts(input);
     // assert
     expect(result).toEqual(expected);
   });
 });
 
-describe("adjustLayoutService", () => {
+describe("addMissingLayoutservice", () => {
   // arrange
   const defined: ScreenSize[] = ["lg", "md", "sm"];
   type Data = {

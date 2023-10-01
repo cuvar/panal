@@ -5,7 +5,7 @@ import {
   getMinWidthForWidget,
 } from "./computeSizeForWidgetService";
 import { isScreenSize } from "~/utils/guards/other";
-import adjustLayouts from "./adjustLayoutsService";
+import addMissingLayouts from "./addMissingLayoutsService";
 
 // todo: write tests
 export default function transformLayoutsForGrid(
@@ -22,12 +22,13 @@ export default function transformLayoutsForGrid(
 
   // todo: problem 2: wie hide ich widgets auf bestimmten screen sizes? -> im jeweiligen widget über "hidden" tw class regeln für jede screen size
   const newData = data.map((widget) => {
-    const newLayout = adjustLayouts(widget.layout);
+    const newLayout = addMissingLayouts(widget.layout);
     return {
       ...widget,
       layout: newLayout,
     };
   });
+  // todo: check for semantic correctness of values
   newData.forEach((widget) => {
     Object.entries(widget.layout).forEach(([key, value]) => {
       const layout = {

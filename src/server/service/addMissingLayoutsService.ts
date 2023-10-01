@@ -5,7 +5,9 @@ import {
 } from "~/utils/guards/widgets";
 import type { Layout, ScreenSizePositioning } from "~/utils/types/widget";
 
-export default function adjustLayouts(layout: Layout): ScreenSizePositioning {
+export default function addMissingLayouts(
+  layout: Layout,
+): ScreenSizePositioning {
   // todo
   if (isScreenSizePositioning(layout)) {
     return layout as ScreenSizePositioning;
