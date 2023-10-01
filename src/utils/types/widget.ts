@@ -38,6 +38,7 @@ export type WidgetConfig = {
 };
 
 export type WidgetData = {
+  id: string;
   type: WidgetType;
   layout: Layout;
   data: LinkWidgetData | SearchWidgetData | CalendarWidgetData | TimeWidgetData;

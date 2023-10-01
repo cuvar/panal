@@ -8,6 +8,7 @@ import computeCalendarWidgetData from "../widgets/calendar/data";
 import computeLinkWidgetData from "../widgets/links/data";
 import computeSearchWidgetData from "../widgets/search/data";
 import computeTimeWidgetData from "../widgets/time/data";
+import { generateUniqueID } from "~/utils/helper";
 
 // todo: write tests
 export default async function getWidgetData(): Promise<WidgetData[]> {
@@ -30,6 +31,7 @@ export default async function getWidgetData(): Promise<WidgetData[]> {
 
     widgetData.push({
       ...widget,
+      id: generateUniqueID(),
       data: data,
     });
   }

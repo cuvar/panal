@@ -34,7 +34,7 @@ export default function WidgetView(props: Props) {
         {props.data.map((widget) => (
           <div
             className="flex items-center justify-center bg-black"
-            key={widget.type}
+            key={widget.id}
           >
             {widget.type === "time" && (
               <TimeWidget
