@@ -22,7 +22,7 @@ export class WidgetUpstashRepository implements WidgetRepository {
     });
   }
 
-  async getWidgetsConfig(): Promise<WidgetConfig[]> {
+  async get(): Promise<WidgetConfig[]> {
     if (!env.UPSTASH_KEY) {
       throw new Error("UPSTASH_KEY is not set");
     }
@@ -42,7 +42,7 @@ export class WidgetUpstashRepository implements WidgetRepository {
     return config;
   }
 
-  async setWidgetsConfig(widgets: WidgetConfig[]): Promise<void> {
+  async set(widgets: WidgetConfig[]): Promise<void> {
     if (!env.UPSTASH_KEY) {
       throw new Error("UPSTASH_KEY is not set");
     }

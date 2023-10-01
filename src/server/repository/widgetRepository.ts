@@ -5,8 +5,8 @@ import type { WidgetConfig } from "~/utils/types/widget";
 import adjustLayoutValues from "../service/adjustLayoutValuesService";
 
 export interface WidgetRepository {
-  getWidgetsConfig(): Promise<WidgetConfig[]>;
-  setWidgetsConfig(widgets: WidgetConfig[]): Promise<void>;
+  get(): Promise<WidgetConfig[]>;
+  set(widgets: WidgetConfig[]): Promise<void>;
 }
 
 export async function getWidgetsConfig(): Promise<WidgetConfig[]> {
@@ -18,7 +18,7 @@ export async function getWidgetsConfig(): Promise<WidgetConfig[]> {
     throw new Error("Invalid widget store");
   }
 
-  const config = await repo.getWidgetsConfig();
+  const config = await repo.get();
   return config;
 }
 
@@ -36,6 +36,6 @@ export async function saveWidgetsConfig(data: object) {
   }
   const adjusted = adjustLayoutValues<WidgetConfig>(parsed);
 
-  const config = await repo.setWidgetsConfig(adjusted);
+  const config = await repo.set(adjusted);
   return config;
 }
