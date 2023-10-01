@@ -6,3 +6,5 @@ export const BREAKPOINTS: Readonly<Record<ScreenSize, number>> = {
   lg: 1024,
   xl: 1280,
 };
+
+export const BREAKPOINTS_ORDER = Object.keys(BREAKPOINTS) as ScreenSize[];

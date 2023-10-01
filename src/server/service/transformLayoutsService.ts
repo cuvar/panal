@@ -1,34 +1,52 @@
 import type GridLayout from "react-grid-layout";
 import type { WidgetData } from "~/utils/types/widget";
+import {
+  getMinHeightForWidget,
+  getMinWidthForWidget,
+} from "./computeSizeForWidgetService";
+import { isScreenSize } from "~/utils/guards/other";
+import adjustLayouts from "./adjustLayoutsService";
 
+// todo: write tests
 export default function transformLayoutsForGrid(
   data: WidgetData[],
 ): GridLayout.Layouts {
   const layouts: GridLayout.Layouts = {
-    lg: [
-      { i: "time", x: 0, y: 1, w: 2, h: 1, minW: 2 },
-      { i: "search", x: 0, y: 2, w: 3, h: 1, minW: 3 },
-      { i: "link", x: 0, y: 3, w: 4, h: 1, minW: 4 },
-      { i: "cal", x: 0, y: 4, w: 2, h: 2, minW: 2 },
-    ],
-    md: [
-      { i: "time", x: 0, y: 1, w: 2, h: 1, minW: 1 },
-      { i: "search", x: 0, y: 2, w: 3, h: 1, minW: 3 },
-      { i: "link", x: 0, y: 3, w: 3, h: 1, minW: 3 },
-      { i: "cal", x: 0, y: 4, w: 2, h: 2, minW: 2 },
-    ],
-    sm: [
-      { i: "time", x: 0, y: 1, w: 1, h: 1, minW: 1 },
-      { i: "search", x: 0, y: 2, w: 2, h: 1, minW: 2 },
-      { i: "link", x: 0, y: 3, w: 3, h: 1, minW: 3 },
-      { i: "cal", x: 0, y: 4, w: 1, h: 2, minW: 1 },
-    ],
-    xs: [
-      { i: "time", x: 0, y: 1, w: 3, h: 1, minW: 3 },
-      { i: "search", x: 0, y: 2, w: 3, h: 1, minW: 3 },
-      { i: "link", x: 0, y: 3, w: 3, h: 1, minW: 3 },
-      { i: "cal", x: 0, y: 4, w: 3, h: 2, minW: 3 },
-    ],
+    xl: [],
+    lg: [],
+    md: [],
+    sm: [],
+    xs: [],
+    xss: [],
   };
+
+  // todo: problem 2: wie hide ich widgets auf bestimmten screen sizes? -> im jeweiligen widget über "hidden" tw class regeln für jede screen size
+  const newData = data.map((widget) => {
+    const newLayout = adjustLayouts(widget.layout);
+    return {
+      ...widget,
+      layout: newLayout,
+    };
+  });
+  newData.forEach((widget) => {
+    Object.entries(widget.layout).forEach(([key, value]) => {
+      const layout = {
+        i: widget.id,
+        x: value.x,
+        y: value.y,
+        w: value.w,
+        h: value.h,
+        minW: getMinWidthForWidget(widget.type),
+        minH: getMinHeightForWidget(widget.type),
+      };
+      if (
+        layouts[key] !== undefined &&
+        isScreenSize(key) &&
+        Array.isArray(layouts[key])
+      ) {
+        layouts[key]?.push(layout);
+      }
+    });
+  });
   return layouts;
 }

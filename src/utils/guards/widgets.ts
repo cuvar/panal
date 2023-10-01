@@ -5,11 +5,14 @@ import { isCalendarWidgetConfig } from "~/server/widgets/calendar/guards";
 import { isTimeWidgetConfig } from "~/server/widgets/time/guards";
 import type {
   Layout,
+  PartialScreenSizePositioning,
   Positioning,
+  ScreenSizePositioning,
   WidgetConfig,
   WidgetType,
 } from "../types/widget";
 import { isScreenSize } from "./other";
+import { BREAKPOINTS_ORDER } from "../const";
 
 export function isWidgetConfig(input: unknown): input is WidgetConfig {
   if (!isObject(input)) {
@@ -60,14 +63,20 @@ export function isLayout(layout: unknown): layout is Layout {
     return false;
   }
 
+  if (isPositioning(layout)) {
+    return true;
+  }
+
+  let foundIssue = false;
   Object.entries(layout).forEach(([key, value]) => {
     if (!isScreenSize(key)) {
-      return false;
+      foundIssue = true;
     }
     if (!isPositioning(value)) {
-      return false;
+      foundIssue = true;
     }
   });
+  if (foundIssue) return false;
   return true;
 }
 
@@ -89,5 +98,50 @@ export function isPositioning(
   if (!isNumber(positioning.h)) {
     return false;
   }
+  return true;
+}
+
+export function isPartialScreenSizePositioning(
+  data: unknown,
+): data is PartialScreenSizePositioning {
+  if (!isObject(data)) {
+    return false;
+  }
+
+  let foundIssue = false;
+  Object.entries(data).forEach(([key, value]) => {
+    if (!isScreenSize(key)) {
+      foundIssue = true;
+    }
+    if (!isPositioning(value)) {
+      foundIssue = true;
+    }
+  });
+  if (foundIssue) return false;
+  return true;
+}
+
+export function isScreenSizePositioning(
+  data: unknown,
+): data is ScreenSizePositioning {
+  if (!isObject(data)) {
+    return false;
+  }
+  if (Object.entries(data).length !== BREAKPOINTS_ORDER.length) {
+    // not all screen sizes are present
+    return false;
+  }
+
+  let foundIssue = false;
+  Object.entries(data).forEach(([key, value]) => {
+    if (!isScreenSize(key)) {
+      foundIssue = true;
+    }
+    if (!isPositioning(value)) {
+      foundIssue = true;
+    }
+  });
+  if (foundIssue) return false;
+
   return true;
 }

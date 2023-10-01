@@ -25,7 +25,17 @@ export type Positioning = {
   h: number;
 };
 
-export type Layout = Positioning | Record<ScreenSize, Positioning>;
+export type ScreenSizePositioning = {
+  xl: Positioning;
+  lg: Positioning;
+  md: Positioning;
+  sm: Positioning;
+  xs: Positioning;
+  xss: Positioning;
+};
+
+export type PartialScreenSizePositioning = { [K in ScreenSize]?: Positioning };
+export type Layout = Positioning | PartialScreenSizePositioning;
 
 export type WidgetConfig = {
   type: WidgetType;
