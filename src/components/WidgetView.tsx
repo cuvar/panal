@@ -32,10 +32,7 @@ export default function WidgetView(props: Props) {
         autoSize={false}
       >
         {props.data.map((widget) => (
-          <div
-            className="flex items-center justify-center bg-black"
-            key={widget.id}
-          >
+          <div className="flex items-center justify-center" key={widget.id}>
             {widget.type === "time" && (
               <TimeWidget
                 data={widget.data as TimeWidgetData}
