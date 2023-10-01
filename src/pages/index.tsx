@@ -1,14 +1,17 @@
 import type { NextPage } from "next";
-import WidgetView from "~/components/WidgetView";
-import LoadingSpinner from "~/sites/Loading";
-import ErrorPage from "~/sites/Error";
 import SiteWrapper from "~/components/SiteWrapper";
+import WidgetView from "~/components/WidgetView";
+import { env } from "~/env.mjs";
+import ErrorPage from "~/sites/Error";
+import LoadingSpinner from "~/sites/Loading";
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
   const widgetDataQuery = api.widget.getWidgetData.useQuery(undefined, {
     onSuccess: (data) => {
-      console.log(data);
+      if (env.NEXT_PUBLIC_PANAL_DEBUG == "false") {
+        console.log(data);
+      }
     },
   });
 
