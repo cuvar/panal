@@ -37,17 +37,19 @@ const Home: NextPage = () => {
     return <LoadingSpinner />;
   }
 
-  function handleValidate() {
-    // todo: implementation
-  }
-
   function handleSave() {
-    // todo: add validation
-    const parsed = JSON.parse(textAreaContent);
-    if (!Array.isArray(parsed)) {
-      return;
+    try {
+      JSON.parse(textAreaContent);
+      const parsed = JSON.parse(textAreaContent);
+      if (!Array.isArray(parsed)) {
+        // todo: show Toast
+        return;
+      }
+      setWidgetConfigMutation.mutate({ widgets: parsed });
+    } catch (error) {
+      console.log(error);
+      // todo: show Toast
     }
-    setWidgetConfigMutation.mutate({ widgets: parsed });
   }
 
   return (
@@ -69,7 +71,6 @@ const Home: NextPage = () => {
               onChange={(e) => setTextAreaContent(e.target.value)}
             ></textarea>
             <div className="flex w-full justify-end space-x-2">
-              <Button handler={() => handleValidate()}>Validate</Button>
               <Button handler={() => handleSave()}>Save</Button>
             </div>
           </div>
