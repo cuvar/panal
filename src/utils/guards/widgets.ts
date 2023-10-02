@@ -9,13 +9,13 @@ import type {
   PartialScreenSizePositioning,
   Positioning,
   ScreenSizePositioning,
-  WidgetConfig,
+  UserWidgetConfig,
   WidgetType,
 } from "../types/widget";
 import { isNumber, isObject } from "./base";
 import { isScreenSize } from "./other";
 
-export function isWidgetConfig(input: unknown): input is WidgetConfig {
+export function isWidgetConfig(input: unknown): input is UserWidgetConfig {
   if (!isObject(input)) {
     return false;
   }
@@ -54,7 +54,7 @@ export function isAdjustedWidgetConfig(
 export function isFittingDataPaylod(
   data: unknown,
   type: WidgetType,
-): data is WidgetConfig["data"] {
+): data is UserWidgetConfig["data"] {
   switch (type) {
     case "calendar":
       return isCalendarWidgetConfig(data);

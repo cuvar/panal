@@ -31,7 +31,7 @@ export type ScreenSizePositioning = Record<ScreenSize, Positioning>;
 export type PartialScreenSizePositioning = { [K in ScreenSize]?: Positioning };
 export type Layout = Positioning | PartialScreenSizePositioning;
 
-export type WidgetConfig = {
+export type UserWidgetConfig = {
   type: WidgetType;
   layout: Layout;
   data:
@@ -41,7 +41,7 @@ export type WidgetConfig = {
     | TimeWidgetConfig;
 };
 
-export type AdjustedWidgetConfig = Omit<WidgetConfig, "layout"> & {
+export type AdjustedWidgetConfig = Omit<UserWidgetConfig, "layout"> & {
   layout: ScreenSizePositioning;
 };
 
