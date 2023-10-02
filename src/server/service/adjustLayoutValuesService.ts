@@ -1,6 +1,6 @@
 import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/utils/const";
 import { isScreenSize } from "~/utils/guards/other";
-import { ScreenSize } from "~/utils/types/types";
+import type { ScreenSize } from "~/utils/types/types";
 import type { Positioning, WidgetData, WidgetType } from "~/utils/types/widget";
 import {
   getMinHeightForWidget,
