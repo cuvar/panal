@@ -1,18 +1,7 @@
 import { BREAKPOINT_COLS } from "~/utils/const";
 import { isScreenSize } from "~/utils/guards/other";
-import {
-  isPartialScreenSizePositioning,
-  isPositioning,
-  isWidgetConfig,
-} from "~/utils/guards/widgets";
 import { ScreenSize } from "~/utils/types/types";
-import type {
-  PartialScreenSizePositioning,
-  Positioning,
-  WidgetConfig,
-  WidgetData,
-  WidgetType,
-} from "~/utils/types/widget";
+import type { Positioning, WidgetData, WidgetType } from "~/utils/types/widget";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
@@ -28,54 +17,20 @@ import {
  * @returns adjusted widgetConfig or widgetData
  */
 export default function adjustLayoutValues<
-  T extends WidgetData | WidgetConfig | WidgetConfig[] | WidgetData[],
->(widgets: T): T {
-  if (Array.isArray(widgets)) {
-    if (isWidgetConfig(widgets[0])) {
-      return (widgets as WidgetConfig[]).map((widget) =>
-        adjustForWidgetConfig(widget),
-      ) as T;
-    } else {
-      return (widgets as WidgetData[]).map((widget) =>
-        adjustForWidgetData(widget),
-      ) as T;
-    }
-  } else {
-    if (isWidgetConfig(widgets)) {
-      return adjustForWidgetConfig(widgets) as T;
-    } else {
-      return adjustForWidgetData(widgets) as T;
-    }
-  }
-}
-
-function adjustForWidgetConfig(widget: WidgetConfig): WidgetConfig {
-  if (isPositioning(widget.layout)) {
-    widget.layout = adjustBoundsForMinValues(widget.layout, widget.type);
-  } else if (isPartialScreenSizePositioning(widget.layout)) {
-    Object.entries(widget.layout).forEach(([key, value]) => {
-      if (isScreenSize(key)) {
-        (widget.layout as PartialScreenSizePositioning)[key] =
-          adjustBoundsForMinValues(value, widget.type, key);
-      }
-    });
-  }
-  return widget;
-}
-
-function adjustForWidgetData(widget: WidgetData): WidgetData {
+  T extends Pick<WidgetData, "layout" | "type">,
+>(widget: T): T {
   Object.entries(widget.layout).forEach(([key, value]) => {
     if (isScreenSize(key)) {
       widget.layout[key] = adjustBoundsForMinValues(value, widget.type, key);
     }
   });
-  return widget;
+  return widget as T;
 }
 
 function adjustBoundsForMinValues(
   layout: Positioning,
   type: WidgetType,
-  screenSize?: ScreenSize,
+  screenSize: ScreenSize,
 ): Positioning {
   const minWidth = getMinWidthForWidget(type);
   const minHeight = getMinHeightForWidget(type);
@@ -89,7 +44,7 @@ function adjustBoundsForMinValues(
   }
 
   // 2. Changes width and height if they exceed the MAX_COLS for a `ScreenSize`
-  if (screenSize && layout.w > BREAKPOINT_COLS[screenSize]) {
+  if (layout.w > BREAKPOINT_COLS[screenSize]) {
     layout.w = BREAKPOINT_COLS[screenSize];
   }
 
@@ -103,7 +58,7 @@ function adjustBoundsForMinValues(
   }
 
   // 4. Adjusts positioning values to not be outside of the bounds of the screen
-  if (screenSize && layout.x + layout.w > BREAKPOINT_COLS[screenSize]) {
+  if (layout.x + layout.w > BREAKPOINT_COLS[screenSize]) {
     layout.x = BREAKPOINT_COLS[screenSize] - layout.w;
   }
   return layout;

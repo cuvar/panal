@@ -1,12 +1,13 @@
 import { env } from "~/env.mjs";
-import { WidgetUpstashRepository } from "./widgetUpstashRepository";
-import parseWidgetConfig from "../service/parseWidgetConfigService";
-import type { WidgetConfig } from "~/utils/types/widget";
+import type { AdjustedWidgetConfig, WidgetConfig } from "~/utils/types/widget";
+import addMissingLayouts from "../service/addMissingLayoutsService";
 import adjustLayoutValues from "../service/adjustLayoutValuesService";
+import parseWidgetConfig from "../service/parseWidgetConfigService";
+import { WidgetUpstashRepository } from "./widgetUpstashRepository";
 
 export interface WidgetRepository {
-  get(): Promise<WidgetConfig[]>;
-  set(widgets: WidgetConfig[]): Promise<void>;
+  get(): Promise<AdjustedWidgetConfig[]>;
+  set(widgets: AdjustedWidgetConfig[]): Promise<void>;
 }
 
 export async function getWidgetsConfig(): Promise<WidgetConfig[]> {
@@ -18,8 +19,12 @@ export async function getWidgetsConfig(): Promise<WidgetConfig[]> {
     throw new Error("Invalid widget store");
   }
 
-  const config = await repo.get();
-  return config;
+  try {
+    const config = await repo.get();
+    return config;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function saveWidgetsConfig(data: object) {
@@ -34,8 +39,16 @@ export async function saveWidgetsConfig(data: object) {
   if (parsed === null) {
     throw new Error("Invalid widget config");
   }
-  const adjusted = adjustLayoutValues<WidgetConfig[]>(parsed);
 
-  const config = await repo.set(adjusted);
+  const fixedWidgetConfig = parsed.map((widget) => {
+    const withMissing = addMissingLayouts(widget.layout);
+    widget.layout = withMissing;
+    const adjusted = adjustLayoutValues<AdjustedWidgetConfig>(
+      widget as AdjustedWidgetConfig,
+    );
+    return adjusted;
+  });
+
+  const config = await repo.set(fixedWidgetConfig);
   return config;
 }

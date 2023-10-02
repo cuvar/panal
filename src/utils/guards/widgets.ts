@@ -1,9 +1,10 @@
-import { isNumber, isObject } from "./base";
+import { isCalendarWidgetConfig } from "~/server/widgets/calendar/guards";
 import { isLinkWidgetConfig } from "~/server/widgets/links/guards";
 import { isSearchWidgetConfig } from "~/server/widgets/search/guards";
-import { isCalendarWidgetConfig } from "~/server/widgets/calendar/guards";
 import { isTimeWidgetConfig } from "~/server/widgets/time/guards";
+import { BREAKPOINTS_ORDER } from "../const";
 import type {
+  AdjustedWidgetConfig,
   Layout,
   PartialScreenSizePositioning,
   Positioning,
@@ -11,8 +12,8 @@ import type {
   WidgetConfig,
   WidgetType,
 } from "../types/widget";
+import { isNumber, isObject } from "./base";
 import { isScreenSize } from "./other";
-import { BREAKPOINTS_ORDER } from "../const";
 
 export function isWidgetConfig(input: unknown): input is WidgetConfig {
   if (!isObject(input)) {
@@ -22,6 +23,25 @@ export function isWidgetConfig(input: unknown): input is WidgetConfig {
     return false;
   }
   if (!isLayout(input.layout)) {
+    return false;
+  }
+  if (!isFittingDataPaylod(input.data, input.type)) {
+    return false;
+  }
+
+  return true;
+}
+
+export function isAdjustedWidgetConfig(
+  input: unknown,
+): input is AdjustedWidgetConfig {
+  if (!isObject(input)) {
+    return false;
+  }
+  if (!isWidgetType(input.type)) {
+    return false;
+  }
+  if (!isScreenSizePositioning(input.layout)) {
     return false;
   }
   if (!isFittingDataPaylod(input.data, input.type)) {
