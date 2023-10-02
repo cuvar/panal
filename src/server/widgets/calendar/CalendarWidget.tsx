@@ -31,6 +31,11 @@ export default function CalendarWidget(props: Props) {
             ))}
           </div>
         ))}
+        {props.data.entries.length === 0 && (
+          <div className="text-center text-gray-500">
+            No calendar entries found
+          </div>
+        )}
       </div>
       {/* <div>Calendar with {props.calendarData.length} entries</div> */}
     </div>
