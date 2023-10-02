@@ -1,4 +1,7 @@
-import { isAdjustedWidgetConfig, isWidgetConfig } from "~/utils/guards/widgets";
+import {
+  isAdjustedWidgetConfig,
+  isUserWidgetConfig,
+} from "~/utils/guards/widgets";
 import type {
   AdjustedWidgetConfig,
   UserWidgetConfig,
@@ -14,7 +17,7 @@ export default function parseWidgetConfig(
   }
   const result: UserWidgetConfig[] = [];
   for (const widget of parsed) {
-    if (!isWidgetConfig(widget)) {
+    if (!isUserWidgetConfig(widget)) {
       return null;
     }
     result.push(widget);

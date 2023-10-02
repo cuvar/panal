@@ -1,6 +1,6 @@
 import type GridLayout from "react-grid-layout";
 import { isScreenSize } from "~/utils/guards/other";
-import type { WidgetData } from "~/utils/types/widget";
+import type { Positioning, WidgetData } from "~/utils/types/widget";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
@@ -31,11 +31,21 @@ export default function transformLayoutsForGrid(
       if (
         layouts[key] !== undefined &&
         isScreenSize(key) &&
-        Array.isArray(layouts[key])
+        Array.isArray(layouts[key]) &&
+        !isEmptyPositioning(layout)
       ) {
         layouts[key]?.push(layout);
       }
     });
   });
   return layouts;
+}
+
+function isEmptyPositioning(positioning: Positioning): boolean {
+  return (
+    positioning.h === 0 &&
+    positioning.w === 0 &&
+    positioning.x === 0 &&
+    positioning.y === 0
+  );
 }

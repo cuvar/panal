@@ -16,7 +16,6 @@ export default function addMissingLayouts(
     const missingScreenSizes = BREAKPOINTS_ORDER.filter(
       (screenSize) => !exisitingScreenSizes.includes(screenSize),
     );
-
     const missingLayouts = missingScreenSizes.map((mss) => {
       const replacementScreen = getReplacementScreenSize(
         exisitingScreenSizes,

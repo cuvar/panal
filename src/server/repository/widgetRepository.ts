@@ -52,6 +52,9 @@ export async function saveWidgetsConfig(data: object) {
     return adjusted;
   });
 
-  const config = await repo.set(fixedWidgetConfig);
-  return config;
+  try {
+    await repo.set(fixedWidgetConfig);
+  } catch (error) {
+    throw error;
+  }
 }

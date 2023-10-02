@@ -5,6 +5,7 @@ import { isTimeWidgetConfig } from "~/server/widgets/time/guards";
 import { BREAKPOINTS_ORDER } from "../const";
 import type {
   AdjustedWidgetConfig,
+  HidingInfo,
   Layout,
   PartialScreenSizePositioning,
   Positioning,
@@ -15,7 +16,7 @@ import type {
 import { isNumber, isObject } from "./base";
 import { isScreenSize } from "./other";
 
-export function isWidgetConfig(input: unknown): input is UserWidgetConfig {
+export function isUserWidgetConfig(input: unknown): input is UserWidgetConfig {
   if (!isObject(input)) {
     return false;
   }
@@ -92,7 +93,7 @@ export function isLayout(layout: unknown): layout is Layout {
     if (!isScreenSize(key)) {
       foundIssue = true;
     }
-    if (!isPositioning(value)) {
+    if (!isPositioning(value) && !isHidingInfo(value)) {
       foundIssue = true;
     }
   });
@@ -133,8 +134,8 @@ export function isPartialScreenSizePositioning(
     if (!isScreenSize(key)) {
       foundIssue = true;
     }
-    if (!isPositioning(value)) {
-      foundIssue = true;
+    if (!isPositioning(value) && !isHidingInfo(value)) {
+      foundIssue = false;
     }
   });
   if (foundIssue) return false;
@@ -163,5 +164,21 @@ export function isScreenSizePositioning(
   });
   if (foundIssue) return false;
 
+  return true;
+}
+
+export function isHidingInfo(data: unknown): data is HidingInfo {
+  if (!isObject(data)) {
+    return false;
+  }
+  if (Object.entries(data).length !== 1) {
+    return false;
+  }
+  if (data.hiding === undefined) {
+    return false;
+  }
+  if (typeof data.hiding !== "boolean") {
+    return false;
+  }
   return true;
 }
