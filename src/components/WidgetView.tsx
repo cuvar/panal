@@ -25,6 +25,14 @@ type Props = {
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 export default function WidgetView(props: Props) {
+  const adjustedBreakpoints = Object.entries(BREAKPOINTS).reduce(
+    (acc, [key, value]) => {
+      // @ts-ignore
+      acc[key] = Math.max(value - 20, 0);
+      return acc;
+    },
+    {},
+  );
   return (
     <div className="h-full">
       <ResponsiveGridLayout
