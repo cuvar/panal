@@ -1,5 +1,8 @@
 import { env } from "~/env.mjs";
-import type { AdjustedWidgetConfig, WidgetConfig } from "~/utils/types/widget";
+import type {
+  AdjustedWidgetConfig,
+  UserWidgetConfig,
+} from "~/utils/types/widget";
 import addMissingLayouts from "../service/addMissingLayoutsService";
 import adjustLayoutValues from "../service/adjustLayoutValuesService";
 import parseWidgetConfig from "../service/parseWidgetConfigService";
@@ -10,7 +13,7 @@ export interface WidgetRepository {
   set(widgets: AdjustedWidgetConfig[]): Promise<void>;
 }
 
-export async function getWidgetsConfig(): Promise<WidgetConfig[]> {
+export async function getWidgetsConfig(): Promise<UserWidgetConfig[]> {
   let repo: WidgetRepository | null = null;
   if (env.WIDGET_STORE == "upstash") {
     repo = new WidgetUpstashRepository();
@@ -49,6 +52,9 @@ export async function saveWidgetsConfig(data: object) {
     return adjusted;
   });
 
-  const config = await repo.set(fixedWidgetConfig);
-  return config;
+  try {
+    await repo.set(fixedWidgetConfig);
+  } catch (error) {
+    throw error;
+  }
 }

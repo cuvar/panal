@@ -9,7 +9,6 @@ import type { Layout, ScreenSizePositioning } from "~/utils/types/widget";
 export default function addMissingLayouts(
   layout: Layout,
 ): ScreenSizePositioning {
-  // todo
   if (isScreenSizePositioning(layout)) {
     return layout;
   } else if (isPartialScreenSizePositioning(layout)) {
@@ -17,7 +16,6 @@ export default function addMissingLayouts(
     const missingScreenSizes = BREAKPOINTS_ORDER.filter(
       (screenSize) => !exisitingScreenSizes.includes(screenSize),
     );
-
     const missingLayouts = missingScreenSizes.map((mss) => {
       const replacementScreen = getReplacementScreenSize(
         exisitingScreenSizes,

@@ -1,7 +1,13 @@
 import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/utils/const";
 import { isScreenSize } from "~/utils/guards/other";
+import { isHidingInfo } from "~/utils/guards/widgets";
 import type { ScreenSize } from "~/utils/types/types";
-import type { Positioning, WidgetData, WidgetType } from "~/utils/types/widget";
+import type {
+  HidingInfo,
+  Positioning,
+  WidgetData,
+  WidgetType,
+} from "~/utils/types/widget";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
@@ -13,8 +19,8 @@ import {
  * 2. Changes width and height if they exceed the MAX_COLS for a `ScreenSize`
  * 3. Adjusts positioning values to not be negative
  * 4. Adjusts positioning values to not be outside of the bounds of the screen
- * @param widgets widgetConfig or widgetData
- * @returns adjusted widgetConfig or widgetData
+ * @param widgets UserWidgetConfig or widgetData
+ * @returns adjusted UserWidgetConfig or widgetData
  */
 export default function adjustLayoutValues<
   T extends Pick<WidgetData, "layout" | "type">,
@@ -28,18 +34,28 @@ export default function adjustLayoutValues<
 }
 
 function adjustBoundsForMinValues(
-  layout: Positioning,
+  layout: Positioning | HidingInfo,
   type: WidgetType,
   screenSize: ScreenSize,
 ): Positioning {
   const minWidth = getMinWidthForWidget(type);
   const minHeight = getMinHeightForWidget(type);
+
+  if (isHidingInfo(layout)) {
+    return {
+      x: 0,
+      y: 0,
+      w: 0,
+      h: 0,
+    };
+  }
+
   // 1. Changes width and height to meet at least the MIN_WIDTH and MIN_HEIGHT.
-  if (layout.w < minWidth) {
+  if (layout.w < minWidth && !(layout.w == 0 && layout.h == 0)) {
     layout.w = minWidth;
   }
 
-  if (layout.h < minHeight) {
+  if (layout.h < minHeight && !(layout.w == 0 && layout.h == 0)) {
     layout.h = minHeight;
   }
 

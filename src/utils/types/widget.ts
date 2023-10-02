@@ -26,19 +26,15 @@ export type Positioning = {
   h: number;
 };
 
-export type ScreenSizePositioning = {
-  xl: Positioning;
-  lg: Positioning;
-  md: Positioning;
-  sm: Positioning;
-  xs: Positioning;
-  xss: Positioning;
-};
+export type ScreenSizePositioning = Record<ScreenSize, Positioning>;
 
-export type PartialScreenSizePositioning = { [K in ScreenSize]?: Positioning };
+export type HidingInfo = { hiding: boolean };
+export type PartialScreenSizePositioning = {
+  [K in ScreenSize]?: Positioning | HidingInfo;
+};
 export type Layout = Positioning | PartialScreenSizePositioning;
 
-export type WidgetConfig = {
+export type UserWidgetConfig = {
   type: WidgetType;
   layout: Layout;
   data:
@@ -48,7 +44,7 @@ export type WidgetConfig = {
     | TimeWidgetConfig;
 };
 
-export type AdjustedWidgetConfig = Omit<WidgetConfig, "layout"> & {
+export type AdjustedWidgetConfig = Omit<UserWidgetConfig, "layout"> & {
   layout: ScreenSizePositioning;
 };
 

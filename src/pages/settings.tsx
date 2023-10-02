@@ -23,6 +23,7 @@ const Home: NextPage = () => {
         console.log(data);
       }
     },
+    refetchOnWindowFocus: false,
   });
   const setWidgetConfigMutation = api.widget.setWidgetConfig.useMutation({
     onSuccess: (_data) => {

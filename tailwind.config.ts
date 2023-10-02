@@ -7,6 +7,10 @@ export default {
       pattern: /(row|col|grid)-(span|start|end|rows|cols)-[1-2]?[0-9]/,
       variants: ["md"],
     },
+    {
+      pattern: /hidden|block/,
+      variants: ["xl", "lg", "md", "sm", "xs"],
+    },
   ],
   theme: {
     extend: {

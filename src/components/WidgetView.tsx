@@ -8,6 +8,7 @@ import {
   GRID_ROW_HEIGHT,
 } from "~/utils/const";
 
+import getHidingClasses from "~/server/service/getHidingClassesService";
 import transformLayoutsForGrid from "~/server/service/transformLayoutsService";
 import CalendarWidget from "~/server/widgets/calendar/CalendarWidget";
 import type { CalendarWidgetData } from "~/server/widgets/calendar/types";
@@ -16,6 +17,7 @@ import SearchWidget from "~/server/widgets/search/SearchWidget";
 import type { SearchWidgetData } from "~/server/widgets/search/types";
 import TimeWidget from "~/server/widgets/time/TimeWidget";
 import type { TimeWidgetData } from "~/server/widgets/time/types";
+import { useDetectScreenSize } from "~/utils/hooks";
 import type { WidgetData } from "~/utils/types/widget";
 import LinkCollectionWidget from "../server/widgets/links/LinkWidget/LinkCollectionWidget";
 
@@ -25,6 +27,8 @@ type Props = {
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 export default function WidgetView(props: Props) {
+  const currentScreenSize = useDetectScreenSize();
+
   const adjustedBreakpoints = Object.entries(BREAKPOINTS).reduce(
     (acc, [key, value]) => {
       (acc as Record<string, number>)[key] = Math.max(value - 20, 0) as number;
@@ -43,34 +47,40 @@ export default function WidgetView(props: Props) {
         maxRows={GRID_MAX_ROW}
         autoSize={false}
       >
-        {props.data.map((widget) => (
-          <div className="flex items-center justify-center" key={widget.id}>
-            {widget.type === "time" && (
-              <TimeWidget
-                data={widget.data as TimeWidgetData}
-                layout={widget.layout}
-              />
-            )}
-            {widget.type === "search" && (
-              <SearchWidget
-                data={widget.data as SearchWidgetData}
-                layout={widget.layout}
-              />
-            )}
-            {widget.type === "links" && (
-              <LinkCollectionWidget
-                data={widget.data as LinkWidgetData}
-                layout={widget.layout}
-              />
-            )}
-            {widget.type === "calendar" && (
-              <CalendarWidget
-                data={widget.data as CalendarWidgetData}
-                layout={widget.layout}
-              />
-            )}
-          </div>
-        ))}
+        {props.data.map(
+          (widget) =>
+            !getHidingClasses(widget.layout).includes(currentScreenSize) && (
+              <div
+                className={`flex items-center justify-center ${""}`}
+                key={widget.id}
+              >
+                {widget.type === "time" && (
+                  <TimeWidget
+                    data={widget.data as TimeWidgetData}
+                    layout={widget.layout}
+                  />
+                )}
+                {widget.type === "search" && (
+                  <SearchWidget
+                    data={widget.data as SearchWidgetData}
+                    layout={widget.layout}
+                  />
+                )}
+                {widget.type === "links" && (
+                  <LinkCollectionWidget
+                    data={widget.data as LinkWidgetData}
+                    layout={widget.layout}
+                  />
+                )}
+                {widget.type === "calendar" && (
+                  <CalendarWidget
+                    data={widget.data as CalendarWidgetData}
+                    layout={widget.layout}
+                  />
+                )}
+              </div>
+            ),
+        )}
       </ResponsiveGridLayout>
     </div>
   );
