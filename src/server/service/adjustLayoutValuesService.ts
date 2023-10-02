@@ -79,7 +79,13 @@ function adjustBoundsForMinValues(
   // 4. Adjusts positioning values to not be outside of the bounds of the screen
   if (layout.x + layout.w > BREAKPOINT_COLS[screenSize]) {
     layout.x = BREAKPOINT_COLS[screenSize] - layout.w;
-    // fix: for hiding of widgets, as negative values can appear here
+    if (layout.x < 0)
+      return {
+        x: 0,
+        y: 0,
+        w: 0,
+        h: 0,
+      };
   }
 
   if (layout.y > GRID_MAX_ROW) {
