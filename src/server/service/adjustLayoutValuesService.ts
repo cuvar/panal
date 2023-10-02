@@ -24,7 +24,7 @@ export default function adjustLayoutValues<
       widget.layout[key] = adjustBoundsForMinValues(value, widget.type, key);
     }
   });
-  return widget as T;
+  return widget;
 }
 
 function adjustBoundsForMinValues(

@@ -25,7 +25,7 @@ const Home: NextPage = () => {
     },
   });
   const setWidgetConfigMutation = api.widget.setWidgetConfig.useMutation({
-    onSuccess: (data) => {
+    onSuccess: (_data) => {
       setToastType("success");
       setToastText(`Saved successfully`);
       setTimeout(() => {

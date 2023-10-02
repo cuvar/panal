@@ -6,7 +6,7 @@ import {
   warningIcon,
 } from "~/utils/icons";
 import { toastTextAtom, toastTypeAtom } from "~/utils/store";
-import { ToastColor, ToastType } from "~/utils/types/types";
+import type { ToastColor, ToastType } from "~/utils/types/types";
 
 export default function Toast() {
   const toastMap: Record<ToastType, ToastColor> = {
