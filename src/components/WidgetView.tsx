@@ -1,7 +1,12 @@
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import { BREAKPOINTS } from "~/utils/const";
+import {
+  BREAKPOINTS,
+  BREAKPOINT_COLS,
+  GRID_MAX_ROW,
+  GRID_ROW_HEIGHT,
+} from "~/utils/const";
 
 import transformLayoutsForGrid from "~/server/service/transformLayoutsService";
 import CalendarWidget from "~/server/widgets/calendar/CalendarWidget";
@@ -25,10 +30,10 @@ export default function WidgetView(props: Props) {
       <ResponsiveGridLayout
         className="layout"
         breakpoints={{ ...BREAKPOINTS }}
-        cols={{ xl: 10, lg: 10, md: 6, sm: 3, xs: 3, xss: 1 }}
-        rowHeight={100}
+        cols={BREAKPOINT_COLS}
+        rowHeight={GRID_ROW_HEIGHT}
         layouts={transformLayoutsForGrid(props.data)}
-        maxRows={10}
+        maxRows={GRID_MAX_ROW}
         autoSize={false}
       >
         {props.data.map((widget) => (
