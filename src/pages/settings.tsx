@@ -1,3 +1,4 @@
+import { useAtom } from "jotai";
 import type { NextPage } from "next";
 import { useState } from "react";
 import Button from "~/components/Button";
@@ -6,9 +7,14 @@ import { env } from "~/env.mjs";
 import ErrorPage from "~/sites/Error";
 import LoadingSpinner from "~/sites/Loading";
 import { api } from "~/utils/api";
+import { useDetectMobile } from "~/utils/hooks";
+import { toastTextAtom, toastTypeAtom } from "~/utils/store";
 
 const Home: NextPage = () => {
+  const [_, setToastText] = useAtom(toastTextAtom);
+  const [__, setToastType] = useAtom(toastTypeAtom);
   const [textAreaContent, setTextAreaContent] = useState("");
+  const isMobile = useDetectMobile();
 
   const widgetConfigQuery = api.widget.getWidgetConfig.useQuery(undefined, {
     onSuccess: (data) => {
@@ -20,15 +26,24 @@ const Home: NextPage = () => {
   });
   const setWidgetConfigMutation = api.widget.setWidgetConfig.useMutation({
     onSuccess: (data) => {
-      // todo: show Toast
+      setToastType("success");
+      setToastText(`Saved successfully`);
+      setTimeout(() => {
+        setToastText("");
+      }, 1500);
       console.log("success");
     },
     onError: (error) => {
-      // todo: show Toast
+      setToastType("error");
+      setToastText(`Saving failed`);
+      setTimeout(() => {
+        setToastText("");
+      }, 1500);
       console.log(error);
     },
   });
 
+  // todo: adjust the layout values of each widget to the max width and height of each screensize: e.g. sm does have 3 cols, but a widget is placed at col 4
   if (widgetConfigQuery.error) {
     return <ErrorPage error={""} />;
   }
@@ -42,37 +57,44 @@ const Home: NextPage = () => {
       JSON.parse(textAreaContent);
       const parsed = JSON.parse(textAreaContent);
       if (!Array.isArray(parsed)) {
-        // todo: show Toast
+        console.log("heerre");
+        setToastType("error");
+        setToastText(`Config must be an array`);
+        setTimeout(() => {
+          setToastText("");
+        }, 3000);
         return;
       }
+
       setWidgetConfigMutation.mutate({ widgets: parsed });
     } catch (error) {
       console.log(error);
-      // todo: show Toast
+      setToastType("error");
+      setToastText(`Config could not be parsed. There are syntax errors.`);
+      setTimeout(() => {
+        setToastText("");
+      }, 3000);
     }
   }
 
   return (
     <SiteWrapper>
-      <div className="flex space-x-8">
-        <ul className="border-r-2 border-r-panal-100 py-2 pr-8">
+      <div className="flex w-full sm:space-x-8">
+        <ul className="hidden border-r-2 border-r-panal-100 py-2 pr-8 sm:block">
           <li>Sidebar</li>
         </ul>
-        <div>
-          <div className="flex flex-col space-y-4">
-            <h1 className="text-2xl font-bold">Widget Config</h1>
-            <textarea
-              name=""
-              id=""
-              cols={60}
-              rows={30}
-              className="overflow-x-scroll whitespace-nowrap rounded-lg bg-slate-900 px-2 py-2 font-mono text-white"
-              value={textAreaContent}
-              onChange={(e) => setTextAreaContent(e.target.value)}
-            ></textarea>
-            <div className="flex w-full justify-end space-x-2">
-              <Button handler={() => handleSave()}>Save</Button>
-            </div>
+        <div className="flex w-full flex-col space-y-4">
+          <h1 className="text-2xl font-bold">Widget Config</h1>
+          <textarea
+            name=""
+            id=""
+            rows={isMobile ? 20 : 30}
+            className="w-full max-w-3xl overflow-x-scroll whitespace-nowrap rounded-lg bg-slate-900 px-2 py-2 font-mono text-white"
+            value={textAreaContent}
+            onChange={(e) => setTextAreaContent(e.target.value)}
+          ></textarea>
+          <div className="flex w-full justify-end space-x-2">
+            <Button handler={() => handleSave()}>Save</Button>
           </div>
         </div>
       </div>

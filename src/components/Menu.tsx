@@ -45,7 +45,7 @@ export default function Menu() {
   });
 
   return (
-    <div className="space-x-2">
+    <div className="z-50 space-x-2">
       <button onClick={onHandleEllipsisClick} ref={menuButtonRef}>
         {ellipsisIcon}
       </button>

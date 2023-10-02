@@ -1,8 +1,9 @@
-import Head from "next/head";
 import { useSession } from "next-auth/react";
+import Head from "next/head";
 import Footer from "~/components/Footer";
 import Navbar from "~/components/Navbar";
 import Login from "~/sites/Login";
+import Toast from "./Toast";
 
 type Props = {
   children: React.ReactNode;
@@ -24,6 +25,9 @@ export default function SiteWrapper(props: Props) {
         <main className="flex h-full flex-col bg-panal-500 px-5 py-5 md:py-10">
           {props.children}
         </main>
+        <div className="flex w-full justify-center">
+          <Toast />
+        </div>
         <Footer />
       </div>
     </>

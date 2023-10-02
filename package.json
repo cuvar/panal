@@ -21,6 +21,7 @@
     "@upstash/redis": "^1.22.0",
     "ical": "^0.8.0",
     "jest-environment-jsdom": "^29.7.0",
+    "jotai": "^2.4.3",
     "next": "^13.4.13",
     "next-auth": "^4.22.4",
     "react": "18.2.0",
