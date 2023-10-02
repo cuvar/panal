@@ -26,6 +26,7 @@ export default function transformLayoutsForGrid(
         i: widget.id,
         minW: getMinWidthForWidget(widget.type),
         minH: getMinHeightForWidget(widget.type),
+        static: true,
       };
 
       if (
