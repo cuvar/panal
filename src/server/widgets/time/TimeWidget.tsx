@@ -7,7 +7,7 @@ type Props = {
   layout: ScreenSizePositioning;
 };
 
-export default function TimeWidget(props: Props) {
+export default function TimeWidget(_props: Props) {
   const [formatedTime, setFormatedTime] = useState<string>(
     Intl.DateTimeFormat("de-DE", {
       hour: "numeric",

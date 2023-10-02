@@ -5,6 +5,7 @@ import type {
   CalendarWidgetConfig,
   CalendarWidgetData,
 } from "./types";
+import { env } from "~/env.mjs";
 
 export const DAYS = 7;
 
@@ -15,7 +16,9 @@ export default async function computeCalendarWidgetData(
   try {
     res = await fetch(config.url).then((res) => res.text());
   } catch (error) {
-    console.log(error);
+    if (env.NEXT_PUBLIC_PANAL_DEBUG == "false") {
+      console.log(error);
+    }
     throw error;
   }
 

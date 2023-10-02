@@ -48,6 +48,10 @@ export type WidgetConfig = {
     | TimeWidgetConfig;
 };
 
+export type AdjustedWidgetConfig = Omit<WidgetConfig, "layout"> & {
+  layout: ScreenSizePositioning;
+};
+
 export type WidgetData = {
   id: string;
   type: WidgetType;

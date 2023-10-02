@@ -11,8 +11,8 @@ import { useDetectMobile } from "~/utils/hooks";
 import { toastTextAtom, toastTypeAtom } from "~/utils/store";
 
 const Home: NextPage = () => {
-  const [_, setToastText] = useAtom(toastTextAtom);
-  const [__, setToastType] = useAtom(toastTypeAtom);
+  const [, setToastText] = useAtom(toastTextAtom);
+  const [, setToastType] = useAtom(toastTypeAtom);
   const [textAreaContent, setTextAreaContent] = useState("");
   const isMobile = useDetectMobile();
 
@@ -25,13 +25,12 @@ const Home: NextPage = () => {
     },
   });
   const setWidgetConfigMutation = api.widget.setWidgetConfig.useMutation({
-    onSuccess: (data) => {
+    onSuccess: (_data) => {
       setToastType("success");
       setToastText(`Saved successfully`);
       setTimeout(() => {
         setToastText("");
       }, 1500);
-      console.log("success");
     },
     onError: (error) => {
       setToastType("error");
@@ -39,13 +38,17 @@ const Home: NextPage = () => {
       setTimeout(() => {
         setToastText("");
       }, 1500);
-      console.log(error);
+      if (env.NEXT_PUBLIC_PANAL_DEBUG == "false") {
+        console.log(error);
+      }
     },
   });
 
-  // todo: adjust the layout values of each widget to the max width and height of each screensize: e.g. sm does have 3 cols, but a widget is placed at col 4
   if (widgetConfigQuery.error) {
-    return <ErrorPage error={""} />;
+    if (env.NEXT_PUBLIC_PANAL_DEBUG == "false") {
+      console.log(widgetConfigQuery.error);
+    }
+    return <ErrorPage error={"Could not fetch widget config"} />;
   }
 
   if (widgetConfigQuery.isLoading) {
@@ -57,7 +60,6 @@ const Home: NextPage = () => {
       JSON.parse(textAreaContent);
       const parsed = JSON.parse(textAreaContent);
       if (!Array.isArray(parsed)) {
-        console.log("heerre");
         setToastType("error");
         setToastText(`Config must be an array`);
         setTimeout(() => {
@@ -68,7 +70,9 @@ const Home: NextPage = () => {
 
       setWidgetConfigMutation.mutate({ widgets: parsed });
     } catch (error) {
-      console.log(error);
+      if (env.NEXT_PUBLIC_PANAL_DEBUG == "false") {
+        console.log(error);
+      }
       setToastType("error");
       setToastText(`Config could not be parsed. There are syntax errors.`);
       setTimeout(() => {
