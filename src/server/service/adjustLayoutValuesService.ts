@@ -1,4 +1,4 @@
-import { BREAKPOINT_COLS } from "~/utils/const";
+import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/utils/const";
 import { isScreenSize } from "~/utils/guards/other";
 import { ScreenSize } from "~/utils/types/types";
 import type { Positioning, WidgetData, WidgetType } from "~/utils/types/widget";
@@ -45,7 +45,10 @@ function adjustBoundsForMinValues(
 
   // 2. Changes width and height if they exceed the MAX_COLS for a `ScreenSize`
   if (layout.w > BREAKPOINT_COLS[screenSize]) {
-    layout.w = BREAKPOINT_COLS[screenSize];
+    layout.w =
+      BREAKPOINT_COLS[screenSize] > minWidth
+        ? BREAKPOINT_COLS[screenSize]
+        : minWidth;
   }
 
   // 3. Adjusts positioning values to not be negative
@@ -60,6 +63,11 @@ function adjustBoundsForMinValues(
   // 4. Adjusts positioning values to not be outside of the bounds of the screen
   if (layout.x + layout.w > BREAKPOINT_COLS[screenSize]) {
     layout.x = BREAKPOINT_COLS[screenSize] - layout.w;
+    // fix: for hiding of widgets, as negative values can appear here
+  }
+
+  if (layout.y > GRID_MAX_ROW) {
+    layout.y = GRID_MAX_ROW - 1;
   }
   return layout;
 }
