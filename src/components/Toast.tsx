@@ -23,8 +23,8 @@ export default function Toast() {
     warning: warningIcon,
   };
 
-  const [toastText, _] = useAtom(toastTextAtom);
-  const [toastType, __] = useAtom(toastTypeAtom);
+  const [toastText] = useAtom(toastTextAtom);
+  const [toastType] = useAtom(toastTypeAtom);
 
   const visibleClass = toastText.trim().length > 0 ? "visible" : "invisible";
 

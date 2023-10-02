@@ -11,8 +11,8 @@ import { useDetectMobile } from "~/utils/hooks";
 import { toastTextAtom, toastTypeAtom } from "~/utils/store";
 
 const Home: NextPage = () => {
-  const [_, setToastText] = useAtom(toastTextAtom);
-  const [__, setToastType] = useAtom(toastTypeAtom);
+  const [, setToastText] = useAtom(toastTextAtom);
+  const [, setToastType] = useAtom(toastTypeAtom);
   const [textAreaContent, setTextAreaContent] = useState("");
   const isMobile = useDetectMobile();
 
