@@ -44,6 +44,7 @@ export const env = createEnv({
    */
   client: {
     // NEXT_PUBLIC_COOKIE_NAME: z.string().min(1),
+    NEXT_PUBLIC_PANAL_DEBUG: z.enum(["true", "false"]).optional(),
   },
 
   runtimeEnv: {
@@ -57,6 +58,7 @@ export const env = createEnv({
     UPSTASH_ENDPOINT: process.env.UPSTASH_ENDPOINT,
     UPSTASH_TOKEN: process.env.UPSTASH_TOKEN,
     UPSTASH_KEY: process.env.UPSTASH_KEY,
+    NEXT_PUBLIC_PANAL_DEBUG: process.env.NEXT_PUBLIC_PANAL_DEBUG,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
