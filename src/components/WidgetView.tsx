@@ -8,6 +8,7 @@ import {
   GRID_ROW_HEIGHT,
 } from "~/utils/const";
 
+import { useAtom } from "jotai";
 import getHidingClasses from "~/server/service/getHidingClassesService";
 import transformLayoutsForGrid from "~/server/service/transformLayoutsService";
 import CalendarWidget from "~/server/widgets/calendar/CalendarWidget";
@@ -18,6 +19,7 @@ import type { SearchWidgetData } from "~/server/widgets/search/types";
 import TimeWidget from "~/server/widgets/time/TimeWidget";
 import type { TimeWidgetData } from "~/server/widgets/time/types";
 import { useDetectScreenSize } from "~/utils/hooks";
+import { editModeAtom } from "~/utils/store";
 import type { WidgetData } from "~/utils/types/widget";
 import LinkCollectionWidget from "../server/widgets/links/LinkWidget/LinkCollectionWidget";
 
@@ -28,6 +30,7 @@ type Props = {
 const ResponsiveGridLayout = WidthProvider(Responsive);
 export default function WidgetView(props: Props) {
   const currentScreenSize = useDetectScreenSize();
+  const [editMode] = useAtom(editModeAtom);
 
   const adjustedBreakpoints = Object.entries(BREAKPOINTS).reduce(
     (acc, [key, value]) => {
@@ -43,7 +46,7 @@ export default function WidgetView(props: Props) {
         breakpoints={{ ...adjustedBreakpoints }}
         cols={BREAKPOINT_COLS}
         rowHeight={GRID_ROW_HEIGHT}
-        layouts={transformLayoutsForGrid(props.data)}
+        layouts={transformLayoutsForGrid(props.data, !editMode)}
         maxRows={GRID_MAX_ROW}
         autoSize={false}
       >

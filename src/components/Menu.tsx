@@ -1,12 +1,21 @@
+import { useAtom } from "jotai";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { cogIcon, ellipsisIcon, signOutIcon } from "~/utils/icons";
+import {
+  checkIcon,
+  cogIcon,
+  ellipsisIcon,
+  penIcon,
+  signOutIcon,
+} from "~/utils/icons";
+import { editModeAtom } from "~/utils/store";
 
 export default function Menu() {
   const [showMenu, setShowMenu] = useState(false);
   const popoverRef = useRef(null);
   const menuButtonRef = useRef(null);
+  const [editMode, setEditMode] = useAtom(editModeAtom);
 
   useEffect(() => {
     if (popoverRef.current && showMenu) {
@@ -44,6 +53,16 @@ export default function Menu() {
     }
   });
 
+  function handleEditLayout() {
+    console.log("edit");
+    setEditMode(true);
+  }
+
+  function handleSaveLayout() {
+    console.log("save");
+    setEditMode(false);
+  }
+
   return (
     <div className="z-50 space-x-2">
       <button onClick={onHandleEllipsisClick} ref={menuButtonRef}>
@@ -73,6 +92,26 @@ export default function Menu() {
           <span>{cogIcon}</span>
           <span>Settings</span>
         </Link>
+        <hr className="border-slate-700" />
+        {editMode ? (
+          <button
+            className="flex justify-start space-x-2 rounded-md px-4 py-2 hover:bg-slate-700 active:bg-slate-800"
+            onClick={() => handleSaveLayout()}
+            onFocus={() => setShowMenu(true)}
+          >
+            <span>{checkIcon}</span>
+            <span>Save layout</span>
+          </button>
+        ) : (
+          <button
+            className="flex justify-start space-x-2 rounded-md px-4 py-2 hover:bg-slate-700 active:bg-slate-800"
+            onClick={() => handleEditLayout()}
+            onFocus={() => setShowMenu(true)}
+          >
+            <span>{penIcon}</span>
+            <span>Edit layout</span>
+          </button>
+        )}
       </div>
     </div>
   );
