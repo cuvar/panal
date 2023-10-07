@@ -10,9 +10,9 @@ import {
 
 import { useAtom } from "jotai";
 import { useEffect } from "react";
+import getHidingClasses from "~/client/services/getHidingClassesService";
+import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
 import type { WidgetData } from "~/server/entities/widgetData";
-import getHidingClasses from "~/server/service/getHidingClassesService";
-import transformLayoutsForGrid from "~/server/service/transformLayoutsService";
 import CalendarWidget from "~/server/widgets/calendar/CalendarWidget";
 import type { CalendarWidgetData } from "~/server/widgets/calendar/types";
 import type { LinkWidgetData } from "~/server/widgets/links/types";

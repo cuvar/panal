@@ -1,11 +1,11 @@
 import type GridLayout from "react-grid-layout";
 import { isScreenSize } from "~/utils/guards/other";
 import type { Positioning } from "~/utils/types/widget";
-import type { WidgetData } from "../entities/widgetData";
+import type { WidgetData } from "../../server/entities/widgetData";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
-} from "./computeSizeForWidgetService";
+} from "../../server/service/computeSizeForWidgetService";
 
 // todo: write tests
 export default function transformLayoutsForGrid(
