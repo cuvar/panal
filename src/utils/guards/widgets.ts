@@ -13,7 +13,7 @@ import type {
   UserWidgetConfig,
   WidgetType,
 } from "../types/widget";
-import { isNumber, isObject } from "./base";
+import { isNumber, isObject, isString } from "./base";
 import { isScreenSize } from "./other";
 
 export function isUserWidgetConfig(input: unknown): input is UserWidgetConfig {
@@ -37,6 +37,9 @@ export function isAdjustedWidgetConfig(
   input: unknown,
 ): input is AdjustedWidgetConfig {
   if (!isObject(input)) {
+    return false;
+  }
+  if (!isString(input.id)) {
     return false;
   }
   if (!isWidgetType(input.type)) {

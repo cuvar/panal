@@ -9,6 +9,7 @@ import {
 // todo: write tests
 export default function transformLayoutsForGrid(
   data: WidgetData[],
+  makeStatic: boolean,
 ): GridLayout.Layouts {
   const layouts: GridLayout.Layouts = {
     xl: [],
@@ -26,7 +27,7 @@ export default function transformLayoutsForGrid(
         i: widget.id,
         minW: getMinWidthForWidget(widget.type),
         minH: getMinHeightForWidget(widget.type),
-        static: true,
+        static: makeStatic,
       };
 
       if (

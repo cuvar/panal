@@ -8,6 +8,8 @@ import {
   GRID_ROW_HEIGHT,
 } from "~/utils/const";
 
+import { useAtom } from "jotai";
+import { useEffect } from "react";
 import getHidingClasses from "~/server/service/getHidingClassesService";
 import transformLayoutsForGrid from "~/server/service/transformLayoutsService";
 import CalendarWidget from "~/server/widgets/calendar/CalendarWidget";
@@ -18,6 +20,11 @@ import type { SearchWidgetData } from "~/server/widgets/search/types";
 import TimeWidget from "~/server/widgets/time/TimeWidget";
 import type { TimeWidgetData } from "~/server/widgets/time/types";
 import { useDetectScreenSize } from "~/utils/hooks";
+import {
+  editModeAtom,
+  editedWidgetLayoutAtom,
+  widgetLayoutAtom,
+} from "~/utils/store";
 import type { WidgetData } from "~/utils/types/widget";
 import LinkCollectionWidget from "../server/widgets/links/LinkWidget/LinkCollectionWidget";
 
@@ -28,6 +35,9 @@ type Props = {
 const ResponsiveGridLayout = WidthProvider(Responsive);
 export default function WidgetView(props: Props) {
   const currentScreenSize = useDetectScreenSize();
+  const [editMode] = useAtom(editModeAtom);
+  const [widgetLayout, setWidgetLayout] = useAtom(widgetLayoutAtom);
+  const [, setEditedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
 
   const adjustedBreakpoints = Object.entries(BREAKPOINTS).reduce(
     (acc, [key, value]) => {
@@ -36,6 +46,22 @@ export default function WidgetView(props: Props) {
     },
     {},
   );
+
+  useEffect(() => {
+    console.log("editMode", editMode);
+    const transformedLayouts = transformLayoutsForGrid(props.data, !editMode);
+    setWidgetLayout(transformedLayouts);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editMode]);
+
+  function handleLayoutChange(
+    layout: ReactGridLayout.Layout[],
+    layouts: ReactGridLayout.Layouts,
+  ) {
+    if (!editMode) return;
+    setEditedWidgetLayout(layouts);
+  }
+
   return (
     <div className="h-full">
       <ResponsiveGridLayout
@@ -43,9 +69,10 @@ export default function WidgetView(props: Props) {
         breakpoints={{ ...adjustedBreakpoints }}
         cols={BREAKPOINT_COLS}
         rowHeight={GRID_ROW_HEIGHT}
-        layouts={transformLayoutsForGrid(props.data)}
+        layouts={widgetLayout}
         maxRows={GRID_MAX_ROW}
         autoSize={false}
+        onLayoutChange={handleLayoutChange}
       >
         {props.data.map(
           (widget) =>

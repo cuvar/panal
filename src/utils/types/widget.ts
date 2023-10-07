@@ -45,6 +45,7 @@ export type UserWidgetConfig = {
 };
 
 export type AdjustedWidgetConfig = Omit<UserWidgetConfig, "layout"> & {
+  id: string;
   layout: ScreenSizePositioning;
 };
 
