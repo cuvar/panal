@@ -1,12 +1,14 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import {
-  getWidgetsConfig,
-  saveWidgetsConfig,
+  getAdjustedWidgetConfig,
+  saveAdjustedWidgetConfig,
+  saveUserWidgetConfig,
 } from "~/server/repository/widgetRepository";
 import getWidgetData from "~/server/service/getWidgetDataService";
+import updateWidgetLayoutService from "~/server/service/updateWidgetLayoutService";
+import { widgetLayoutSchema } from "~/utils/schema";
 
 export const widgetRouter = createTRPCRouter({
   getWidgetData: protectedProcedure.query(async () => {
@@ -22,7 +24,7 @@ export const widgetRouter = createTRPCRouter({
   }),
   getWidgetConfig: protectedProcedure.query(async () => {
     try {
-      const data = await getWidgetsConfig();
+      const data = await getAdjustedWidgetConfig();
       return data;
     } catch (error) {
       throw new TRPCError({
@@ -39,7 +41,28 @@ export const widgetRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       try {
-        await saveWidgetsConfig(input.widgets);
+        await saveUserWidgetConfig(input.widgets);
+      } catch (error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: error instanceof Error ? error?.message : "",
+        });
+      }
+    }),
+  setWidgetLayout: protectedProcedure
+    .input(
+      z.object({
+        layout: widgetLayoutSchema,
+      }),
+    )
+    .mutation(async ({ input }) => {
+      try {
+        const widgetConfig = await getAdjustedWidgetConfig();
+        const updatedWidgets = updateWidgetLayoutService(
+          input.layout,
+          widgetConfig,
+        );
+        await saveAdjustedWidgetConfig(updatedWidgets);
       } catch (error) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",

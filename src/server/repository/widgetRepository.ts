@@ -1,8 +1,6 @@
 import { env } from "~/env.mjs";
-import type {
-  AdjustedWidgetConfig,
-  UserWidgetConfig,
-} from "~/utils/types/widget";
+import { generateUniqueID } from "~/utils/helper";
+import type { AdjustedWidgetConfig } from "~/utils/types/widget";
 import addMissingLayouts from "../service/addMissingLayoutsService";
 import adjustLayoutValues from "../service/adjustLayoutValuesService";
 import parseWidgetConfig from "../service/parseWidgetConfigService";
@@ -13,7 +11,7 @@ export interface WidgetRepository {
   set(widgets: AdjustedWidgetConfig[]): Promise<void>;
 }
 
-export async function getWidgetsConfig(): Promise<UserWidgetConfig[]> {
+export async function getAdjustedWidgetConfig() {
   let repo: WidgetRepository | null = null;
   if (env.WIDGET_STORE == "upstash") {
     repo = new WidgetUpstashRepository();
@@ -30,7 +28,7 @@ export async function getWidgetsConfig(): Promise<UserWidgetConfig[]> {
   }
 }
 
-export async function saveWidgetsConfig(data: object) {
+export async function saveUserWidgetConfig(data: object) {
   let repo: WidgetRepository | null = null;
   if (env.WIDGET_STORE == "upstash") {
     repo = new WidgetUpstashRepository();
@@ -46,6 +44,7 @@ export async function saveWidgetsConfig(data: object) {
   const fixedWidgetConfig = parsed.map((widget) => {
     const withMissing = addMissingLayouts(widget.layout);
     widget.layout = withMissing;
+    (widget as AdjustedWidgetConfig).id = generateUniqueID();
     const adjusted = adjustLayoutValues<AdjustedWidgetConfig>(
       widget as AdjustedWidgetConfig,
     );
@@ -54,6 +53,23 @@ export async function saveWidgetsConfig(data: object) {
 
   try {
     await repo.set(fixedWidgetConfig);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function saveAdjustedWidgetConfig(data: AdjustedWidgetConfig[]) {
+  let repo: WidgetRepository | null = null;
+  if (env.WIDGET_STORE == "upstash") {
+    repo = new WidgetUpstashRepository();
+  }
+
+  if (!repo) {
+    throw new Error("Invalid widget store");
+  }
+
+  try {
+    await repo.set(data);
   } catch (error) {
     throw error;
   }

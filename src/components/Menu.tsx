@@ -2,6 +2,9 @@ import { useAtom } from "jotai";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { env } from "~/env.mjs";
+import makeLayoutsStatic from "~/server/service/makeLayoutsStaticService";
+import { api } from "~/utils/api";
 import {
   checkIcon,
   cogIcon,
@@ -9,29 +12,50 @@ import {
   penIcon,
   signOutIcon,
 } from "~/utils/icons";
-import { editModeAtom } from "~/utils/store";
+import {
+  editModeAtom,
+  editedWidgetLayoutAtom,
+  toastTextAtom,
+  toastTypeAtom,
+  widgetLayoutAtom,
+} from "~/utils/store";
 
 export default function Menu() {
   const [showMenu, setShowMenu] = useState(false);
   const popoverRef = useRef(null);
   const menuButtonRef = useRef(null);
   const [editMode, setEditMode] = useAtom(editModeAtom);
+  const [, setWidgetLayout] = useAtom(widgetLayoutAtom);
+  const [editedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
+  const [, setToastText] = useAtom(toastTextAtom);
+  const [, setToastType] = useAtom(toastTypeAtom);
+
+  const setWidgetLayoutMutation = api.widget.setWidgetLayout.useMutation({
+    onSuccess: () => {
+      setWidgetLayout(makeLayoutsStatic(editedWidgetLayout, true));
+      setToastType("success");
+      setToastText(`Saved successfully`);
+      setTimeout(() => {
+        setToastText("");
+      }, 1500);
+    },
+    onError: (error) => {
+      setToastType("error");
+      setToastText(`Saving failed`);
+      setTimeout(() => {
+        setToastText("");
+      }, 1500);
+      if (env.NEXT_PUBLIC_PANAL_DEBUG == "false") {
+        console.log(error);
+      }
+    },
+  });
 
   useEffect(() => {
     if (popoverRef.current && showMenu) {
       (popoverRef.current as HTMLDivElement).focus();
     }
   }, [showMenu]);
-
-  function handleLogout() {
-    void (async () => {
-      await signOut();
-    })();
-  }
-
-  function onHandleEllipsisClick() {
-    setShowMenu(true);
-  }
 
   document.addEventListener("click", function (event) {
     if (popoverRef.current == null) return;
@@ -53,6 +77,16 @@ export default function Menu() {
     }
   });
 
+  function handleLogout() {
+    void (async () => {
+      await signOut();
+    })();
+  }
+
+  function handleEllipsisClick() {
+    setShowMenu(true);
+  }
+
   function handleEditLayout() {
     console.log("edit");
     setEditMode(true);
@@ -61,11 +95,12 @@ export default function Menu() {
   function handleSaveLayout() {
     console.log("save");
     setEditMode(false);
+    setWidgetLayoutMutation.mutate({ layout: editedWidgetLayout });
   }
 
   return (
     <div className="z-50 space-x-2">
-      <button onClick={onHandleEllipsisClick} ref={menuButtonRef}>
+      <button onClick={handleEllipsisClick} ref={menuButtonRef}>
         {ellipsisIcon}
       </button>
       <div

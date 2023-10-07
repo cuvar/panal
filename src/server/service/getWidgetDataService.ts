@@ -1,6 +1,5 @@
-import { generateUniqueID } from "~/utils/helper";
 import type { WidgetData } from "~/utils/types/widget";
-import { getWidgetsConfig } from "../repository/widgetRepository";
+import { getAdjustedWidgetConfig } from "../repository/widgetRepository";
 import computeCalendarWidgetData from "../widgets/calendar/data";
 import { isCalendarWidgetConfig } from "../widgets/calendar/guards";
 import computeLinkWidgetData from "../widgets/links/data";
@@ -15,7 +14,7 @@ import adjustLayoutValues from "./adjustLayoutValuesService";
 // todo: write tests
 export default async function getWidgetData(): Promise<WidgetData[]> {
   try {
-    const widgetsConfig = await getWidgetsConfig();
+    const widgetsConfig = await getAdjustedWidgetConfig();
     const widgetData: WidgetData[] = [];
     for (const widget of widgetsConfig) {
       let data;
@@ -40,7 +39,6 @@ export default async function getWidgetData(): Promise<WidgetData[]> {
       const newWidget = {
         ...widget,
         layout: newLayout,
-        id: generateUniqueID(),
         data: data,
       };
 
