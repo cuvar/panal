@@ -48,7 +48,6 @@ export default function WidgetView(props: Props) {
   );
 
   useEffect(() => {
-    console.log("editMode", editMode);
     const transformedLayouts = transformLayoutsForGrid(props.data, !editMode);
     setWidgetLayout(transformedLayouts);
     // eslint-disable-next-line react-hooks/exhaustive-deps
