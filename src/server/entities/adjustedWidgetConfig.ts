@@ -67,9 +67,7 @@ export class AdjustedWidgetConfig {
   }
 
   static getSchema() {
-    const adjustedWidgetConfigSchema: z.ZodType<
-      Omit<AdjustedWidgetConfig, "setLayout">
-    > = z.object({
+    const adjustedWidgetConfigSchema = z.object({
       id: z.string(),
       type: widgetTypeSchema,
       layout: screenSizePositioningSchema,
