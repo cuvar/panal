@@ -1,11 +1,5 @@
-import {
-  isAdjustedWidgetConfig,
-  isUserWidgetConfig,
-} from "~/utils/guards/widgets";
-import type {
-  AdjustedWidgetConfig,
-  UserWidgetConfig,
-} from "~/utils/types/widget";
+import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
+import { UserWidgetConfig } from "../entities/userWidgetConfig";
 
 // todo: write tests
 export default function parseWidgetConfig(
@@ -17,10 +11,10 @@ export default function parseWidgetConfig(
   }
   const result: UserWidgetConfig[] = [];
   for (const widget of parsed) {
-    if (!isUserWidgetConfig(widget)) {
+    if (!UserWidgetConfig.validate(widget)) {
       return null;
     }
-    result.push(widget);
+    result.push(new UserWidgetConfig(widget.type, widget.layout, widget.data));
   }
   return result;
 }
@@ -35,10 +29,17 @@ export function parseAdjustedWidgetConfig(
 
   const result: AdjustedWidgetConfig[] = [];
   for (const widget of parsed) {
-    if (!isAdjustedWidgetConfig(widget)) {
+    if (!AdjustedWidgetConfig.validate(widget)) {
       return null;
     }
-    result.push(widget);
+    result.push(
+      new AdjustedWidgetConfig(
+        widget.id,
+        widget.type,
+        widget.layout,
+        widget.data,
+      ),
+    );
   }
   return result;
 }

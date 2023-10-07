@@ -1,4 +1,4 @@
-import type { WidgetData } from "~/utils/types/widget";
+import { WidgetData } from "../entities/widgetData";
 import { getAdjustedWidgetConfig } from "../repository/widgetRepository";
 import computeCalendarWidgetData from "../widgets/calendar/data";
 import { isCalendarWidgetConfig } from "../widgets/calendar/guards";
@@ -34,13 +34,12 @@ export default async function getWidgetData(): Promise<WidgetData[]> {
         data = {};
       }
 
-      const newLayout = addMissingLayouts(widget.layout);
-
-      const newWidget = {
-        ...widget,
-        layout: newLayout,
-        data: data,
-      };
+      const newWidget = new WidgetData(
+        widget.id,
+        widget.type,
+        addMissingLayouts(widget.layout),
+        data,
+      );
 
       widgetData.push(adjustLayoutValues<WidgetData>(newWidget));
     }

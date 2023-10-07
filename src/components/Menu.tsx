@@ -3,7 +3,7 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { env } from "~/env.mjs";
-import makeLayoutsStatic from "~/server/service/makeLayoutsStaticService";
+import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
 import { api } from "~/utils/api";
 import {
   checkIcon,
@@ -88,12 +88,10 @@ export default function Menu() {
   }
 
   function handleEditLayout() {
-    console.log("edit");
     setEditMode(true);
   }
 
   function handleSaveLayout() {
-    console.log("save");
     setEditMode(false);
     setWidgetLayoutMutation.mutate({ layout: editedWidgetLayout });
   }

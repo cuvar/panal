@@ -19,10 +19,8 @@ import type {
   TimeWidgetData,
 } from "~/server/widgets/time/types";
 import type {
-  AdjustedWidgetConfig,
   Positioning,
   ScreenSizePositioning,
-  WidgetData,
   WidgetType,
 } from "~/utils/types/widget";
 
@@ -120,26 +118,4 @@ export const calendarWidgetConfigSchema: z.ZodType<CalendarWidgetConfig> =
   z.object({
     url: z.string(),
     daysInAdvance: z.number(),
-  });
-
-export const widgetDataSchema: z.ZodType<Omit<WidgetData, "layout">> = z.object(
-  {
-    id: z.string(),
-    type: widgetTypeSchema,
-    data: linkWidgetDataSchema
-      .or(searchWidgetDataSchema)
-      .or(timeWidgetDataSchema)
-      .or(calendarWidgetDataSchema),
-  },
-);
-
-export const adjustedWidgetConfigSchema: z.ZodType<AdjustedWidgetConfig> =
-  z.object({
-    id: z.string(),
-    type: widgetTypeSchema,
-    layout: screenSizePositioningSchema,
-    data: linkWidgetConfigSchema
-      .or(searchWidgetConfigSchema)
-      .or(timeWidgetConfigSchema)
-      .or(calendarWidgetConfigSchema),
   });
