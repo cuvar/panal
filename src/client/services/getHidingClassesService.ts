@@ -1,4 +1,5 @@
-import type { Positioning, ScreenSizePositioning } from "~/utils/types/widget";
+import { isEmptyPositioning } from "~/utils/helper";
+import type { ScreenSizePositioning } from "~/utils/types/widget";
 
 export default function getHidingClasses(
   layout: ScreenSizePositioning,
@@ -14,13 +15,4 @@ export default function getHidingClasses(
     }
   });
   return hidingClasses;
-}
-
-function isEmptyPositioning(positioning: Positioning): boolean {
-  return (
-    positioning.h === 0 &&
-    positioning.w === 0 &&
-    positioning.x === 0 &&
-    positioning.y === 0
-  );
 }
