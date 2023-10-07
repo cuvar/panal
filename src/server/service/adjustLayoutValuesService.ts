@@ -15,8 +15,6 @@ import {
  * 2. Changes width and height if they exceed the MAX_COLS for a `ScreenSize`
  * 3. Adjusts positioning values to not be negative
  * 4. Adjusts positioning values to not be outside of the bounds of the screen
- * @param widgets UserWidgetConfig or widgetData
- * @returns adjusted UserWidgetConfig or widgetData
  */
 export default function adjustLayoutValues<
   T extends Pick<WidgetData, "layout" | "type">,

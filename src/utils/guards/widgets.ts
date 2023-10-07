@@ -1,3 +1,4 @@
+import type { UserWidgetConfig } from "~/server/entities/userWidgetConfig";
 import { isCalendarWidgetConfig } from "~/server/widgets/calendar/guards";
 import { isLinkWidgetConfig } from "~/server/widgets/links/guards";
 import { isSearchWidgetConfig } from "~/server/widgets/search/guards";
@@ -10,28 +11,10 @@ import type {
   PartialScreenSizePositioning,
   Positioning,
   ScreenSizePositioning,
-  UserWidgetConfig,
   WidgetType,
 } from "../types/widget";
 import { isNumber, isObject, isString } from "./base";
 import { isScreenSize } from "./other";
-
-export function isUserWidgetConfig(input: unknown): input is UserWidgetConfig {
-  if (!isObject(input)) {
-    return false;
-  }
-  if (!isWidgetType(input.type)) {
-    return false;
-  }
-  if (!isLayout(input.layout)) {
-    return false;
-  }
-  if (!isFittingDataPaylod(input.data, input.type)) {
-    return false;
-  }
-
-  return true;
-}
 
 export function isAdjustedWidgetConfig(
   input: unknown,

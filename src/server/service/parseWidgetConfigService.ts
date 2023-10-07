@@ -1,11 +1,6 @@
-import {
-  isAdjustedWidgetConfig,
-  isUserWidgetConfig,
-} from "~/utils/guards/widgets";
-import type {
-  AdjustedWidgetConfig,
-  UserWidgetConfig,
-} from "~/utils/types/widget";
+import { isAdjustedWidgetConfig } from "~/utils/guards/widgets";
+import type { AdjustedWidgetConfig } from "~/utils/types/widget";
+import { UserWidgetConfig } from "../entities/userWidgetConfig";
 
 // todo: write tests
 export default function parseWidgetConfig(
@@ -17,7 +12,7 @@ export default function parseWidgetConfig(
   }
   const result: UserWidgetConfig[] = [];
   for (const widget of parsed) {
-    if (!isUserWidgetConfig(widget)) {
+    if (!UserWidgetConfig.validate(widget)) {
       return null;
     }
     result.push(widget);
