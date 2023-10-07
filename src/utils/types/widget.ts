@@ -1,4 +1,3 @@
-import type { UserWidgetConfig } from "~/server/entities/userWidgetConfig";
 import type { ScreenSize } from "./types";
 
 // general
@@ -18,8 +17,3 @@ export type PartialScreenSizePositioning = {
   [K in ScreenSize]?: Positioning | HidingInfo;
 };
 export type Layout = Positioning | PartialScreenSizePositioning;
-
-export type AdjustedWidgetConfig = Omit<UserWidgetConfig, "layout"> & {
-  id: string;
-  layout: ScreenSizePositioning;
-};

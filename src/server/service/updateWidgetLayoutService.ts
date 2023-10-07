@@ -2,7 +2,7 @@ import type GridLayout from "react-grid-layout";
 import { BREAKPOINTS_ORDER } from "~/utils/const";
 import { isSameSet } from "~/utils/helper";
 import type { ScreenSize } from "~/utils/types/types";
-import type { AdjustedWidgetConfig } from "~/utils/types/widget";
+import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 
 export default function updateWidgetLayoutService(
   newLayouts: GridLayout.Layouts,
@@ -27,9 +27,7 @@ function updateForScreenSize(
 ) {
   newLayouts[breakpoint]?.forEach((layout) => {
     const widget = widgetConfig.find((widget) => widget.id === layout.i);
-
     if (!widget) throw new Error("widget not found");
-
-    widget.layout[breakpoint] = layout;
+    widget.setLayout(breakpoint, layout);
   });
 }

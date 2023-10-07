@@ -1,9 +1,7 @@
 import { env } from "~/env.mjs";
-import { generateUniqueID } from "~/utils/helper";
-import type { AdjustedWidgetConfig } from "~/utils/types/widget";
-import addMissingLayouts from "../service/addMissingLayoutsService";
-import adjustLayoutValues from "../service/adjustLayoutValuesService";
+import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import parseWidgetConfig from "../service/parseWidgetConfigService";
+import transformWidgetConfig from "../service/transformWidgetConfigService";
 import { WidgetUpstashRepository } from "./widgetUpstashRepository";
 
 export interface WidgetRepository {
@@ -40,19 +38,9 @@ export async function saveUserWidgetConfig(data: object) {
   if (parsed === null) {
     throw new Error("Invalid widget config");
   }
-
-  const fixedWidgetConfig = parsed.map((widget) => {
-    const withMissing = addMissingLayouts(widget.layout);
-    widget.layout = withMissing;
-    (widget as AdjustedWidgetConfig).id = generateUniqueID();
-    const adjusted = adjustLayoutValues<AdjustedWidgetConfig>(
-      widget as AdjustedWidgetConfig,
-    );
-    return adjusted;
-  });
-
+  const adjustedWidgetConfig = transformWidgetConfig(parsed);
   try {
-    await repo.set(fixedWidgetConfig);
+    await repo.set(adjustedWidgetConfig);
   } catch (error) {
     throw error;
   }

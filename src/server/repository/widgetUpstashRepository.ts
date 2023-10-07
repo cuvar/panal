@@ -1,8 +1,8 @@
 import { Redis } from "@upstash/redis";
 import { env } from "~/env.mjs";
-import type { AdjustedWidgetConfig } from "~/utils/types/widget";
 import { parseAdjustedWidgetConfig } from "../service/parseWidgetConfigService";
 import type { WidgetRepository } from "./widgetRepository";
+import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 
 export class WidgetUpstashRepository implements WidgetRepository {
   private redis;
