@@ -14,7 +14,13 @@ export default function updateWidgetLayoutService(
   }
   BREAKPOINTS_ORDER.forEach((breakpoint) => {
     if (!newLayouts[breakpoint]) throw new Error("newLayouts is not valid");
-    updateForScreenSize(newLayouts, widgetConfig, breakpoint);
+    try {
+      updateForScreenSize(newLayouts, widgetConfig, breakpoint);
+    } catch (error) {
+      if (typeof error === "string") {
+        throw new Error(error);
+      }
+    }
   });
 
   return widgetConfig;
