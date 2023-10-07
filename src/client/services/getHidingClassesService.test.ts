@@ -6,7 +6,7 @@ import type { ScreenSizePositioning } from "~/utils/types/widget";
 import getHidingClasses from "./getHidingClassesService";
 
 describe("getHidingClassesService", () => {
-  it("should return an array of strings", () => {
+  it("should return an empty string array", () => {
     // arrange
     const input: ScreenSizePositioning = {
       xl: {
@@ -54,7 +54,7 @@ describe("getHidingClassesService", () => {
     // expect(result.length).toEqual(0);
     expect(result.length).toEqual(0);
   });
-  it("should return an array of strings", () => {
+  it("should return an string array", () => {
     // arrange
     const input: ScreenSizePositioning = {
       xl: {
