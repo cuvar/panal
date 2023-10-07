@@ -4,7 +4,7 @@ export default function makeLayoutsStatic(
   layouts: GridLayout.Layouts,
   makeStatic: boolean,
 ): GridLayout.Layouts {
-  Object.entries(layouts).forEach(([key, value]) => {
+  Object.entries(layouts).forEach(([_key, value]) => {
     if (Array.isArray(value)) {
       value.forEach((layout) => {
         layout.static = makeStatic;
