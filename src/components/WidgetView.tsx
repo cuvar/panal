@@ -10,6 +10,7 @@ import {
 
 import { useAtom } from "jotai";
 import { useEffect } from "react";
+import type { WidgetData } from "~/server/entities/widgetData";
 import getHidingClasses from "~/server/service/getHidingClassesService";
 import transformLayoutsForGrid from "~/server/service/transformLayoutsService";
 import CalendarWidget from "~/server/widgets/calendar/CalendarWidget";
@@ -25,7 +26,6 @@ import {
   editedWidgetLayoutAtom,
   widgetLayoutAtom,
 } from "~/utils/store";
-import type { WidgetData } from "~/utils/types/widget";
 import LinkCollectionWidget from "../server/widgets/links/LinkWidget/LinkCollectionWidget";
 
 type Props = {

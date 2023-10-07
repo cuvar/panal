@@ -48,10 +48,3 @@ export type AdjustedWidgetConfig = Omit<UserWidgetConfig, "layout"> & {
   id: string;
   layout: ScreenSizePositioning;
 };
-
-export type WidgetData = {
-  id: string;
-  type: WidgetType;
-  layout: ScreenSizePositioning;
-  data: LinkWidgetData | SearchWidgetData | CalendarWidgetData | TimeWidgetData;
-};

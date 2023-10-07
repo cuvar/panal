@@ -2,12 +2,8 @@ import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/utils/const";
 import { isScreenSize } from "~/utils/guards/other";
 import { isHidingInfo } from "~/utils/guards/widgets";
 import type { ScreenSize } from "~/utils/types/types";
-import type {
-  HidingInfo,
-  Positioning,
-  WidgetData,
-  WidgetType,
-} from "~/utils/types/widget";
+import type { HidingInfo, Positioning, WidgetType } from "~/utils/types/widget";
+import type { WidgetData } from "../entities/widgetData";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
