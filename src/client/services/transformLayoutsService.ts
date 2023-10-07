@@ -7,7 +7,6 @@ import {
   getMinWidthForWidget,
 } from "../../server/service/computeSizeForWidgetService";
 
-// todo: write tests
 export default function transformLayoutsForGrid(
   data: WidgetData[],
   makeStatic: boolean,
