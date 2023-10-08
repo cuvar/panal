@@ -7,6 +7,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env: # Or as an environment variable
+      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+      USERNAME: ${{ secrets.USERNAME }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      EMAIL: ${{ secrets.EMAIL }}
+      WIDGET_STORE: ${{ secrets.WIDGET_STORE }}
+      UPSTASH_ENDPOINT: ${{ secrets.UPSTASH_ENDPOINT }}
+      UPSTASH_TOKEN: ${{ secrets.UPSTASH_TOKEN }}
+      UPSTASH_KEY: ${{ secrets.UPSTASH_KEY }}
 
     strategy:
       matrix:
