@@ -1,6 +1,11 @@
 import { isObject, isString } from "~/utils/guards/base";
 import type { LinkWidgetConfig, LinkWidgetData, LinkWidgetLink } from "./types";
 
+/**
+ * Check whether data is of type LinkWidgetLink
+ * @param {unknown} data Unkown type to be checked
+ * @returns {boolean} Whether data is of type LinkWidgetLink
+ */
 export function isLinkWidgetLink(data: unknown): data is LinkWidgetLink {
   if (!isObject(data)) {
     return false;
@@ -17,6 +22,11 @@ export function isLinkWidgetLink(data: unknown): data is LinkWidgetLink {
   return true;
 }
 
+/**
+ * Check whether data is of type LinkWidgetData
+ * @param {unknown} data Unkown type to be checked
+ * @returns {boolean} Whether data is of type LinkWidgetData
+ */
 export function isLinkWidgetData(data: unknown): data is LinkWidgetData {
   return (
     Array.isArray(data) &&
@@ -24,6 +34,11 @@ export function isLinkWidgetData(data: unknown): data is LinkWidgetData {
   );
 }
 
+/**
+ * Check whether data is of type LinkWidgetConfig
+ * @param {unknown} data Unkown type to be checked
+ * @returns {boolean} Whether data is of type LinkWidgetConfig
+ */
 export function isLinkWidgetConfig(data: unknown): data is LinkWidgetConfig {
   return (
     Array.isArray(data) &&
