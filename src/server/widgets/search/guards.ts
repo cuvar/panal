@@ -26,9 +26,20 @@ export function isSearchEngine(data: unknown): data is SearchEngine {
 }
 
 export function isSearchWidgetData(data: unknown): data is SearchWidgetData {
-  return (
-    Array.isArray(data) &&
-    data.every((searchEngine) => isSearchEngine(searchEngine))
+  if (!isObject(data)) {
+    return false;
+  }
+
+  if (!("searchEngines" in data) || !isObject(data.searchEngines)) {
+    return false;
+  }
+
+  if (!Array.isArray(data.searchEngines)) {
+    return false;
+  }
+
+  return data.searchEngines.every((searchEngine) =>
+    isSearchEngine(searchEngine),
   );
 }
 
