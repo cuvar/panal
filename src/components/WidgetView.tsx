@@ -77,7 +77,9 @@ export default function WidgetView(props: Props) {
           (widget) =>
             !getHidingClasses(widget.layout).includes(currentScreenSize) && (
               <div
-                className={`flex items-center justify-center ${""}`}
+                className={`flex items-center justify-center ${
+                  editMode ? "rounded-md border-2 border-panal-700" : ""
+                }`}
                 key={widget.id}
               >
                 {widget.type === "time" && (
