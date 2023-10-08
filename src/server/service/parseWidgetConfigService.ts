@@ -1,8 +1,7 @@
 import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import { UserWidgetConfig } from "../entities/userWidgetConfig";
 
-// todo: write tests
-export default function parseWidgetConfig(
+export default function parseUserWidgetConfig(
   input: string,
 ): UserWidgetConfig[] | null {
   const parsed = JSON.parse(input);

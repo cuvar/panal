@@ -1,6 +1,6 @@
 import { env } from "~/env.mjs";
 import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
-import parseWidgetConfig from "../service/parseWidgetConfigService";
+import parseUserWidgetConfig from "../service/parseWidgetConfigService";
 import transformWidgetConfig from "../service/transformWidgetConfigService";
 import { WidgetUpstashRepository } from "./widgetUpstashRepository";
 
@@ -34,7 +34,7 @@ export async function saveUserWidgetConfig(data: object) {
   if (!repo) {
     throw new Error("Invalid widget store");
   }
-  const parsed = parseWidgetConfig(JSON.stringify(data));
+  const parsed = parseUserWidgetConfig(JSON.stringify(data));
   if (parsed === null) {
     throw new Error("Invalid widget config");
   }

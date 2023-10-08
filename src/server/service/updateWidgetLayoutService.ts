@@ -20,6 +20,7 @@ export default function updateWidgetLayoutService(
       if (typeof error === "string") {
         throw new Error(error);
       }
+      throw error;
     }
   });
 
@@ -34,6 +35,11 @@ function updateForScreenSize(
   newLayouts[breakpoint]?.forEach((layout) => {
     const widget = widgetConfig.find((widget) => widget.id === layout.i);
     if (!widget) throw new Error("widget not found");
-    widget.setLayout(breakpoint, layout);
+    widget.setLayout(breakpoint, {
+      x: layout.x,
+      y: layout.y,
+      w: layout.w,
+      h: layout.h,
+    });
   });
 }

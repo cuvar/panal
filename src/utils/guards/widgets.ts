@@ -97,7 +97,7 @@ export function isPartialScreenSizePositioning(
     if (!isScreenSize(key)) {
       foundIssue = true;
     }
-    if (!isPositioning(value) && !isHidingInfo(value)) {
+    if (!isPositioning(value) && !isHidingInfo(value) && !foundIssue) {
       foundIssue = false;
     }
   });

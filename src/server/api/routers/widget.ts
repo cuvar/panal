@@ -6,14 +6,15 @@ import {
   saveAdjustedWidgetConfig,
   saveUserWidgetConfig,
 } from "~/server/repository/widgetRepository";
-import getWidgetData from "~/server/service/getWidgetDataService";
+import transformWidgetData from "~/server/service/transformWidgetDataService";
 import updateWidgetLayoutService from "~/server/service/updateWidgetLayoutService";
 import { widgetLayoutSchema } from "~/utils/schema";
 
 export const widgetRouter = createTRPCRouter({
   getWidgetData: protectedProcedure.query(async () => {
     try {
-      const data = await getWidgetData();
+      const widgetsConfig = await getAdjustedWidgetConfig();
+      const data = transformWidgetData(widgetsConfig);
       return data;
     } catch (error) {
       throw new TRPCError({

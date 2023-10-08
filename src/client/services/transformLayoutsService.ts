@@ -1,13 +1,12 @@
 import type GridLayout from "react-grid-layout";
 import { isScreenSize } from "~/utils/guards/other";
-import type { Positioning } from "~/utils/types/widget";
+import { isEmptyPositioning } from "~/utils/helper";
 import type { WidgetData } from "../../server/entities/widgetData";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
 } from "../../server/service/computeSizeForWidgetService";
 
-// todo: write tests
 export default function transformLayoutsForGrid(
   data: WidgetData[],
   makeStatic: boolean,
@@ -42,13 +41,4 @@ export default function transformLayoutsForGrid(
     });
   });
   return layouts;
-}
-
-function isEmptyPositioning(positioning: Positioning): boolean {
-  return (
-    positioning.h === 0 &&
-    positioning.w === 0 &&
-    positioning.x === 0 &&
-    positioning.y === 0
-  );
 }

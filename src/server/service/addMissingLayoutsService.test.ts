@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import { describe, expect, test } from "@jest/globals";
 import type { ScreenSize } from "~/utils/types/types";
 import type {
@@ -18,6 +22,7 @@ describe("addMissingLayoutservice", () => {
       w: 1,
       h: 1,
     };
+
     const expected: ScreenSizePositioning = {
       xl: input,
       lg: input,
