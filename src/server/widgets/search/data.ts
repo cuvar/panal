@@ -1,4 +1,4 @@
-import type { SearchWidgetData, SearchWidgetConfig } from "./types";
+import type { SearchWidgetConfig, SearchWidgetData } from "./types";
 
 export default function computeSearchWidgetData(
   config: SearchWidgetConfig,
