@@ -9,6 +9,10 @@ export interface WidgetRepository {
   set(widgets: AdjustedWidgetConfig[]): Promise<void>;
 }
 
+/**
+ * Gets the widget config from the widget store
+ * @returns {AdjustedWidgetConfig[]} widget config
+ */
 export async function getAdjustedWidgetConfig() {
   let repo: WidgetRepository | null = null;
   if (env.WIDGET_STORE == "upstash") {
@@ -26,6 +30,10 @@ export async function getAdjustedWidgetConfig() {
   }
 }
 
+/**
+ * Saves the widget config to the widget store
+ * @param {object} data widget config
+ */
 export async function saveUserWidgetConfig(data: object) {
   let repo: WidgetRepository | null = null;
   if (env.WIDGET_STORE == "upstash") {
@@ -46,6 +54,10 @@ export async function saveUserWidgetConfig(data: object) {
   }
 }
 
+/**
+ * Saves the widget config to the widget store
+ * @param {AdjustedWidgetConfig[]} data Config to save
+ */
 export async function saveAdjustedWidgetConfig(data: AdjustedWidgetConfig[]) {
   let repo: WidgetRepository | null = null;
   if (env.WIDGET_STORE == "upstash") {
