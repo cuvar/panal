@@ -6,6 +6,11 @@ import {
 import type { ScreenSize } from "~/utils/types/types";
 import type { Layout, ScreenSizePositioning } from "~/utils/types/widget";
 
+/**
+ * Adds layouts for missing ScreenSizes to the given layout
+ * @param {Layout} layout Given layout
+ * @returns {ScreenSizePositioning} layout with all ScreenSizes
+ */
 export default function addMissingLayouts(
   layout: Layout,
 ): ScreenSizePositioning {
@@ -52,6 +57,12 @@ export default function addMissingLayouts(
   };
 }
 
+/**
+ * Returns the ScreenSize that can be used as a replacement for the missing ScreenSize
+ * @param {ScreenSize[]} defined ScreenSizes that are defined
+ * @param {ScreenSize} missing ScreenSize that is missing
+ * @returns {ScreenSize} Replacement ScreenSize
+ */
 export function getReplacementScreenSize(
   defined: ScreenSize[],
   missing: ScreenSize,

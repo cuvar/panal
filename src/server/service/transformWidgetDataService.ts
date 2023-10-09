@@ -11,6 +11,11 @@ import { isTimeWidgetConfig } from "../widgets/time/guards";
 import addMissingLayouts from "./addMissingLayoutsService";
 import adjustLayoutValues from "./adjustLayoutValuesService";
 
+/**
+ * Transforms the given AdjustedWidgetConfig[] into a WidgetData[]
+ * @param {AdjustedWidgetConfig[]} widgetConfig AdjustedWidgetConfig[] to transform
+ * @returns {Promise<WidgetData[]>} WidgetData[] with unique IDs
+ */
 export default async function transformWidgetData(
   widgetConfig: AdjustedWidgetConfig[],
 ): Promise<WidgetData[]> {

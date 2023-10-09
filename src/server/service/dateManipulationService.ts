@@ -3,9 +3,9 @@ import type { CalendarEntry } from "../widgets/calendar/types";
 
 /**
  * Filters future events with a given `days` in advance.
- * @param calendarData All data of calendar unfiltered
- * @param days Days in advance
- * @returns Filtered calendar data
+ * @param {CalendarEntry[]} calendarData All data of calendar unfiltered
+ * @param {number} days Days in advance
+ * @returns {CalendarEntry[]} Filtered calendar data
  */
 export function filterFutureEvents(
   calendarData: CalendarEntry[],
@@ -35,8 +35,8 @@ export function filterFutureEvents(
 
 /**
  * Groups calendar data by day.
- * @param data All events from the calendar
- * @returns Grouped calendar data by day
+ * @param {CalendarEntry[]} data All events from the calendar
+ * @returns {CalendarEntry[][]} Grouped calendar data by day
  */
 export function groupCalendarWidgetByDay(
   data: CalendarEntry[],
@@ -59,9 +59,9 @@ export function groupCalendarWidgetByDay(
 
 /**
  * Returns all dates with or without a recurrence.
- * @param data Parsed data from ical.parseICS
- * @param daysInAdvance Days in advance that should be included
- * @returns
+ * @param {FullCalendar} data Parsed data from ical.parseICS
+ * @param {number} daysInAdvance Days in advance that should be included
+ * @returns {CalendarEntry[]} List of dates with or without a recurrence
  */
 export function getDatesIncludingRecurrences(
   data: FullCalendar,
@@ -102,8 +102,8 @@ export function getDatesIncludingRecurrences(
 }
 /**
  * Filters all events that are valid for the following calculations
- * @param data Parsed data from ical.parseICS
- * @returns List of valid events
+ * @param {FullCalendar} data Parsed data from ical.parseICS
+ * @returns {CalendarComponent[]} List of valid events
  */
 export function filterValidEvents(data: FullCalendar) {
   const events = [];
@@ -121,8 +121,8 @@ export function filterValidEvents(data: FullCalendar) {
 
 /**
  * Gets all events that do not have a recurrence rule.
- * @param events List of valid events
- * @returns List of events without a recurrence rule
+ * @param {CalendarComponent[]} events List of valid events
+ * @returns {CalendarEntry[]} List of events without a recurrence rule
  */
 export function getNonRecurringEvents(events: CalendarComponent[]) {
   const nonRecurringEvents = events.filter(
@@ -148,8 +148,8 @@ export function getNonRecurringEvents(events: CalendarComponent[]) {
 
 /**
  * Gets all events that have a recurrence rule.
- * @param events List of valid events
- * @returns List of events with a recurrence rule
+ * @param {CalendarComponent[]} events List of valid events
+ * @returns {CalendarComponent[]} List of events with a recurrence rule
  */
 export function getRecurringEvents(events: CalendarComponent[]) {
   return events.filter(
@@ -160,10 +160,10 @@ export function getRecurringEvents(events: CalendarComponent[]) {
 
 /**
  * Filters all recurrences that are in date range.
- * @param event Event with recurrences
- * @param rangeStart Start of the range
- * @param rangeEnd End of the range
- * @returns List of recurrences in date range
+ * @param {CalendarComponent} event Event with recurrences
+ * @param {Date} rangeStart Start of the range
+ * @param {Date} rangeEnd End of the range
+ * @returns {Date[]} List of recurrences in date range
  */
 export function filterInRangeRecurrences(
   event: CalendarComponent,
@@ -192,11 +192,11 @@ export function filterInRangeRecurrences(
 
 /**
  * Gets the recurrence event for a given event if valid.
- * @param event The given event
- * @param date
- * @param rangeStart Start of range
- * @param rangeEnd End of range
- * @returns List of valid recurrence
+ * @param {CalendarComponent} event The given event
+ * @param {Date} date The date to check
+ * @param {Date} rangeStart Start of range
+ * @param {Date} rangeEnd End of range
+ * @returns {CalendarEntry} List of valid recurrence
  */
 export function getValidRecurrenceEvent(
   event: CalendarComponent,

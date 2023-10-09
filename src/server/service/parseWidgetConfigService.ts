@@ -1,6 +1,11 @@
 import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import { UserWidgetConfig } from "../entities/userWidgetConfig";
 
+/**
+ * Parses a string into a UserWidgetConfig[].
+ * @param {string} input String to parse
+ * @returns {UserWidgetConfig[] | null} Parsed UserWidgetConfig[] or null if invalid
+ */
 export default function parseUserWidgetConfig(
   input: string,
 ): UserWidgetConfig[] | null {
@@ -18,6 +23,11 @@ export default function parseUserWidgetConfig(
   return result;
 }
 
+/**
+ * Parses a string into a AdjustedWidgetConfig[].
+ * @param {string} input String to parse
+ * @returns {AdjustedWidgetConfig[] | null} Parsed AdjustedWidgetConfig[] or null if invalid
+ */
 export function parseAdjustedWidgetConfig(
   input: string,
 ): AdjustedWidgetConfig[] | null {
