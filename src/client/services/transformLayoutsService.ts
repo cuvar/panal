@@ -7,6 +7,12 @@ import {
   getMinWidthForWidget,
 } from "../../server/service/computeSizeForWidgetService";
 
+/**
+ * Transforms WidgetData[] into GridLayout.Layouts for react-grid-layout
+ * @param {WidgetData[]} data WidgetData array to transform
+ * @param {boolean} makeStatic Indicates if the widgets should be static or not
+ * @returns {GridLayout.Layouts} transformed layouts
+ */
 export default function transformLayoutsForGrid(
   data: WidgetData[],
   makeStatic: boolean,
