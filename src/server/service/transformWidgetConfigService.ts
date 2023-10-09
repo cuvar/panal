@@ -4,6 +4,11 @@ import type { UserWidgetConfig } from "../entities/userWidgetConfig";
 import addMissingLayouts from "./addMissingLayoutsService";
 import adjustLayoutValues from "./adjustLayoutValuesService";
 
+/**
+ * Transforms the given UserWidgetConfig[] into an AdjustedWidgetConfig[]
+ * @param {UserWidgetConfig[]} userWidgetConfig UserWidgetConfig[] to transform
+ * @returns {AdjustedWidgetConfig[]} AdjustedWidgetConfig[] with unique IDs
+ */
 export default function transformWidgetConfig(
   userWidgetConfig: UserWidgetConfig[],
 ) {

@@ -10,11 +10,13 @@ import {
 } from "./computeSizeForWidgetService";
 
 /**
- * Adjusts the sizing parameters of a widget's layout. Specifically:
  * 1. Changes width and height to meet at least the MIN_WIDTH and MIN_HEIGHT.
  * 2. Changes width and height if they exceed the MAX_COLS for a `ScreenSize`
  * 3. Adjusts positioning values to not be negative
  * 4. Adjusts positioning values to not be outside of the bounds of the screen
+ * Adjusts the sizing parameters of a widget's layout. Specifically:
+ * @param {object} widget Widget to adjust layout values for
+ * @returns {object} widget with adjusted layout values
  */
 export default function adjustLayoutValues<
   T extends Pick<WidgetData, "layout" | "type">,
@@ -27,6 +29,13 @@ export default function adjustLayoutValues<
   return widget;
 }
 
+/**
+ * Adjusts the sizing parameters of a widget's layout. Specifically:
+ * @param {Positioning|HidingInfo} layout Layout to adjust
+ * @param {WidgetType} type WidgetType to adjust layout values for
+ * @param {ScreenSize} screenSize ScreenSize to adjust layout values for
+ * @returns {Positioning} layout with adjusted values
+ */
 function adjustBoundsForMinValues(
   layout: Positioning | HidingInfo,
   type: WidgetType,

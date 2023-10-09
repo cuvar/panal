@@ -4,6 +4,12 @@ import { isSameSet } from "~/utils/helper";
 import type { ScreenSize } from "~/utils/types/types";
 import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 
+/**
+ * Updates the layout values of the given AdjustedWidgetConfig[] with the given GridLayout.Layouts
+ * @param {GridLayout.Layouts} newLayouts Layout updates for various ScreenSizes
+ * @param {AdjustedWidgetConfig[]} widgetConfig AdjustedWidgetConfig[] to update
+ * @returns {AdjustedWidgetConfig[]} Updated AdjustedWidgetConfig[]
+ */
 export default function updateWidgetLayoutService(
   newLayouts: GridLayout.Layouts,
   widgetConfig: AdjustedWidgetConfig[],
@@ -27,6 +33,12 @@ export default function updateWidgetLayoutService(
   return widgetConfig;
 }
 
+/**
+ * Updates the layout values of the given AdjustedWidgetConfig[] with the given GridLayout.Layouts for the given ScreenSize
+ * @param {GridLayout.Layouts} newLayouts new layout values for the given ScreenSize
+ * @param {AdjustedWidgetConfig[]} widgetConfig AdjustedWidgetConfig[] to update
+ * @param {ScreenSize} breakpoint given ScreenSize
+ */
 function updateForScreenSize(
   newLayouts: GridLayout.Layouts,
   widgetConfig: AdjustedWidgetConfig[],
