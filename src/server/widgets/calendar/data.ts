@@ -7,6 +7,11 @@ import {
 } from "~/server/service/dateManipulationService";
 import type { CalendarWidgetConfig, CalendarWidgetData } from "./types";
 
+/**
+ * Compute data for link widget
+ * @param {CalendarWidgetConfig} config config for link widget
+ * @returns {CalendarWidgetData} data for link widget
+ */
 export default async function computeCalendarWidgetData(
   config: CalendarWidgetConfig,
 ): Promise<CalendarWidgetData> {
