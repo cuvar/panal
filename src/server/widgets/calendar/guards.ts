@@ -1,10 +1,15 @@
 import { isDate, isNumber, isObject, isString } from "~/utils/guards/base";
 import type {
   CalendarEntry,
-  CalendarWidgetData,
   CalendarWidgetConfig,
+  CalendarWidgetData,
 } from "./types";
 
+/**
+ * Checks whether data is of type CalendarWidgetConfig
+ * @param {unknown} data Unkown type to be checked
+ * @returns {boolean} Whether data is of type CalendarWidgetConfig
+ */
 export function isCalendarWidgetConfig(
   data: unknown,
 ): data is CalendarWidgetConfig {
@@ -20,6 +25,11 @@ export function isCalendarWidgetConfig(
   return true;
 }
 
+/**
+ * Checks whether data is of type CalendarWidgetData
+ * @param {unknown} data Unkown type to be checked
+ * @returns {boolean} Whether data is of type CalendarWidgetData
+ */
 export function isCalendarWidgetData(
   data: unknown,
 ): data is CalendarWidgetData {
@@ -41,6 +51,11 @@ export function isCalendarWidgetData(
   return true;
 }
 
+/**
+ * Checks whether data is of type CalendarEntry
+ * @param {unknown} data Unkown type to be checked
+ * @returns {boolean} Whether data is of type CalendarEntry
+ */
 export function isCalendarEntry(data: unknown): data is CalendarEntry {
   if (!isObject(data)) {
     return false;

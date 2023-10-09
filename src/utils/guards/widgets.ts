@@ -15,6 +15,12 @@ import type {
 import { isNumber, isObject } from "./base";
 import { isScreenSize } from "./other";
 
+/**
+ * Checks whether data is of type  @type {UserWidgetConfig["data"]}
+ * @param {unknown} data Unkown type to be checked
+ * @param {WidgetType} type Unkown type to be checked
+ * @returns {boolean} Whether data is of type @type {UserWidgetConfig["data"]}
+ */
 export function isFittingDataPaylod(
   data: unknown,
   type: WidgetType,
@@ -33,6 +39,11 @@ export function isFittingDataPaylod(
   }
 }
 
+/**
+ * Checks whether data is of type WidgetType
+ * @param {unknown} type Unkown type to be checked
+ * @returns {boolean} Whether data is of type WidgetType
+ */
 export function isWidgetType(type: unknown): type is WidgetType {
   return (
     type === "calendar" ||
@@ -42,6 +53,11 @@ export function isWidgetType(type: unknown): type is WidgetType {
   );
 }
 
+/**
+ * Checks whether data is of type Layout
+ * @param {unknown} layout Unkown type to be checked
+ * @returns {boolean} Whether data is of type Layout
+ */
 export function isLayout(layout: unknown): layout is Layout {
   if (!isObject(layout)) {
     return false;
@@ -64,6 +80,11 @@ export function isLayout(layout: unknown): layout is Layout {
   return true;
 }
 
+/**
+ * Checks whether data is of type Positioning
+ * @param {unknown} positioning Unkown type to be checked
+ * @returns {boolean} Whether data is of type Positioning
+ */
 export function isPositioning(
   positioning: unknown,
 ): positioning is Positioning {
@@ -85,6 +106,11 @@ export function isPositioning(
   return true;
 }
 
+/**
+ * Checks whether data is of type PartialScreenSizePositioning
+ * @param {unknown} data Unkown type to be checked
+ * @returns {boolean} Whether data is of type PartialScreenSizePositioning
+ */
 export function isPartialScreenSizePositioning(
   data: unknown,
 ): data is PartialScreenSizePositioning {
@@ -105,6 +131,11 @@ export function isPartialScreenSizePositioning(
   return true;
 }
 
+/**
+ * Checks whether data is of type ScreenSizePositioning
+ * @param {unknown} data Unkown type to be checked
+ * @returns {boolean} Whether data is of type ScreenSizePositioning
+ */
 export function isScreenSizePositioning(
   data: unknown,
 ): data is ScreenSizePositioning {
@@ -130,6 +161,11 @@ export function isScreenSizePositioning(
   return true;
 }
 
+/**
+ * Checks whether data is of type HidingInfo
+ * @param {unknown} data Unkown type to be checked
+ * @returns {boolean} Whether data is of type HidingInfo
+ */
 export function isHidingInfo(data: unknown): data is HidingInfo {
   if (!isObject(data)) {
     return false;

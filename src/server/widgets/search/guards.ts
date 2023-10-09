@@ -5,6 +5,11 @@ import type {
   SearchWidgetData,
 } from "./types";
 
+/**
+ * Checks whether data is of type SearchEngine
+ * @param {unknown} data Unkown type to be checked
+ * @returns {boolean} Whether data is of type SearchEngine
+ */
 export function isSearchEngine(data: unknown): data is SearchEngine {
   if (!isObject(data)) {
     return false;
@@ -25,6 +30,11 @@ export function isSearchEngine(data: unknown): data is SearchEngine {
   return true;
 }
 
+/**
+ * Checks whether data is of type SearchWidgetData
+ * @param {unknown} data Unkown type to be checked
+ * @returns {boolean} Whether data is of type SearchWidgetData
+ */
 export function isSearchWidgetData(data: unknown): data is SearchWidgetData {
   if (!isObject(data)) {
     return false;
@@ -43,6 +53,11 @@ export function isSearchWidgetData(data: unknown): data is SearchWidgetData {
   );
 }
 
+/**
+ * Checks whether data is of type SearchWidgetConfig
+ * @param {unknown} data Unkown type to be checked
+ * @returns {boolean} Whether data is of type SearchWidgetConfig
+ */
 export function isSearchWidgetConfig(
   data: unknown,
 ): data is SearchWidgetConfig {
