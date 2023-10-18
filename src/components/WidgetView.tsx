@@ -62,7 +62,7 @@ export default function WidgetView(props: Props) {
   }
 
   return (
-    <div className="h-full">
+    <div className="h-full w-full max-w-[1280px]">
       <ResponsiveGridLayout
         className="layout"
         breakpoints={{ ...adjustedBreakpoints }}
