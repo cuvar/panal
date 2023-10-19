@@ -1,5 +1,5 @@
 import ical from "ical";
-import { env } from "~/env.mjs";
+import type { Fetcher } from "~/server/driver/Fetcher";
 import {
   filterFutureEvents,
   getDatesIncludingRecurrences,
@@ -9,22 +9,15 @@ import type { CalendarWidgetConfig, CalendarWidgetData } from "./types";
 
 /**
  * Compute data for link widget
- * @param {CalendarWidgetConfig} config config for link widget
- * @returns {CalendarWidgetData} data for link widget
+ * @param {CalendarWidgetConfig} config Config for link widget
+ * @param {Fetcher} fetcher Fetcher for ICS file
+ * @returns {CalendarWidgetData} Data for link widget
  */
 export default async function computeCalendarWidgetData(
   config: CalendarWidgetConfig,
+  fetcher: Fetcher,
 ): Promise<CalendarWidgetData> {
-  let res = null;
-  try {
-    res = await fetch(config.url).then((res) => res.text());
-  } catch (error) {
-    if (env.NEXT_PUBLIC_PANAL_DEBUG == "false") {
-      console.log(error);
-    }
-    throw error;
-  }
-
+  const res = await fetcher.fetch(config.url);
   const data = ical.parseICS(res);
   const calendarData = getDatesIncludingRecurrences(data, config.daysInAdvance);
   const futureDates = filterFutureEvents(calendarData, config.daysInAdvance);

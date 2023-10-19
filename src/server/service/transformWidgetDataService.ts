@@ -1,3 +1,4 @@
+import { ICSFetcher } from "../driver/ICSFetcher";
 import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import { WidgetData } from "../entities/widgetData";
 import computeCalendarWidgetData from "../widgets/calendar/data";
@@ -25,7 +26,7 @@ export default async function transformWidgetData(
 
     try {
       if (widget.type === "calendar" && isCalendarWidgetConfig(widget.data)) {
-        data = await computeCalendarWidgetData(widget.data);
+        data = await computeCalendarWidgetData(widget.data, new ICSFetcher());
       } else if (widget.type === "links" && isLinkWidgetConfig(widget.data)) {
         data = computeLinkWidgetData(widget.data);
       } else if (
