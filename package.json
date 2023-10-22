@@ -20,6 +20,7 @@
     "@trpc/server": "^10.34.0",
     "@upstash/redis": "^1.22.0",
     "ical": "^0.8.0",
+    "ics": "^3.5.0",
     "jest-environment-jsdom": "^29.7.0",
     "jotai": "^2.4.3",
     "next": "^13.4.13",
