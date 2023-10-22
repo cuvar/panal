@@ -89,7 +89,7 @@ describe("updateWidgetLayoutService", () => {
     expect(result[0]?.layout).toEqual(expected.layout);
   });
 
-  it("throws correctly for wrong newLayouts", () => {
+  it("works correctly for wrong newLayouts", () => {
     // arrange
     const id = "hello world";
     const widgetType = "time";
@@ -145,10 +145,10 @@ describe("updateWidgetLayoutService", () => {
     };
 
     // act
+    const result = updateWidgetLayoutService(newLayouts, [widgetConfig]);
+
     // assert
-    expect(() =>
-      updateWidgetLayoutService(newLayouts, [widgetConfig]),
-    ).toThrowError("newLayouts is not valid");
+    expect(result[0]).toBe(widgetConfig);
   });
 
   it("works correctly for updating widget layout", () => {
@@ -209,9 +209,8 @@ describe("updateWidgetLayoutService", () => {
     };
 
     // act
+    const result = updateWidgetLayoutService(newLayouts, [widgetConfig]);
     // assert
-    expect(() =>
-      updateWidgetLayoutService(newLayouts, [widgetConfig]),
-    ).toThrowError("widget not found");
+    expect(result[0]).toBe(widgetConfig);
   });
 });
