@@ -1,0 +1,16 @@
+name: License Compliance Check
+
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  license-compliance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: License compliance check
+        uses: mikaelvesavuori/license-compliance-action@v1.0.2
+        with:
+          allow_licenses: "https://www.mockachino.com/${{ secrets.MOCKACHINO }}/licenses"
+          nested_field: "licenseString"
