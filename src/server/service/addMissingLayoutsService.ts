@@ -1,4 +1,5 @@
 import { BREAKPOINTS_ORDER } from "~/utils/const";
+import AppError from "~/utils/error";
 import {
   isPartialScreenSizePositioning,
   isScreenSizePositioning,
@@ -21,29 +22,33 @@ export default function addMissingLayouts(
     const missingScreenSizes = BREAKPOINTS_ORDER.filter(
       (screenSize) => !exisitingScreenSizes.includes(screenSize),
     );
-    const missingLayouts = missingScreenSizes.map((mss) => {
-      const replacementScreen = getReplacementScreenSize(
-        exisitingScreenSizes,
-        mss,
-      );
-      const replacementLayout = layout[replacementScreen];
-      if (replacementLayout == undefined) {
-        throw new Error("No replacement layout found");
-      }
+    try {
+      const missingLayouts = missingScreenSizes.map((mss) => {
+        const replacementScreen = getReplacementScreenSize(
+          exisitingScreenSizes,
+          mss,
+        );
+        const replacementLayout = layout[replacementScreen];
+        if (replacementLayout == undefined) {
+          throw new AppError("No replacement layout found");
+        }
 
-      return {
-        screen: mss,
-        layout: replacementLayout,
-      };
-    });
+        return {
+          screen: mss,
+          layout: replacementLayout,
+        };
+      });
 
-    // merge
-    const newLayout = layout;
-    missingLayouts.forEach((ml) => {
-      newLayout[ml.screen] = ml.layout;
-    });
+      // merge
+      const newLayout = layout;
+      missingLayouts.forEach((ml) => {
+        newLayout[ml.screen] = ml.layout;
+      });
 
-    return newLayout as ScreenSizePositioning;
+      return newLayout as ScreenSizePositioning;
+    } catch (error) {
+      throw new AppError("Cannot add missing layouts", error, true);
+    }
   }
 
   // is Positioning
@@ -88,5 +93,5 @@ export function getReplacementScreenSize(
     }
   }
 
-  throw new Error("No replacement screen size found");
+  throw new AppError("No replacement screen size found");
 }

@@ -1,19 +1,20 @@
 import { Redis } from "@upstash/redis";
 import { env } from "~/env.mjs";
+import AppError from "~/utils/error";
+import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import { parseAdjustedWidgetConfig } from "../service/parseWidgetConfigService";
 import type { WidgetRepository } from "./widgetRepository";
-import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 
 export class WidgetUpstashRepository implements WidgetRepository {
   private redis;
 
   constructor() {
     if (env.WIDGET_STORE !== "upstash") {
-      throw new Error("Widget store is not set to redis");
+      throw new AppError("Widget store is not set to 'upstash'", null, true);
     }
 
     if (!env.UPSTASH_ENDPOINT || !env.UPSTASH_TOKEN || !env.UPSTASH_KEY) {
-      throw new Error("Upstash credentials are not set");
+      throw new AppError("Upstash credentials are not set", null, true);
     }
 
     this.redis = new Redis({
@@ -24,29 +25,37 @@ export class WidgetUpstashRepository implements WidgetRepository {
 
   async get(): Promise<AdjustedWidgetConfig[]> {
     if (!env.UPSTASH_KEY) {
-      throw new Error("UPSTASH_KEY is not set");
+      throw new AppError("UPSTASH_KEY is not set", null, true);
     }
 
-    const response = await this.redis.get(env.UPSTASH_KEY);
-    if (!response) {
-      throw new Error("No widgets found");
-    }
-    if (typeof response !== "object") {
-      throw new Error("Invalid response from Upstash");
-    }
-    const config = parseAdjustedWidgetConfig(JSON.stringify(response));
-    if (!config) {
-      throw new Error("Invalid widget config");
-    }
+    try {
+      const response = await this.redis.get(env.UPSTASH_KEY);
+      if (!response) {
+        throw new AppError("No widgets found", null, true);
+      }
+      if (typeof response !== "object") {
+        throw new AppError("Invalid response from Upstash", null, true);
+      }
+      const config = parseAdjustedWidgetConfig(JSON.stringify(response));
+      if (!config) {
+        throw new AppError("Invalid widget config", null, true);
+      }
 
-    return config;
+      return config;
+    } catch (error) {
+      throw new AppError("Cannot get widget config through redis", error, true);
+    }
   }
 
   async set(widgets: AdjustedWidgetConfig[]): Promise<void> {
     if (!env.UPSTASH_KEY) {
-      throw new Error("UPSTASH_KEY is not set");
+      throw new AppError("UPSTASH_KEY is not set", null, true);
     }
 
-    await this.redis.set(env.UPSTASH_KEY, JSON.stringify(widgets));
+    try {
+      await this.redis.set(env.UPSTASH_KEY, JSON.stringify(widgets));
+    } catch (error) {
+      throw new AppError("Cannot set widget config through redis", error, true);
+    }
   }
 }

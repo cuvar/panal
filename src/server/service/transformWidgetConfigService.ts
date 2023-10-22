@@ -1,3 +1,4 @@
+import AppError from "~/utils/error";
 import { generateUniqueID } from "~/utils/helper";
 import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import type { UserWidgetConfig } from "../entities/userWidgetConfig";
@@ -12,16 +13,20 @@ import adjustLayoutValues from "./adjustLayoutValuesService";
 export default function transformWidgetConfig(
   userWidgetConfig: UserWidgetConfig[],
 ) {
-  const adjustedWidgetConfig = userWidgetConfig.map((widget) => {
-    const withMissingLayouts = addMissingLayouts(widget.layout);
-    const adjustedConfig = new AdjustedWidgetConfig(
-      generateUniqueID(),
-      widget.type,
-      withMissingLayouts,
-      widget.data,
-    );
-    return adjustLayoutValues<AdjustedWidgetConfig>(adjustedConfig);
-  });
+  try {
+    const adjustedWidgetConfig = userWidgetConfig.map((widget) => {
+      const withMissingLayouts = addMissingLayouts(widget.layout);
+      const adjustedConfig = new AdjustedWidgetConfig(
+        generateUniqueID(),
+        widget.type,
+        withMissingLayouts,
+        widget.data,
+      );
+      return adjustLayoutValues<AdjustedWidgetConfig>(adjustedConfig);
+    });
 
-  return adjustedWidgetConfig;
+    return adjustedWidgetConfig;
+  } catch (error) {
+    throw new AppError("Cannot transform widget config", error);
+  }
 }

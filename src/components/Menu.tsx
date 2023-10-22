@@ -2,7 +2,6 @@ import { useAtom } from "jotai";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { env } from "~/env.mjs";
 import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
 import { api } from "~/utils/api";
 import {
@@ -12,6 +11,7 @@ import {
   penIcon,
   signOutIcon,
 } from "~/utils/icons";
+import Log from "~/utils/log";
 import {
   editModeAtom,
   editedWidgetLayoutAtom,
@@ -45,9 +45,7 @@ export default function Menu() {
       setTimeout(() => {
         setToastText("");
       }, 1500);
-      if (env.NEXT_PUBLIC_PANAL_DEBUG == "false") {
-        console.log(error);
-      }
+      Log(error, "error");
     },
   });
 

@@ -8,18 +8,20 @@ import {
 } from "~/server/repository/widgetRepository";
 import transformWidgetData from "~/server/service/transformWidgetDataService";
 import updateWidgetLayoutService from "~/server/service/updateWidgetLayoutService";
+import Log from "~/utils/log";
 import { widgetLayoutSchema } from "~/utils/schema";
 
 export const widgetRouter = createTRPCRouter({
   getWidgetData: protectedProcedure.query(async () => {
     try {
       const widgetsConfig = await getAdjustedWidgetConfig();
-      const data = transformWidgetData(widgetsConfig);
+      const data = await transformWidgetData(widgetsConfig);
       return data;
     } catch (error) {
+      Log(error, "error");
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
-        message: error instanceof Error ? error?.message : "",
+        message: "Unable to get widget data",
       });
     }
   }),
@@ -28,9 +30,10 @@ export const widgetRouter = createTRPCRouter({
       const data = await getAdjustedWidgetConfig();
       return data;
     } catch (error) {
+      Log(error, "error");
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
-        message: error instanceof Error ? error?.message : "",
+        message: "Unable to get widget config",
       });
     }
   }),
@@ -44,9 +47,10 @@ export const widgetRouter = createTRPCRouter({
       try {
         await saveUserWidgetConfig(input.widgets);
       } catch (error) {
+        Log(error, "error");
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: error instanceof Error ? error?.message : "",
+          message: "Unable to update widget config",
         });
       }
     }),
@@ -65,9 +69,10 @@ export const widgetRouter = createTRPCRouter({
         );
         await saveAdjustedWidgetConfig(updatedWidgets);
       } catch (error) {
+        Log(error, "error");
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: error instanceof Error ? error?.message : "",
+          message: "Unable to update widget layout",
         });
       }
     }),
