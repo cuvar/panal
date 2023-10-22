@@ -5,7 +5,7 @@ import {
   getDatesIncludingRecurrences,
   groupCalendarWidgetByDay,
 } from "~/server/service/dateManipulationService";
-import AppError from "~/utils/error";
+import Log from "~/utils/log";
 import type { CalendarWidgetConfig, CalendarWidgetData } from "./types";
 
 /**
@@ -30,6 +30,7 @@ export default async function computeCalendarWidgetData(
 
     return { entries: groupedData };
   } catch (error) {
-    throw new AppError("Cannot compute calendar widget data", error);
+    Log(error, "error");
+    return { entries: [] };
   }
 }

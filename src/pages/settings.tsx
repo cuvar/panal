@@ -3,11 +3,11 @@ import type { NextPage } from "next";
 import { useState } from "react";
 import Button from "~/components/Button";
 import SiteWrapper from "~/components/SiteWrapper";
-import { env } from "~/env.mjs";
 import ErrorPage from "~/sites/Error";
 import LoadingSpinner from "~/sites/Loading";
 import { api } from "~/utils/api";
 import { useDetectMobile } from "~/utils/hooks";
+import Log from "~/utils/log";
 import { toastTextAtom, toastTypeAtom } from "~/utils/store";
 
 const Home: NextPage = () => {
@@ -19,9 +19,7 @@ const Home: NextPage = () => {
   const widgetConfigQuery = api.widget.getWidgetConfig.useQuery(undefined, {
     onSuccess: (data) => {
       setTextAreaContent(JSON.stringify(data, null, 2));
-      if (env.NEXT_PUBLIC_PANAL_DEBUG == "false") {
-        console.log(data);
-      }
+      Log(data);
     },
     refetchOnWindowFocus: false,
   });
@@ -39,16 +37,12 @@ const Home: NextPage = () => {
       setTimeout(() => {
         setToastText("");
       }, 1500);
-      if (env.NEXT_PUBLIC_PANAL_DEBUG == "false") {
-        console.log(error);
-      }
+      Log(error);
     },
   });
 
   if (widgetConfigQuery.error) {
-    if (env.NEXT_PUBLIC_PANAL_DEBUG == "false") {
-      console.log(widgetConfigQuery.error);
-    }
+    Log(widgetConfigQuery.error);
     return <ErrorPage error={"Could not fetch widget config"} />;
   }
 
@@ -71,9 +65,7 @@ const Home: NextPage = () => {
 
       setWidgetConfigMutation.mutate({ widgets: parsed });
     } catch (error) {
-      if (env.NEXT_PUBLIC_PANAL_DEBUG == "false") {
-        console.log(error);
-      }
+      Log(error, "error");
       setToastType("error");
       setToastText(`Config could not be parsed. There are syntax errors.`);
       setTimeout(() => {

@@ -1,5 +1,6 @@
 import { env } from "~/env.mjs";
 import AppError from "~/utils/error";
+import Log from "~/utils/log";
 import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import parseUserWidgetConfig from "../service/parseWidgetConfigService";
 import transformWidgetConfig from "../service/transformWidgetConfigService";
@@ -19,7 +20,8 @@ export async function getAdjustedWidgetConfig() {
     const config = await getWidgetRepository().get();
     return config;
   } catch (error) {
-    throw new AppError("Cannot get adjusted widget config", error, true);
+    Log(error, "error");
+    return [];
   }
 }
 
@@ -33,8 +35,8 @@ export async function saveUserWidgetConfig(data: object) {
     throw new AppError("Cannot parse widget config");
   }
 
-  const adjustedWidgetConfig = transformWidgetConfig(parsed);
   try {
+    const adjustedWidgetConfig = transformWidgetConfig(parsed);
     await getWidgetRepository().set(adjustedWidgetConfig);
   } catch (error) {
     throw new AppError("Cannot save user widget config", error, true);

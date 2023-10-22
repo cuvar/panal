@@ -1,4 +1,5 @@
 import AppError from "~/utils/error";
+import Log from "~/utils/log";
 import { ICSFetcher } from "../driver/ICSFetcher";
 import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import { WidgetData } from "../entities/widgetData";
@@ -40,17 +41,23 @@ export default async function transformWidgetData(
       } else {
         data = {};
       }
+    } catch (error) {
+      Log(error, "error");
+      data = {};
+    }
 
+    try {
+      const missingLayouts = addMissingLayouts(widget.layout);
       const newWidget = new WidgetData(
         widget.id,
         widget.type,
-        addMissingLayouts(widget.layout),
+        missingLayouts,
         data,
       );
 
       widgetData.push(adjustLayoutValues<WidgetData>(newWidget));
     } catch (error) {
-      throw new AppError("Cannot transform widget data", error, true);
+      throw new AppError("Cannot transform widget config", error);
     }
   }
   return widgetData;

@@ -2,6 +2,7 @@ import type GridLayout from "react-grid-layout";
 import { BREAKPOINTS_ORDER } from "~/utils/const";
 import AppError from "~/utils/error";
 import { isSameSet } from "~/utils/helper";
+import Log from "~/utils/log";
 import type { ScreenSize } from "~/utils/types/types";
 import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 
@@ -15,18 +16,27 @@ export default function updateWidgetLayoutService(
   newLayouts: GridLayout.Layouts,
   widgetConfig: AdjustedWidgetConfig[],
 ): AdjustedWidgetConfig[] {
-  if (!newLayouts) throw new AppError("`newLayouts` is undefined");
+  if (!newLayouts) {
+    const error = new AppError("`newLayouts` is undefined");
+    Log(error, "error");
+    return widgetConfig;
+  }
+
   if (!isSameSet(BREAKPOINTS_ORDER, Object.keys(newLayouts))) {
-    throw new AppError("newLayouts is invalid because of missing screen sizes");
+    Log(
+      new AppError("newLayouts is invalid because of missing screen sizes"),
+      "error",
+    );
   }
   BREAKPOINTS_ORDER.forEach((breakpoint) => {
-    if (!newLayouts[breakpoint])
-      throw new AppError(breakpoint + " does not exist in `newLayouts`");
-    try {
-      updateForScreenSize(newLayouts, widgetConfig, breakpoint);
-    } catch (error) {
-      throw new AppError("Cannot update layout for screen size", error);
+    if (!newLayouts[breakpoint]) {
+      Log(
+        new AppError(breakpoint + " does not exist in `newLayouts`"),
+        "error",
+      );
+      return;
     }
+    updateForScreenSize(newLayouts, widgetConfig, breakpoint);
   });
 
   return widgetConfig;
@@ -45,7 +55,11 @@ function updateForScreenSize(
 ) {
   newLayouts[breakpoint]?.forEach((layout) => {
     const widget = widgetConfig.find((widget) => widget.id === layout.i);
-    if (!widget) throw new AppError("Widget could not be found");
+    if (!widget) {
+      const error = new AppError("Widget could not be found");
+      Log(error, "error");
+      return;
+    }
     widget.setLayout(breakpoint, {
       x: layout.x,
       y: layout.y,
