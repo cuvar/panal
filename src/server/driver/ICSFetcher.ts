@@ -1,4 +1,4 @@
-import { env } from "~/env.mjs";
+import AppError from "~/utils/error";
 import type { Fetcher } from "./Fetcher";
 
 export class ICSFetcher implements Fetcher {
@@ -7,10 +7,7 @@ export class ICSFetcher implements Fetcher {
       const res = await fetch(url).then((res) => res.text());
       return res;
     } catch (error) {
-      if (env.NEXT_PUBLIC_PANAL_DEBUG == "false") {
-        console.log(error);
-      }
-      throw error;
+      throw new AppError("Cannot fetch ICS file", error);
     }
   }
 }

@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { env } from "~/env.mjs";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import {
   getAdjustedWidgetConfig,
@@ -8,6 +9,7 @@ import {
 } from "~/server/repository/widgetRepository";
 import transformWidgetData from "~/server/service/transformWidgetDataService";
 import updateWidgetLayoutService from "~/server/service/updateWidgetLayoutService";
+import AppError from "~/utils/error";
 import { widgetLayoutSchema } from "~/utils/schema";
 
 export const widgetRouter = createTRPCRouter({
@@ -17,9 +19,12 @@ export const widgetRouter = createTRPCRouter({
       const data = transformWidgetData(widgetsConfig);
       return data;
     } catch (error) {
+      if (error instanceof AppError && env.NEXT_PUBLIC_PANAL_DEBUG) {
+        console.log(error.message);
+      }
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
-        message: error instanceof Error ? error?.message : "",
+        message: "Unable to get widget data",
       });
     }
   }),
@@ -28,9 +33,12 @@ export const widgetRouter = createTRPCRouter({
       const data = await getAdjustedWidgetConfig();
       return data;
     } catch (error) {
+      if (error instanceof AppError && env.NEXT_PUBLIC_PANAL_DEBUG) {
+        console.log(error.message);
+      }
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
-        message: error instanceof Error ? error?.message : "",
+        message: "Unable to get widget config",
       });
     }
   }),
@@ -44,9 +52,12 @@ export const widgetRouter = createTRPCRouter({
       try {
         await saveUserWidgetConfig(input.widgets);
       } catch (error) {
+        if (error instanceof AppError && env.NEXT_PUBLIC_PANAL_DEBUG) {
+          console.log(error.message);
+        }
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: error instanceof Error ? error?.message : "",
+          message: "Unable to update widget config",
         });
       }
     }),
@@ -65,9 +76,12 @@ export const widgetRouter = createTRPCRouter({
         );
         await saveAdjustedWidgetConfig(updatedWidgets);
       } catch (error) {
+        if (error instanceof AppError && env.NEXT_PUBLIC_PANAL_DEBUG) {
+          console.log(error.message);
+        }
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: error instanceof Error ? error?.message : "",
+          message: "Unable to update widget layout",
         });
       }
     }),

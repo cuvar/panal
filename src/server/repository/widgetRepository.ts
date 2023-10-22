@@ -1,4 +1,5 @@
 import { env } from "~/env.mjs";
+import AppError from "~/utils/error";
 import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import parseUserWidgetConfig from "../service/parseWidgetConfigService";
 import transformWidgetConfig from "../service/transformWidgetConfigService";
@@ -14,19 +15,11 @@ export interface WidgetRepository {
  * @returns {AdjustedWidgetConfig[]} widget config
  */
 export async function getAdjustedWidgetConfig() {
-  let repo: WidgetRepository | null = null;
-  if (env.WIDGET_STORE == "upstash") {
-    repo = new WidgetUpstashRepository();
-  }
-  if (!repo) {
-    throw new Error("Invalid widget store");
-  }
-
   try {
-    const config = await repo.get();
+    const config = await getWidgetRepository().get();
     return config;
   } catch (error) {
-    throw error;
+    throw new AppError("Cannot get adjusted widget config", error, true);
   }
 }
 
@@ -35,22 +28,16 @@ export async function getAdjustedWidgetConfig() {
  * @param {object} data widget config
  */
 export async function saveUserWidgetConfig(data: object) {
-  let repo: WidgetRepository | null = null;
-  if (env.WIDGET_STORE == "upstash") {
-    repo = new WidgetUpstashRepository();
-  }
-  if (!repo) {
-    throw new Error("Invalid widget store");
-  }
   const parsed = parseUserWidgetConfig(JSON.stringify(data));
   if (parsed === null) {
-    throw new Error("Invalid widget config");
+    throw new AppError("Cannot parse widget config");
   }
+
   const adjustedWidgetConfig = transformWidgetConfig(parsed);
   try {
-    await repo.set(adjustedWidgetConfig);
+    await getWidgetRepository().set(adjustedWidgetConfig);
   } catch (error) {
-    throw error;
+    throw new AppError("Cannot save user widget config", error, true);
   }
 }
 
@@ -59,18 +46,26 @@ export async function saveUserWidgetConfig(data: object) {
  * @param {AdjustedWidgetConfig[]} data Config to save
  */
 export async function saveAdjustedWidgetConfig(data: AdjustedWidgetConfig[]) {
+  try {
+    await getWidgetRepository().set(data);
+  } catch (error) {
+    throw new AppError("Cannot save adjusted widget config", error, true);
+  }
+}
+
+/**
+ * Gets the widget repository
+ * @returns {WidgetRepository} Widget repository
+ */
+export function getWidgetRepository(): WidgetRepository {
   let repo: WidgetRepository | null = null;
   if (env.WIDGET_STORE == "upstash") {
     repo = new WidgetUpstashRepository();
   }
 
   if (!repo) {
-    throw new Error("Invalid widget store");
+    throw new AppError("Widget repository not defined", null, true);
   }
 
-  try {
-    await repo.set(data);
-  } catch (error) {
-    throw error;
-  }
+  return repo;
 }

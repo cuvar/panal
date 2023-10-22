@@ -1,3 +1,4 @@
+import AppError from "~/utils/error";
 import { ICSFetcher } from "../driver/ICSFetcher";
 import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import { WidgetData } from "../entities/widgetData";
@@ -49,7 +50,7 @@ export default async function transformWidgetData(
 
       widgetData.push(adjustLayoutValues<WidgetData>(newWidget));
     } catch (error) {
-      throw error;
+      throw new AppError("Cannot transform widget data", error, true);
     }
   }
   return widgetData;
