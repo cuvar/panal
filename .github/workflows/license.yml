@@ -1,19 +1,33 @@
-name: License Compliance Check
+name: Linting
 
 on:
   pull_request:
     branches: ["main"]
 
 jobs:
-  license-compliance:
+  lint:
     runs-on: ubuntu-latest
+    env: # Or as an environment variable
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+      USERNAME: ${{ secrets.USERNAME }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      EMAIL: ${{ secrets.EMAIL }}
+      WIDGET_STORE: ${{ secrets.WIDGET_STORE }}
+      UPSTASH_ENDPOINT: ${{ secrets.UPSTASH_ENDPOINT }}
+      UPSTASH_TOKEN: ${{ secrets.UPSTASH_TOKEN }}
+      UPSTASH_KEY: ${{ secrets.UPSTASH_KEY }}
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
     steps:
       - uses: actions/checkout@v3
-      - name: License compliance check
-        uses: mikaelvesavuori/license-compliance-action@v1.0.2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          allow_licenses: "https://www.mockachino.com/${{ secrets.MOCKACHINO }}/licenses"
-          nested_field: "licenseString"
-      - name: Fail if license compliance check fails
-        if: ${{ steps.license-compliance.outputs.result != 'success' }}
-        run: exit 1
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm ci
+      - run: npm run check-license
