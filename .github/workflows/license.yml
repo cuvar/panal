@@ -1,11 +1,11 @@
-name: Linting
+name: License Checker
 
 on:
   pull_request:
     branches: ["main"]
 
 jobs:
-  lint:
+  license-checker:
     runs-on: ubuntu-latest
     env: # Or as an environment variable
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
