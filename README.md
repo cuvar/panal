@@ -10,7 +10,7 @@ I wanted to have a simple self-hosted dashboard application for viewing every se
 - search field with various search engines
 - etc
 
-Each service should be a customizable widget on the dashboard. A widget engine (currently working on [that one](https://github.com/cuvar/rswe)) should be used for managing widgets more easily.
+Each service should be a customizable widget on the dashboard. A widget engine should be used for managing widgets more easily.
 
 [dashy](https://github.com/Lissy93/dashy) solves some of the problems and is doing great at that (so maybe that's something for you). However, it is missing some of the functionality I wanted. That's why we're here.
 
@@ -28,7 +28,3 @@ No matter how you want to deploy this application, you need to specify the envir
 
 Pull requests are welcome. For major changes, please open an issue first
 to discuss what you would like to change.
-
-## License
-
-This project is licensed under the [MIT](./LICENSE) license.

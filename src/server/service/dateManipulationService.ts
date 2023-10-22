@@ -1,5 +1,11 @@
 import type { CalendarComponent, FullCalendar } from "ical";
 import type { CalendarEntry } from "../widgets/calendar/types";
+import {
+  filterInRangeRecurrences,
+  getNonRecurringEvents,
+  getRecurringEvents,
+  getValidRecurrenceEvent,
+} from "./recurrenceService";
 
 /**
  * Filters future events with a given `days` in advance.
@@ -58,6 +64,25 @@ export function groupCalendarWidgetByDay(
 }
 
 /**
+ * Transforms calendar data to internal format.
+ * @param {CalendarComponent} event External calendar data
+ * @returns {CalendarEntry} Internal calendar data
+ */
+export function toInternal(event: CalendarComponent): CalendarEntry {
+  const startDate = new Date(event.start!); // todo: get rid of !
+  const endDate = new Date(event.end!);
+  const duration = endDate.getTime() - startDate.getTime();
+
+  const newEvent: CalendarEntry = {
+    title: typeof event.summary !== "string" ? "*No data*" : event.summary,
+    start: startDate,
+    end: endDate,
+    duration: duration,
+  };
+  return newEvent;
+}
+
+/**
  * Returns all dates with or without a recurrence.
  * @param {FullCalendar} data Parsed data from ical.parseICS
  * @param {number} daysInAdvance Days in advance that should be included
@@ -75,18 +100,21 @@ export function getDatesIncludingRecurrences(
   );
   const rangeEnd = new Date(todayPlusNDays);
 
-  const events = filterValidEvents(data);
-  datesWithRecurrences.push(...getNonRecurringEvents(events));
+  const events = filterValidEvents(data).map((e) => transformEventTimeData(e));
+  const internal = getNonRecurringEvents(events).map((e) => toInternal(e));
+  datesWithRecurrences.push(...internal);
 
   const recurringEvents = getRecurringEvents(events);
   for (const event of recurringEvents) {
     const dates = event.rrule!.between(rangeStart, rangeEnd, true, () => true);
-    // The "dates" array contains the set of dates within our desired date range that are valid
-    // for the recurrence rule.  *However*, it's possible for us to have a specific recurrence that
-    // had its date changed from outside the range to inside the range. One way to handle this is
-    // to add *all* recurrence override entries into the set of dates that we check, and then later
-    // filter out any recurrences that don't actually belong within our range.
-
+    // The `dates` array contains the set of dates within our desired date range that are valid
+    // for the recurrence rule.
+    // `event.recurrence` contains events which were originally controlled by the rrule.
+    // However, it has been changed for any reason, which can lead to this: an entry of
+    // the `event.recurrence` array might have a date that is not in the range of the rrule
+    // (specifically: between rangeStart and rangeEnd). Therefore, we just add this occurrence
+    // to the `dates` array which why check later anyways in `getValidRecurrenceEvent`. If the
+    // event is not in the range, it will be filtered out.
     const inRange = filterInRangeRecurrences(event, rangeStart, rangeEnd);
     dates.push(...inRange);
 
@@ -100,6 +128,44 @@ export function getDatesIncludingRecurrences(
 
   return datesWithRecurrences;
 }
+
+/**
+ * Transforms duration to end date.
+ * @param {CalendarComponent} event Event with duration data
+ * @returns {CalendarComponent} Event with end date data
+ */
+export function transformEventTimeData(
+  event: CalendarComponent,
+): CalendarComponent {
+  if (typeof event.start === "undefined") return event;
+  if (typeof event.duration !== "string") return event;
+
+  event.start = new Date(event.start);
+  const duration = icsDurationToSeconds(event.duration);
+  event.end = new Date(event.start?.getTime() + duration * 1000);
+  delete event.duration;
+  return event;
+}
+
+/**
+ * Turns an ICAL-formatted duration into seconds.
+ * @param {string} duration ICAL-formatted duration
+ * @returns {number} Duration in seconds
+ */
+export function icsDurationToSeconds(duration: string) {
+  const durationRegex = /P(?:(\d+)D)?T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/;
+
+  const matches = duration.match(durationRegex);
+  if (!matches) return 0;
+
+  const days = matches[1] ? parseInt(matches[1]) : 0;
+  const hours = matches[2] ? parseInt(matches[2]) : 0;
+  const minutes = matches[3] ? parseInt(matches[3]) : 0;
+  const seconds = matches[4] ? parseInt(matches[4]) : 0;
+
+  return seconds + minutes * 60 + hours * 60 * 60 + days * 24 * 60 * 60;
+}
+
 /**
  * Filters all events that are valid for the following calculations
  * @param {FullCalendar} data Parsed data from ical.parseICS
@@ -111,145 +177,11 @@ export function filterValidEvents(data: FullCalendar) {
     const event = data[k];
     if (typeof event === "undefined") continue;
     if (typeof event.start === "undefined") continue;
-    if (typeof event.end === "undefined") continue;
+    if (typeof event.end === "undefined" && event.duration === "undefined")
+      continue;
     if (event.type !== "VEVENT") continue;
     events.push(event);
   }
 
   return events;
-}
-
-/**
- * Gets all events that do not have a recurrence rule.
- * @param {CalendarComponent[]} events List of valid events
- * @returns {CalendarEntry[]} List of events without a recurrence rule
- */
-export function getNonRecurringEvents(events: CalendarComponent[]) {
-  const nonRecurringEvents = events.filter(
-    (event) =>
-      typeof event.rrule === "undefined" || typeof event.rrule === "string",
-  );
-  const entries = nonRecurringEvents.map((event) => {
-    const startDate = new Date(event.start!);
-    const endDate = new Date(event.end!);
-    const duration = endDate.getTime() - startDate.getTime();
-
-    const newEvent: CalendarEntry = {
-      title: typeof event.summary !== "string" ? "*No data*" : event.summary,
-      start: startDate,
-      end: endDate,
-      duration: duration,
-    };
-    return newEvent;
-  });
-
-  return entries;
-}
-
-/**
- * Gets all events that have a recurrence rule.
- * @param {CalendarComponent[]} events List of valid events
- * @returns {CalendarComponent[]} List of events with a recurrence rule
- */
-export function getRecurringEvents(events: CalendarComponent[]) {
-  return events.filter(
-    (event) =>
-      !(typeof event.rrule === "undefined" || typeof event.rrule === "string"),
-  );
-}
-
-/**
- * Filters all recurrences that are in date range.
- * @param {CalendarComponent} event Event with recurrences
- * @param {Date} rangeStart Start of the range
- * @param {Date} rangeEnd End of the range
- * @returns {Date[]} List of recurrences in date range
- */
-export function filterInRangeRecurrences(
-  event: CalendarComponent,
-  rangeStart: Date,
-  rangeEnd: Date,
-) {
-  const dates: Date[] = [];
-  if (event.recurrences == undefined) {
-    return [];
-  }
-
-  for (const r of event.recurrences) {
-    // Only add dates that weren't already in the range we added from the rrule so that
-    // we don't double-add those events.
-
-    // check if date r is in range
-    if (!r.start || r.dtstamp) continue;
-    const date = new Date(r.start ?? r.dtstamp);
-    if (date >= rangeStart && date <= rangeEnd) {
-      dates.push(date);
-    }
-  }
-
-  return dates;
-}
-
-/**
- * Gets the recurrence event for a given event if valid.
- * @param {CalendarComponent} event The given event
- * @param {Date} date The date to check
- * @param {Date} rangeStart Start of range
- * @param {Date} rangeEnd End of range
- * @returns {CalendarEntry} List of valid recurrence
- */
-export function getValidRecurrenceEvent(
-  event: CalendarComponent,
-  date: Date,
-  rangeStart: Date,
-  rangeEnd: Date,
-) {
-  let curEvent = event;
-  let curDuration =
-    new Date(event.start!).getTime() - new Date(event.end!).getTime();
-  let startDate = date;
-  let showRecurrence = true;
-  const dateLookupKey = date.toISOString().substring(0, 10);
-
-  // * CHECK FOR RECURRENCE OVERRIDE *
-  // For each date that we're checking, it's possible that there is a recurrence override for that one day.
-  if (
-    typeof dateLookupKey == "number" &&
-    curEvent.recurrences?.[dateLookupKey] != undefined
-  ) {
-    // We found an override, so for this recurrence, use a potentially different title, start date, and duration.
-    if (
-      typeof curEvent.recurrences[dateLookupKey] == "undefined" ||
-      !curEvent.recurrences[dateLookupKey]
-    ) {
-      return null;
-    }
-
-    const a = curEvent.recurrences[dateLookupKey];
-    if (a === undefined) return null;
-    curEvent = a;
-    if (typeof curEvent.start === "undefined") return null;
-    if (typeof curEvent.end === "undefined") return null;
-
-    startDate = new Date(curEvent.start);
-    curDuration = new Date(curEvent.end).getTime() - startDate.getTime();
-  }
-
-  // If there's no recurrence override, check for an exception date. Exception dates represent exceptions to the rule.
-  else if (curEvent.exdate?.[dateLookupKey] != undefined) {
-    // This date is an exception date, which means we should skip it in the recurrence pattern.
-    showRecurrence = false;
-  }
-
-  const endDate = new Date(startDate.getTime() + curDuration);
-  if (endDate <= rangeStart || startDate >= rangeEnd) showRecurrence = false;
-  if (!showRecurrence) return null;
-
-  const newEvent: CalendarEntry = {
-    title: curEvent.summary ?? "*No data*",
-    start: startDate,
-    end: endDate,
-    duration: curDuration,
-  };
-  return newEvent;
 }
