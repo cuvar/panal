@@ -16,7 +16,4 @@ jobs:
           nested_field: "licenseString"
       - name: Fail if license compliance check fails
         if: ${{ steps.license-compliance.outputs.result != 'success' }}
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.actions.createError('License compliance check failed.')
+        run: exit 1
