@@ -2,11 +2,14 @@
   "name": "panal",
   "version": "0.1.0",
   "private": true,
+  "license": "CC BY-NC 4.0",
   "scripts": {
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
+    "generate-notice": "generate-attribution",
+    "check-license": "license-checker --onlyAllow 'MIT;ISC;0BSD;BSD*;BSD-2-Clause;BSD-3-Clause;Apache-2.0;Python-2.0;MPL-2.0;CC-BY-4.0;CC0-1.0;CC-BY-3.0' --excludePackages 'panal@0.1.0'",
     "test": "jest --passWithNoTests"
   },
   "dependencies": {
