@@ -9,6 +9,7 @@ import {
 } from "~/utils/const";
 
 import { useAtom } from "jotai";
+import Link from "next/link";
 import { useEffect } from "react";
 import getHidingClasses from "~/client/services/getHidingClassesService";
 import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
@@ -21,6 +22,7 @@ import type { SearchWidgetData } from "~/server/widgets/search/types";
 import TimeWidget from "~/server/widgets/time/TimeWidget";
 import type { TimeWidgetData } from "~/server/widgets/time/types";
 import { useDetectScreenSize } from "~/utils/hooks";
+import { cogIcon } from "~/utils/icons";
 import {
   editModeAtom,
   editedWidgetLayoutAtom,
@@ -83,6 +85,7 @@ export default function WidgetView(props: Props) {
                 }`}
                 key={widget.id}
               >
+                {editMode && <Link href={`/w/${widget.id}`} className="absolute top-2 right-2 z-20 text-panal-100">{cogIcon}</Link>}
                 {widget.type === "time" && (
                   <TimeWidget
                     data={widget.data as TimeWidgetData}

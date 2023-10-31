@@ -7,6 +7,7 @@ import {
 } from "~/server/repository/widgetRepository";
 import transformWidgetData from "~/server/service/transformWidgetDataService";
 import updateWidgetLayoutService from "~/server/service/updateWidgetLayoutService";
+import AppError from "~/utils/error";
 import Log from "~/utils/log";
 import { widgetLayoutSchema } from "~/utils/schema";
 
@@ -24,6 +25,25 @@ export const widgetRouter = createTRPCRouter({
       });
     }
   }),
+  getWidgetDataForWidget: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input }) => {
+      try {
+        const widgetsConfig = await getAdjustedWidgetConfig();
+        const data = await transformWidgetData(widgetsConfig);
+        const res = data.find((d) => d.id == input.id);
+        if (!res) {
+          throw new AppError(`No widget data for widget with ID ${input.id}`);
+        }
+        return res;
+      } catch (error) {
+        Log(error, "error");
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Unable to get widget data",
+        });
+      }
+    }),
   getWidgetConfig: protectedProcedure.query(async () => {
     try {
       const data = await getWidgetRepository().get();
