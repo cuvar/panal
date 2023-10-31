@@ -70,6 +70,7 @@ export default function WidgetView(props: Props) {
         rowHeight={GRID_ROW_HEIGHT}
         layouts={widgetLayout}
         maxRows={GRID_MAX_ROW}
+        verticalCompact={false}
         autoSize={false}
         onLayoutChange={handleLayoutChange}
       >
