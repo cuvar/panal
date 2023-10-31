@@ -1,5 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
-import type { Positioning } from "./types/widget";
+import type { Positioning, WidgetType } from "./types/widget";
 
 /**
  * Checks whether input is of type empty Positioning
@@ -31,4 +31,26 @@ export function isEmptyPositioning(positioning: Positioning): boolean {
     positioning.x === 0 &&
     positioning.y === 0
   );
+}
+
+/**
+ * Turns a given WidgetType into an appropriate display name.
+ * @param {WidgetType} type WidgetType for which the display name is required
+ * @returns {string} Display name for WidgetType
+ */
+export function getNameForWidgetType(type: WidgetType): string {
+  if (type === "time") return "Time";
+  if (type === "calendar") return "Calendar";
+  if (type === "links") return "Link Collection";
+  if (type === "search") return "Search";
+  return "unknown";
+}
+
+/**
+ * Properly formats a JSON object to a string with right spacing and newlines
+ * @param {object} json JSON Object to format
+ * @returns {string} Proper formatted JSON string
+ */
+export function toProperJsonStringFormat(json: object): string {
+  return JSON.stringify(json, null, 2);
 }

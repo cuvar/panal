@@ -64,7 +64,7 @@ export default function WidgetView(props: Props) {
   }
 
   return (
-    <div className="h-full w-full max-w-[1280px]">
+    <div className="h-screen w-full max-w-[1280px]">
       <ResponsiveGridLayout
         className="layout"
         breakpoints={{ ...adjustedBreakpoints }}
@@ -85,7 +85,14 @@ export default function WidgetView(props: Props) {
                 }`}
                 key={widget.id}
               >
-                {editMode && <Link href={`/w/${widget.id}`} className="absolute top-2 right-2 z-20 text-panal-100">{cogIcon}</Link>}
+                {editMode && (
+                  <Link
+                    href={`/w/${widget.id}`}
+                    className="absolute right-2 top-2 z-20 text-panal-100"
+                  >
+                    {cogIcon}
+                  </Link>
+                )}
                 {widget.type === "time" && (
                   <TimeWidget
                     data={widget.data as TimeWidgetData}
