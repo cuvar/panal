@@ -35,6 +35,10 @@ export const env = createEnv({
       process.env.WIDGET_STORE === "upstash"
         ? z.string().min(1)
         : z.string().min(1).optional(),
+    REPO_FILE:
+      process.env.WIDGET_STORE === "file"
+        ? z.string().min(1)
+        : z.string().min(1).optional(),
   },
 
   /**
@@ -58,6 +62,7 @@ export const env = createEnv({
     UPSTASH_ENDPOINT: process.env.UPSTASH_ENDPOINT,
     UPSTASH_TOKEN: process.env.UPSTASH_TOKEN,
     UPSTASH_KEY: process.env.UPSTASH_KEY,
+    REPO_FILE: process.env.REPO_FILE,
     NEXT_PUBLIC_PANAL_DEBUG: process.env.NEXT_PUBLIC_PANAL_DEBUG,
   },
   /**

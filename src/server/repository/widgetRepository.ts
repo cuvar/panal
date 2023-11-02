@@ -4,6 +4,7 @@ import Log from "~/utils/log";
 import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import parseUserWidgetConfig from "../service/parseWidgetConfigService";
 import transformWidgetConfig from "../service/transformWidgetConfigService";
+import { WidgetLocalFileRepository } from "./widgetLocalFileRepository";
 import { WidgetUpstashRepository } from "./widgetUpstashRepository";
 
 export interface WidgetRepository {
@@ -63,6 +64,8 @@ export function getWidgetRepository(): WidgetRepository {
   let repo: WidgetRepository | null = null;
   if (env.WIDGET_STORE == "upstash") {
     repo = new WidgetUpstashRepository();
+  } else if (env.WIDGET_STORE == "file") {
+    repo = new WidgetLocalFileRepository();
   }
 
   if (!repo) {
