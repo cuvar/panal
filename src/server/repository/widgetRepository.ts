@@ -60,15 +60,20 @@ export async function saveUserWidgetConfig(
  * Updates the widget config of widget with ID `id` and content `widgets` to the widget store
  * @param {string} id ID of widget
  * @param {object} widgets Entered widget config from user
+ * @param {WidgetRepository} repo Repository used for storage
  */
-export async function updateUserWidgetConfig(id: string, widgets: object) {
+export async function updateUserWidgetConfig(
+  id: string,
+  widgets: object,
+  repo: WidgetRepository,
+) {
   const newParsed = parseUserWidgetConfig(JSON.stringify([widgets]));
 
   if (newParsed === null || !Array.isArray(newParsed) || newParsed.length < 1) {
     throw new AppError("Cannot parse widget config");
   }
 
-  const awc = await getWidgetRepository().get();
+  const awc = await repo.get();
   const currentConfig = awc.find((e) => e.id === id) as UserWidgetConfig;
 
   if (!currentConfig) {
@@ -84,17 +89,5 @@ export async function updateUserWidgetConfig(id: string, widgets: object) {
     await getWidgetRepository().set(adjustedWidgetConfig);
   } catch (error) {
     throw new AppError("Cannot save user widget config", error, true);
-  }
-}
-
-/**
- * Saves the widget config to the widget store
- * @param {AdjustedWidgetConfig[]} data Config to save
- */
-export async function saveAdjustedWidgetConfig(data: AdjustedWidgetConfig[]) {
-  try {
-    await getWidgetRepository().set(data);
-  } catch (error) {
-    throw new AppError("Cannot save adjusted widget config", error, true);
   }
 }

@@ -79,7 +79,6 @@ const Home: NextPage = () => {
     // setWidgetConfigMutation.mutate({
     //   widgets:
     // })
-    // TODO: first, resolve issue #68, then rebase on top of it to get a testable repository
   }
 
   return (
