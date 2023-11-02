@@ -44,7 +44,7 @@ export const widgetRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       try {
-        await saveUserWidgetConfig(input.widgets);
+        await saveUserWidgetConfig(input.widgets, getWidgetRepository());
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({

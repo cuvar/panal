@@ -4,6 +4,7 @@ import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import parseUserWidgetConfig from "../service/parseWidgetConfigService";
 import transformWidgetConfig from "../service/transformWidgetConfigService";
 import { WidgetLocalFileRepository } from "./widgetLocalFileRepository";
+import { WidgetRepositoryMock } from "./widgetRepositoryMock";
 import { WidgetUpstashRepository } from "./widgetUpstashRepository";
 
 export interface WidgetRepository {
@@ -21,6 +22,8 @@ export function getWidgetRepository(): WidgetRepository {
     repo = new WidgetUpstashRepository();
   } else if (env.WIDGET_STORE == "file") {
     repo = new WidgetLocalFileRepository();
+  } else if (env.WIDGET_STORE == "mock") {
+    repo = new WidgetRepositoryMock();
   }
 
   if (!repo) {
@@ -31,10 +34,14 @@ export function getWidgetRepository(): WidgetRepository {
 }
 
 /**
- * Saves the widget config to the widget store
- * @param {object} data widget config
+ * Saves the widget config to the widget store,
+ * @param {object} data Widget config
+ * @param {WidgetRepository} repo Repository used for storage
  */
-export async function saveUserWidgetConfig(data: object) {
+export async function saveUserWidgetConfig(
+  data: object,
+  repo: WidgetRepository,
+) {
   const parsed = parseUserWidgetConfig(JSON.stringify(data));
   if (parsed === null) {
     throw new AppError("Cannot parse widget config");
@@ -42,7 +49,7 @@ export async function saveUserWidgetConfig(data: object) {
 
   try {
     const adjustedWidgetConfig = transformWidgetConfig(parsed);
-    await getWidgetRepository().set(adjustedWidgetConfig);
+    await repo.set(adjustedWidgetConfig);
   } catch (error) {
     throw new AppError("Cannot save user widget config", error, true);
   }
