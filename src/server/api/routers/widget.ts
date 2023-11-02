@@ -2,8 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import {
-  getAdjustedWidgetConfig,
-  saveAdjustedWidgetConfig,
+  getWidgetRepository,
   saveUserWidgetConfig,
 } from "~/server/repository/widgetRepository";
 import transformWidgetData from "~/server/service/transformWidgetDataService";
@@ -14,7 +13,7 @@ import { widgetLayoutSchema } from "~/utils/schema";
 export const widgetRouter = createTRPCRouter({
   getWidgetData: protectedProcedure.query(async () => {
     try {
-      const widgetsConfig = await getAdjustedWidgetConfig();
+      const widgetsConfig = await getWidgetRepository().get();
       const data = await transformWidgetData(widgetsConfig);
       return data;
     } catch (error) {
@@ -27,7 +26,7 @@ export const widgetRouter = createTRPCRouter({
   }),
   getWidgetConfig: protectedProcedure.query(async () => {
     try {
-      const data = await getAdjustedWidgetConfig();
+      const data = await getWidgetRepository().get();
       return data;
     } catch (error) {
       Log(error, "error");
@@ -62,12 +61,12 @@ export const widgetRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       try {
-        const widgetConfig = await getAdjustedWidgetConfig();
+        const widgetConfig = await getWidgetRepository().get();
         const updatedWidgets = updateWidgetLayoutService(
           input.layout,
           widgetConfig,
         );
-        await saveAdjustedWidgetConfig(updatedWidgets);
+        await getWidgetRepository().set(updatedWidgets);
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({
