@@ -22,7 +22,7 @@ export const env = createEnv({
     USERNAME: z.string().min(1),
     PASSWORD: z.string().min(1),
     EMAIL: z.string().email(),
-    WIDGET_STORE: z.enum(["upstash", "file"]),
+    WIDGET_STORE: z.enum(["mock", "upstash", "file"]),
     UPSTASH_ENDPOINT:
       process.env.WIDGET_STORE === "upstash"
         ? z.string().url()
@@ -33,6 +33,10 @@ export const env = createEnv({
         : z.string().min(1).optional(),
     UPSTASH_KEY:
       process.env.WIDGET_STORE === "upstash"
+        ? z.string().min(1)
+        : z.string().min(1).optional(),
+    REPO_FILE:
+      process.env.WIDGET_STORE === "file"
         ? z.string().min(1)
         : z.string().min(1).optional(),
   },
@@ -58,6 +62,7 @@ export const env = createEnv({
     UPSTASH_ENDPOINT: process.env.UPSTASH_ENDPOINT,
     UPSTASH_TOKEN: process.env.UPSTASH_TOKEN,
     UPSTASH_KEY: process.env.UPSTASH_KEY,
+    REPO_FILE: process.env.REPO_FILE,
     NEXT_PUBLIC_PANAL_DEBUG: process.env.NEXT_PUBLIC_PANAL_DEBUG,
   },
   /**
