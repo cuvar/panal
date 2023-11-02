@@ -4,6 +4,7 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import {
   getWidgetRepository,
   saveUserWidgetConfig,
+  updateUserWidgetConfig,
 } from "~/server/repository/widgetRepository";
 import transformWidgetData from "~/server/service/transformWidgetDataService";
 import updateWidgetLayoutService from "~/server/service/updateWidgetLayoutService";
@@ -25,15 +26,16 @@ export const widgetRouter = createTRPCRouter({
       });
     }
   }),
-  getWidgetDataForWidget: protectedProcedure
+  getAdjustedWidgetConfigForWidget: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
       try {
-        const widgetsConfig = await getAdjustedWidgetConfig();
-        const data = await transformWidgetData(widgetsConfig);
+        const data = await getWidgetRepository().get();
         const res = data.find((d) => d.id == input.id);
         if (!res) {
-          throw new AppError(`No widget data for widget with ID ${input.id}`);
+          throw new AppError(
+            `No adjusted widget config for widget with ID ${input.id}`,
+          );
         }
         return res;
       } catch (error) {
@@ -65,6 +67,24 @@ export const widgetRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       try {
         await saveUserWidgetConfig(input.widgets, getWidgetRepository());
+      } catch (error) {
+        Log(error, "error");
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Unable to update widget config",
+        });
+      }
+    }),
+  setWidgetConfigForWidget: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        widgets: z.array(z.any()),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      try {
+        await updateUserWidgetConfig(input.id, input.widgets);
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({
