@@ -16,8 +16,10 @@ export default function transformWidgetConfig(
   try {
     const adjustedWidgetConfig = userWidgetConfig.map((widget) => {
       const withMissingLayouts = addMissingLayouts(widget.layout);
+      const wId = "id" in widget ? (widget.id as string) : generateUniqueID();
+
       const adjustedConfig = new AdjustedWidgetConfig(
-        generateUniqueID(),
+        wId,
         widget.type,
         withMissingLayouts,
         widget.data,
