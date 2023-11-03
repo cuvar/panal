@@ -7,6 +7,7 @@ import { api } from "~/utils/api";
 import {
   checkIcon,
   cogIcon,
+  crossIcon,
   ellipsisIcon,
   penIcon,
   signOutIcon,
@@ -94,6 +95,10 @@ export default function Menu() {
     setWidgetLayoutMutation.mutate({ layout: editedWidgetLayout });
   }
 
+  function handleAbortEditLayout() {
+    setEditMode(false);
+  }
+
   return (
     <div className="z-50 space-x-2">
       <button onClick={handleEllipsisClick} ref={menuButtonRef}>
@@ -141,6 +146,16 @@ export default function Menu() {
           >
             <span>{penIcon}</span>
             <span>Edit layout</span>
+          </button>
+        )}
+        {editMode && (
+          <button
+            className="flex justify-start space-x-2 rounded-md px-4 py-2 hover:bg-slate-700 active:bg-slate-800"
+            onClick={() => handleAbortEditLayout()}
+            onFocus={() => setShowMenu(true)}
+          >
+            <span>{crossIcon}</span>
+            <span>Abort</span>
           </button>
         )}
       </div>
