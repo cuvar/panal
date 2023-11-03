@@ -54,3 +54,4 @@ widgets.json
 
 # custom
 .vscode/*
+store.json
