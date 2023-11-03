@@ -12,6 +12,11 @@ import { api } from "~/utils/api";
 import { getNameForWidgetType, toProperJsonStringFormat } from "~/utils/helper";
 import Log from "~/utils/log";
 import { toastTextAtom, toastTypeAtom } from "~/utils/store";
+import { type ScreenSize } from "~/utils/types/types";
+import {
+  type Positioning,
+  type ScreenSizePositioning,
+} from "~/utils/types/widget";
 
 const Home: NextPage = () => {
   const id = useRouter().query.id;
@@ -19,6 +24,9 @@ const Home: NextPage = () => {
   const [, setToastType] = useAtom(toastTypeAtom);
   const [widgetData, setWidgetData] = useState<WidgetData | null>(null);
   const [textAreaInput, setTextAreaInput] = useState("");
+  const [layoutData, setLayoutData] = useState<ScreenSizePositioning | null>(
+    null,
+  );
 
   const widgetDataQuery = api.widget.getAdjustedWidgetConfigForWidget.useQuery(
     { id: typeof id === "string" ? id : "" },
@@ -26,29 +34,31 @@ const Home: NextPage = () => {
       enabled: typeof id === "string",
       onSuccess: (data) => {
         setWidgetData(data);
+        setLayoutData(data.layout);
         setTextAreaInput(toProperJsonStringFormat(data.data));
         Log(data);
       },
     },
   );
 
-  const setWidgetConfigMutation = api.widget.setWidgetConfig.useMutation({
-    onSuccess: (_data) => {
-      setToastType("success");
-      setToastText(`Saved successfully`);
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
-    },
-    onError: (error) => {
-      setToastType("error");
-      setToastText(`Saving failed`);
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
-      Log(error);
-    },
-  });
+  const setWidgetConfigForWidgetMutation =
+    api.widget.setWidgetConfigForWidget.useMutation({
+      onSuccess: (_data) => {
+        setToastType("success");
+        setToastText(`Saved successfully`);
+        setTimeout(() => {
+          setToastText("");
+        }, 1500);
+      },
+      onError: (error) => {
+        setToastType("error");
+        setToastText(`Saving failed`);
+        setTimeout(() => {
+          setToastText("");
+        }, 1500);
+        Log(error);
+      },
+    });
 
   if (typeof id !== "string" && !widgetDataQuery.isLoading) {
     return <ErrorPage error={`ID is not valid.`} />;
@@ -65,20 +75,31 @@ const Home: NextPage = () => {
     );
   }
 
-  function handleInputChange(
+  function handleLayoutInputChange(
     ev: ChangeEvent<HTMLInputElement>,
-    key: string,
-    value: number,
+    key: keyof Positioning,
+    screenSize: ScreenSize,
   ) {
-    console.log(key, value);
-    // TODO: add implementation
+    if (!layoutData) {
+      return;
+    }
+
+    const newLayoutData = { ...layoutData };
+    newLayoutData[screenSize][key] = parseInt(ev.target.value);
+    setLayoutData(newLayoutData);
   }
 
   function onClickSave() {
-    // TODO: implement mutation preparation
-    // setWidgetConfigMutation.mutate({
-    //   widgets:
-    // })
+    if (!widgetData || !layoutData) {
+      return;
+    }
+
+    setWidgetConfigForWidgetMutation.mutate({
+      id: id as string,
+      type: widgetData.type,
+      layout: layoutData,
+      data: textAreaInput,
+    });
   }
 
   return (
@@ -106,37 +127,45 @@ const Home: NextPage = () => {
               </p>
             </div>
             <Separator />
-            <div className="">
-              <h2 className="mb-5 text-xl">Layout</h2>
-              <div className="space-y-2">
-                {Object.entries(widgetData.layout).map(([key, value]) => {
-                  return (
-                    <div key={key} className="flex space-x-2">
-                      <div className="w-10">{key}</div>
-                      <div className="flex space-x-2">
-                        {Object.entries(value).map(
-                          ([key, value]: [string, number]) => {
-                            return (
-                              <div key={key} className="flex space-x-2">
-                                <p>{key}</p>
-                                <input
-                                  type="number"
-                                  className="w-10 rounded-sm text-right text-black"
-                                  value={value}
-                                  onChange={(e) =>
-                                    handleInputChange(e, key, value)
-                                  }
-                                />
-                              </div>
-                            );
-                          },
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
+            {layoutData && (
+              <div className="">
+                <h2 className="mb-5 text-xl">Layout</h2>
+                <div className="space-y-2">
+                  {Object.entries(layoutData).map(
+                    ([screenKey, screenValue]) => {
+                      return (
+                        <div key={screenKey} className="flex space-x-2">
+                          <div className="w-10">{screenKey}</div>
+                          <div className="flex space-x-2">
+                            {Object.entries(screenValue).map(
+                              ([key, value]: [string, number]) => {
+                                return (
+                                  <div key={key} className="flex space-x-2">
+                                    <p>{key}</p>
+                                    <input
+                                      type="number"
+                                      className="w-10 rounded-sm text-right text-black"
+                                      value={value}
+                                      onChange={(e) =>
+                                        handleLayoutInputChange(
+                                          e,
+                                          key as keyof Positioning,
+                                          screenKey as ScreenSize,
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                );
+                              },
+                            )}
+                          </div>
+                        </div>
+                      );
+                    },
+                  )}
+                </div>
               </div>
-            </div>
+            )}
             <Separator />
             <div className="">
               <h2 className="mb-5 text-xl">Configuration</h2>

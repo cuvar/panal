@@ -10,7 +10,11 @@ import transformWidgetData from "~/server/service/transformWidgetDataService";
 import updateWidgetLayoutService from "~/server/service/updateWidgetLayoutService";
 import AppError from "~/utils/error";
 import Log from "~/utils/log";
-import { widgetLayoutSchema } from "~/utils/schema";
+import {
+  screenSizePositioningSchema,
+  widgetLayoutSchema,
+  widgetTypeSchema,
+} from "~/utils/schema";
 
 export const widgetRouter = createTRPCRouter({
   getWidgetData: protectedProcedure.query(async () => {
@@ -79,16 +83,19 @@ export const widgetRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
-        widgets: z.array(z.any()),
+        type: widgetTypeSchema,
+        layout: screenSizePositioningSchema,
+        data: z.string(),
       }),
     )
     .mutation(async ({ input }) => {
+      const widget = {
+        type: input.type,
+        layout: input.layout,
+        data: JSON.parse(input.data),
+      };
       try {
-        await updateUserWidgetConfig(
-          input.id,
-          input.widgets,
-          getWidgetRepository(),
-        );
+        await updateUserWidgetConfig(input.id, widget, getWidgetRepository());
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({

@@ -59,18 +59,18 @@ export async function saveUserWidgetConfig(
 /**
  * Updates the widget config of widget with ID `id` and content `widgets` to the widget store
  * @param {string} id ID of widget
- * @param {object} widgets Entered widget config from user
+ * @param {object} widget Entered widget config from user
  * @param {WidgetRepository} repo Repository used for storage
  */
 export async function updateUserWidgetConfig(
   id: string,
-  widgets: object,
+  widget: object,
   repo: WidgetRepository,
 ) {
-  const newParsed = parseUserWidgetConfig(JSON.stringify([widgets]));
+  const newParsed = parseUserWidgetConfig(JSON.stringify([widget]));
 
-  if (newParsed === null || !Array.isArray(newParsed) || newParsed.length < 1) {
-    throw new AppError("Cannot parse widget config");
+  if (!newParsed || !Array.isArray(newParsed) || newParsed.length < 1) {
+    throw new AppError(`Cannot parse widget config: ${newParsed?.toString()}`);
   }
 
   const awc = await repo.get();
@@ -80,7 +80,6 @@ export async function updateUserWidgetConfig(
     throw new AppError(`No widget with ID ${id}`);
   }
 
-  // TODO: is this really updating the original object?
   currentConfig.data = newParsed[0]!.data;
   currentConfig.layout = newParsed[0]!.layout;
 
