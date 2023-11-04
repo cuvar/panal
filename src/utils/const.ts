@@ -40,3 +40,5 @@ export const MIN_WIDGET_HEIGHT = Object.freeze({
 
 export const GRID_ROW_HEIGHT = 100;
 export const GRID_MAX_ROW = 10;
+
+export const REPO_LAYOUT_FILE = "./store.layout.json";

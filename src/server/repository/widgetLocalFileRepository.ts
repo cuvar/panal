@@ -1,5 +1,6 @@
 import fs from "fs/promises";
 import { env } from "~/env.mjs";
+import { REPO_LAYOUT_FILE } from "~/utils/const";
 import AppError from "~/utils/error";
 import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import { parseAdjustedWidgetConfig } from "../service/parseWidgetConfigService";
@@ -13,11 +14,7 @@ export class WidgetLocalFileRepository implements WidgetRepository {
       throw new AppError("Widget store is not set to 'file'", null, true);
     }
 
-    if (!env.REPO_FILE) {
-      throw new AppError("Local file repo path not set", null, true);
-    }
-
-    this.file = env.REPO_FILE;
+    this.file = REPO_LAYOUT_FILE;
   }
 
   async get(): Promise<AdjustedWidgetConfig[]> {
