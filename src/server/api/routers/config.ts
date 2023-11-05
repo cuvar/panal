@@ -4,7 +4,7 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { WidgetConfig } from "~/server/entities/widgetConfig";
 import { getConfigRepository } from "~/server/repository/config/configRepository";
 import { parseWidgetConfigArray } from "~/server/service/parseWidgetConfigService";
-import transformWidgetConfig from "~/server/service/transformWidgetDataService";
+import transformWidgetConfig from "~/server/service/transformWidgetConfigService";
 import AppError from "~/utils/error";
 import Log from "~/utils/log";
 import { widgetTypeSchema } from "~/utils/schema";
