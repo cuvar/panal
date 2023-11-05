@@ -32,7 +32,7 @@ export const widgetRouter = createTRPCRouter({
       });
     }
   }),
-  getAdjustedWidgetConfigForWidget: protectedProcedure
+  getLayoutForWidget: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
       try {
