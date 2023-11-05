@@ -13,7 +13,7 @@ export class ConfigUpstashRepository implements ConfigRepository {
       throw new AppError("Widget store is not set to 'upstash'", null, true);
     }
 
-    if (!env.UPSTASH_ENDPOINT || !env.UPSTASH_TOKEN || !env.UPSTASH_KEY) {
+    if (!env.UPSTASH_ENDPOINT || !env.UPSTASH_TOKEN) {
       throw new AppError("Upstash credentials are not set", null, true);
     }
 
