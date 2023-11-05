@@ -9,7 +9,7 @@ import transformLayoutsForGrid from "./transformLayoutsService";
 describe("transformLayoutsService", () => {
   it("transforms correctly into gridlayout with static: true", () => {
     // arrange
-    const awc1 = new AdjustedWidgetLayout("1", "time", {
+    const widgetData1 = new AdjustedWidgetLayout("1", "time", {
       xl: {
         x: 0,
         y: 0,
@@ -47,7 +47,7 @@ describe("transformLayoutsService", () => {
         h: 6,
       },
     });
-    const awc2 = new AdjustedWidgetLayout("2", "time", {
+    const widgetData2 = new AdjustedWidgetLayout("2", "time", {
       xl: {
         x: 0,
         y: 0,
@@ -86,7 +86,7 @@ describe("transformLayoutsService", () => {
       },
     });
 
-    const input: AdjustedWidgetLayout[] = [awc1, awc2];
+    const input: AdjustedWidgetLayout[] = [widgetData1, widgetData2];
     const makeStatic = true;
     const expected: GridLayout.Layouts = {
       xl: [
@@ -196,7 +196,7 @@ describe("transformLayoutsService", () => {
 
   it("transforms correctly into gridlayout with static: false", () => {
     // arrange
-    const awc1 = new AdjustedWidgetLayout("1", "time", {
+    const widgetData1 = new AdjustedWidgetLayout("1", "time", {
       xl: {
         x: 0,
         y: 0,
@@ -234,7 +234,7 @@ describe("transformLayoutsService", () => {
         h: 6,
       },
     });
-    const awc2 = new AdjustedWidgetLayout("2", "time", {
+    const widgetData2 = new AdjustedWidgetLayout("2", "time", {
       xl: {
         x: 0,
         y: 0,
@@ -273,7 +273,7 @@ describe("transformLayoutsService", () => {
       },
     });
 
-    const input: AdjustedWidgetLayout[] = [awc1, awc2];
+    const input: AdjustedWidgetLayout[] = [widgetData1, widgetData2];
     const makeStatic = false;
     const expected: GridLayout.Layouts = {
       xl: [

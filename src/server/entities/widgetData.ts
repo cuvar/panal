@@ -12,7 +12,7 @@ import type { LinkWidgetData } from "../widgets/links/types";
 import type { SearchWidgetData } from "../widgets/search/types";
 import type { TimeWidgetData } from "../widgets/time/types";
 
-export class AdjustedWidgetConfig {
+export class WidgetData {
   id: string;
   type: WidgetType;
   data: LinkWidgetData | SearchWidgetData | CalendarWidgetData | TimeWidgetData;
