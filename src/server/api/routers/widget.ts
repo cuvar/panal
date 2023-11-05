@@ -6,7 +6,7 @@ import {
   getLayoutRepository,
   saveUserWidgetConfig,
   updateUserWidgetConfig,
-} from "~/server/repository/layout/widgetRepository";
+} from "~/server/repository/layout/layoutRepository";
 import transformWidgetData from "~/server/service/transformWidgetDataService";
 import updateWidgetLayoutService from "~/server/service/updateWidgetLayoutService";
 import AppError from "~/utils/error";

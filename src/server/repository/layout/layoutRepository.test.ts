@@ -2,8 +2,8 @@
  * @jest-environment node
  */
 
-import { saveUserWidgetConfig } from "./widgetRepository";
-import { LayoutRepositoryMock } from "./widgetRepositoryMock";
+import { saveUserWidgetConfig } from "./layoutRepository";
+import { LayoutRepositoryMock } from "./layoutRepositoryMock";
 
 describe("Widget repository:", () => {
   test("throws correctly on empty data", async () => {

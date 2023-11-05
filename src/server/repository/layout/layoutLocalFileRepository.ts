@@ -4,7 +4,7 @@ import AppError from "~/utils/error";
 import { type Reader } from "../../driver/Reader/Reader";
 import type { AdjustedWidgetConfig } from "../../entities/adjustedWidgetConfig";
 import { parseAdjustedWidgetConfig } from "../../service/parseWidgetConfigService";
-import type { LayoutRepository } from "./widgetRepository";
+import type { LayoutRepository } from "./layoutRepository";
 
 export class WidgetLocalFileRepository implements LayoutRepository {
   private file: string;

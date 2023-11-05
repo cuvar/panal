@@ -5,9 +5,9 @@ import type { AdjustedWidgetConfig } from "../../entities/adjustedWidgetConfig";
 import { type UserWidgetConfig } from "../../entities/userWidgetConfig";
 import parseUserWidgetConfig from "../../service/parseWidgetConfigService";
 import transformWidgetConfig from "../../service/transformWidgetConfigService";
-import { WidgetLocalFileRepository } from "./widgetLocalFileRepository";
-import { LayoutRepositoryMock } from "./widgetRepositoryMock";
-import { WidgetUpstashRepository } from "./widgetUpstashRepository";
+import { WidgetLocalFileRepository } from "./layoutLocalFileRepository";
+import { LayoutRepositoryMock } from "./layoutRepositoryMock";
+import { WidgetUpstashRepository } from "./layoutUpstashRepository";
 
 export interface LayoutRepository {
   get(): Promise<AdjustedWidgetConfig[]>;

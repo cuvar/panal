@@ -4,7 +4,7 @@ import { UPSTASH_LAYOUT_KEY } from "~/utils/const";
 import AppError from "~/utils/error";
 import type { AdjustedWidgetConfig } from "../../entities/adjustedWidgetConfig";
 import { parseAdjustedWidgetConfig } from "../../service/parseWidgetConfigService";
-import type { LayoutRepository } from "./widgetRepository";
+import type { LayoutRepository } from "./layoutRepository";
 
 export class WidgetUpstashRepository implements LayoutRepository {
   private redis;
