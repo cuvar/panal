@@ -13,7 +13,7 @@ export interface ConfigRepository {
 
 /**
  * Gets the widget repository
- * @returns {WidgetRepository} Widget repository
+ * @returns {ConfigRepository} Widget repository
  */
 export function getWidgetRepository(): ConfigRepository {
   let repo: ConfigRepository | null = null;
