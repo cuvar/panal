@@ -2,10 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
-import {
-  getLayoutRepository,
-  updateUserWidgetLayout,
-} from "~/server/repository/layout/layoutRepository";
+import { getLayoutRepository } from "~/server/repository/layout/layoutRepository";
 import transformWidgetLayout from "~/server/service/transformWidgetLayoutService";
 import updateWidgetLayoutService from "~/server/service/updateWidgetLayoutService";
 import AppError from "~/utils/error";
@@ -86,7 +83,7 @@ export const layoutRouter = createTRPCRouter({
         input.layout,
       );
       try {
-        await updateUserWidgetLayout(widget, getLayoutRepository());
+        await getLayoutRepository().set(widget.id, widget);
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({

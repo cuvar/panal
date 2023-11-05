@@ -2,8 +2,6 @@ import { env } from "~/env.mjs";
 import AppError from "~/utils/error";
 import { FileReader } from "../../driver/Reader/FileReader";
 import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
-import parseUserWidgetLayout from "../../service/parseWidgetConfigService";
-import transformWidgetLayout from "../../service/transformWidgetLayoutService";
 import { LayoutLocalFileRepository } from "./layoutLocalFileRepository";
 import { LayoutRepositoryMock } from "./layoutRepositoryMock";
 import { LayoutUpstashRepository } from "./layoutUpstashRepository";
@@ -34,43 +32,4 @@ export function getLayoutRepository(): LayoutRepository {
   }
 
   return repo;
-}
-
-/**
- * Saves the widget config to the widget store,
- * @param {object} data Widget config
- * @param {LayoutRepository} repo Repository used for storage
- */
-export async function saveUserWidgetLayout(
-  data: object,
-  repo: LayoutRepository,
-) {
-  const parsed = parseUserWidgetLayout(JSON.stringify(data));
-  if (parsed === null) {
-    throw new AppError("Cannot parse widget config");
-  }
-
-  try {
-    const adjustedWidgetLayout = transformWidgetLayout(parsed);
-    await repo.setAll(adjustedWidgetLayout);
-  } catch (error) {
-    throw new AppError("Cannot save user widget config", error, true);
-  }
-}
-
-/**
- * Updates the widget config of widget with ID `id` and content `widgets` to the widget store
- * @param {string} id ID of widget
- * @param {object} widget Entered widget config from user
- * @param {LayoutRepository} repo Repository used for storage
- */
-export async function updateUserWidgetLayout(
-  widget: AdjustedWidgetLayout,
-  repo: LayoutRepository,
-) {
-  try {
-    await repo.set(widget.id, widget);
-  } catch (error) {
-    throw new AppError("Cannot save user widget config", error, true);
-  }
 }

@@ -1,11 +1,9 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import {
-  getConfigRepository,
-  saveUserWidgetConfig,
-  updateUserWidgetConfig,
-} from "~/server/repository/config/configRepository";
+import { WidgetConfig } from "~/server/entities/widgetConfig";
+import { getConfigRepository } from "~/server/repository/config/configRepository";
+import { parseWidgetConfigArray } from "~/server/service/parseWidgetConfigService";
 import transformWidgetData from "~/server/service/transformWidgetDataService";
 import AppError from "~/utils/error";
 import Log from "~/utils/log";
@@ -52,7 +50,12 @@ export const configRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       try {
-        await saveUserWidgetConfig(input.widgets, getConfigRepository());
+        const parsed = parseWidgetConfigArray(JSON.stringify(input.widgets));
+        if (parsed === null) {
+          throw new AppError("Cannot parse widget config");
+        }
+
+        await getConfigRepository().setAll(parsed);
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({
@@ -75,7 +78,10 @@ export const configRouter = createTRPCRouter({
         data: JSON.parse(input.data),
       };
       try {
-        await updateUserWidgetConfig(input.id, widget, getConfigRepository());
+        if (!WidgetConfig.validate(widget)) {
+          throw new AppError(`Cannot parse widget config`);
+        }
+        await getConfigRepository().set(input.id, widget);
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({
