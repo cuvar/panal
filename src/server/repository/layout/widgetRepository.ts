@@ -1,10 +1,10 @@
 import { env } from "~/env.mjs";
 import AppError from "~/utils/error";
-import { FileReader } from "../driver/Reader/FileReader";
-import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
-import { type UserWidgetConfig } from "../entities/userWidgetConfig";
-import parseUserWidgetConfig from "../service/parseWidgetConfigService";
-import transformWidgetConfig from "../service/transformWidgetConfigService";
+import { FileReader } from "../../driver/Reader/FileReader";
+import type { AdjustedWidgetConfig } from "../../entities/adjustedWidgetConfig";
+import { type UserWidgetConfig } from "../../entities/userWidgetConfig";
+import parseUserWidgetConfig from "../../service/parseWidgetConfigService";
+import transformWidgetConfig from "../../service/transformWidgetConfigService";
 import { WidgetLocalFileRepository } from "./widgetLocalFileRepository";
 import { WidgetRepositoryMock } from "./widgetRepositoryMock";
 import { WidgetUpstashRepository } from "./widgetUpstashRepository";

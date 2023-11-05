@@ -1,9 +1,9 @@
 import { env } from "~/env.mjs";
 import { REPO_LAYOUT_FILE } from "~/utils/const";
 import AppError from "~/utils/error";
-import { type Reader } from "../driver/Reader/Reader";
-import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
-import { parseAdjustedWidgetConfig } from "../service/parseWidgetConfigService";
+import { type Reader } from "../../driver/Reader/Reader";
+import type { AdjustedWidgetConfig } from "../../entities/adjustedWidgetConfig";
+import { parseAdjustedWidgetConfig } from "../../service/parseWidgetConfigService";
 import type { WidgetRepository } from "./widgetRepository";
 
 export class WidgetLocalFileRepository implements WidgetRepository {
