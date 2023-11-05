@@ -8,6 +8,7 @@ import {
   updateUserWidgetLayout,
 } from "~/server/repository/layout/layoutRepository";
 import transformWidgetData from "~/server/service/transformWidgetDataService";
+import transformWidgetLayout from "~/server/service/transformWidgetLayoutService";
 import updateWidgetLayoutService from "~/server/service/updateWidgetLayoutService";
 import AppError from "~/utils/error";
 import Log from "~/utils/log";
@@ -19,11 +20,13 @@ import {
 
 export const widgetRouter = createTRPCRouter({
   getWidgetData: protectedProcedure.query(async () => {
+    // TODO: split
     try {
       const storedConfigs = await getConfigRepository().getAll();
       const storedLayouts = await getLayoutRepository().get();
-      const data = await transformWidgetData(storedConfigs, storedLayouts);
-      return data;
+      const configData = await transformWidgetData(storedConfigs);
+      const layoutData = await transformWidgetLayout(storedLayouts);
+      return configData;
     } catch (error) {
       Log(error, "error");
       throw new TRPCError({
