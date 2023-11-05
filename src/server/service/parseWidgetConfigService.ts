@@ -1,4 +1,4 @@
-import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
+import { AdjustedWidgetLayout } from "../entities/adjustedWidgetConfig";
 import { UserWidgetLayout } from "../entities/userWidgetConfig";
 import { WidgetConfig } from "../entities/widgetConfig";
 
@@ -25,24 +25,24 @@ export default function parseUserWidgetConfig(
 }
 
 /**
- * Parses a string into a AdjustedWidgetConfig[].
+ * Parses a string into a AdjustedWidgetLayout[].
  * @param {string} input String to parse
- * @returns {AdjustedWidgetConfig[] | null} Parsed AdjustedWidgetConfig[] or null if invalid
+ * @returns {AdjustedWidgetLayout[] | null} Parsed AdjustedWidgetLayout[] or null if invalid
  */
 export function parseAdjustedWidgetConfig(
   input: string,
-): AdjustedWidgetConfig[] | null {
+): AdjustedWidgetLayout[] | null {
   const parsed = JSON.parse(input);
   if (!Array.isArray(parsed)) {
     return null;
   }
 
-  const result: AdjustedWidgetConfig[] = [];
+  const result: AdjustedWidgetLayout[] = [];
   for (const widget of parsed) {
-    if (!AdjustedWidgetConfig.validate(widget)) {
+    if (!AdjustedWidgetLayout.validate(widget)) {
       return null;
     }
-    result.push(new AdjustedWidgetConfig(widget.id, widget.layout));
+    result.push(new AdjustedWidgetLayout(widget.id, widget.layout));
   }
   return result;
 }

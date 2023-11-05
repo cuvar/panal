@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
+import { AdjustedWidgetLayout } from "../entities/adjustedWidgetConfig";
 import { UserWidgetLayout } from "../entities/userWidgetConfig";
 import transformWidgetLayout from "./transformWidgetConfigService";
 
@@ -76,7 +76,7 @@ describe("transformWidgetConfigService", () => {
     };
 
     const input = new UserWidgetLayout(layoutInput);
-    const expected = new AdjustedWidgetConfig("1", layoutExpected);
+    const expected = new AdjustedWidgetLayout("1", layoutExpected);
 
     // act
     const action = async () => {

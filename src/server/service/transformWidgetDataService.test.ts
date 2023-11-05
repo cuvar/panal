@@ -3,7 +3,7 @@
  */
 
 import type { ScreenSizePositioning, WidgetType } from "~/utils/types/widget";
-import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
+import { AdjustedWidgetLayout } from "../entities/adjustedWidgetConfig";
 import { WidgetData } from "../entities/widgetData";
 import transformWidgetData from "./transformWidgetDataService";
 
@@ -50,7 +50,7 @@ describe("transformWidgetDataService", () => {
       },
     };
 
-    const input: AdjustedWidgetConfig = new AdjustedWidgetConfig("1", layout);
+    const input: AdjustedWidgetLayout = new AdjustedWidgetLayout("1", layout);
     const expected: WidgetData = new WidgetData("1", widgetType, layout, {});
     // act
     const result = await transformWidgetData([input]);

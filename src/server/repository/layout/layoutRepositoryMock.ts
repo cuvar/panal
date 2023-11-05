@@ -1,12 +1,12 @@
-import type { AdjustedWidgetConfig } from "../../entities/adjustedWidgetConfig";
+import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetConfig";
 import type { LayoutRepository } from "./layoutRepository";
 
 export class LayoutRepositoryMock implements LayoutRepository {
-  async get(): Promise<AdjustedWidgetConfig[]> {
+  async get(): Promise<AdjustedWidgetLayout[]> {
     return Promise.resolve([]);
   }
 
-  async set(widgets: AdjustedWidgetConfig[]): Promise<void> {
+  async set(widgets: AdjustedWidgetLayout[]): Promise<void> {
     //
   }
 }

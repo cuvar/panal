@@ -2,7 +2,7 @@ import { Redis } from "@upstash/redis";
 import { env } from "~/env.mjs";
 import { UPSTASH_LAYOUT_KEY } from "~/utils/const";
 import AppError from "~/utils/error";
-import type { AdjustedWidgetConfig } from "../../entities/adjustedWidgetConfig";
+import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetConfig";
 import { parseAdjustedWidgetConfig } from "../../service/parseWidgetConfigService";
 import type { LayoutRepository } from "./layoutRepository";
 
@@ -24,7 +24,7 @@ export class WidgetUpstashRepository implements LayoutRepository {
     });
   }
 
-  async get(): Promise<AdjustedWidgetConfig[]> {
+  async get(): Promise<AdjustedWidgetLayout[]> {
     try {
       const response = await this.redis.get(UPSTASH_LAYOUT_KEY);
       if (!response) {
@@ -44,7 +44,7 @@ export class WidgetUpstashRepository implements LayoutRepository {
     }
   }
 
-  async set(widgets: AdjustedWidgetConfig[]): Promise<void> {
+  async set(widgets: AdjustedWidgetLayout[]): Promise<void> {
     try {
       await this.redis.set(UPSTASH_LAYOUT_KEY, JSON.stringify(widgets));
     } catch (error) {

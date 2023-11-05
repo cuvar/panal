@@ -1,7 +1,7 @@
 import { env } from "~/env.mjs";
 import AppError from "~/utils/error";
 import { FileReader } from "../../driver/Reader/FileReader";
-import type { AdjustedWidgetConfig } from "../../entities/adjustedWidgetConfig";
+import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetConfig";
 import { type UserWidgetLayout } from "../../entities/userWidgetConfig";
 import parseUserWidgetConfig from "../../service/parseWidgetConfigService";
 import transformWidgetLayout from "../../service/transformWidgetConfigService";
@@ -10,8 +10,8 @@ import { LayoutRepositoryMock } from "./layoutRepositoryMock";
 import { WidgetUpstashRepository } from "./layoutUpstashRepository";
 
 export interface LayoutRepository {
-  get(): Promise<AdjustedWidgetConfig[]>;
-  set(widgets: AdjustedWidgetConfig[]): Promise<void>;
+  get(): Promise<AdjustedWidgetLayout[]>;
+  set(widgets: AdjustedWidgetLayout[]): Promise<void>;
 }
 
 /**

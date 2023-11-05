@@ -3,7 +3,7 @@
  */
 
 import type { ScreenSizePositioning } from "~/utils/types/widget";
-import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
+import { AdjustedWidgetLayout } from "../entities/adjustedWidgetConfig";
 import { UserWidgetLayout } from "../entities/userWidgetConfig";
 import parseUserWidgetConfig, {
   parseAdjustedWidgetConfig,
@@ -126,7 +126,7 @@ describe("parseWidgetConfigService", () => {
     expect(result).toBeNull();
   });
 
-  it("works correctly for parsing AdjustedWidgetConfig", () => {
+  it("works correctly for parsing AdjustedWidgetLayout", () => {
     // arrange
     const id = "hello world";
     const layoutInput: ScreenSizePositioning = {
@@ -168,7 +168,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new AdjustedWidgetConfig(id, layoutInput);
+    const expected = new AdjustedWidgetLayout(id, layoutInput);
     const input = JSON.stringify([expected]);
     // act
     const result = parseAdjustedWidgetConfig(input);
@@ -178,7 +178,7 @@ describe("parseWidgetConfigService", () => {
     expect(result).toStrictEqual([expected]);
   });
 
-  it("fails correctly for parsing AdjustedWidgetConfig due of missing array", () => {
+  it("fails correctly for parsing AdjustedWidgetLayout due of missing array", () => {
     // arrange
     const id = "hello world";
     const layoutInput: ScreenSizePositioning = {
@@ -220,7 +220,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new AdjustedWidgetConfig(id, layoutInput);
+    const expected = new AdjustedWidgetLayout(id, layoutInput);
     const input = JSON.stringify(expected);
     // act
     const result = parseAdjustedWidgetConfig(input);
@@ -229,7 +229,7 @@ describe("parseWidgetConfigService", () => {
     expect(result).toBeNull();
   });
 
-  it("fails correctly for parsing AdjustedWidgetConfig due wrong data property", () => {
+  it("fails correctly for parsing AdjustedWidgetLayout due wrong data property", () => {
     // arrange
     const id = "hello world";
     const layoutInput: ScreenSizePositioning = {
@@ -271,7 +271,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new AdjustedWidgetConfig(id, layoutInput);
+    const expected = new AdjustedWidgetLayout(id, layoutInput);
     const input = JSON.stringify([expected]);
     // act
     const result = parseAdjustedWidgetConfig(input);

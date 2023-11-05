@@ -10,7 +10,7 @@ import {
   type ConfigRepository,
 } from "../repository/config/configRepository";
 
-export class AdjustedWidgetConfig {
+export class AdjustedWidgetLayout {
   id: string;
   layout: ScreenSizePositioning;
   _type: WidgetType | null;
@@ -21,7 +21,7 @@ export class AdjustedWidgetConfig {
     this._type = null;
   }
 
-  static validate(input: unknown): input is AdjustedWidgetConfig {
+  static validate(input: unknown): input is AdjustedWidgetLayout {
     if (!isObject(input)) {
       return false;
     }

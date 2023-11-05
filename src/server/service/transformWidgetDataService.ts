@@ -1,7 +1,7 @@
 import AppError from "~/utils/error";
 import Log from "~/utils/log";
 import { ICSFetcher } from "../driver/ICSFetcher";
-import { type AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
+import { type AdjustedWidgetLayout } from "../entities/adjustedWidgetConfig";
 import { type WidgetConfig } from "../entities/widgetConfig";
 import { WidgetData } from "../entities/widgetData";
 import computeCalendarWidgetData from "../widgets/calendar/data";
@@ -16,14 +16,14 @@ import addMissingLayouts from "./addMissingLayoutsService";
 import adjustLayoutValues from "./adjustLayoutValuesService";
 
 /**
- * Transforms the given AdjustedWidgetConfig[] into a WidgetData[]
- * @param {WidgetConfig[]} widgetConfig AdjustedWidgetConfig[] to transform
- * @param {AdjustedWidgetConfig[]} layoutConfig
+ * Transforms the given AdjustedWidgetLayout[] into a WidgetData[]
+ * @param {WidgetConfig[]} widgetConfig AdjustedWidgetLayout[] to transform
+ * @param {AdjustedWidgetLayout[]} layoutConfig
  * @returns {Promise<WidgetData[]>} WidgetData[] with unique IDs
  */
 export default async function transformWidgetData(
   widgetConfig: WidgetConfig[],
-  layoutConfig: AdjustedWidgetConfig[],
+  layoutConfig: AdjustedWidgetLayout[],
 ): Promise<WidgetData[]> {
   const widgetData: WidgetData[] = [];
   for (const widget of widgetConfig) {

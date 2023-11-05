@@ -2,7 +2,7 @@ import { env } from "~/env.mjs";
 import { REPO_LAYOUT_FILE } from "~/utils/const";
 import AppError from "~/utils/error";
 import { type Reader } from "../../driver/Reader/Reader";
-import type { AdjustedWidgetConfig } from "../../entities/adjustedWidgetConfig";
+import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetConfig";
 import { parseAdjustedWidgetConfig } from "../../service/parseWidgetConfigService";
 import type { LayoutRepository } from "./layoutRepository";
 
@@ -19,7 +19,7 @@ export class WidgetLocalFileRepository implements LayoutRepository {
     this.reader = reader;
   }
 
-  async get(): Promise<AdjustedWidgetConfig[]> {
+  async get(): Promise<AdjustedWidgetLayout[]> {
     try {
       const fileContents = await this.reader.read(this.file);
       const response = JSON.parse(fileContents);
@@ -45,7 +45,7 @@ export class WidgetLocalFileRepository implements LayoutRepository {
     }
   }
 
-  async set(widgets: AdjustedWidgetConfig[]): Promise<void> {
+  async set(widgets: AdjustedWidgetLayout[]): Promise<void> {
     try {
       await this.reader.write(this.file, JSON.stringify(widgets));
     } catch (error) {

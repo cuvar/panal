@@ -4,7 +4,7 @@
 
 import type GridLayout from "react-grid-layout";
 import type { ScreenSizePositioning } from "~/utils/types/widget";
-import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
+import { AdjustedWidgetLayout } from "../entities/adjustedWidgetConfig";
 import updateWidgetLayoutService from "./updateWidgetLayoutService";
 
 describe("updateWidgetLayoutService", () => {
@@ -49,7 +49,7 @@ describe("updateWidgetLayoutService", () => {
         h: 0,
       },
     };
-    const widgetConfig: AdjustedWidgetConfig = new AdjustedWidgetConfig(
+    const widgetConfig: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       id,
       layoutInput,
     );
@@ -69,7 +69,7 @@ describe("updateWidgetLayoutService", () => {
       h: newLayouts.lg![0]!.h,
     };
 
-    const expected: AdjustedWidgetConfig = new AdjustedWidgetConfig(
+    const expected: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       id,
       layoutExpected,
     );
@@ -123,7 +123,7 @@ describe("updateWidgetLayoutService", () => {
         h: 0,
       },
     };
-    const widgetConfig: AdjustedWidgetConfig = new AdjustedWidgetConfig(
+    const widgetConfig: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       id,
       layoutInput,
     );
@@ -182,7 +182,7 @@ describe("updateWidgetLayoutService", () => {
         h: 0,
       },
     };
-    const widgetConfig: AdjustedWidgetConfig = new AdjustedWidgetConfig(
+    const widgetConfig: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       id,
       layoutInput,
     );

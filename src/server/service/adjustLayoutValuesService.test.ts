@@ -4,7 +4,7 @@
 
 import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/utils/const";
 import type { ScreenSizePositioning, WidgetType } from "~/utils/types/widget";
-import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
+import { AdjustedWidgetLayout } from "../entities/adjustedWidgetConfig";
 import { WidgetData } from "../entities/widgetData";
 import adjustLayoutValues from "./adjustLayoutValuesService";
 import {
@@ -111,7 +111,7 @@ describe("adjustLayoutValuesService", () => {
     expect(result).toStrictEqual(expected);
   });
 
-  it("works for AdjustedWidgetConfig", () => {
+  it("works for AdjustedWidgetLayout", () => {
     // arrange
     const widgetType: WidgetType = "time";
     const minWidth = getMinWidthForWidget(widgetType);
@@ -193,17 +193,17 @@ describe("adjustLayoutValuesService", () => {
       },
     };
 
-    const input: AdjustedWidgetConfig = new AdjustedWidgetConfig(
+    const input: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       "1",
       layoutInput,
     );
-    const expected: AdjustedWidgetConfig = new AdjustedWidgetConfig(
+    const expected: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       "1",
       layoutExpected,
     );
 
     // act
-    const result = adjustLayoutValues<AdjustedWidgetConfig>(input, widgetType);
+    const result = adjustLayoutValues<AdjustedWidgetLayout>(input, widgetType);
 
     // assert
     expect(result).toStrictEqual(expected);
