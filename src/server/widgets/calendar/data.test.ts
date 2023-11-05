@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { MockICSFetcher } from "~/server/driver/MockICSFetcher";
+import { MockICSFetcher } from "~/server/driver/Fetcher/MockICSFetcher";
 import computeCalendarWidgetData from "../calendar/data";
 import type { CalendarWidgetConfig } from "./types";
 

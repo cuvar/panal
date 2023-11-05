@@ -1,5 +1,5 @@
 import Log from "~/utils/log";
-import { ICSFetcher } from "../driver/ICSFetcher";
+import { ICSFetcher } from "../driver/Fetcher/ICSFetcher";
 import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import { type WidgetConfig } from "../entities/widgetConfig";
 import computeCalendarWidgetData from "../widgets/calendar/data";
