@@ -6,7 +6,6 @@ import Button from "~/components/Button";
 import Separator from "~/components/Separator";
 import SiteWrapper from "~/components/SiteWrapper";
 import Textarea from "~/components/Textarea";
-import { type WidgetData } from "~/server/entities/widgetData";
 import ErrorPage from "~/sites/Error";
 import { api } from "~/utils/api";
 import { getNameForWidgetType, toProperJsonStringFormat } from "~/utils/helper";
@@ -16,58 +15,92 @@ import { type ScreenSize } from "~/utils/types/types";
 import {
   type Positioning,
   type ScreenSizePositioning,
+  type WidgetType,
 } from "~/utils/types/widget";
 
 const Home: NextPage = () => {
   const id = useRouter().query.id;
   const [, setToastText] = useAtom(toastTextAtom);
   const [, setToastType] = useAtom(toastTypeAtom);
-  const [widgetData, setWidgetData] = useState<WidgetData | null>(null);
+  const [widgetType, setWidgetType] = useState<WidgetType | null>(null);
   const [textAreaInput, setTextAreaInput] = useState("");
   const [layoutData, setLayoutData] = useState<ScreenSizePositioning | null>(
     null,
   );
 
-  const widgetDataQuery = api.layout.getLayoutForWidget.useQuery(
+  const widgetLayoutQuery = api.layout.getForWidget.useQuery(
     { id: typeof id === "string" ? id : "" },
     {
       enabled: typeof id === "string",
       onSuccess: (data) => {
-        setWidgetData(data);
+        setWidgetType(data.type);
         setLayoutData(data.layout);
+        Log(data);
+      },
+    },
+  );
+  const widgetConfigQuery = api.config.getForWidget.useQuery(
+    { id: typeof id === "string" ? id : "" },
+    {
+      enabled: typeof id === "string",
+      onSuccess: (data) => {
         setTextAreaInput(toProperJsonStringFormat(data.data));
         Log(data);
       },
     },
   );
 
-  const setWidgetConfigForWidgetMutation =
-    api.config.setWidgetConfigForWidget.useMutation({
-      onSuccess: (_data) => {
-        setToastType("success");
-        setToastText(`Saved successfully`);
-        setTimeout(() => {
-          setToastText("");
-        }, 1500);
-      },
-      onError: (error) => {
-        setToastType("error");
-        setToastText(`Saving failed`);
-        setTimeout(() => {
-          setToastText("");
-        }, 1500);
-        Log(error);
-      },
-    });
+  const setWidgetConfigForWidgetMutation = api.config.setForWidget.useMutation({
+    onSuccess: (_data) => {
+      setToastType("success");
+      setToastText(`Config saved successfully`);
+      setTimeout(() => {
+        setToastText("");
+      }, 1500);
+    },
+    onError: (error) => {
+      setToastType("error");
+      setToastText(`Saving failed`);
+      setTimeout(() => {
+        setToastText("");
+      }, 1500);
+      Log(error);
+    },
+  });
 
-  if (typeof id !== "string" && !widgetDataQuery.isLoading) {
+  const setWidgetLayoutForWidgetMutation = api.layout.setForWidget.useMutation({
+    onSuccess: (_data) => {
+      setToastType("success");
+      setToastText(`Layout saved successfully`);
+      setTimeout(() => {
+        setToastText("");
+      }, 1500);
+    },
+    onError: (error) => {
+      setToastType("error");
+      setToastText(`Saving failed`);
+      setTimeout(() => {
+        setToastText("");
+      }, 1500);
+      Log(error);
+    },
+  });
+
+  if (
+    typeof id !== "string" &&
+    !widgetLayoutQuery.isLoading &&
+    !widgetConfigQuery.isLoading
+  ) {
     return <ErrorPage error={`ID is not valid.`} />;
   }
 
   if (
     // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    (widgetDataQuery.error || !widgetData) &&
-    !widgetDataQuery.isLoading &&
+    (widgetLayoutQuery.error || !widgetType) &&
+    !widgetLayoutQuery.isLoading &&
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+    (widgetConfigQuery.error || !widgetType) &&
+    !widgetConfigQuery.isLoading &&
     typeof id === "string"
   ) {
     return (
@@ -89,16 +122,27 @@ const Home: NextPage = () => {
     setLayoutData(newLayoutData);
   }
 
-  function onClickSave() {
-    if (!widgetData || !layoutData) {
+  function onClickSaveConfig() {
+    if (!widgetType) {
       return;
     }
 
     setWidgetConfigForWidgetMutation.mutate({
       id: id as string,
-      type: widgetData.type,
-      layout: layoutData,
+      type: widgetType,
       data: textAreaInput,
+    });
+  }
+
+  function onClickSaveLayout() {
+    if (!widgetType || !layoutData) {
+      return;
+    }
+
+    setWidgetLayoutForWidgetMutation.mutate({
+      id: id as string,
+      type: widgetType,
+      layout: layoutData,
     });
   }
 
@@ -106,24 +150,25 @@ const Home: NextPage = () => {
     <SiteWrapper>
       <div className="min-h-screen w-full">
         <h1 className="w-full text-left text-3xl font-bold">Settings</h1>
-        {widgetDataQuery.isLoading && (
-          <div className="flex h-screen items-center justify-center">
-            <div className="text-xl italic">Loading</div>
-          </div>
-        )}
-        {widgetData && (
+        {widgetLayoutQuery.isLoading ||
+          (widgetConfigQuery.isLoading && (
+            <div className="flex h-screen items-center justify-center">
+              <div className="text-xl italic">Loading</div>
+            </div>
+          ))}
+        {widgetType && (
           <div className="mt-10 h-full w-full">
             <div className="">
               <h2 className="mb-5 text-xl">General information</h2>
               <p>
                 <span>WidgetType: </span>
                 <span className="font-mono">
-                  {getNameForWidgetType(widgetData.type)}
+                  {getNameForWidgetType(widgetType)}
                 </span>
               </p>
               <p>
                 <span>ID: </span>
-                <span className="font-mono">{widgetData.id}</span>
+                <span className="font-mono">{id}</span>
               </p>
             </div>
             <Separator />
@@ -180,7 +225,8 @@ const Home: NextPage = () => {
               </div>
             </div>
             <div className="mt-5 flex w-full justify-end">
-              <Button handler={onClickSave}>Save</Button>
+              <Button handler={onClickSaveConfig}>Save Config</Button>
+              <Button handler={onClickSaveLayout}>Save Layout</Button>
             </div>
           </div>
         )}

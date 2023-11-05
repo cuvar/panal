@@ -7,7 +7,7 @@ import { api } from "~/utils/api";
 import Log from "~/utils/log";
 
 const Home: NextPage = () => {
-  const widgetDataQuery = api.layout.getWidgetLayout.useQuery(undefined, {
+  const widgetDataQuery = api.layout.getAll.useQuery(undefined, {
     onSuccess: (data) => {
       Log(data);
     },

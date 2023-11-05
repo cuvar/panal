@@ -1,6 +1,6 @@
 import { env } from "~/env.mjs";
 import { FileReader } from "~/server/driver/Reader/FileReader";
-import { type WidgetConfig } from "~/server/entities/widgetConfig";
+import { WidgetConfig } from "~/server/entities/widgetConfig";
 import { parseWidgetConfigArray } from "~/server/service/parseWidgetConfigService";
 import AppError from "~/utils/error";
 import { ConfigLocalFileRepository } from "./configLocalFileRepository";
@@ -51,6 +51,28 @@ export async function saveUserWidgetConfig(
 
   try {
     await repo.setAll(parsed);
+  } catch (error) {
+    throw new AppError("Cannot save user widget config", error, true);
+  }
+}
+
+/**
+ * Updates the widget config of widget with ID `id` and content `widgets` to the widget store
+ * @param {string} id ID of widget
+ * @param {object} widget Entered widget config from user
+ * @param {ConfigRepository} repo Repository used for storage
+ */
+export async function updateUserWidgetConfig(
+  id: string,
+  widget: object,
+  repo: ConfigRepository,
+) {
+  if (!WidgetConfig.validate(widget)) {
+    throw new AppError(`Cannot parse widget config`);
+  }
+
+  try {
+    await repo.set(id, widget);
   } catch (error) {
     throw new AppError("Cannot save user widget config", error, true);
   }

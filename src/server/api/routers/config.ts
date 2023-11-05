@@ -4,17 +4,15 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import {
   getConfigRepository,
   saveUserWidgetConfig,
+  updateUserWidgetConfig,
 } from "~/server/repository/config/configRepository";
-import {
-  getLayoutRepository,
-  updateUserWidgetLayout,
-} from "~/server/repository/layout/layoutRepository";
 import transformWidgetData from "~/server/service/transformWidgetDataService";
+import AppError from "~/utils/error";
 import Log from "~/utils/log";
-import { screenSizePositioningSchema, widgetTypeSchema } from "~/utils/schema";
+import { widgetTypeSchema } from "~/utils/schema";
 
 export const configRouter = createTRPCRouter({
-  getWidgetConfig: protectedProcedure.query(async () => {
+  getAll: protectedProcedure.query(async () => {
     try {
       const storedConfigs = await getConfigRepository().getAll();
       const configData = await transformWidgetData(storedConfigs);
@@ -27,7 +25,26 @@ export const configRouter = createTRPCRouter({
       });
     }
   }),
-  setAllWidgetConfig: protectedProcedure
+  getForWidget: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input }) => {
+      try {
+        const data = await getConfigRepository().get(input.id);
+        if (!data) {
+          throw new AppError(
+            `No adjusted widget config for widget with ID ${input.id}`,
+          );
+        }
+        return data;
+      } catch (error) {
+        Log(error, "error");
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Unable to get widget data",
+        });
+      }
+    }),
+  setAll: protectedProcedure
     .input(
       z.object({
         widgets: z.array(z.any()),
@@ -44,23 +61,21 @@ export const configRouter = createTRPCRouter({
         });
       }
     }),
-  setWidgetConfigForWidget: protectedProcedure // TODO: rework
+  setForWidget: protectedProcedure
     .input(
       z.object({
         id: z.string(),
         type: widgetTypeSchema,
-        layout: screenSizePositioningSchema,
         data: z.string(),
       }),
     )
     .mutation(async ({ input }) => {
       const widget = {
         type: input.type,
-        layout: input.layout,
         data: JSON.parse(input.data),
       };
       try {
-        await updateUserWidgetLayout(input.id, widget, getLayoutRepository());
+        await updateUserWidgetConfig(input.id, widget, getConfigRepository());
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({

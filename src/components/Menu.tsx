@@ -31,7 +31,7 @@ export default function Menu() {
   const [, setToastText] = useAtom(toastTextAtom);
   const [, setToastType] = useAtom(toastTypeAtom);
 
-  const setWidgetLayoutMutation = api.layout.setWidgetLayout.useMutation({
+  const setWidgetLayoutMutation = api.layout.setAll.useMutation({
     onSuccess: () => {
       setWidgetLayout(makeLayoutsStatic(editedWidgetLayout, true));
       setToastType("success");
