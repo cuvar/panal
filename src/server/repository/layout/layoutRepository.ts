@@ -2,7 +2,6 @@ import { env } from "~/env.mjs";
 import AppError from "~/utils/error";
 import { FileReader } from "../../driver/Reader/FileReader";
 import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
-import { type UserWidgetLayout } from "../../entities/userWidgetLayout";
 import parseUserWidgetLayout from "../../service/parseWidgetConfigService";
 import transformWidgetLayout from "../../service/transformWidgetLayoutService";
 import { LayoutLocalFileRepository } from "./layoutLocalFileRepository";
@@ -12,7 +11,8 @@ import { LayoutUpstashRepository } from "./layoutUpstashRepository";
 export interface LayoutRepository {
   get(id: string): Promise<AdjustedWidgetLayout>;
   getAll(): Promise<AdjustedWidgetLayout[]>;
-  set(widgets: AdjustedWidgetLayout[]): Promise<void>;
+  setAll(widgets: AdjustedWidgetLayout[]): Promise<void>;
+  set(id: string, widgets: AdjustedWidgetLayout): Promise<void>;
 }
 
 /**
@@ -52,7 +52,7 @@ export async function saveUserWidgetLayout(
 
   try {
     const adjustedWidgetLayout = transformWidgetLayout(parsed);
-    await repo.set(adjustedWidgetLayout);
+    await repo.setAll(adjustedWidgetLayout);
   } catch (error) {
     throw new AppError("Cannot save user widget config", error, true);
   }
@@ -65,30 +65,11 @@ export async function saveUserWidgetLayout(
  * @param {LayoutRepository} repo Repository used for storage
  */
 export async function updateUserWidgetLayout(
-  id: string,
-  widget: object,
+  widget: AdjustedWidgetLayout,
   repo: LayoutRepository,
 ) {
-  const newParsed = parseUserWidgetLayout(JSON.stringify([widget]));
-
-  if (!newParsed || !Array.isArray(newParsed) || newParsed.length < 1) {
-    throw new AppError(`Cannot parse widget config: ${newParsed?.toString()}`);
-  }
-
-  const awc = await repo.get();
-  const currentConfig = awc.find((e) => e.id === id) as UserWidgetLayout;
-
-  if (!currentConfig) {
-    throw new AppError(`No widget with ID ${id}`);
-  }
-
-  currentConfig.layout = newParsed[0]!.layout;
-
   try {
-    const adjustedWidgetLayout = transformWidgetLayout(
-      awc as UserWidgetLayout[],
-    );
-    await getLayoutRepository().set(adjustedWidgetLayout);
+    await repo.set(widget.id, widget);
   } catch (error) {
     throw new AppError("Cannot save user widget config", error, true);
   }

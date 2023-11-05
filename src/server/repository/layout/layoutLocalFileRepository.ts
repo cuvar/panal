@@ -19,6 +19,23 @@ export class LayoutLocalFileRepository implements LayoutRepository {
     this.reader = reader;
   }
 
+  async get(id: string): Promise<AdjustedWidgetLayout> {
+    try {
+      const data = await this.getAll();
+      const res = data.find((d) => d.id == id);
+      if (!res) {
+        throw new AppError(`No widget config for id ${id}`);
+      }
+      return res;
+    } catch (error) {
+      throw new AppError(
+        "Cannot get widget layout through local file",
+        error,
+        true,
+      );
+    }
+  }
+
   async getAll(): Promise<AdjustedWidgetLayout[]> {
     try {
       const fileContents = await this.reader.read(this.file);
@@ -45,24 +62,27 @@ export class LayoutLocalFileRepository implements LayoutRepository {
     }
   }
 
-  async get(id: string): Promise<AdjustedWidgetLayout> {
+  async set(id: string, widget: AdjustedWidgetLayout): Promise<void> {
     try {
-      const data = await this.getAll();
-      const res = data.find((d) => d.id == id);
-      if (!res) {
-        throw new AppError(`No widget config for id ${id}`);
+      const currentAll = await this.getAll();
+      const currentConfig = currentAll.find((e) => e.id === id);
+      if (!currentConfig) {
+        throw new AppError(`No widget with ID ${id}`);
       }
-      return res;
+
+      currentConfig.layout = widget.layout;
+
+      await this.reader.write(this.file, JSON.stringify(currentAll));
     } catch (error) {
       throw new AppError(
-        "Cannot get widget layout through local file",
+        "Cannot set widget config through local file",
         error,
         true,
       );
     }
   }
 
-  async set(widgets: AdjustedWidgetLayout[]): Promise<void> {
+  async setAll(widgets: AdjustedWidgetLayout[]): Promise<void> {
     try {
       await this.reader.write(this.file, JSON.stringify(widgets));
     } catch (error) {
