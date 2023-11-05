@@ -29,7 +29,7 @@ export default function parseUserWidgetLayout(
  * @param {string} input String to parse
  * @returns {AdjustedWidgetLayout[] | null} Parsed AdjustedWidgetLayout[] or null if invalid
  */
-export function parseAdjustedWidgetConfig(
+export function parseAdjustedWidgetLayout(
   input: string,
 ): AdjustedWidgetLayout[] | null {
   const parsed = JSON.parse(input);

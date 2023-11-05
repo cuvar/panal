@@ -14,7 +14,7 @@ export default async function transformWidgetLayout(
   userWidgetLayout: UserWidgetLayout[],
 ): Promise<AdjustedWidgetLayout[]> {
   try {
-    const adjustedWidgetConfig: AdjustedWidgetLayout[] = [];
+    const adjustedWidgetLayout: AdjustedWidgetLayout[] = [];
     for (const widget of userWidgetLayout) {
       const withMissingLayouts = addMissingLayouts(widget.layout);
       const wId = "id" in widget ? (widget.id as string) : generateUniqueID();
@@ -25,10 +25,10 @@ export default async function transformWidgetLayout(
         adjustedConfig,
         widgetType,
       );
-      adjustedWidgetConfig.push(adjusted);
+      adjustedWidgetLayout.push(adjusted);
     }
 
-    return adjustedWidgetConfig;
+    return adjustedWidgetLayout;
   } catch (error) {
     throw new AppError("Cannot transform widget config", error);
   }

@@ -3,7 +3,7 @@ import { env } from "~/env.mjs";
 import { UPSTASH_LAYOUT_KEY } from "~/utils/const";
 import AppError from "~/utils/error";
 import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
-import { parseAdjustedWidgetConfig } from "../../service/parseWidgetConfigService";
+import { parseAdjustedWidgetLayout } from "../../service/parseWidgetConfigService";
 import type { LayoutRepository } from "./layoutRepository";
 
 export class WidgetUpstashRepository implements LayoutRepository {
@@ -33,7 +33,7 @@ export class WidgetUpstashRepository implements LayoutRepository {
       if (typeof response !== "object") {
         throw new AppError("Invalid response from Upstash", null, true);
       }
-      const config = parseAdjustedWidgetConfig(JSON.stringify(response));
+      const config = parseAdjustedWidgetLayout(JSON.stringify(response));
       if (!config) {
         throw new AppError("Invalid widget config", null, true);
       }

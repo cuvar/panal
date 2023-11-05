@@ -35,12 +35,12 @@ export class AdjustedWidgetLayout {
   }
 
   static getSchema() {
-    const adjustedWidgetConfigSchema = z.object({
+    const adjustedWidgetLayoutSchema = z.object({
       id: z.string(),
       layout: screenSizePositioningSchema,
     });
 
-    return adjustedWidgetConfigSchema;
+    return adjustedWidgetLayoutSchema;
   }
 
   setLayout(
