@@ -4,7 +4,7 @@ import { FileReader } from "../../driver/Reader/FileReader";
 import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
 import { type UserWidgetLayout } from "../../entities/userWidgetLayout";
 import parseUserWidgetLayout from "../../service/parseWidgetConfigService";
-import transformWidgetLayout from "../../service/transformWidgetConfigService";
+import transformWidgetLayout from "../../service/transformWidgetLayoutService";
 import { WidgetLocalFileRepository } from "./layoutLocalFileRepository";
 import { LayoutRepositoryMock } from "./layoutRepositoryMock";
 import { WidgetUpstashRepository } from "./layoutUpstashRepository";

@@ -4,9 +4,9 @@
 
 import { AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
 import { UserWidgetLayout } from "../entities/userWidgetLayout";
-import transformWidgetLayout from "./transformWidgetConfigService";
+import transformWidgetLayout from "./transformWidgetLayoutService";
 
-describe("transformWidgetConfigService", () => {
+describe("transformWidgetLayoutService", () => {
   it("works correctly", async () => {
     // arrange
     const layoutInput = {
