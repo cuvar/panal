@@ -1,4 +1,4 @@
-import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetConfig";
+import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
 import type { LayoutRepository } from "./layoutRepository";
 
 export class LayoutRepositoryMock implements LayoutRepository {

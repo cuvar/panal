@@ -1,7 +1,7 @@
 import AppError from "~/utils/error";
 import { generateUniqueID } from "~/utils/helper";
-import { AdjustedWidgetLayout } from "../entities/adjustedWidgetConfig";
-import type { UserWidgetLayout } from "../entities/userWidgetConfig";
+import { AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
+import type { UserWidgetLayout } from "../entities/userWidgetLayout";
 import addMissingLayouts from "./addMissingLayoutsService";
 import adjustLayoutValues from "./adjustLayoutValuesService";
 

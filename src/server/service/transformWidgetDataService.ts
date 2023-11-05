@@ -1,7 +1,7 @@
 import AppError from "~/utils/error";
 import Log from "~/utils/log";
 import { ICSFetcher } from "../driver/ICSFetcher";
-import { type AdjustedWidgetLayout } from "../entities/adjustedWidgetConfig";
+import { type AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
 import { type WidgetConfig } from "../entities/widgetConfig";
 import { WidgetData } from "../entities/widgetData";
 import computeCalendarWidgetData from "../widgets/calendar/data";

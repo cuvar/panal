@@ -3,7 +3,7 @@
  */
 
 import type { ScreenSizePositioning, WidgetType } from "~/utils/types/widget";
-import { AdjustedWidgetLayout } from "../entities/adjustedWidgetConfig";
+import { AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
 import { WidgetData } from "../entities/widgetData";
 import transformWidgetData from "./transformWidgetDataService";
 

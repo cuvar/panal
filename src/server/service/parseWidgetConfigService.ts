@@ -1,5 +1,5 @@
-import { AdjustedWidgetLayout } from "../entities/adjustedWidgetConfig";
-import { UserWidgetLayout } from "../entities/userWidgetConfig";
+import { AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
+import { UserWidgetLayout } from "../entities/userWidgetLayout";
 import { WidgetConfig } from "../entities/widgetConfig";
 
 /**

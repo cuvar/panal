@@ -1,8 +1,8 @@
 import { env } from "~/env.mjs";
 import AppError from "~/utils/error";
 import { FileReader } from "../../driver/Reader/FileReader";
-import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetConfig";
-import { type UserWidgetLayout } from "../../entities/userWidgetConfig";
+import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
+import { type UserWidgetLayout } from "../../entities/userWidgetLayout";
 import parseUserWidgetConfig from "../../service/parseWidgetConfigService";
 import transformWidgetLayout from "../../service/transformWidgetConfigService";
 import { WidgetLocalFileRepository } from "./layoutLocalFileRepository";

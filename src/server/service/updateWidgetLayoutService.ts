@@ -4,7 +4,7 @@ import AppError from "~/utils/error";
 import { isSameSet } from "~/utils/helper";
 import Log from "~/utils/log";
 import type { ScreenSize } from "~/utils/types/types";
-import type { AdjustedWidgetLayout } from "../entities/adjustedWidgetConfig";
+import type { AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
 
 /**
  * Updates the layout values of the given AdjustedWidgetLayout[] with the given GridLayout.Layouts
