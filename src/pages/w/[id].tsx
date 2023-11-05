@@ -28,7 +28,7 @@ const Home: NextPage = () => {
     null,
   );
 
-  const widgetDataQuery = api.widget.getLayoutForWidget.useQuery(
+  const widgetDataQuery = api.layout.getLayoutForWidget.useQuery(
     { id: typeof id === "string" ? id : "" },
     {
       enabled: typeof id === "string",
@@ -42,7 +42,7 @@ const Home: NextPage = () => {
   );
 
   const setWidgetConfigForWidgetMutation =
-    api.widget.setWidgetConfigForWidget.useMutation({
+    api.config.setWidgetConfigForWidget.useMutation({
       onSuccess: (_data) => {
         setToastType("success");
         setToastText(`Saved successfully`);

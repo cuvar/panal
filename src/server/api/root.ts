@@ -1,5 +1,6 @@
-import { widgetRouter } from "~/server/api/routers/widget";
 import { createTRPCRouter } from "~/server/api/trpc";
+import { configRouter } from "./routers/config";
+import { layoutRouter } from "./routers/layout";
 
 /**
  * This is the primary router for your server.
@@ -7,7 +8,8 @@ import { createTRPCRouter } from "~/server/api/trpc";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  widget: widgetRouter,
+  config: configRouter,
+  layout: layoutRouter,
 });
 
 // export type definition of API
