@@ -5,7 +5,7 @@
 import { saveUserWidgetConfig } from "./layoutRepository";
 import { LayoutRepositoryMock } from "./layoutRepositoryMock";
 
-describe("Widget repository:", () => {
+describe("Layout repository:", () => {
   test("throws correctly on empty data", async () => {
     // arrange
     const repo = new LayoutRepositoryMock();
