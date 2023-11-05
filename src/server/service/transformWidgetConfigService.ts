@@ -10,7 +10,7 @@ import adjustLayoutValues from "./adjustLayoutValuesService";
  * @param {UserWidgetConfig[]} userWidgetConfig UserWidgetConfig[] to transform
  * @returns {AdjustedWidgetConfig[]} AdjustedWidgetConfig[] with unique IDs
  */
-export default async function transformWidgetConfig(
+export default async function transformWidgetLayout(
   userWidgetConfig: UserWidgetConfig[],
 ): Promise<AdjustedWidgetConfig[]> {
   try {

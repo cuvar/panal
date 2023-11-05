@@ -4,7 +4,7 @@
 
 import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import { UserWidgetConfig } from "../entities/userWidgetConfig";
-import transformWidgetConfig from "./transformWidgetConfigService";
+import transformWidgetLayout from "./transformWidgetConfigService";
 
 describe("transformWidgetConfigService", () => {
   it("works correctly", async () => {
@@ -80,7 +80,7 @@ describe("transformWidgetConfigService", () => {
 
     // act
     const action = async () => {
-      const res = await transformWidgetConfig([input]);
+      const res = await transformWidgetLayout([input]);
       return res[0]!;
     };
 

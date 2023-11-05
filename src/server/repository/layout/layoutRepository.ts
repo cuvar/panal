@@ -4,7 +4,7 @@ import { FileReader } from "../../driver/Reader/FileReader";
 import type { AdjustedWidgetConfig } from "../../entities/adjustedWidgetConfig";
 import { type UserWidgetConfig } from "../../entities/userWidgetConfig";
 import parseUserWidgetConfig from "../../service/parseWidgetConfigService";
-import transformWidgetConfig from "../../service/transformWidgetConfigService";
+import transformWidgetLayout from "../../service/transformWidgetConfigService";
 import { WidgetLocalFileRepository } from "./layoutLocalFileRepository";
 import { LayoutRepositoryMock } from "./layoutRepositoryMock";
 import { WidgetUpstashRepository } from "./layoutUpstashRepository";
@@ -50,7 +50,7 @@ export async function saveUserWidgetConfig(
   }
 
   try {
-    const adjustedWidgetConfig = await transformWidgetConfig(parsed);
+    const adjustedWidgetConfig = await transformWidgetLayout(parsed);
     await repo.set(adjustedWidgetConfig);
   } catch (error) {
     throw new AppError("Cannot save user widget config", error, true);
@@ -84,7 +84,7 @@ export async function updateUserWidgetConfig(
   currentConfig.layout = newParsed[0]!.layout;
 
   try {
-    const adjustedWidgetConfig = await transformWidgetConfig(
+    const adjustedWidgetConfig = await transformWidgetLayout(
       awc as UserWidgetConfig[],
     );
     await getLayoutRepository().set(adjustedWidgetConfig);
