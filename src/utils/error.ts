@@ -3,7 +3,7 @@ export default class AppError extends Error {
   constructor(message: string, error?: unknown, isFatal = false) {
     super(message);
     this.message =
-      error instanceof Error ? message + "," + error.message : message;
+      error instanceof Error ? message + ",\n" + error.message : message;
     this.isFatal = isFatal;
   }
 }
