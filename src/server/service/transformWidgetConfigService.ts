@@ -1,7 +1,7 @@
 import Log from "~/utils/log";
 import { ICSFetcher } from "../driver/Fetcher/ICSFetcher";
-import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import { type WidgetConfig } from "../entities/widgetConfig";
+import { WidgetData } from "../entities/widgetData";
 import computeCalendarWidgetData from "../widgets/calendar/data";
 import { isCalendarWidgetConfig } from "../widgets/calendar/guards";
 import computeLinkWidgetData from "../widgets/links/data";
@@ -12,14 +12,14 @@ import computeTimeWidgetData from "../widgets/time/data";
 import { isTimeWidgetConfig } from "../widgets/time/guards";
 
 /**
- * Transforms the given WidgetConfig[] into a AdjustedWidgetConfig[]
+ * Transforms the given WidgetConfig[] into a WidgetData[]
  * @param {WidgetConfig[]} widgetConfig AdjustedWidgetLayout[] to transform
- * @returns {Promise<AdjustedWidgetConfig[]>} AdjustedWidgetConfig[] with unique IDs
+ * @returns {Promise<WidgetData[]>} WidgetData[] with unique IDs
  */
 export default async function transformWidgetConfig(
   widgetConfig: WidgetConfig[],
-): Promise<AdjustedWidgetConfig[]> {
-  const adjustedWidgetConfig: AdjustedWidgetConfig[] = [];
+): Promise<WidgetData[]> {
+  const widgetData: WidgetData[] = [];
   for (const widget of widgetConfig) {
     let data;
 
@@ -43,9 +43,7 @@ export default async function transformWidgetConfig(
       data = {};
     }
 
-    adjustedWidgetConfig.push(
-      new AdjustedWidgetConfig(widget.id, widget.type, data),
-    );
+    widgetData.push(new WidgetData(widget.id, widget.type, data));
   }
-  return adjustedWidgetConfig;
+  return widgetData;
 }
