@@ -4,7 +4,7 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { WidgetConfig } from "~/server/entities/widgetConfig";
 import { getConfigRepository } from "~/server/repository/config/configRepository";
 import { parseWidgetConfigArray } from "~/server/service/parseWidgetConfigService";
-import transformWidgetData from "~/server/service/transformWidgetDataService";
+import transformWidgetConfig from "~/server/service/transformWidgetDataService";
 import AppError from "~/utils/error";
 import Log from "~/utils/log";
 import { widgetTypeSchema } from "~/utils/schema";
@@ -13,7 +13,7 @@ export const configRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
     try {
       const storedConfigs = await getConfigRepository().getAll();
-      const configData = await transformWidgetData(storedConfigs);
+      const configData = await transformWidgetConfig(storedConfigs);
       return configData;
     } catch (error) {
       Log(error, "error");

@@ -2,15 +2,14 @@ import type GridLayout from "react-grid-layout";
 import { type AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
 import { isScreenSize } from "~/utils/guards/other";
 import { isEmptyPositioning } from "~/utils/helper";
-import type { WidgetData } from "../../server/entities/widgetData";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
 } from "../../server/service/computeSizeForWidgetService";
 
 /**
- * Transforms WidgetData[] into GridLayout.Layouts for react-grid-layout
- * @param {WidgetData[]} data WidgetData array to transform
+ * Transforms AdjustedWidgetLayout[] into GridLayout.Layouts for react-grid-layout
+ * @param {AdjustedWidgetLayout[]} data AdjustedWidgetLayout array to transform
  * @param {boolean} makeStatic Indicates if the widgets should be static or not
  * @returns {GridLayout.Layouts} transformed layouts
  */

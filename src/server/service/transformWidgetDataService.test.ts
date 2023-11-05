@@ -4,9 +4,9 @@
 
 import type { ScreenSizePositioning, WidgetType } from "~/utils/types/widget";
 import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
-import transformWidgetData from "./transformWidgetDataService";
+import transformWidgetConfig from "./transformWidgetDataService";
 
-describe("transformWidgetDataService", () => {
+describe("transformWidgetConfigService", () => {
   it("works correctly", async () => {
     // arrange
     const widgetType: WidgetType = "time";
@@ -57,7 +57,7 @@ describe("transformWidgetDataService", () => {
     const expected = input;
 
     // act
-    const result = await transformWidgetData([input]);
+    const result = await transformWidgetConfig([input]);
 
     // assert
     expect(result).toEqual([expected]);

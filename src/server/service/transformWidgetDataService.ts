@@ -16,7 +16,7 @@ import { isTimeWidgetConfig } from "../widgets/time/guards";
  * @param {WidgetConfig[]} widgetConfig AdjustedWidgetLayout[] to transform
  * @returns {Promise<AdjustedWidgetConfig[]>} AdjustedWidgetConfig[] with unique IDs
  */
-export default async function transformWidgetData(
+export default async function transformWidgetConfig(
   widgetConfig: WidgetConfig[],
 ): Promise<AdjustedWidgetConfig[]> {
   const adjustedWidgetConfig: AdjustedWidgetConfig[] = [];
