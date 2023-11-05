@@ -2,14 +2,13 @@ import { useState } from "react";
 import { isPositioning } from "~/utils/guards/widgets";
 import { useDetectMobile, useDetectScreenSize } from "~/utils/hooks";
 import { plusIcon } from "~/utils/icons";
-import type { ScreenSizePositioning } from "~/utils/types/widget";
+import type { WidgetProps } from "~/utils/types/widget";
 import type { LinkWidgetData } from "../types";
 import LinkContainer from "./LinkContainer";
 import LinkWidget from "./LinkWidget";
 
-type Props = {
+type Props = WidgetProps & {
   data: LinkWidgetData;
-  layout: ScreenSizePositioning;
 };
 
 export default function LinkCollectionWidget(props: Props) {
@@ -27,12 +26,13 @@ export default function LinkCollectionWidget(props: Props) {
       },
     ]);
   }
-  const COL_COUNT = isPositioning(props.layout)
-    ? props.layout.w + 1
-    : props.layout[currentScreenSize].w; // fix: i feel like this is not quite right
-  const ROW_COUNT = isPositioning(props.layout)
-    ? props.layout.h
-    : props.layout[currentScreenSize].h;
+  const layout = props.widget.layout;
+  const COL_COUNT = isPositioning(layout)
+    ? layout.w + 1
+    : layout[currentScreenSize].w; // fix: i feel like this is not quite right
+  const ROW_COUNT = isPositioning(layout)
+    ? layout.h
+    : layout[currentScreenSize].h;
   const SMALL_MAX_COL_COUNT = COL_COUNT; // todo: make this dynamic; move this to `const` file
   const SMALL_COL_COUNT = Math.min(COL_COUNT, SMALL_MAX_COL_COUNT);
 

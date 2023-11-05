@@ -33,7 +33,8 @@ export const configRouter = createTRPCRouter({
             `No adjusted widget config for widget with ID ${input.id}`,
           );
         }
-        return data;
+        const configData = await transformWidgetConfig([data]);
+        return configData[0]!;
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({

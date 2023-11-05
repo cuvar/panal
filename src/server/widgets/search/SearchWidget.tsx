@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { searchIcon } from "~/utils/icons";
-import type { ScreenSizePositioning } from "~/utils/types/widget";
+import type { WidgetProps } from "~/utils/types/widget";
 import type { SearchEngine, SearchWidgetData } from "./types";
 
 const fallbackEngine: SearchEngine = {
@@ -9,9 +9,8 @@ const fallbackEngine: SearchEngine = {
   url: "https://www.ecosia.org/search?q=",
 };
 
-type Props = {
+type Props = WidgetProps & {
   data: SearchWidgetData;
-  layout: ScreenSizePositioning;
 };
 
 export default function SearchWidget(props: Props) {

@@ -9,26 +9,17 @@ import {
 } from "~/utils/const";
 
 import { useAtom } from "jotai";
-import Link from "next/link";
 import { useEffect } from "react";
 import getHidingClasses from "~/client/services/getHidingClassesService";
 import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
 import { type AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
-import CalendarWidget from "~/server/widgets/calendar/CalendarWidget";
-import type { CalendarWidgetData } from "~/server/widgets/calendar/types";
-import type { LinkWidgetData } from "~/server/widgets/links/types";
-import SearchWidget from "~/server/widgets/search/SearchWidget";
-import type { SearchWidgetData } from "~/server/widgets/search/types";
-import TimeWidget from "~/server/widgets/time/TimeWidget";
-import type { TimeWidgetData } from "~/server/widgets/time/types";
 import { useDetectScreenSize } from "~/utils/hooks";
-import { cogIcon } from "~/utils/icons";
 import {
   editModeAtom,
   editedWidgetLayoutAtom,
   widgetLayoutAtom,
 } from "~/utils/store";
-import LinkCollectionWidget from "../server/widgets/links/LinkWidget/LinkCollectionWidget";
+import WidgetWrapper from "./WidgetWrapper";
 
 type Props = {
   layout: AdjustedWidgetLayout[];
@@ -76,48 +67,14 @@ export default function WidgetView(props: Props) {
         autoSize={false}
         onLayoutChange={handleLayoutChange}
       >
-        {props.data.map(
+        {props.layout.map(
           (widget) =>
             !getHidingClasses(widget.layout).includes(currentScreenSize) && (
-              <div
-                className={`flex items-center justify-center ${
-                  editMode ? "rounded-md border-2 border-panal-700" : ""
-                }`}
+              <WidgetWrapper
                 key={widget.id}
-              >
-                {editMode && (
-                  <Link
-                    href={`/w/${widget.id}`}
-                    className="absolute right-2 top-2 z-20 text-panal-100"
-                  >
-                    {cogIcon}
-                  </Link>
-                )}
-                {widget.type === "time" && (
-                  <TimeWidget
-                    data={widget.data as TimeWidgetData}
-                    layout={widget.layout}
-                  />
-                )}
-                {widget.type === "search" && (
-                  <SearchWidget
-                    data={widget.data as SearchWidgetData}
-                    layout={widget.layout}
-                  />
-                )}
-                {widget.type === "links" && (
-                  <LinkCollectionWidget
-                    data={widget.data as LinkWidgetData}
-                    layout={widget.layout}
-                  />
-                )}
-                {widget.type === "calendar" && (
-                  <CalendarWidget
-                    data={widget.data as CalendarWidgetData}
-                    layout={widget.layout}
-                  />
-                )}
-              </div>
+                editMode={editMode}
+                widget={widget}
+              />
             ),
         )}
       </ResponsiveGridLayout>
