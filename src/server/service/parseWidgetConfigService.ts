@@ -7,7 +7,7 @@ import { WidgetConfig } from "../entities/widgetConfig";
  * @param {string} input String to parse
  * @returns {UserWidgetLayout[] | null} Parsed UserWidgetLayout[] or null if invalid
  */
-export default function parseUserWidgetConfig(
+export default function parseUserWidgetLayout(
   input: string,
 ): UserWidgetLayout[] | null {
   const parsed = JSON.parse(input);

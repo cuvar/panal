@@ -3,7 +3,7 @@ import AppError from "~/utils/error";
 import { FileReader } from "../../driver/Reader/FileReader";
 import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
 import { type UserWidgetLayout } from "../../entities/userWidgetLayout";
-import parseUserWidgetConfig from "../../service/parseWidgetConfigService";
+import parseUserWidgetLayout from "../../service/parseWidgetConfigService";
 import transformWidgetLayout from "../../service/transformWidgetConfigService";
 import { WidgetLocalFileRepository } from "./layoutLocalFileRepository";
 import { LayoutRepositoryMock } from "./layoutRepositoryMock";
@@ -40,11 +40,11 @@ export function getLayoutRepository(): LayoutRepository {
  * @param {object} data Widget config
  * @param {LayoutRepository} repo Repository used for storage
  */
-export async function saveUserWidgetConfig(
+export async function saveUserWidgetLayout(
   data: object,
   repo: LayoutRepository,
 ) {
-  const parsed = parseUserWidgetConfig(JSON.stringify(data));
+  const parsed = parseUserWidgetLayout(JSON.stringify(data));
   if (parsed === null) {
     throw new AppError("Cannot parse widget config");
   }
@@ -63,12 +63,12 @@ export async function saveUserWidgetConfig(
  * @param {object} widget Entered widget config from user
  * @param {LayoutRepository} repo Repository used for storage
  */
-export async function updateUserWidgetConfig(
+export async function updateUserWidgetLayout(
   id: string,
   widget: object,
   repo: LayoutRepository,
 ) {
-  const newParsed = parseUserWidgetConfig(JSON.stringify([widget]));
+  const newParsed = parseUserWidgetLayout(JSON.stringify([widget]));
 
   if (!newParsed || !Array.isArray(newParsed) || newParsed.length < 1) {
     throw new AppError(`Cannot parse widget config: ${newParsed?.toString()}`);

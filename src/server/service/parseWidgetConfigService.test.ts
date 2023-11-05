@@ -5,7 +5,7 @@
 import type { ScreenSizePositioning } from "~/utils/types/widget";
 import { AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
 import { UserWidgetLayout } from "../entities/userWidgetLayout";
-import parseUserWidgetConfig, {
+import parseUserWidgetLayout, {
   parseAdjustedWidgetConfig,
 } from "./parseWidgetConfigService";
 
@@ -42,7 +42,7 @@ describe("parseWidgetConfigService", () => {
     const expected = new UserWidgetLayout(layoutInput);
     const input = JSON.stringify([expected]);
     // act
-    const result = parseUserWidgetConfig(input);
+    const result = parseUserWidgetLayout(input);
 
     // assert
     expect(result).not.toBeNull();
@@ -82,7 +82,7 @@ describe("parseWidgetConfigService", () => {
     const expected = new UserWidgetLayout(layoutInput);
     const input = JSON.stringify(expected);
     // act
-    const result = parseUserWidgetConfig(input);
+    const result = parseUserWidgetLayout(input);
 
     // assert
     expect(result).toBeNull();
@@ -120,7 +120,7 @@ describe("parseWidgetConfigService", () => {
     const expected = new UserWidgetLayout(layoutInput);
     const input = JSON.stringify([expected]);
     // act
-    const result = parseUserWidgetConfig(input);
+    const result = parseUserWidgetLayout(input);
 
     // assert
     expect(result).toBeNull();

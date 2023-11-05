@@ -7,15 +7,15 @@ import adjustLayoutValues from "./adjustLayoutValuesService";
 
 /**
  * Transforms the given UserWidgetLayout[] into an AdjustedWidgetLayout[]
- * @param {UserWidgetLayout[]} userWidgetConfig UserWidgetLayout[] to transform
+ * @param {UserWidgetLayout[]} userWidgetLayout UserWidgetLayout[] to transform
  * @returns {AdjustedWidgetLayout[]} AdjustedWidgetLayout[] with unique IDs
  */
 export default async function transformWidgetLayout(
-  userWidgetConfig: UserWidgetLayout[],
+  userWidgetLayout: UserWidgetLayout[],
 ): Promise<AdjustedWidgetLayout[]> {
   try {
     const adjustedWidgetConfig: AdjustedWidgetLayout[] = [];
-    for (const widget of userWidgetConfig) {
+    for (const widget of userWidgetLayout) {
       const withMissingLayouts = addMissingLayouts(widget.layout);
       const wId = "id" in widget ? (widget.id as string) : generateUniqueID();
 

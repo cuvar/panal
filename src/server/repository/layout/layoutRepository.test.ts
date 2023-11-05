@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { saveUserWidgetConfig } from "./layoutRepository";
+import { saveUserWidgetLayout } from "./layoutRepository";
 import { LayoutRepositoryMock } from "./layoutRepositoryMock";
 
 describe("Layout repository:", () => {
@@ -13,7 +13,7 @@ describe("Layout repository:", () => {
 
     // act
     const action = async () => {
-      await saveUserWidgetConfig(input, repo);
+      await saveUserWidgetLayout(input, repo);
     };
 
     // assert
@@ -27,7 +27,7 @@ describe("Layout repository:", () => {
 
     // act
     const action = async () => {
-      await saveUserWidgetConfig(input, repo);
+      await saveUserWidgetLayout(input, repo);
     };
 
     // assert

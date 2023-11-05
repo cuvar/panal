@@ -4,8 +4,8 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { getConfigRepository } from "~/server/repository/config/configRepository";
 import {
   getLayoutRepository,
-  saveUserWidgetConfig,
-  updateUserWidgetConfig,
+  saveUserWidgetLayout,
+  updateUserWidgetLayout,
 } from "~/server/repository/layout/layoutRepository";
 import transformWidgetData from "~/server/service/transformWidgetDataService";
 import updateWidgetLayoutService from "~/server/service/updateWidgetLayoutService";
@@ -91,7 +91,7 @@ export const widgetRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       try {
-        await saveUserWidgetConfig(input.widgets, getLayoutRepository());
+        await saveUserWidgetLayout(input.widgets, getLayoutRepository());
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({
@@ -116,7 +116,7 @@ export const widgetRouter = createTRPCRouter({
         data: JSON.parse(input.data),
       };
       try {
-        await updateUserWidgetConfig(input.id, widget, getLayoutRepository());
+        await updateUserWidgetLayout(input.id, widget, getLayoutRepository());
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({
