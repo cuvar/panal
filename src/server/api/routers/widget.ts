@@ -1,10 +1,12 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { getConfigRepository } from "~/server/repository/config/configRepository";
+import {
+  getConfigRepository,
+  saveUserWidgetConfig,
+} from "~/server/repository/config/configRepository";
 import {
   getLayoutRepository,
-  saveUserWidgetLayout,
   updateUserWidgetLayout,
 } from "~/server/repository/layout/layoutRepository";
 import transformWidgetData from "~/server/service/transformWidgetDataService";
@@ -21,7 +23,7 @@ import {
 export const widgetRouter = createTRPCRouter({
   getWidgetLayout: protectedProcedure.query(async () => {
     try {
-      const storedLayouts = await getLayoutRepository().get();
+      const storedLayouts = await getLayoutRepository().getAll();
       const layoutData = transformWidgetLayout(storedLayouts);
       return layoutData;
     } catch (error) {
@@ -49,33 +51,13 @@ export const widgetRouter = createTRPCRouter({
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
       try {
-        const data = await getLayoutRepository().get();
-        const res = data.find((d) => d.id == input.id);
-        if (!res) {
-          throw new AppError(
-            `No adjusted widget config for widget with ID ${input.id}`,
-          );
-        }
-        return res;
-      } catch (error) {
-        Log(error, "error");
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Unable to get widget data",
-        });
-      }
-    }),
-  getConfigForWidget: protectedProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ input }) => {
-      try {
-        const data = await getConfigRepository().get(input.id);
+        const data = await getLayoutRepository().get(input.id);
         if (!data) {
           throw new AppError(
             `No adjusted widget config for widget with ID ${input.id}`,
           );
         }
-        return res;
+        return data;
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({
@@ -84,19 +66,7 @@ export const widgetRouter = createTRPCRouter({
         });
       }
     }),
-  getWidgetConfig: protectedProcedure.query(async () => {
-    try {
-      const data = await getLayoutRepository().get();
-      return data;
-    } catch (error) {
-      Log(error, "error");
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message: "Unable to get widget config",
-      });
-    }
-  }),
-  setWidgetConfig: protectedProcedure
+  setAllWidgetConfig: protectedProcedure
     .input(
       z.object({
         widgets: z.array(z.any()),
@@ -104,7 +74,7 @@ export const widgetRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       try {
-        await saveUserWidgetLayout(input.widgets, getLayoutRepository());
+        await saveUserWidgetConfig(input.widgets, getConfigRepository());
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({
@@ -113,7 +83,7 @@ export const widgetRouter = createTRPCRouter({
         });
       }
     }),
-  setWidgetConfigForWidget: protectedProcedure
+  setWidgetConfigForWidget: protectedProcedure // TODO: rework
     .input(
       z.object({
         id: z.string(),
@@ -138,7 +108,7 @@ export const widgetRouter = createTRPCRouter({
         });
       }
     }),
-  setWidgetLayout: protectedProcedure
+  setWidgetLayout: protectedProcedure // TODO: rework
     .input(
       z.object({
         layout: widgetLayoutSchema,

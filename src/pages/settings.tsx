@@ -24,7 +24,7 @@ const Home: NextPage = () => {
     refetchOnWindowFocus: false,
   });
 
-  const setWidgetConfigMutation = api.widget.setWidgetConfig.useMutation({
+  const setWidgetConfigMutation = api.widget.setAllWidgetConfig.useMutation({
     onSuccess: (_data) => {
       setToastType("success");
       setToastText(`Saved successfully`);
