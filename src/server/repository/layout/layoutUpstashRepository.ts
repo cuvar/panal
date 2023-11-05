@@ -6,7 +6,7 @@ import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
 import { parseAdjustedWidgetLayout } from "../../service/parseWidgetConfigService";
 import type { LayoutRepository } from "./layoutRepository";
 
-export class WidgetUpstashRepository implements LayoutRepository {
+export class LayoutUpstashRepository implements LayoutRepository {
   private redis;
 
   constructor() {
@@ -24,7 +24,7 @@ export class WidgetUpstashRepository implements LayoutRepository {
     });
   }
 
-  async get(): Promise<AdjustedWidgetLayout[]> {
+  async getAll(): Promise<AdjustedWidgetLayout[]> {
     try {
       const response = await this.redis.get(UPSTASH_LAYOUT_KEY);
       if (!response) {
@@ -41,6 +41,19 @@ export class WidgetUpstashRepository implements LayoutRepository {
       return config;
     } catch (error) {
       throw new AppError("Cannot get widget config through redis", error, true);
+    }
+  }
+
+  async get(id: string): Promise<AdjustedWidgetLayout> {
+    try {
+      const data = await this.getAll();
+      const res = data.find((d) => d.id == id);
+      if (!res) {
+        throw new AppError(`No widget config for id ${id}`);
+      }
+      return res;
+    } catch (error) {
+      throw new AppError("Cannot get widget layout through redis", error, true);
     }
   }
 

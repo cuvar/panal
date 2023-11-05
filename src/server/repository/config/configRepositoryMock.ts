@@ -9,11 +9,15 @@ export class ConfigRepositoryMock implements ConfigRepository {
     return Promise.resolve(this.wc);
   }
 
+  async getAll(): Promise<WidgetConfig[]> {
+    return Promise.resolve([this.wc]);
+  }
+
   async set(id: string, data: WidgetConfig): Promise<void> {
     //
   }
 
-  async getAll(): Promise<WidgetConfig[]> {
-    return Promise.resolve([this.wc]);
+  async setAll(data: WidgetConfig[]): Promise<void> {
+    //
   }
 }

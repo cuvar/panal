@@ -5,12 +5,13 @@ import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
 import { type UserWidgetLayout } from "../../entities/userWidgetLayout";
 import parseUserWidgetLayout from "../../service/parseWidgetConfigService";
 import transformWidgetLayout from "../../service/transformWidgetLayoutService";
-import { WidgetLocalFileRepository } from "./layoutLocalFileRepository";
+import { LayoutLocalFileRepository } from "./layoutLocalFileRepository";
 import { LayoutRepositoryMock } from "./layoutRepositoryMock";
-import { WidgetUpstashRepository } from "./layoutUpstashRepository";
+import { LayoutUpstashRepository } from "./layoutUpstashRepository";
 
 export interface LayoutRepository {
-  get(): Promise<AdjustedWidgetLayout[]>;
+  get(id: string): Promise<AdjustedWidgetLayout>;
+  getAll(): Promise<AdjustedWidgetLayout[]>;
   set(widgets: AdjustedWidgetLayout[]): Promise<void>;
 }
 
@@ -21,9 +22,9 @@ export interface LayoutRepository {
 export function getLayoutRepository(): LayoutRepository {
   let repo: LayoutRepository | null = null;
   if (env.WIDGET_STORE == "upstash") {
-    repo = new WidgetUpstashRepository();
+    repo = new LayoutUpstashRepository();
   } else if (env.WIDGET_STORE == "file") {
-    repo = new WidgetLocalFileRepository(new FileReader());
+    repo = new LayoutLocalFileRepository(new FileReader());
   } else if (env.WIDGET_STORE == "mock") {
     repo = new LayoutRepositoryMock();
   }

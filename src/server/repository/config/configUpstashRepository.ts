@@ -80,6 +80,21 @@ export class ConfigUpstashRepository implements ConfigRepository {
     }
   }
 
+  async setAll(data: WidgetConfig[]): Promise<void> {
+    for (const config of data) {
+      const key = UPSTASH_PREFIX + config.id;
+      try {
+        await this.redis.set(key, JSON.stringify(data));
+      } catch (error) {
+        throw new AppError(
+          "Cannot set all widget configs through redis",
+          error,
+          true,
+        );
+      }
+    }
+  }
+
   async getKeysWithPrefix(prefix: string) {
     let cursor = 0;
     const keys: string[] = [];

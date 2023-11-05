@@ -6,7 +6,7 @@ import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
 import { parseAdjustedWidgetLayout } from "../../service/parseWidgetConfigService";
 import type { LayoutRepository } from "./layoutRepository";
 
-export class WidgetLocalFileRepository implements LayoutRepository {
+export class LayoutLocalFileRepository implements LayoutRepository {
   private file: string;
   private reader: Reader;
 
@@ -19,7 +19,7 @@ export class WidgetLocalFileRepository implements LayoutRepository {
     this.reader = reader;
   }
 
-  async get(): Promise<AdjustedWidgetLayout[]> {
+  async getAll(): Promise<AdjustedWidgetLayout[]> {
     try {
       const fileContents = await this.reader.read(this.file);
       const response = JSON.parse(fileContents);
@@ -39,6 +39,23 @@ export class WidgetLocalFileRepository implements LayoutRepository {
     } catch (error) {
       throw new AppError(
         "Cannot get widget config through local file",
+        error,
+        true,
+      );
+    }
+  }
+
+  async get(id: string): Promise<AdjustedWidgetLayout> {
+    try {
+      const data = await this.getAll();
+      const res = data.find((d) => d.id == id);
+      if (!res) {
+        throw new AppError(`No widget config for id ${id}`);
+      }
+      return res;
+    } catch (error) {
+      throw new AppError(
+        "Cannot get widget layout through local file",
         error,
         true,
       );
