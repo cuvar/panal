@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { type AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
+import ErrorWidget from "~/server/widgets/ErrorWidget";
+import LoadingWidget from "~/server/widgets/LoadingWidget";
 import CalendarWidget from "~/server/widgets/calendar/CalendarWidget";
 import { type CalendarWidgetData } from "~/server/widgets/calendar/types";
 import LinkCollectionWidget from "~/server/widgets/links/LinkWidget/LinkCollectionWidget";
@@ -10,7 +12,6 @@ import TimeWidget from "~/server/widgets/time/TimeWidget";
 import { type TimeWidgetData } from "~/server/widgets/time/types";
 import { api } from "~/utils/api";
 import { cogIcon } from "~/utils/icons";
-import Log from "~/utils/log";
 
 type Props = {
   editMode: boolean;
@@ -22,13 +23,9 @@ export default function WidgetWrapper(props: Props) {
     id: props.widget.id,
   });
 
-  if (getConfigQuery.data) {
-    Log(getConfigQuery.data?.data);
-  }
-
   return (
     <div
-      className={`flex items-center justify-center ${
+      className={`flex h-full w-full items-center justify-center ${
         props.editMode ? "rounded-md border-2 border-panal-700" : ""
       }`}
     >
@@ -40,8 +37,8 @@ export default function WidgetWrapper(props: Props) {
           {cogIcon}
         </Link>
       )}
-      {getConfigQuery.isLoading && <div>loading</div>}
-      {getConfigQuery.error && <div>widget cannot be rendered</div>}
+      {getConfigQuery.isLoading && <LoadingWidget />}
+      {getConfigQuery.error && <ErrorWidget msg={"Data cannot be loaded"} />}
       {!getConfigQuery.isLoading && getConfigQuery.data && (
         <>
           {props.widget.type === "time" && (
