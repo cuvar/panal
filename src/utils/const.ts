@@ -42,3 +42,6 @@ export const GRID_ROW_HEIGHT = 100;
 export const GRID_MAX_ROW = 10;
 
 export const REPO_LAYOUT_FILE = "./store.layout.json";
+export const REPO_CONFIG_FILE = "./store.config.json";
+
+export const UPSTASH_PREFIX = "panal-";

@@ -37,7 +37,11 @@ export class WidgetLocalFileRepository implements WidgetRepository {
 
       return config;
     } catch (error) {
-      throw new AppError("Cannot get widget config through redis", error, true);
+      throw new AppError(
+        "Cannot get widget config through local file",
+        error,
+        true,
+      );
     }
   }
 

@@ -1,5 +1,6 @@
 import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import { UserWidgetConfig } from "../entities/userWidgetConfig";
+import { WidgetConfig } from "../entities/widgetConfig";
 
 /**
  * Parses a string into a UserWidgetConfig[].
@@ -49,6 +50,27 @@ export function parseAdjustedWidgetConfig(
         widget.data,
       ),
     );
+  }
+  return result;
+}
+
+/**
+ * Parses a string into a WidgetConfig[].
+ * @param {string} input String to parse
+ * @returns {WidgetConfig[] | null} Parsed WidgetConfig[] or null if invalid
+ */
+export function parseWidgetConfigArray(input: string): WidgetConfig[] | null {
+  const parsed = JSON.parse(input);
+  if (!Array.isArray(parsed)) {
+    return null;
+  }
+
+  const result: WidgetConfig[] = [];
+  for (const widget of parsed) {
+    if (!WidgetConfig.validate(widget)) {
+      return null;
+    }
+    result.push(new WidgetConfig(widget.id, widget.type, widget.data));
   }
   return result;
 }
