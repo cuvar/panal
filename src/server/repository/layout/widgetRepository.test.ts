@@ -3,12 +3,12 @@
  */
 
 import { saveUserWidgetConfig } from "./widgetRepository";
-import { WidgetRepositoryMock } from "./widgetRepositoryMock";
+import { LayoutRepositoryMock } from "./widgetRepositoryMock";
 
 describe("Widget repository:", () => {
   test("throws correctly on empty data", async () => {
     // arrange
-    const repo = new WidgetRepositoryMock();
+    const repo = new LayoutRepositoryMock();
     const input = {};
 
     // act
@@ -22,7 +22,7 @@ describe("Widget repository:", () => {
 
   test("throws on empty data", async () => {
     // arrange
-    const repo = new WidgetRepositoryMock();
+    const repo = new LayoutRepositoryMock();
     const input: object = [];
 
     // act

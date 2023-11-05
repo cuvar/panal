@@ -6,26 +6,26 @@ import { type UserWidgetConfig } from "../../entities/userWidgetConfig";
 import parseUserWidgetConfig from "../../service/parseWidgetConfigService";
 import transformWidgetConfig from "../../service/transformWidgetConfigService";
 import { WidgetLocalFileRepository } from "./widgetLocalFileRepository";
-import { WidgetRepositoryMock } from "./widgetRepositoryMock";
+import { LayoutRepositoryMock } from "./widgetRepositoryMock";
 import { WidgetUpstashRepository } from "./widgetUpstashRepository";
 
-export interface WidgetRepository {
+export interface LayoutRepository {
   get(): Promise<AdjustedWidgetConfig[]>;
   set(widgets: AdjustedWidgetConfig[]): Promise<void>;
 }
 
 /**
  * Gets the widget repository
- * @returns {WidgetRepository} Widget repository
+ * @returns {LayoutRepository} Widget repository
  */
-export function getWidgetRepository(): WidgetRepository {
-  let repo: WidgetRepository | null = null;
+export function getLayoutRepository(): LayoutRepository {
+  let repo: LayoutRepository | null = null;
   if (env.WIDGET_STORE == "upstash") {
     repo = new WidgetUpstashRepository();
   } else if (env.WIDGET_STORE == "file") {
     repo = new WidgetLocalFileRepository(new FileReader());
   } else if (env.WIDGET_STORE == "mock") {
-    repo = new WidgetRepositoryMock();
+    repo = new LayoutRepositoryMock();
   }
 
   if (!repo) {
@@ -38,11 +38,11 @@ export function getWidgetRepository(): WidgetRepository {
 /**
  * Saves the widget config to the widget store,
  * @param {object} data Widget config
- * @param {WidgetRepository} repo Repository used for storage
+ * @param {LayoutRepository} repo Repository used for storage
  */
 export async function saveUserWidgetConfig(
   data: object,
-  repo: WidgetRepository,
+  repo: LayoutRepository,
 ) {
   const parsed = parseUserWidgetConfig(JSON.stringify(data));
   if (parsed === null) {
@@ -61,12 +61,12 @@ export async function saveUserWidgetConfig(
  * Updates the widget config of widget with ID `id` and content `widgets` to the widget store
  * @param {string} id ID of widget
  * @param {object} widget Entered widget config from user
- * @param {WidgetRepository} repo Repository used for storage
+ * @param {LayoutRepository} repo Repository used for storage
  */
 export async function updateUserWidgetConfig(
   id: string,
   widget: object,
-  repo: WidgetRepository,
+  repo: LayoutRepository,
 ) {
   const newParsed = parseUserWidgetConfig(JSON.stringify([widget]));
 
@@ -87,7 +87,7 @@ export async function updateUserWidgetConfig(
     const adjustedWidgetConfig = await transformWidgetConfig(
       awc as UserWidgetConfig[],
     );
-    await getWidgetRepository().set(adjustedWidgetConfig);
+    await getLayoutRepository().set(adjustedWidgetConfig);
   } catch (error) {
     throw new AppError("Cannot save user widget config", error, true);
   }
