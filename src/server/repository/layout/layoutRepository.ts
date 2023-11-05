@@ -50,7 +50,7 @@ export async function saveUserWidgetLayout(
   }
 
   try {
-    const adjustedWidgetLayout = await transformWidgetLayout(parsed);
+    const adjustedWidgetLayout = transformWidgetLayout(parsed);
     await repo.set(adjustedWidgetLayout);
   } catch (error) {
     throw new AppError("Cannot save user widget config", error, true);
@@ -84,7 +84,7 @@ export async function updateUserWidgetLayout(
   currentConfig.layout = newParsed[0]!.layout;
 
   try {
-    const adjustedWidgetLayout = await transformWidgetLayout(
+    const adjustedWidgetLayout = transformWidgetLayout(
       awc as UserWidgetLayout[],
     );
     await getLayoutRepository().set(adjustedWidgetLayout);

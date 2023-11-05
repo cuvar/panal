@@ -19,19 +19,29 @@ import {
 } from "~/utils/schema";
 
 export const widgetRouter = createTRPCRouter({
-  getWidgetData: protectedProcedure.query(async () => {
-    // TODO: split
+  getWidgetLayout: protectedProcedure.query(async () => {
+    try {
+      const storedLayouts = await getLayoutRepository().get();
+      const layoutData = transformWidgetLayout(storedLayouts);
+      return layoutData;
+    } catch (error) {
+      Log(error, "error");
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Unable to get widget layout",
+      });
+    }
+  }),
+  getWidgetConfig: protectedProcedure.query(async () => {
     try {
       const storedConfigs = await getConfigRepository().getAll();
-      const storedLayouts = await getLayoutRepository().get();
       const configData = await transformWidgetData(storedConfigs);
-      const layoutData = await transformWidgetLayout(storedLayouts);
       return configData;
     } catch (error) {
       Log(error, "error");
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
-        message: "Unable to get widget data",
+        message: "Unable to get widget config",
       });
     }
   }),

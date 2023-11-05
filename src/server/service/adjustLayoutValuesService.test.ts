@@ -105,7 +105,7 @@ describe("adjustLayoutValuesService", () => {
     );
 
     // act
-    const result = adjustLayoutValues<WidgetData>(input, widgetType);
+    const result = adjustLayoutValues<WidgetData>(input);
 
     // assert
     expect(result).toStrictEqual(expected);
@@ -195,15 +195,17 @@ describe("adjustLayoutValuesService", () => {
 
     const input: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       "1",
+      widgetType,
       layoutInput,
     );
     const expected: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       "1",
+      widgetType,
       layoutExpected,
     );
 
     // act
-    const result = adjustLayoutValues<AdjustedWidgetLayout>(input, widgetType);
+    const result = adjustLayoutValues<AdjustedWidgetLayout>(input);
 
     // assert
     expect(result).toStrictEqual(expected);

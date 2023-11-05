@@ -1,24 +1,19 @@
 import { z } from "zod";
-import AppError from "~/utils/error";
 import { isObject, isString } from "~/utils/guards/base";
-import { isScreenSizePositioning } from "~/utils/guards/widgets";
-import { screenSizePositioningSchema } from "~/utils/schema";
+import { isScreenSizePositioning, isWidgetType } from "~/utils/guards/widgets";
+import { screenSizePositioningSchema, widgetTypeSchema } from "~/utils/schema";
 import type { ScreenSize } from "~/utils/types/types";
 import type { ScreenSizePositioning, WidgetType } from "~/utils/types/widget";
-import {
-  getConfigRepository,
-  type ConfigRepository,
-} from "../repository/config/configRepository";
 
 export class AdjustedWidgetLayout {
   id: string;
   layout: ScreenSizePositioning;
-  _type: WidgetType | null;
+  type: WidgetType;
 
-  constructor(id: string, layout: ScreenSizePositioning) {
+  constructor(id: string, type: WidgetType, layout: ScreenSizePositioning) {
     this.id = id;
+    this.type = type;
     this.layout = layout;
-    this._type = null;
   }
 
   static validate(input: unknown): input is AdjustedWidgetLayout {
@@ -26,6 +21,9 @@ export class AdjustedWidgetLayout {
       return false;
     }
     if (!isString(input.id)) {
+      return false;
+    }
+    if (!isWidgetType(input.type)) {
       return false;
     }
     if (!isScreenSizePositioning(input.layout)) {
@@ -37,6 +35,7 @@ export class AdjustedWidgetLayout {
   static getSchema() {
     const adjustedWidgetLayoutSchema = z.object({
       id: z.string(),
+      type: widgetTypeSchema,
       layout: screenSizePositioningSchema,
     });
 
@@ -48,21 +47,5 @@ export class AdjustedWidgetLayout {
     layout: ScreenSizePositioning[typeof breakpoint],
   ) {
     this.layout[breakpoint] = layout;
-  }
-
-  async getType() {
-    if (!this._type) {
-      this._type = await this._retrieveType(getConfigRepository());
-    }
-    return this._type;
-  }
-
-  async _retrieveType(repo: ConfigRepository): Promise<WidgetType> {
-    const res = await repo.get(this.id);
-    if (!res) {
-      throw new AppError(`Cannot fetch type for id ${this.id}`);
-    }
-
-    return res.type;
   }
 }

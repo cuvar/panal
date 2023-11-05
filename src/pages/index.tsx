@@ -7,7 +7,7 @@ import { api } from "~/utils/api";
 import Log from "~/utils/log";
 
 const Home: NextPage = () => {
-  const widgetDataQuery = api.widget.getWidgetData.useQuery(undefined, {
+  const widgetDataQuery = api.widget.getWidgetLayout.useQuery(undefined, {
     onSuccess: (data) => {
       Log(data);
     },
@@ -23,7 +23,7 @@ const Home: NextPage = () => {
 
   return (
     <SiteWrapper>
-      <WidgetView data={widgetDataQuery.data} />
+      <WidgetView layout={widgetDataQuery.data} />
     </SiteWrapper>
   );
 };

@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import getHidingClasses from "~/client/services/getHidingClassesService";
 import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
-import type { WidgetData } from "~/server/entities/widgetData";
+import { type AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
 import CalendarWidget from "~/server/widgets/calendar/CalendarWidget";
 import type { CalendarWidgetData } from "~/server/widgets/calendar/types";
 import type { LinkWidgetData } from "~/server/widgets/links/types";
@@ -31,7 +31,7 @@ import {
 import LinkCollectionWidget from "../server/widgets/links/LinkWidget/LinkCollectionWidget";
 
 type Props = {
-  data: WidgetData[];
+  layout: AdjustedWidgetLayout[];
 };
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -50,7 +50,7 @@ export default function WidgetView(props: Props) {
   );
 
   useEffect(() => {
-    const transformedLayouts = transformLayoutsForGrid(props.data, !editMode);
+    const transformedLayouts = transformLayoutsForGrid(props.layout, !editMode);
     setWidgetLayout(transformedLayouts);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode]);

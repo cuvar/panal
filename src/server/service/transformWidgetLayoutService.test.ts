@@ -7,8 +7,9 @@ import { UserWidgetLayout } from "../entities/userWidgetLayout";
 import transformWidgetLayout from "./transformWidgetLayoutService";
 
 describe("transformWidgetLayoutService", () => {
-  it("works correctly", async () => {
+  it("works correctly", () => {
     // arrange
+    const widgetType = "time";
     const layoutInput = {
       xl: {
         x: 0,
@@ -75,17 +76,14 @@ describe("transformWidgetLayoutService", () => {
       },
     };
 
-    const input = new UserWidgetLayout(layoutInput);
-    const expected = new AdjustedWidgetLayout("1", layoutExpected);
+    const input = new UserWidgetLayout(widgetType, layoutInput);
+    const expected = new AdjustedWidgetLayout("1", widgetType, layoutExpected);
 
     // act
-    const action = async () => {
-      const res = await transformWidgetLayout([input]);
-      return res[0]!;
-    };
+    const res = transformWidgetLayout([input])[0]!;
 
     // assert
-    await expect(typeof (await action()).id).resolves.toBe("string");
-    await expect((await action()).layout).resolves.toBe(expected.layout);
+    expect(typeof res.id).toBe("string");
+    expect(res.layout).toBe(expected.layout);
   });
 });

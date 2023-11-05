@@ -49,26 +49,3 @@ export default async function transformWidgetData(
   }
   return adjustedWidgetConfig;
 }
-
-// const layout = layoutConfig.find((l) => l.id === widget.id);
-// if (!layout) {
-//   throw new AppError(
-//     `Cannot find a layout for widget with id ${widget.id}`,
-//   );
-// }
-
-// try {
-//   const missingLayouts = addMissingLayouts(layout.layout);
-//   const newWidget = new WidgetData(
-//     widget.id,
-//     widget.type,
-//     missingLayouts,
-//     data,
-//   );
-
-//   widgetData.push(
-//     adjustLayoutValues<WidgetData>(newWidget, newWidget.type),
-//   );
-// } catch (error) {
-//   throw new AppError("Cannot transform widget config", error);
-// }

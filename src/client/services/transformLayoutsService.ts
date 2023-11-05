@@ -1,4 +1,5 @@
 import type GridLayout from "react-grid-layout";
+import { type AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
 import { isScreenSize } from "~/utils/guards/other";
 import { isEmptyPositioning } from "~/utils/helper";
 import type { WidgetData } from "../../server/entities/widgetData";
@@ -14,7 +15,7 @@ import {
  * @returns {GridLayout.Layouts} transformed layouts
  */
 export default function transformLayoutsForGrid(
-  data: WidgetData[],
+  data: AdjustedWidgetLayout[],
   makeStatic: boolean,
 ): GridLayout.Layouts {
   const layouts: GridLayout.Layouts = {
