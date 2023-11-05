@@ -11,6 +11,7 @@ describe("updateWidgetLayoutService", () => {
   it("works correctly for updating widget layout", () => {
     // arrange
     const id = "hello world";
+    const widgetType = "time";
     const layoutInput: ScreenSizePositioning = {
       xl: {
         x: 0,
@@ -51,6 +52,7 @@ describe("updateWidgetLayoutService", () => {
     };
     const widgetConfig: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       id,
+      widgetType,
       layoutInput,
     );
     const newLayouts: GridLayout.Layouts = {
@@ -71,6 +73,7 @@ describe("updateWidgetLayoutService", () => {
 
     const expected: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       id,
+      widgetType,
       layoutExpected,
     );
 
@@ -85,6 +88,7 @@ describe("updateWidgetLayoutService", () => {
   it("works correctly for wrong newLayouts", () => {
     // arrange
     const id = "hello world";
+    const widgetType = "time";
     const layoutInput: ScreenSizePositioning = {
       xl: {
         x: 0,
@@ -125,6 +129,7 @@ describe("updateWidgetLayoutService", () => {
     };
     const widgetConfig: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       id,
+      widgetType,
       layoutInput,
     );
     const newLayouts: GridLayout.Layouts = {
@@ -144,6 +149,7 @@ describe("updateWidgetLayoutService", () => {
   it("works correctly for updating widget layout", () => {
     // arrange
     const id = "hello world";
+    const widgetType = "time";
     const layoutInput: ScreenSizePositioning = {
       xl: {
         x: 0,
@@ -184,6 +190,7 @@ describe("updateWidgetLayoutService", () => {
     };
     const widgetConfig: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       id,
+      widgetType,
       layoutInput,
     );
     const newLayouts: GridLayout.Layouts = {

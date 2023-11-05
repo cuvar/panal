@@ -24,7 +24,7 @@ export default function transformWidgetLayout(
         widget.type,
         withMissingLayouts,
       );
-      const adjusted = adjustLayoutValues<AdjustedWidgetLayout>(adjustedConfig);
+      const adjusted = adjustLayoutValues(adjustedConfig);
       adjustedWidgetLayout.push(adjusted);
     }
 

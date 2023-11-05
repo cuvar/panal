@@ -3,100 +3,90 @@
  */
 
 import type GridLayout from "react-grid-layout";
-import type { WidgetData } from "~/server/entities/widgetData";
+import { AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
 import transformLayoutsForGrid from "./transformLayoutsService";
 
 describe("transformLayoutsService", () => {
   it("transforms correctly into gridlayout with static: true", () => {
     // arrange
-    const input: WidgetData[] = [
-      {
-        id: "1",
-        type: "time",
-        layout: {
-          xl: {
-            x: 0,
-            y: 0,
-            w: 1,
-            h: 1,
-          },
-          lg: {
-            x: 0,
-            y: 0,
-            w: 2,
-            h: 2,
-          },
-          md: {
-            x: 0,
-            y: 0,
-            w: 3,
-            h: 3,
-          },
-          sm: {
-            x: 0,
-            y: 0,
-            w: 4,
-            h: 4,
-          },
-          xs: {
-            x: 0,
-            y: 0,
-            w: 5,
-            h: 5,
-          },
-          xss: {
-            x: 0,
-            y: 0,
-            w: 6,
-            h: 6,
-          },
-        },
-        data: {},
+    const awc1 = new AdjustedWidgetLayout("1", "time", {
+      xl: {
+        x: 0,
+        y: 0,
+        w: 1,
+        h: 1,
       },
-      {
-        id: "2",
-        type: "time",
-        layout: {
-          xl: {
-            x: 0,
-            y: 0,
-            w: 1,
-            h: 1,
-          },
-          lg: {
-            x: 0,
-            y: 0,
-            w: 2,
-            h: 2,
-          },
-          md: {
-            x: 0,
-            y: 0,
-            w: 3,
-            h: 3,
-          },
-          sm: {
-            x: 0,
-            y: 0,
-            w: 4,
-            h: 4,
-          },
-          xs: {
-            x: 0,
-            y: 0,
-            w: 5,
-            h: 5,
-          },
-          xss: {
-            x: 0,
-            y: 0,
-            w: 6,
-            h: 6,
-          },
-        },
-        data: {},
+      lg: {
+        x: 0,
+        y: 0,
+        w: 2,
+        h: 2,
       },
-    ];
+      md: {
+        x: 0,
+        y: 0,
+        w: 3,
+        h: 3,
+      },
+      sm: {
+        x: 0,
+        y: 0,
+        w: 4,
+        h: 4,
+      },
+      xs: {
+        x: 0,
+        y: 0,
+        w: 5,
+        h: 5,
+      },
+      xss: {
+        x: 0,
+        y: 0,
+        w: 6,
+        h: 6,
+      },
+    });
+    const awc2 = new AdjustedWidgetLayout("2", "time", {
+      xl: {
+        x: 0,
+        y: 0,
+        w: 1,
+        h: 1,
+      },
+      lg: {
+        x: 0,
+        y: 0,
+        w: 2,
+        h: 2,
+      },
+      md: {
+        x: 0,
+        y: 0,
+        w: 3,
+        h: 3,
+      },
+      sm: {
+        x: 0,
+        y: 0,
+        w: 4,
+        h: 4,
+      },
+      xs: {
+        x: 0,
+        y: 0,
+        w: 5,
+        h: 5,
+      },
+      xss: {
+        x: 0,
+        y: 0,
+        w: 6,
+        h: 6,
+      },
+    });
+
+    const input: AdjustedWidgetLayout[] = [awc1, awc2];
     const makeStatic = true;
     const expected: GridLayout.Layouts = {
       xl: [
@@ -206,94 +196,84 @@ describe("transformLayoutsService", () => {
 
   it("transforms correctly into gridlayout with static: false", () => {
     // arrange
-    const input: WidgetData[] = [
-      {
-        id: "1",
-        type: "time",
-        layout: {
-          xl: {
-            x: 0,
-            y: 0,
-            w: 1,
-            h: 1,
-          },
-          lg: {
-            x: 0,
-            y: 0,
-            w: 2,
-            h: 2,
-          },
-          md: {
-            x: 0,
-            y: 0,
-            w: 3,
-            h: 3,
-          },
-          sm: {
-            x: 0,
-            y: 0,
-            w: 4,
-            h: 4,
-          },
-          xs: {
-            x: 0,
-            y: 0,
-            w: 5,
-            h: 5,
-          },
-          xss: {
-            x: 0,
-            y: 0,
-            w: 6,
-            h: 6,
-          },
-        },
-        data: {},
+    const awc1 = new AdjustedWidgetLayout("1", "time", {
+      xl: {
+        x: 0,
+        y: 0,
+        w: 1,
+        h: 1,
       },
-      {
-        id: "2",
-        type: "time",
-        layout: {
-          xl: {
-            x: 0,
-            y: 0,
-            w: 1,
-            h: 1,
-          },
-          lg: {
-            x: 0,
-            y: 0,
-            w: 2,
-            h: 2,
-          },
-          md: {
-            x: 0,
-            y: 0,
-            w: 3,
-            h: 3,
-          },
-          sm: {
-            x: 0,
-            y: 0,
-            w: 4,
-            h: 4,
-          },
-          xs: {
-            x: 0,
-            y: 0,
-            w: 5,
-            h: 5,
-          },
-          xss: {
-            x: 0,
-            y: 0,
-            w: 6,
-            h: 6,
-          },
-        },
-        data: {},
+      lg: {
+        x: 0,
+        y: 0,
+        w: 2,
+        h: 2,
       },
-    ];
+      md: {
+        x: 0,
+        y: 0,
+        w: 3,
+        h: 3,
+      },
+      sm: {
+        x: 0,
+        y: 0,
+        w: 4,
+        h: 4,
+      },
+      xs: {
+        x: 0,
+        y: 0,
+        w: 5,
+        h: 5,
+      },
+      xss: {
+        x: 0,
+        y: 0,
+        w: 6,
+        h: 6,
+      },
+    });
+    const awc2 = new AdjustedWidgetLayout("2", "time", {
+      xl: {
+        x: 0,
+        y: 0,
+        w: 1,
+        h: 1,
+      },
+      lg: {
+        x: 0,
+        y: 0,
+        w: 2,
+        h: 2,
+      },
+      md: {
+        x: 0,
+        y: 0,
+        w: 3,
+        h: 3,
+      },
+      sm: {
+        x: 0,
+        y: 0,
+        w: 4,
+        h: 4,
+      },
+      xs: {
+        x: 0,
+        y: 0,
+        w: 5,
+        h: 5,
+      },
+      xss: {
+        x: 0,
+        y: 0,
+        w: 6,
+        h: 6,
+      },
+    });
+
+    const input: AdjustedWidgetLayout[] = [awc1, awc2];
     const makeStatic = false;
     const expected: GridLayout.Layouts = {
       xl: [

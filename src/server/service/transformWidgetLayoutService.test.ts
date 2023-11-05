@@ -84,6 +84,6 @@ describe("transformWidgetLayoutService", () => {
 
     // assert
     expect(typeof res.id).toBe("string");
-    expect(res.layout).toBe(expected.layout);
+    expect(res.layout).toStrictEqual(expected.layout);
   });
 });
