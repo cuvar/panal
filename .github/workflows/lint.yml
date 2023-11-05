@@ -17,7 +17,6 @@ jobs:
       UPSTASH_ENDPOINT: ${{ secrets.UPSTASH_ENDPOINT }}
       UPSTASH_TOKEN: ${{ secrets.UPSTASH_TOKEN }}
       UPSTASH_KEY: ${{ secrets.UPSTASH_KEY }}
-      REPO_FILE: ${{ secrets.REPO_FILE }}
 
     strategy:
       matrix:

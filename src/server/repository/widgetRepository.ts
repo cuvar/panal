@@ -1,5 +1,6 @@
 import { env } from "~/env.mjs";
 import AppError from "~/utils/error";
+import { FileReader } from "../driver/Reader/FileReader";
 import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
 import { type UserWidgetConfig } from "../entities/userWidgetConfig";
 import parseUserWidgetConfig from "../service/parseWidgetConfigService";
@@ -22,7 +23,7 @@ export function getWidgetRepository(): WidgetRepository {
   if (env.WIDGET_STORE == "upstash") {
     repo = new WidgetUpstashRepository();
   } else if (env.WIDGET_STORE == "file") {
-    repo = new WidgetLocalFileRepository();
+    repo = new WidgetLocalFileRepository(new FileReader());
   } else if (env.WIDGET_STORE == "mock") {
     repo = new WidgetRepositoryMock();
   }
