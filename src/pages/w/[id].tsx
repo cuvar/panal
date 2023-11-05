@@ -28,7 +28,7 @@ const Home: NextPage = () => {
     null,
   );
 
-  const widgetDataQuery = api.widget.getAdjustedWidgetConfigForWidget.useQuery(
+  const widgetDataQuery = api.widget.getLayoutForWidget.useQuery(
     { id: typeof id === "string" ? id : "" },
     {
       enabled: typeof id === "string",

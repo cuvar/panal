@@ -1,8 +1,7 @@
-import AppError from "~/utils/error";
 import Log from "~/utils/log";
 import { ICSFetcher } from "../driver/ICSFetcher";
-import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
-import { WidgetData } from "../entities/widgetData";
+import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
+import { type WidgetConfig } from "../entities/widgetConfig";
 import computeCalendarWidgetData from "../widgets/calendar/data";
 import { isCalendarWidgetConfig } from "../widgets/calendar/guards";
 import computeLinkWidgetData from "../widgets/links/data";
@@ -11,18 +10,16 @@ import computeSearchWidgetData from "../widgets/search/data";
 import { isSearchWidgetConfig } from "../widgets/search/guards";
 import computeTimeWidgetData from "../widgets/time/data";
 import { isTimeWidgetConfig } from "../widgets/time/guards";
-import addMissingLayouts from "./addMissingLayoutsService";
-import adjustLayoutValues from "./adjustLayoutValuesService";
 
 /**
- * Transforms the given AdjustedWidgetConfig[] into a WidgetData[]
- * @param {AdjustedWidgetConfig[]} widgetConfig AdjustedWidgetConfig[] to transform
- * @returns {Promise<WidgetData[]>} WidgetData[] with unique IDs
+ * Transforms the given WidgetConfig[] into a AdjustedWidgetConfig[]
+ * @param {WidgetConfig[]} widgetConfig AdjustedWidgetLayout[] to transform
+ * @returns {Promise<AdjustedWidgetConfig[]>} AdjustedWidgetConfig[] with unique IDs
  */
 export default async function transformWidgetData(
-  widgetConfig: AdjustedWidgetConfig[],
-): Promise<WidgetData[]> {
-  const widgetData: WidgetData[] = [];
+  widgetConfig: WidgetConfig[],
+): Promise<AdjustedWidgetConfig[]> {
+  const adjustedWidgetConfig: AdjustedWidgetConfig[] = [];
   for (const widget of widgetConfig) {
     let data;
 
@@ -46,19 +43,32 @@ export default async function transformWidgetData(
       data = {};
     }
 
-    try {
-      const missingLayouts = addMissingLayouts(widget.layout);
-      const newWidget = new WidgetData(
-        widget.id,
-        widget.type,
-        missingLayouts,
-        data,
-      );
-
-      widgetData.push(adjustLayoutValues<WidgetData>(newWidget));
-    } catch (error) {
-      throw new AppError("Cannot transform widget config", error);
-    }
+    adjustedWidgetConfig.push(
+      new AdjustedWidgetConfig(widget.id, widget.type, data),
+    );
   }
-  return widgetData;
+  return adjustedWidgetConfig;
 }
+
+// const layout = layoutConfig.find((l) => l.id === widget.id);
+// if (!layout) {
+//   throw new AppError(
+//     `Cannot find a layout for widget with id ${widget.id}`,
+//   );
+// }
+
+// try {
+//   const missingLayouts = addMissingLayouts(layout.layout);
+//   const newWidget = new WidgetData(
+//     widget.id,
+//     widget.type,
+//     missingLayouts,
+//     data,
+//   );
+
+//   widgetData.push(
+//     adjustLayoutValues<WidgetData>(newWidget, newWidget.type),
+//   );
+// } catch (error) {
+//   throw new AppError("Cannot transform widget config", error);
+// }

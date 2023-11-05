@@ -15,15 +15,16 @@ import {
  * 3. Adjusts positioning values to not be negative
  * 4. Adjusts positioning values to not be outside of the bounds of the screen
  * Adjusts the sizing parameters of a widget's layout. Specifically:
- * @param {object} widget Widget to adjust layout values for
- * @returns {object} widget with adjusted layout values
+ * @param {Pick<WidgetData, "layout">} widget Widget to adjust layout values for
+ * @param {WidgetType} type WidgetType for `widget`
+ * @returns {Pick<WidgetData, "layout">} widget with adjusted layout values
  */
 export default function adjustLayoutValues<
-  T extends Pick<WidgetData, "layout" | "type">,
->(widget: T): T {
+  T extends Pick<WidgetData, "layout" | "id">,
+>(widget: T, type: WidgetType): T {
   Object.entries(widget.layout).forEach(([key, value]) => {
     if (isScreenSize(key)) {
-      widget.layout[key] = adjustBoundsForMinValues(value, widget.type, key);
+      widget.layout[key] = adjustBoundsForMinValues(value, type, key);
     }
   });
   return widget;

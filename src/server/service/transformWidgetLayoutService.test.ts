@@ -2,14 +2,13 @@
  * @jest-environment node
  */
 
-import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
-import { UserWidgetConfig } from "../entities/userWidgetConfig";
-import transformWidgetConfig from "./transformWidgetConfigService";
+import { AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
+import { UserWidgetLayout } from "../entities/userWidgetLayout";
+import transformWidgetLayout from "./transformWidgetLayoutService";
 
-describe("transformWidgetConfigService", () => {
-  it("works correctly", () => {
+describe("transformWidgetLayoutService", () => {
+  it("works correctly", async () => {
     // arrange
-    const widgetType = "calendar";
     const layoutInput = {
       xl: {
         x: 0,
@@ -76,21 +75,17 @@ describe("transformWidgetConfigService", () => {
       },
     };
 
-    const input = new UserWidgetConfig(widgetType, layoutInput, {});
-    const expected = new AdjustedWidgetConfig(
-      "1",
-      widgetType,
-      layoutExpected,
-      {},
-    );
+    const input = new UserWidgetLayout(layoutInput);
+    const expected = new AdjustedWidgetLayout("1", layoutExpected);
 
     // act
-    const result = transformWidgetConfig([input])[0]!;
+    const action = async () => {
+      const res = await transformWidgetLayout([input]);
+      return res[0]!;
+    };
 
     // assert
-    expect(typeof result.id).toBe("string");
-    expect(result.type).toEqual(expected.type);
-    expect(result.layout).toEqual(expected.layout);
-    expect(result.data).toEqual(expected.data);
+    await expect(typeof (await action()).id).resolves.toBe("string");
+    await expect((await action()).layout).resolves.toBe(expected.layout);
   });
 });

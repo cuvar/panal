@@ -54,6 +54,21 @@ export class WidgetConfig {
     return true;
   }
 
+  /**
+   * Checks whether data is of type WidgetConfig[]
+   * @param {unknown} data Unkown type to be checked
+   * @returns {boolean} Whether data is of type WidgetConfig[]
+   */
+  static isWidgetConfigArray(data: unknown): data is WidgetConfig[] {
+    if (!Array.isArray(data)) {
+      return false;
+    }
+    if (!data.every((r) => WidgetConfig.validate(r))) {
+      return false;
+    }
+    return true;
+  }
+
   static getSchema() {
     const widgetConfigSchema = z.object({
       id: z.string(),

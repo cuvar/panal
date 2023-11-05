@@ -2,18 +2,18 @@
  * @jest-environment node
  */
 
-import { saveUserWidgetConfig } from "./widgetRepository";
-import { WidgetRepositoryMock } from "./widgetRepositoryMock";
+import { saveUserWidgetLayout } from "./layoutRepository";
+import { LayoutRepositoryMock } from "./layoutRepositoryMock";
 
-describe("Widget repository:", () => {
+describe("Layout repository:", () => {
   test("throws correctly on empty data", async () => {
     // arrange
-    const repo = new WidgetRepositoryMock();
+    const repo = new LayoutRepositoryMock();
     const input = {};
 
     // act
     const action = async () => {
-      await saveUserWidgetConfig(input, repo);
+      await saveUserWidgetLayout(input, repo);
     };
 
     // assert
@@ -22,12 +22,12 @@ describe("Widget repository:", () => {
 
   test("throws on empty data", async () => {
     // arrange
-    const repo = new WidgetRepositoryMock();
+    const repo = new LayoutRepositoryMock();
     const input: object = [];
 
     // act
     const action = async () => {
-      await saveUserWidgetConfig(input, repo);
+      await saveUserWidgetLayout(input, repo);
     };
 
     // assert

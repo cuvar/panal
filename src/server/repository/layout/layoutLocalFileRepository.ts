@@ -1,12 +1,12 @@
 import { env } from "~/env.mjs";
 import { REPO_LAYOUT_FILE } from "~/utils/const";
 import AppError from "~/utils/error";
-import { type Reader } from "../driver/Reader/Reader";
-import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
-import { parseAdjustedWidgetConfig } from "../service/parseWidgetConfigService";
-import type { WidgetRepository } from "./widgetRepository";
+import { type Reader } from "../../driver/Reader/Reader";
+import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
+import { parseAdjustedWidgetLayout } from "../../service/parseWidgetConfigService";
+import type { LayoutRepository } from "./layoutRepository";
 
-export class WidgetLocalFileRepository implements WidgetRepository {
+export class WidgetLocalFileRepository implements LayoutRepository {
   private file: string;
   private reader: Reader;
 
@@ -19,7 +19,7 @@ export class WidgetLocalFileRepository implements WidgetRepository {
     this.reader = reader;
   }
 
-  async get(): Promise<AdjustedWidgetConfig[]> {
+  async get(): Promise<AdjustedWidgetLayout[]> {
     try {
       const fileContents = await this.reader.read(this.file);
       const response = JSON.parse(fileContents);
@@ -30,7 +30,7 @@ export class WidgetLocalFileRepository implements WidgetRepository {
       if (typeof response !== "object") {
         throw new AppError("Invalid response from local file", null, true);
       }
-      const config = parseAdjustedWidgetConfig(JSON.stringify(response));
+      const config = parseAdjustedWidgetLayout(JSON.stringify(response));
       if (!config) {
         throw new AppError("Invalid widget config", null, true);
       }
@@ -45,7 +45,7 @@ export class WidgetLocalFileRepository implements WidgetRepository {
     }
   }
 
-  async set(widgets: AdjustedWidgetConfig[]): Promise<void> {
+  async set(widgets: AdjustedWidgetLayout[]): Promise<void> {
     try {
       await this.reader.write(this.file, JSON.stringify(widgets));
     } catch (error) {

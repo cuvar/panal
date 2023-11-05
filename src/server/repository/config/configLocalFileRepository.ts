@@ -47,6 +47,29 @@ export class ConfigLocalFileRepository implements ConfigRepository {
     }
   }
 
+  async getAll(): Promise<WidgetConfig[]> {
+    try {
+      const fileContents = await this.reader.read(this.file);
+      const response = JSON.parse(fileContents);
+
+      if (!response) {
+        throw new AppError("No widgets found", null, true);
+      }
+      if (typeof response !== "object") {
+        throw new AppError("Invalid response from local file", null, true);
+      }
+
+      const config = parseWidgetConfigArray(JSON.stringify(response));
+      if (!config) {
+        throw new AppError("Invalid widget config", null, true);
+      }
+
+      return config;
+    } catch (error) {
+      throw new AppError("Cannot get widget config through redis", error, true);
+    }
+  }
+
   async set(id: string, data: WidgetConfig): Promise<void> {
     try {
       const response = await this.reader.read(this.file);

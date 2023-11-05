@@ -4,14 +4,13 @@
 
 import type GridLayout from "react-grid-layout";
 import type { ScreenSizePositioning } from "~/utils/types/widget";
-import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
+import { AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
 import updateWidgetLayoutService from "./updateWidgetLayoutService";
 
 describe("updateWidgetLayoutService", () => {
   it("works correctly for updating widget layout", () => {
     // arrange
     const id = "hello world";
-    const widgetType = "time";
     const layoutInput: ScreenSizePositioning = {
       xl: {
         x: 0,
@@ -50,11 +49,9 @@ describe("updateWidgetLayoutService", () => {
         h: 0,
       },
     };
-    const widgetConfig: AdjustedWidgetConfig = new AdjustedWidgetConfig(
+    const widgetConfig: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       id,
-      widgetType,
       layoutInput,
-      {},
     );
     const newLayouts: GridLayout.Layouts = {
       xl: [],
@@ -72,11 +69,9 @@ describe("updateWidgetLayoutService", () => {
       h: newLayouts.lg![0]!.h,
     };
 
-    const expected: AdjustedWidgetConfig = new AdjustedWidgetConfig(
+    const expected: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       id,
-      widgetType,
       layoutExpected,
-      {},
     );
 
     // act
@@ -84,15 +79,12 @@ describe("updateWidgetLayoutService", () => {
 
     // assert
     expect(result).not.toBeNull();
-    expect(result[0]?.type).toStrictEqual(expected.type);
-    expect(result[0]?.data).toStrictEqual(expected.data);
     expect(result[0]?.layout).toEqual(expected.layout);
   });
 
   it("works correctly for wrong newLayouts", () => {
     // arrange
     const id = "hello world";
-    const widgetType = "time";
     const layoutInput: ScreenSizePositioning = {
       xl: {
         x: 0,
@@ -131,11 +123,9 @@ describe("updateWidgetLayoutService", () => {
         h: 0,
       },
     };
-    const widgetConfig: AdjustedWidgetConfig = new AdjustedWidgetConfig(
+    const widgetConfig: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       id,
-      widgetType,
       layoutInput,
-      {},
     );
     const newLayouts: GridLayout.Layouts = {
       xl: [],
@@ -154,7 +144,6 @@ describe("updateWidgetLayoutService", () => {
   it("works correctly for updating widget layout", () => {
     // arrange
     const id = "hello world";
-    const widgetType = "time";
     const layoutInput: ScreenSizePositioning = {
       xl: {
         x: 0,
@@ -193,11 +182,9 @@ describe("updateWidgetLayoutService", () => {
         h: 0,
       },
     };
-    const widgetConfig: AdjustedWidgetConfig = new AdjustedWidgetConfig(
+    const widgetConfig: AdjustedWidgetLayout = new AdjustedWidgetLayout(
       id,
-      widgetType,
       layoutInput,
-      {},
     );
     const newLayouts: GridLayout.Layouts = {
       xl: [],

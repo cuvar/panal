@@ -1,12 +1,14 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { getConfigRepository } from "~/server/repository/config/configRepository";
 import {
-  getWidgetRepository,
-  saveUserWidgetConfig,
-  updateUserWidgetConfig,
-} from "~/server/repository/widgetRepository";
+  getLayoutRepository,
+  saveUserWidgetLayout,
+  updateUserWidgetLayout,
+} from "~/server/repository/layout/layoutRepository";
 import transformWidgetData from "~/server/service/transformWidgetDataService";
+import transformWidgetLayout from "~/server/service/transformWidgetLayoutService";
 import updateWidgetLayoutService from "~/server/service/updateWidgetLayoutService";
 import AppError from "~/utils/error";
 import Log from "~/utils/log";
@@ -18,10 +20,13 @@ import {
 
 export const widgetRouter = createTRPCRouter({
   getWidgetData: protectedProcedure.query(async () => {
+    // TODO: split
     try {
-      const widgetsConfig = await getWidgetRepository().get();
-      const data = await transformWidgetData(widgetsConfig);
-      return data;
+      const storedConfigs = await getConfigRepository().getAll();
+      const storedLayouts = await getLayoutRepository().get();
+      const configData = await transformWidgetData(storedConfigs);
+      const layoutData = await transformWidgetLayout(storedLayouts);
+      return configData;
     } catch (error) {
       Log(error, "error");
       throw new TRPCError({
@@ -30,11 +35,11 @@ export const widgetRouter = createTRPCRouter({
       });
     }
   }),
-  getAdjustedWidgetConfigForWidget: protectedProcedure
+  getLayoutForWidget: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
       try {
-        const data = await getWidgetRepository().get();
+        const data = await getLayoutRepository().get();
         const res = data.find((d) => d.id == input.id);
         if (!res) {
           throw new AppError(
@@ -50,9 +55,28 @@ export const widgetRouter = createTRPCRouter({
         });
       }
     }),
+  getConfigForWidget: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input }) => {
+      try {
+        const data = await getConfigRepository().get(input.id);
+        if (!data) {
+          throw new AppError(
+            `No adjusted widget config for widget with ID ${input.id}`,
+          );
+        }
+        return res;
+      } catch (error) {
+        Log(error, "error");
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Unable to get widget data",
+        });
+      }
+    }),
   getWidgetConfig: protectedProcedure.query(async () => {
     try {
-      const data = await getWidgetRepository().get();
+      const data = await getLayoutRepository().get();
       return data;
     } catch (error) {
       Log(error, "error");
@@ -70,7 +94,7 @@ export const widgetRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       try {
-        await saveUserWidgetConfig(input.widgets, getWidgetRepository());
+        await saveUserWidgetLayout(input.widgets, getLayoutRepository());
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({
@@ -95,7 +119,7 @@ export const widgetRouter = createTRPCRouter({
         data: JSON.parse(input.data),
       };
       try {
-        await updateUserWidgetConfig(input.id, widget, getWidgetRepository());
+        await updateUserWidgetLayout(input.id, widget, getLayoutRepository());
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({
@@ -112,12 +136,12 @@ export const widgetRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       try {
-        const widgetConfig = await getWidgetRepository().get();
+        const widgetConfig = await getLayoutRepository().get();
         const updatedWidgets = updateWidgetLayoutService(
           input.layout,
           widgetConfig,
         );
-        await getWidgetRepository().set(updatedWidgets);
+        await getLayoutRepository().set(updatedWidgets);
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({

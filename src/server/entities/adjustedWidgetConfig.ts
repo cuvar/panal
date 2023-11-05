@@ -1,89 +1,45 @@
 import { z } from "zod";
-import { isObject, isString } from "~/utils/guards/base";
 import {
-  isFittingDataPaylod,
-  isScreenSizePositioning,
-  isWidgetType,
-} from "~/utils/guards/widgets";
-import {
-  calendarWidgetConfigSchema,
-  linkWidgetConfigSchema,
-  screenSizePositioningSchema,
-  searchWidgetConfigSchema,
-  timeWidgetConfigSchema,
+  calendarWidgetDataSchema,
+  linkWidgetDataSchema,
+  searchWidgetDataSchema,
+  timeWidgetDataSchema,
   widgetTypeSchema,
 } from "~/utils/schema";
-import type { ScreenSize } from "~/utils/types/types";
-import type { ScreenSizePositioning, WidgetType } from "~/utils/types/widget";
-import type { CalendarWidgetConfig } from "../widgets/calendar/types";
-import type { LinkWidgetConfig } from "../widgets/links/types";
-import type { SearchWidgetConfig } from "../widgets/search/types";
-import type { TimeWidgetConfig } from "../widgets/time/types";
+import type { WidgetType } from "~/utils/types/widget";
+import type { CalendarWidgetData } from "../widgets/calendar/types";
+import type { LinkWidgetData } from "../widgets/links/types";
+import type { SearchWidgetData } from "../widgets/search/types";
+import type { TimeWidgetData } from "../widgets/time/types";
 
 export class AdjustedWidgetConfig {
   id: string;
-  layout: ScreenSizePositioning;
   type: WidgetType;
-  data:
-    | LinkWidgetConfig
-    | SearchWidgetConfig
-    | CalendarWidgetConfig
-    | TimeWidgetConfig;
-
+  data: LinkWidgetData | SearchWidgetData | CalendarWidgetData | TimeWidgetData;
   constructor(
     id: string,
     type: WidgetType,
-    layout: ScreenSizePositioning,
     data:
-      | LinkWidgetConfig
-      | SearchWidgetConfig
-      | CalendarWidgetConfig
-      | TimeWidgetConfig,
+      | LinkWidgetData
+      | SearchWidgetData
+      | CalendarWidgetData
+      | TimeWidgetData,
   ) {
     this.id = id;
-    this.layout = layout;
     this.type = type;
     this.data = data;
   }
 
-  static validate(input: unknown): input is AdjustedWidgetConfig {
-    if (!isObject(input)) {
-      return false;
-    }
-    if (!isString(input.id)) {
-      return false;
-    }
-    if (!isWidgetType(input.type)) {
-      return false;
-    }
-    if (!isScreenSizePositioning(input.layout)) {
-      return false;
-    }
-    if (!isFittingDataPaylod(input.data, input.type)) {
-      return false;
-    }
-
-    return true;
-  }
-
   static getSchema() {
-    const adjustedWidgetConfigSchema = z.object({
+    const widgetConfigSchema = z.object({
       id: z.string(),
       type: widgetTypeSchema,
-      layout: screenSizePositioningSchema,
-      data: linkWidgetConfigSchema
-        .or(searchWidgetConfigSchema)
-        .or(timeWidgetConfigSchema)
-        .or(calendarWidgetConfigSchema),
+      data: linkWidgetDataSchema
+        .or(searchWidgetDataSchema)
+        .or(timeWidgetDataSchema)
+        .or(calendarWidgetDataSchema),
     });
 
-    return adjustedWidgetConfigSchema;
-  }
-
-  setLayout(
-    breakpoint: ScreenSize,
-    layout: ScreenSizePositioning[typeof breakpoint],
-  ) {
-    this.layout[breakpoint] = layout;
+    return widgetConfigSchema;
   }
 }

@@ -1,55 +1,48 @@
-import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
-import { UserWidgetConfig } from "../entities/userWidgetConfig";
+import { AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
+import { UserWidgetLayout } from "../entities/userWidgetLayout";
 import { WidgetConfig } from "../entities/widgetConfig";
 
 /**
- * Parses a string into a UserWidgetConfig[].
+ * Parses a string into a UserWidgetLayout[].
  * @param {string} input String to parse
- * @returns {UserWidgetConfig[] | null} Parsed UserWidgetConfig[] or null if invalid
+ * @returns {UserWidgetLayout[] | null} Parsed UserWidgetLayout[] or null if invalid
  */
-export default function parseUserWidgetConfig(
+export default function parseUserWidgetLayout(
   input: string,
-): UserWidgetConfig[] | null {
+): UserWidgetLayout[] | null {
   const parsed = JSON.parse(input);
   if (!Array.isArray(parsed)) {
     return null;
   }
-  const result: UserWidgetConfig[] = [];
+  const result: UserWidgetLayout[] = [];
   for (const widget of parsed) {
-    if (!UserWidgetConfig.validate(widget)) {
+    if (!UserWidgetLayout.validate(widget)) {
       return null;
     }
-    result.push(new UserWidgetConfig(widget.type, widget.layout, widget.data));
+    result.push(new UserWidgetLayout(widget.layout));
   }
   return result;
 }
 
 /**
- * Parses a string into a AdjustedWidgetConfig[].
+ * Parses a string into a AdjustedWidgetLayout[].
  * @param {string} input String to parse
- * @returns {AdjustedWidgetConfig[] | null} Parsed AdjustedWidgetConfig[] or null if invalid
+ * @returns {AdjustedWidgetLayout[] | null} Parsed AdjustedWidgetLayout[] or null if invalid
  */
-export function parseAdjustedWidgetConfig(
+export function parseAdjustedWidgetLayout(
   input: string,
-): AdjustedWidgetConfig[] | null {
+): AdjustedWidgetLayout[] | null {
   const parsed = JSON.parse(input);
   if (!Array.isArray(parsed)) {
     return null;
   }
 
-  const result: AdjustedWidgetConfig[] = [];
+  const result: AdjustedWidgetLayout[] = [];
   for (const widget of parsed) {
-    if (!AdjustedWidgetConfig.validate(widget)) {
+    if (!AdjustedWidgetLayout.validate(widget)) {
       return null;
     }
-    result.push(
-      new AdjustedWidgetConfig(
-        widget.id,
-        widget.type,
-        widget.layout,
-        widget.data,
-      ),
-    );
+    result.push(new AdjustedWidgetLayout(widget.id, widget.layout));
   }
   return result;
 }
