@@ -1,11 +1,13 @@
 import { isObject } from "~/utils/guards/base";
-import { isLayout } from "~/utils/guards/widgets";
-import type { Layout } from "~/utils/types/widget";
+import { isLayout, isWidgetType } from "~/utils/guards/widgets";
+import type { Layout, WidgetType } from "~/utils/types/widget";
 
 export class UserWidgetLayout {
   layout: Layout;
+  type: WidgetType;
 
-  constructor(layout: Layout) {
+  constructor(type: WidgetType, layout: Layout) {
+    this.type = type;
     this.layout = layout;
   }
 
@@ -13,6 +15,11 @@ export class UserWidgetLayout {
     if (!isObject(input)) {
       return false;
     }
+
+    if (!isWidgetType(input.type)) {
+      return false;
+    }
+
     if (!isLayout(input.layout)) {
       return false;
     }

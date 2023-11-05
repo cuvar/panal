@@ -1,3 +1,4 @@
+import { type AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
 import type { ScreenSize } from "./types";
 
 // general
@@ -17,3 +18,7 @@ export type PartialScreenSizePositioning = {
   [K in ScreenSize]?: Positioning | HidingInfo;
 };
 export type Layout = Positioning | PartialScreenSizePositioning;
+
+export type WidgetProps = {
+  widget: AdjustedWidgetLayout;
+};

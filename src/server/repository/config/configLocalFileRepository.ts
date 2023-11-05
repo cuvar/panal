@@ -101,4 +101,16 @@ export class ConfigLocalFileRepository implements ConfigRepository {
       );
     }
   }
+
+  async setAll(data: WidgetConfig[]): Promise<void> {
+    try {
+      await this.reader.write(this.file, JSON.stringify(data));
+    } catch (error) {
+      throw new AppError(
+        "Cannot set all widget configs through local file",
+        error,
+        true,
+      );
+    }
+  }
 }

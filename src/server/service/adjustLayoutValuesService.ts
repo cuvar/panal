@@ -3,7 +3,7 @@ import { isScreenSize } from "~/utils/guards/other";
 import { isHidingInfo } from "~/utils/guards/widgets";
 import type { ScreenSize } from "~/utils/types/types";
 import type { HidingInfo, Positioning, WidgetType } from "~/utils/types/widget";
-import type { WidgetData } from "../entities/widgetData";
+import { type AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
@@ -15,16 +15,15 @@ import {
  * 3. Adjusts positioning values to not be negative
  * 4. Adjusts positioning values to not be outside of the bounds of the screen
  * Adjusts the sizing parameters of a widget's layout. Specifically:
- * @param {Pick<WidgetData, "layout">} widget Widget to adjust layout values for
- * @param {WidgetType} type WidgetType for `widget`
- * @returns {Pick<WidgetData, "layout">} widget with adjusted layout values
+ * @param {AdjustedWidgetLayout} widget Widget to adjust layout values for
+ * @returns {AdjustedWidgetLayout} widget with adjusted layout values
  */
-export default function adjustLayoutValues<
-  T extends Pick<WidgetData, "layout" | "id">,
->(widget: T, type: WidgetType): T {
+export default function adjustLayoutValues(
+  widget: AdjustedWidgetLayout,
+): AdjustedWidgetLayout {
   Object.entries(widget.layout).forEach(([key, value]) => {
     if (isScreenSize(key)) {
-      widget.layout[key] = adjustBoundsForMinValues(value, type, key);
+      widget.layout[key] = adjustBoundsForMinValues(value, widget.type, key);
     }
   });
   return widget;

@@ -10,6 +10,7 @@ export interface ConfigRepository {
   get(id: string): Promise<WidgetConfig>;
   getAll(): Promise<WidgetConfig[]>;
   set(id: string, data: WidgetConfig): Promise<void>;
+  setAll(data: WidgetConfig[]): Promise<void>;
 }
 
 /**

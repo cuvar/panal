@@ -6,7 +6,7 @@ import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
 import { parseAdjustedWidgetLayout } from "../../service/parseWidgetConfigService";
 import type { LayoutRepository } from "./layoutRepository";
 
-export class WidgetLocalFileRepository implements LayoutRepository {
+export class LayoutLocalFileRepository implements LayoutRepository {
   private file: string;
   private reader: Reader;
 
@@ -19,7 +19,24 @@ export class WidgetLocalFileRepository implements LayoutRepository {
     this.reader = reader;
   }
 
-  async get(): Promise<AdjustedWidgetLayout[]> {
+  async get(id: string): Promise<AdjustedWidgetLayout> {
+    try {
+      const data = await this.getAll();
+      const res = data.find((d) => d.id == id);
+      if (!res) {
+        throw new AppError(`No widget config for id ${id}`);
+      }
+      return res;
+    } catch (error) {
+      throw new AppError(
+        "Cannot get widget layout through local file",
+        error,
+        true,
+      );
+    }
+  }
+
+  async getAll(): Promise<AdjustedWidgetLayout[]> {
     try {
       const fileContents = await this.reader.read(this.file);
       const response = JSON.parse(fileContents);
@@ -45,7 +62,27 @@ export class WidgetLocalFileRepository implements LayoutRepository {
     }
   }
 
-  async set(widgets: AdjustedWidgetLayout[]): Promise<void> {
+  async set(id: string, widget: AdjustedWidgetLayout): Promise<void> {
+    try {
+      const currentAll = await this.getAll();
+      const currentConfig = currentAll.find((e) => e.id === id);
+      if (!currentConfig) {
+        throw new AppError(`No widget with ID ${id}`);
+      }
+
+      currentConfig.layout = widget.layout;
+
+      await this.reader.write(this.file, JSON.stringify(currentAll));
+    } catch (error) {
+      throw new AppError(
+        "Cannot set widget config through local file",
+        error,
+        true,
+      );
+    }
+  }
+
+  async setAll(widgets: AdjustedWidgetLayout[]): Promise<void> {
     try {
       await this.reader.write(this.file, JSON.stringify(widgets));
     } catch (error) {

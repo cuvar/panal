@@ -16,7 +16,7 @@ const Home: NextPage = () => {
   const [, setToastType] = useAtom(toastTypeAtom);
   const [textAreaContent, setTextAreaContent] = useState("");
 
-  const widgetConfigQuery = api.widget.getWidgetConfig.useQuery(undefined, {
+  const widgetConfigQuery = api.config.getAll.useQuery(undefined, {
     onSuccess: (data) => {
       setTextAreaContent(toProperJsonStringFormat(data));
       Log(data);
@@ -24,7 +24,7 @@ const Home: NextPage = () => {
     refetchOnWindowFocus: false,
   });
 
-  const setWidgetConfigMutation = api.widget.setWidgetConfig.useMutation({
+  const setWidgetConfigMutation = api.config.setAll.useMutation({
     onSuccess: (_data) => {
       setToastType("success");
       setToastText(`Saved successfully`);

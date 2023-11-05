@@ -19,7 +19,7 @@ export default function parseUserWidgetLayout(
     if (!UserWidgetLayout.validate(widget)) {
       return null;
     }
-    result.push(new UserWidgetLayout(widget.layout));
+    result.push(new UserWidgetLayout(widget.type, widget.layout));
   }
   return result;
 }
@@ -42,7 +42,9 @@ export function parseAdjustedWidgetLayout(
     if (!AdjustedWidgetLayout.validate(widget)) {
       return null;
     }
-    result.push(new AdjustedWidgetLayout(widget.id, widget.layout));
+    result.push(
+      new AdjustedWidgetLayout(widget.id, widget.type, widget.layout),
+    );
   }
   return result;
 }

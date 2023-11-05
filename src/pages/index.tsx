@@ -7,23 +7,23 @@ import { api } from "~/utils/api";
 import Log from "~/utils/log";
 
 const Home: NextPage = () => {
-  const widgetDataQuery = api.widget.getWidgetData.useQuery(undefined, {
+  const widgetLayoutQuery = api.layout.getAll.useQuery(undefined, {
     onSuccess: (data) => {
       Log(data);
     },
   });
 
-  if (widgetDataQuery.error) {
+  if (widgetLayoutQuery.error) {
     return <ErrorPage error={""} />;
   }
 
-  if (widgetDataQuery.isLoading) {
+  if (widgetLayoutQuery.isLoading) {
     return <LoadingSpinner />;
   }
 
   return (
     <SiteWrapper>
-      <WidgetView data={widgetDataQuery.data} />
+      <WidgetView layout={widgetLayoutQuery.data} />
     </SiteWrapper>
   );
 };

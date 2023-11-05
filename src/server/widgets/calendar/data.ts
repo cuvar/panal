@@ -1,5 +1,5 @@
 import ical from "ical";
-import type { Fetcher } from "~/server/driver/Fetcher";
+import type { Fetcher } from "~/server/driver/Fetcher/Fetcher";
 import {
   filterFutureEvents,
   getDatesIncludingRecurrences,

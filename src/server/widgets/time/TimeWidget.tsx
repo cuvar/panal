@@ -1,10 +1,9 @@
 import { useState } from "react";
-import type { ScreenSizePositioning } from "~/utils/types/widget";
-import type { TimeWidgetData } from "./types";
+import type { WidgetProps } from "~/utils/types/widget";
+import { type TimeWidgetData } from "./types";
 
-type Props = {
+type Props = WidgetProps & {
   data: TimeWidgetData;
-  layout: ScreenSizePositioning;
 };
 
 export default function TimeWidget(_props: Props) {

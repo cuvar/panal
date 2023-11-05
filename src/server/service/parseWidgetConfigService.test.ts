@@ -12,6 +12,7 @@ import parseUserWidgetLayout, {
 describe("parseWidgetConfigService", () => {
   it("works correctly for parsing UserWidgetLayout", () => {
     // arrange
+    const widgetType = "time";
     const layoutInput = {
       xl: {
         x: 0,
@@ -39,7 +40,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new UserWidgetLayout(layoutInput);
+    const expected = new UserWidgetLayout(widgetType, layoutInput);
     const input = JSON.stringify([expected]);
     // act
     const result = parseUserWidgetLayout(input);
@@ -79,7 +80,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new UserWidgetLayout(layoutInput);
+    const expected = new UserWidgetLayout(widgetType, layoutInput);
     const input = JSON.stringify(expected);
     // act
     const result = parseUserWidgetLayout(input);
@@ -91,6 +92,7 @@ describe("parseWidgetConfigService", () => {
   it("works correctly for parsing AdjustedWidgetLayout", () => {
     // arrange
     const id = "hello world";
+    const widgetType = "time";
     const layoutInput: ScreenSizePositioning = {
       xl: {
         x: 0,
@@ -130,7 +132,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new AdjustedWidgetLayout(id, layoutInput);
+    const expected = new AdjustedWidgetLayout(id, widgetType, layoutInput);
     const input = JSON.stringify([expected]);
     // act
     const result = parseAdjustedWidgetLayout(input);
@@ -143,6 +145,7 @@ describe("parseWidgetConfigService", () => {
   it("fails correctly for parsing AdjustedWidgetLayout due of missing array", () => {
     // arrange
     const id = "hello world";
+    const widgetType = "time";
     const layoutInput: ScreenSizePositioning = {
       xl: {
         x: 0,
@@ -182,7 +185,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new AdjustedWidgetLayout(id, layoutInput);
+    const expected = new AdjustedWidgetLayout(id, widgetType, layoutInput);
     const input = JSON.stringify(expected);
     // act
     const result = parseAdjustedWidgetLayout(input);
