@@ -4,13 +4,13 @@
 
 import type { ScreenSizePositioning } from "~/utils/types/widget";
 import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
-import { UserWidgetConfig } from "../entities/userWidgetConfig";
+import { UserWidgetLayout } from "../entities/userWidgetConfig";
 import parseUserWidgetConfig, {
   parseAdjustedWidgetConfig,
 } from "./parseWidgetConfigService";
 
 describe("parseWidgetConfigService", () => {
-  it("works correctly for parsing UserWidgetConfig", () => {
+  it("works correctly for parsing UserWidgetLayout", () => {
     // arrange
     const layoutInput = {
       xl: {
@@ -39,7 +39,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new UserWidgetConfig(layoutInput);
+    const expected = new UserWidgetLayout(layoutInput);
     const input = JSON.stringify([expected]);
     // act
     const result = parseUserWidgetConfig(input);
@@ -49,7 +49,7 @@ describe("parseWidgetConfigService", () => {
     expect(result).toStrictEqual([expected]);
   });
 
-  it("fails correctly for parsing UserWidgetConfig due to missing array", () => {
+  it("fails correctly for parsing UserWidgetLayout due to missing array", () => {
     // arrange
     const widgetType = "time";
     const layoutInput = {
@@ -79,7 +79,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new UserWidgetConfig(layoutInput);
+    const expected = new UserWidgetLayout(layoutInput);
     const input = JSON.stringify(expected);
     // act
     const result = parseUserWidgetConfig(input);
@@ -88,7 +88,7 @@ describe("parseWidgetConfigService", () => {
     expect(result).toBeNull();
   });
 
-  it("fails correctly for parsing UserWidgetConfig due wrong data property", () => {
+  it("fails correctly for parsing UserWidgetLayout due wrong data property", () => {
     // arrange
     const layoutInput = {
       xl: {
@@ -117,7 +117,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new UserWidgetConfig(layoutInput);
+    const expected = new UserWidgetLayout(layoutInput);
     const input = JSON.stringify([expected]);
     // act
     const result = parseUserWidgetConfig(input);

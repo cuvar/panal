@@ -3,7 +3,7 @@
  */
 
 import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
-import { UserWidgetConfig } from "../entities/userWidgetConfig";
+import { UserWidgetLayout } from "../entities/userWidgetConfig";
 import transformWidgetLayout from "./transformWidgetConfigService";
 
 describe("transformWidgetConfigService", () => {
@@ -75,7 +75,7 @@ describe("transformWidgetConfigService", () => {
       },
     };
 
-    const input = new UserWidgetConfig(layoutInput);
+    const input = new UserWidgetLayout(layoutInput);
     const expected = new AdjustedWidgetConfig("1", layoutExpected);
 
     // act

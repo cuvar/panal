@@ -1,17 +1,17 @@
 import AppError from "~/utils/error";
 import { generateUniqueID } from "~/utils/helper";
 import { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
-import type { UserWidgetConfig } from "../entities/userWidgetConfig";
+import type { UserWidgetLayout } from "../entities/userWidgetConfig";
 import addMissingLayouts from "./addMissingLayoutsService";
 import adjustLayoutValues from "./adjustLayoutValuesService";
 
 /**
- * Transforms the given UserWidgetConfig[] into an AdjustedWidgetConfig[]
- * @param {UserWidgetConfig[]} userWidgetConfig UserWidgetConfig[] to transform
+ * Transforms the given UserWidgetLayout[] into an AdjustedWidgetConfig[]
+ * @param {UserWidgetLayout[]} userWidgetConfig UserWidgetLayout[] to transform
  * @returns {AdjustedWidgetConfig[]} AdjustedWidgetConfig[] with unique IDs
  */
 export default async function transformWidgetLayout(
-  userWidgetConfig: UserWidgetConfig[],
+  userWidgetConfig: UserWidgetLayout[],
 ): Promise<AdjustedWidgetConfig[]> {
   try {
     const adjustedWidgetConfig: AdjustedWidgetConfig[] = [];

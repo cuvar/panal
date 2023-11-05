@@ -2,7 +2,7 @@ import { env } from "~/env.mjs";
 import AppError from "~/utils/error";
 import { FileReader } from "../../driver/Reader/FileReader";
 import type { AdjustedWidgetConfig } from "../../entities/adjustedWidgetConfig";
-import { type UserWidgetConfig } from "../../entities/userWidgetConfig";
+import { type UserWidgetLayout } from "../../entities/userWidgetConfig";
 import parseUserWidgetConfig from "../../service/parseWidgetConfigService";
 import transformWidgetLayout from "../../service/transformWidgetConfigService";
 import { WidgetLocalFileRepository } from "./layoutLocalFileRepository";
@@ -75,7 +75,7 @@ export async function updateUserWidgetConfig(
   }
 
   const awc = await repo.get();
-  const currentConfig = awc.find((e) => e.id === id) as UserWidgetConfig;
+  const currentConfig = awc.find((e) => e.id === id) as UserWidgetLayout;
 
   if (!currentConfig) {
     throw new AppError(`No widget with ID ${id}`);
@@ -85,7 +85,7 @@ export async function updateUserWidgetConfig(
 
   try {
     const adjustedWidgetConfig = await transformWidgetLayout(
-      awc as UserWidgetConfig[],
+      awc as UserWidgetLayout[],
     );
     await getLayoutRepository().set(adjustedWidgetConfig);
   } catch (error) {
