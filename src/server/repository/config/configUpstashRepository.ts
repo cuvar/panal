@@ -1,7 +1,7 @@
 import { Redis } from "@upstash/redis";
 import { env } from "~/env.mjs";
 import { WidgetConfig } from "~/server/entities/widgetConfig";
-import { UPSTASH_PREFIX } from "~/utils/const";
+import { UPSTASH_PREFIX, UPSTASH_WIDGET_PREFIX } from "~/utils/const";
 import AppError from "~/utils/error";
 import { type ConfigRepository } from "./configRepository";
 
@@ -24,7 +24,7 @@ export class ConfigUpstashRepository implements ConfigRepository {
   }
 
   async get(id: string): Promise<WidgetConfig> {
-    const key = UPSTASH_PREFIX + id;
+    const key = UPSTASH_PREFIX + UPSTASH_WIDGET_PREFIX + id;
 
     try {
       const response = await this.redis.get(key);
@@ -43,6 +43,33 @@ export class ConfigUpstashRepository implements ConfigRepository {
     }
   }
 
+  async getAll(): Promise<WidgetConfig[]> {
+    const key = UPSTASH_PREFIX + UPSTASH_WIDGET_PREFIX;
+
+    try {
+      const keys = await this.getKeysWithPrefix(key);
+      const response = await this.redis.mget(...keys);
+
+      if (!response) {
+        throw new AppError("No widgets found", null, true);
+      }
+      if (!Array.isArray(response)) {
+        throw new AppError("Invalid response from Upstash", null, true);
+      }
+      if (!WidgetConfig.isWidgetConfigArray(response)) {
+        throw new AppError("Invalid widget config", null, true);
+      }
+
+      const mapped = response.map((r) => {
+        return new WidgetConfig(r.id, r.type, r.data);
+      });
+
+      return mapped;
+    } catch (error) {
+      throw new AppError("Cannot get widget config through redis", error, true);
+    }
+  }
+
   async set(id: string, data: WidgetConfig): Promise<void> {
     const key = UPSTASH_PREFIX + id;
 
@@ -51,5 +78,22 @@ export class ConfigUpstashRepository implements ConfigRepository {
     } catch (error) {
       throw new AppError("Cannot set widget config through redis", error, true);
     }
+  }
+
+  async getKeysWithPrefix(prefix: string) {
+    let cursor = 0;
+    const keys: string[] = [];
+    const pattern = `${prefix}*`;
+
+    do {
+      const result = await this.redis.scan(cursor, {
+        match: pattern,
+      });
+
+      cursor = +result[0];
+      keys.push(...result[1]);
+    } while (cursor !== 0);
+
+    return keys;
   }
 }

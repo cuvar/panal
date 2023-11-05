@@ -1,49 +1,24 @@
 import { z } from "zod";
+import AppError from "~/utils/error";
 import { isObject, isString } from "~/utils/guards/base";
-import {
-  isFittingDataPaylod,
-  isScreenSizePositioning,
-  isWidgetType,
-} from "~/utils/guards/widgets";
-import {
-  calendarWidgetConfigSchema,
-  linkWidgetConfigSchema,
-  screenSizePositioningSchema,
-  searchWidgetConfigSchema,
-  timeWidgetConfigSchema,
-  widgetTypeSchema,
-} from "~/utils/schema";
+import { isScreenSizePositioning } from "~/utils/guards/widgets";
+import { screenSizePositioningSchema } from "~/utils/schema";
 import type { ScreenSize } from "~/utils/types/types";
 import type { ScreenSizePositioning, WidgetType } from "~/utils/types/widget";
-import type { CalendarWidgetConfig } from "../widgets/calendar/types";
-import type { LinkWidgetConfig } from "../widgets/links/types";
-import type { SearchWidgetConfig } from "../widgets/search/types";
-import type { TimeWidgetConfig } from "../widgets/time/types";
+import {
+  getConfigRepository,
+  type ConfigRepository,
+} from "../repository/config/configRepository";
 
 export class AdjustedWidgetConfig {
   id: string;
   layout: ScreenSizePositioning;
-  type: WidgetType;
-  data:
-    | LinkWidgetConfig
-    | SearchWidgetConfig
-    | CalendarWidgetConfig
-    | TimeWidgetConfig;
+  _type: WidgetType | null;
 
-  constructor(
-    id: string,
-    type: WidgetType,
-    layout: ScreenSizePositioning,
-    data:
-      | LinkWidgetConfig
-      | SearchWidgetConfig
-      | CalendarWidgetConfig
-      | TimeWidgetConfig,
-  ) {
+  constructor(id: string, layout: ScreenSizePositioning) {
     this.id = id;
     this.layout = layout;
-    this.type = type;
-    this.data = data;
+    this._type = null;
   }
 
   static validate(input: unknown): input is AdjustedWidgetConfig {
@@ -53,28 +28,16 @@ export class AdjustedWidgetConfig {
     if (!isString(input.id)) {
       return false;
     }
-    if (!isWidgetType(input.type)) {
-      return false;
-    }
     if (!isScreenSizePositioning(input.layout)) {
       return false;
     }
-    if (!isFittingDataPaylod(input.data, input.type)) {
-      return false;
-    }
-
     return true;
   }
 
   static getSchema() {
     const adjustedWidgetConfigSchema = z.object({
       id: z.string(),
-      type: widgetTypeSchema,
       layout: screenSizePositioningSchema,
-      data: linkWidgetConfigSchema
-        .or(searchWidgetConfigSchema)
-        .or(timeWidgetConfigSchema)
-        .or(calendarWidgetConfigSchema),
     });
 
     return adjustedWidgetConfigSchema;
@@ -85,5 +48,21 @@ export class AdjustedWidgetConfig {
     layout: ScreenSizePositioning[typeof breakpoint],
   ) {
     this.layout[breakpoint] = layout;
+  }
+
+  async getType() {
+    if (!this._type) {
+      this._type = await this._retrieveType(getConfigRepository());
+    }
+    return this._type;
+  }
+
+  async _retrieveType(repo: ConfigRepository): Promise<WidgetType> {
+    const res = await repo.get(this.id);
+    if (!res) {
+      throw new AppError(`Cannot fetch type for id ${this.id}`);
+    }
+
+    return res.type;
   }
 }

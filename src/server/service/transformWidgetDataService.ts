@@ -1,7 +1,8 @@
 import AppError from "~/utils/error";
 import Log from "~/utils/log";
 import { ICSFetcher } from "../driver/ICSFetcher";
-import type { AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
+import { type AdjustedWidgetConfig } from "../entities/adjustedWidgetConfig";
+import { type WidgetConfig } from "../entities/widgetConfig";
 import { WidgetData } from "../entities/widgetData";
 import computeCalendarWidgetData from "../widgets/calendar/data";
 import { isCalendarWidgetConfig } from "../widgets/calendar/guards";
@@ -16,11 +17,13 @@ import adjustLayoutValues from "./adjustLayoutValuesService";
 
 /**
  * Transforms the given AdjustedWidgetConfig[] into a WidgetData[]
- * @param {AdjustedWidgetConfig[]} widgetConfig AdjustedWidgetConfig[] to transform
+ * @param {WidgetConfig[]} widgetConfig AdjustedWidgetConfig[] to transform
+ * @param {AdjustedWidgetConfig[]} layoutConfig
  * @returns {Promise<WidgetData[]>} WidgetData[] with unique IDs
  */
 export default async function transformWidgetData(
-  widgetConfig: AdjustedWidgetConfig[],
+  widgetConfig: WidgetConfig[],
+  layoutConfig: AdjustedWidgetConfig[],
 ): Promise<WidgetData[]> {
   const widgetData: WidgetData[] = [];
   for (const widget of widgetConfig) {
@@ -46,8 +49,15 @@ export default async function transformWidgetData(
       data = {};
     }
 
+    const layout = layoutConfig.find((l) => l.id === widget.id);
+    if (!layout) {
+      throw new AppError(
+        `Cannot find a layout for widget with id ${widget.id}`,
+      );
+    }
+
     try {
-      const missingLayouts = addMissingLayouts(widget.layout);
+      const missingLayouts = addMissingLayouts(layout.layout);
       const newWidget = new WidgetData(
         widget.id,
         widget.type,
@@ -55,7 +65,9 @@ export default async function transformWidgetData(
         data,
       );
 
-      widgetData.push(adjustLayoutValues<WidgetData>(newWidget));
+      widgetData.push(
+        adjustLayoutValues<WidgetData>(newWidget, newWidget.type),
+      );
     } catch (error) {
       throw new AppError("Cannot transform widget config", error);
     }

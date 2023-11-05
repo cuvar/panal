@@ -50,12 +50,7 @@ describe("transformWidgetDataService", () => {
       },
     };
 
-    const input: AdjustedWidgetConfig = new AdjustedWidgetConfig(
-      "1",
-      widgetType,
-      layout,
-      {},
-    );
+    const input: AdjustedWidgetConfig = new AdjustedWidgetConfig("1", layout);
     const expected: WidgetData = new WidgetData("1", widgetType, layout, {});
     // act
     const result = await transformWidgetData([input]);

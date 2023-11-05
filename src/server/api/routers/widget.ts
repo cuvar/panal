@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { getConfigRepository } from "~/server/repository/config/configRepository";
 import {
   getWidgetRepository,
   saveUserWidgetConfig,
@@ -19,8 +20,9 @@ import {
 export const widgetRouter = createTRPCRouter({
   getWidgetData: protectedProcedure.query(async () => {
     try {
-      const widgetsConfig = await getWidgetRepository().get();
-      const data = await transformWidgetData(widgetsConfig);
+      const storedConfigs = await getConfigRepository().getAll();
+      const storedLayouts = await getWidgetRepository().get();
+      const data = await transformWidgetData(storedConfigs, storedLayouts);
       return data;
     } catch (error) {
       Log(error, "error");

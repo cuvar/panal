@@ -10,22 +10,23 @@ import adjustLayoutValues from "./adjustLayoutValuesService";
  * @param {UserWidgetConfig[]} userWidgetConfig UserWidgetConfig[] to transform
  * @returns {AdjustedWidgetConfig[]} AdjustedWidgetConfig[] with unique IDs
  */
-export default function transformWidgetConfig(
+export default async function transformWidgetConfig(
   userWidgetConfig: UserWidgetConfig[],
-) {
+): Promise<AdjustedWidgetConfig[]> {
   try {
-    const adjustedWidgetConfig = userWidgetConfig.map((widget) => {
+    const adjustedWidgetConfig: AdjustedWidgetConfig[] = [];
+    for (const widget of userWidgetConfig) {
       const withMissingLayouts = addMissingLayouts(widget.layout);
       const wId = "id" in widget ? (widget.id as string) : generateUniqueID();
 
-      const adjustedConfig = new AdjustedWidgetConfig(
-        wId,
-        widget.type,
-        withMissingLayouts,
-        widget.data,
+      const adjustedConfig = new AdjustedWidgetConfig(wId, withMissingLayouts);
+      const widgetType = await adjustedConfig.getType();
+      const adjusted = adjustLayoutValues<AdjustedWidgetConfig>(
+        adjustedConfig,
+        widgetType,
       );
-      return adjustLayoutValues<AdjustedWidgetConfig>(adjustedConfig);
-    });
+      adjustedWidgetConfig.push(adjusted);
+    }
 
     return adjustedWidgetConfig;
   } catch (error) {

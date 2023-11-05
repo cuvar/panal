@@ -1,4 +1,4 @@
-import type { UserWidgetConfig } from "~/server/entities/userWidgetConfig";
+import { type WidgetConfig } from "~/server/entities/widgetConfig";
 import { isCalendarWidgetConfig } from "~/server/widgets/calendar/guards";
 import { isLinkWidgetConfig } from "~/server/widgets/links/guards";
 import { isSearchWidgetConfig } from "~/server/widgets/search/guards";
@@ -16,15 +16,15 @@ import { isNumber, isObject } from "./base";
 import { isScreenSize } from "./other";
 
 /**
- * Checks whether data is of type  @type {UserWidgetConfig["data"]}
+ * Checks whether data is of type  @type {WidgetConfig["data"]}
  * @param {unknown} data Unkown type to be checked
  * @param {WidgetType} type Unkown type to be checked
- * @returns {boolean} Whether data is of type @type {UserWidgetConfig["data"]}
+ * @returns {boolean} Whether data is of type @type {WidgetConfig["data"]}
  */
 export function isFittingDataPaylod(
   data: unknown,
   type: WidgetType,
-): data is UserWidgetConfig["data"] {
+): data is WidgetConfig["data"] {
   switch (type) {
     case "calendar":
       return isCalendarWidgetConfig(data);

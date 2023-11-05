@@ -50,7 +50,7 @@ export async function saveUserWidgetConfig(
   }
 
   try {
-    const adjustedWidgetConfig = transformWidgetConfig(parsed);
+    const adjustedWidgetConfig = await transformWidgetConfig(parsed);
     await repo.set(adjustedWidgetConfig);
   } catch (error) {
     throw new AppError("Cannot save user widget config", error, true);
@@ -81,11 +81,12 @@ export async function updateUserWidgetConfig(
     throw new AppError(`No widget with ID ${id}`);
   }
 
-  currentConfig.data = newParsed[0]!.data;
   currentConfig.layout = newParsed[0]!.layout;
 
   try {
-    const adjustedWidgetConfig = transformWidgetConfig(awc);
+    const adjustedWidgetConfig = await transformWidgetConfig(
+      awc as UserWidgetConfig[],
+    );
     await getWidgetRepository().set(adjustedWidgetConfig);
   } catch (error) {
     throw new AppError("Cannot save user widget config", error, true);

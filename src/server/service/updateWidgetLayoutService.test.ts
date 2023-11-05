@@ -11,7 +11,6 @@ describe("updateWidgetLayoutService", () => {
   it("works correctly for updating widget layout", () => {
     // arrange
     const id = "hello world";
-    const widgetType = "time";
     const layoutInput: ScreenSizePositioning = {
       xl: {
         x: 0,
@@ -52,9 +51,7 @@ describe("updateWidgetLayoutService", () => {
     };
     const widgetConfig: AdjustedWidgetConfig = new AdjustedWidgetConfig(
       id,
-      widgetType,
       layoutInput,
-      {},
     );
     const newLayouts: GridLayout.Layouts = {
       xl: [],
@@ -74,9 +71,7 @@ describe("updateWidgetLayoutService", () => {
 
     const expected: AdjustedWidgetConfig = new AdjustedWidgetConfig(
       id,
-      widgetType,
       layoutExpected,
-      {},
     );
 
     // act
@@ -84,15 +79,12 @@ describe("updateWidgetLayoutService", () => {
 
     // assert
     expect(result).not.toBeNull();
-    expect(result[0]?.type).toStrictEqual(expected.type);
-    expect(result[0]?.data).toStrictEqual(expected.data);
     expect(result[0]?.layout).toEqual(expected.layout);
   });
 
   it("works correctly for wrong newLayouts", () => {
     // arrange
     const id = "hello world";
-    const widgetType = "time";
     const layoutInput: ScreenSizePositioning = {
       xl: {
         x: 0,
@@ -133,9 +125,7 @@ describe("updateWidgetLayoutService", () => {
     };
     const widgetConfig: AdjustedWidgetConfig = new AdjustedWidgetConfig(
       id,
-      widgetType,
       layoutInput,
-      {},
     );
     const newLayouts: GridLayout.Layouts = {
       xl: [],
@@ -154,7 +144,6 @@ describe("updateWidgetLayoutService", () => {
   it("works correctly for updating widget layout", () => {
     // arrange
     const id = "hello world";
-    const widgetType = "time";
     const layoutInput: ScreenSizePositioning = {
       xl: {
         x: 0,
@@ -195,9 +184,7 @@ describe("updateWidgetLayoutService", () => {
     };
     const widgetConfig: AdjustedWidgetConfig = new AdjustedWidgetConfig(
       id,
-      widgetType,
       layoutInput,
-      {},
     );
     const newLayouts: GridLayout.Layouts = {
       xl: [],

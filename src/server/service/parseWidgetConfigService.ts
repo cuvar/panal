@@ -19,7 +19,7 @@ export default function parseUserWidgetConfig(
     if (!UserWidgetConfig.validate(widget)) {
       return null;
     }
-    result.push(new UserWidgetConfig(widget.type, widget.layout, widget.data));
+    result.push(new UserWidgetConfig(widget.layout));
   }
   return result;
 }
@@ -42,14 +42,7 @@ export function parseAdjustedWidgetConfig(
     if (!AdjustedWidgetConfig.validate(widget)) {
       return null;
     }
-    result.push(
-      new AdjustedWidgetConfig(
-        widget.id,
-        widget.type,
-        widget.layout,
-        widget.data,
-      ),
-    );
+    result.push(new AdjustedWidgetConfig(widget.id, widget.layout));
   }
   return result;
 }

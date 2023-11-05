@@ -12,7 +12,6 @@ import parseUserWidgetConfig, {
 describe("parseWidgetConfigService", () => {
   it("works correctly for parsing UserWidgetConfig", () => {
     // arrange
-    const widgetType = "time";
     const layoutInput = {
       xl: {
         x: 0,
@@ -40,7 +39,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new UserWidgetConfig(widgetType, layoutInput, {});
+    const expected = new UserWidgetConfig(layoutInput);
     const input = JSON.stringify([expected]);
     // act
     const result = parseUserWidgetConfig(input);
@@ -80,7 +79,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new UserWidgetConfig(widgetType, layoutInput, {});
+    const expected = new UserWidgetConfig(layoutInput);
     const input = JSON.stringify(expected);
     // act
     const result = parseUserWidgetConfig(input);
@@ -91,7 +90,6 @@ describe("parseWidgetConfigService", () => {
 
   it("fails correctly for parsing UserWidgetConfig due wrong data property", () => {
     // arrange
-    const widgetType = "calendar";
     const layoutInput = {
       xl: {
         x: 0,
@@ -119,7 +117,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new UserWidgetConfig(widgetType, layoutInput, {});
+    const expected = new UserWidgetConfig(layoutInput);
     const input = JSON.stringify([expected]);
     // act
     const result = parseUserWidgetConfig(input);
@@ -131,7 +129,6 @@ describe("parseWidgetConfigService", () => {
   it("works correctly for parsing AdjustedWidgetConfig", () => {
     // arrange
     const id = "hello world";
-    const widgetType = "time";
     const layoutInput: ScreenSizePositioning = {
       xl: {
         x: 0,
@@ -171,7 +168,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new AdjustedWidgetConfig(id, widgetType, layoutInput, {});
+    const expected = new AdjustedWidgetConfig(id, layoutInput);
     const input = JSON.stringify([expected]);
     // act
     const result = parseAdjustedWidgetConfig(input);
@@ -184,7 +181,6 @@ describe("parseWidgetConfigService", () => {
   it("fails correctly for parsing AdjustedWidgetConfig due of missing array", () => {
     // arrange
     const id = "hello world";
-    const widgetType = "time";
     const layoutInput: ScreenSizePositioning = {
       xl: {
         x: 0,
@@ -224,7 +220,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new AdjustedWidgetConfig(id, widgetType, layoutInput, {});
+    const expected = new AdjustedWidgetConfig(id, layoutInput);
     const input = JSON.stringify(expected);
     // act
     const result = parseAdjustedWidgetConfig(input);
@@ -236,7 +232,6 @@ describe("parseWidgetConfigService", () => {
   it("fails correctly for parsing AdjustedWidgetConfig due wrong data property", () => {
     // arrange
     const id = "hello world";
-    const widgetType = "calendar";
     const layoutInput: ScreenSizePositioning = {
       xl: {
         x: 0,
@@ -276,7 +271,7 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new AdjustedWidgetConfig(id, widgetType, layoutInput, {});
+    const expected = new AdjustedWidgetConfig(id, layoutInput);
     const input = JSON.stringify([expected]);
     // act
     const result = parseAdjustedWidgetConfig(input);

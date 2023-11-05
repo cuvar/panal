@@ -8,6 +8,7 @@ import { ConfigUpstashRepository } from "./configUpstashRepository";
 
 export interface ConfigRepository {
   get(id: string): Promise<WidgetConfig>;
+  getAll(): Promise<WidgetConfig[]>;
   set(id: string, data: WidgetConfig): Promise<void>;
 }
 
@@ -15,7 +16,7 @@ export interface ConfigRepository {
  * Gets the widget repository
  * @returns {ConfigRepository} Widget repository
  */
-export function getWidgetRepository(): ConfigRepository {
+export function getConfigRepository(): ConfigRepository {
   let repo: ConfigRepository | null = null;
   if (env.WIDGET_STORE == "upstash") {
     repo = new ConfigUpstashRepository();
