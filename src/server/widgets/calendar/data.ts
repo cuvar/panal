@@ -28,9 +28,9 @@ export default async function computeCalendarWidgetData(
     const futureDates = filterFutureEvents(calendarData, config.daysInAdvance);
     const groupedData = groupCalendarWidgetByDay(futureDates);
 
-    return { entries: groupedData };
+    return { entries: groupedData, color: config.color };
   } catch (error) {
     Log(error, "error");
-    return { entries: [] };
+    return { entries: [], color: config.color };
   }
 }

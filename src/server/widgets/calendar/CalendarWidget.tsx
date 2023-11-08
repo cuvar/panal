@@ -1,4 +1,5 @@
 import type { WidgetProps } from "~/utils/types/widget";
+import CalendarItem from "./CalendarItem";
 import { type CalendarWidgetData } from "./types";
 
 type Props = WidgetProps & {
@@ -16,17 +17,7 @@ export default function CalendarWidget(props: Props) {
               {new Date(entry[0]?.start ?? "").toDateString()}
             </p>
             {entry.map((e, index) => (
-              <div
-                key={index}
-                className="my-2 flex flex-col rounded-md bg-gray-800 p-2 text-xs"
-              >
-                <div>{e.title}</div>
-                <div className="flex space-x-2">
-                  <div>{formatDate(e.start)}</div>
-                  <span>-</span>
-                  <div>{formatDate(e.end)}</div>
-                </div>
-              </div>
+              <CalendarItem key={index} color={props.data.color} entry={e} />
             ))}
           </div>
         ))}
@@ -39,17 +30,4 @@ export default function CalendarWidget(props: Props) {
       {/* <div>Calendar with {props.calendarData.length} entries</div> */}
     </div>
   );
-}
-
-function dateIsValid(date: Date) {
-  return !Number.isNaN(new Date(date).getTime());
-}
-
-function formatDate(date: Date): string {
-  if (!dateIsValid(date)) return "-";
-
-  return Intl.DateTimeFormat("de-DE", {
-    hour: "numeric",
-    minute: "numeric",
-  }).format(new Date(date));
 }
