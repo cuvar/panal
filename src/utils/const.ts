@@ -25,7 +25,7 @@ export const BREAKPOINT_COLS: Readonly<Record<ScreenSize, number>> = {
 export const MIN_WIDGET_WIDTH = Object.freeze({
   time: 2,
   search: 2,
-  links: 3,
+  links: 1,
   calendar: 2,
   default: 1,
 });
