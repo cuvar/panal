@@ -9,7 +9,7 @@ export class MockICSFetcher implements Fetcher {
   }
 
   async fetch(_url: string): Promise<string> {
-    const events: ics.EventAttributes[] = [...createRandomEvents(this.number)];
+    const events: ics.EventAttributes[] = [..._createRandomEvents(this.number)];
 
     const res = ics.createEvents(events);
     if (res.error) {
@@ -24,10 +24,10 @@ export class MockICSFetcher implements Fetcher {
  * @param {number} n Amount of random events that should be generated
  * @returns {ics.EventAttributes[]} Generated events
  */
-function createRandomEvents(n: number): ics.EventAttributes[] {
+function _createRandomEvents(n: number): ics.EventAttributes[] {
   const events = [];
   for (let i = 0; i < n; i++) {
-    events.push(createRandomEvent("Test " + (i + 1)));
+    events.push(_createRandomEvent("Test " + (i + 1)));
   }
 
   return events;
@@ -38,8 +38,8 @@ function createRandomEvents(n: number): ics.EventAttributes[] {
  * @param {string} [title] Title of the event
  * @returns {ics.EventAttributes} Random event
  */
-function createRandomEvent(title?: string): ics.EventAttributes {
-  const date = getRandomDateInFuture();
+function _createRandomEvent(title?: string): ics.EventAttributes {
+  const date = _getRandomDateInFuture();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
@@ -59,7 +59,7 @@ function createRandomEvent(title?: string): ics.EventAttributes {
  * Generates a random date in the future
  * @returns {Date} Random date in the future
  */
-function getRandomDateInFuture() {
+function _getRandomDateInFuture() {
   const date = new Date();
   date.setDate(date.getDate() + Math.random() * 100);
   return date;

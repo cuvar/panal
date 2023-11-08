@@ -36,6 +36,7 @@ export default function Menu() {
       setWidgetLayout(makeLayoutsStatic(editedWidgetLayout, true));
       setToastType("success");
       setToastText(`Saved successfully`);
+      location.reload();
       setTimeout(() => {
         setToastText("");
       }, 1500);
@@ -88,15 +89,18 @@ export default function Menu() {
 
   function handleEditLayout() {
     setEditMode(true);
+    setShowMenu(false);
   }
 
   function handleSaveLayout() {
     setEditMode(false);
+    setShowMenu(false);
     setWidgetLayoutMutation.mutate({ layout: editedWidgetLayout });
   }
 
   function handleAbortEditLayout() {
     setEditMode(false);
+    setShowMenu(false);
   }
 
   return (
