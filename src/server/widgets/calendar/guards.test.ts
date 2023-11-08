@@ -11,6 +11,7 @@ describe("CalendarWidget guards", () => {
     const input: CalendarWidgetConfig = {
       url: "https://google.com/",
       daysInAdvance: 7,
+      color: "aabbcc",
     };
     // act
     const result = isCalendarWidgetConfig(input);
@@ -51,6 +52,7 @@ describe("CalendarWidget guards", () => {
           },
         ],
       ],
+      color: "aabbcc",
     };
     // act
     const result = isCalendarWidgetData(input);

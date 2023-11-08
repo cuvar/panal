@@ -111,6 +111,7 @@ export const calendarEntrySchema: z.ZodType<CalendarEntry> = z.object({
 export const calendarWidgetDataSchema: z.ZodType<CalendarWidgetData> = z.object(
   {
     entries: z.array(z.array(calendarEntrySchema)),
+    color: z.string().length(6),
   },
 );
 
@@ -118,4 +119,5 @@ export const calendarWidgetConfigSchema: z.ZodType<CalendarWidgetConfig> =
   z.object({
     url: z.string(),
     daysInAdvance: z.number(),
+    color: z.string().length(6),
   });
