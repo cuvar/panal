@@ -23,7 +23,7 @@ export const configRouter = createTRPCRouter({
       });
     }
   }),
-  getForWidget: protectedProcedure
+  getDataForWidget: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
       try {
@@ -40,6 +40,25 @@ export const configRouter = createTRPCRouter({
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Unable to get widget data",
+        });
+      }
+    }),
+  getConfigForWidget: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input }) => {
+      try {
+        const data = await getConfigRepository().get(input.id);
+        if (!data) {
+          throw new AppError(
+            `No adjusted widget config for widget with ID ${input.id}`,
+          );
+        }
+        return data;
+      } catch (error) {
+        Log(error, "error");
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Unable to get widget config",
         });
       }
     }),

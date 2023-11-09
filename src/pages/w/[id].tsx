@@ -39,7 +39,7 @@ const Home: NextPage = () => {
       },
     },
   );
-  const widgetConfigQuery = api.config.getForWidget.useQuery(
+  const widgetConfigQuery = api.config.getConfigForWidget.useQuery(
     { id: typeof id === "string" ? id : "" },
     {
       enabled: typeof id === "string",
