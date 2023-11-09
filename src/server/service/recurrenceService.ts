@@ -71,7 +71,7 @@ export function getValidRecurrenceEvent(
   date: Date,
   rangeStart: Date,
   rangeEnd: Date,
-  color: string,
+  color?: string,
 ) {
   let curEvent = event;
   let curDuration =

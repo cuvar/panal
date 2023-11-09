@@ -120,6 +120,6 @@ export const calendarWidgetConfigSchema: z.ZodType<CalendarWidgetConfig> =
     z.object({
       url: z.string(),
       daysInAdvance: z.number(),
-      color: z.string(),
+      color: z.string().length(7).optional(),
     }),
   );

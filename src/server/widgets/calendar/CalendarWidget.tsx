@@ -16,7 +16,7 @@ export default function CalendarWidget(props: Props) {
               {new Date(entry[0]?.start ?? "").toDateString()}
             </p>
             {entry.map((e, index) => (
-              <CalendarItem key={index} color={e.color} entry={e} />
+              <CalendarItem key={index} entry={e} />
             ))}
           </div>
         ))}

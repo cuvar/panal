@@ -81,7 +81,7 @@ export function sortCalendarEntries(entries: CalendarEntry[]): CalendarEntry[] {
  */
 export function toInternal(
   event: CalendarComponent,
-  color: string,
+  color?: string,
 ): CalendarEntry {
   const startDate = new Date(event.start!); // todo: get rid of !
   const endDate = new Date(event.end!);
@@ -107,7 +107,7 @@ export function toInternal(
 export function getDatesIncludingRecurrences(
   data: FullCalendar,
   daysInAdvance: number,
-  color: string,
+  color?: string,
 ): CalendarEntry[] {
   const datesWithRecurrences: CalendarEntry[] = [];
 

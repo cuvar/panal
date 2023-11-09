@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { type CalendarEntry } from "./types";
 
 type Props = {
-  color: string;
   entry: CalendarEntry;
 };
 
@@ -16,8 +15,8 @@ export default function CalendarItem(props: Props) {
     }
 
     (containerRef.current as HTMLDivElement).style.backgroundColor =
-      props.color ?? defaultColor;
-  }, []);
+      props.entry.color ?? defaultColor;
+  }, [props.entry.color]);
 
   return (
     <div

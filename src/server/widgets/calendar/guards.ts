@@ -89,7 +89,7 @@ export function isCalendarEntry(data: unknown): data is CalendarEntry {
   if (!("duration" in data) || !isNumber(data.duration)) {
     return false;
   }
-  if (!("color" in data) || !isString(data.color)) {
+  if ("color" in data && (!isString(data.color) || data.color.length !== 7)) {
     return false;
   }
   return true;

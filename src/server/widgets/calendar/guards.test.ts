@@ -8,11 +8,13 @@ import type { CalendarWidgetConfig, CalendarWidgetData } from "./types";
 describe("CalendarWidget guards", () => {
   it("isCalendarWidgetConfig works correctly", () => {
     // arrange
-    const input: CalendarWidgetConfig = {
-      url: "https://google.com/",
-      daysInAdvance: 7,
-      color: "aabbcc",
-    };
+    const input: CalendarWidgetConfig = [
+      {
+        url: "https://google.com/",
+        daysInAdvance: 7,
+        color: "aabbcc",
+      },
+    ];
     // act
     const result = isCalendarWidgetConfig(input);
     // assert
@@ -49,10 +51,10 @@ describe("CalendarWidget guards", () => {
             start: new Date(),
             end: new Date(),
             duration: 2,
+            color: "#COFFEE",
           },
         ],
       ],
-      color: "aabbcc",
     };
     // act
     const result = isCalendarWidgetData(input);
