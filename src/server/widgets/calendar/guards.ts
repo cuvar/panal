@@ -23,7 +23,7 @@ export function isCalendarWidgetConfigItem(
   if (!("daysInAdvance" in data) || !isNumber(data.daysInAdvance)) {
     return false;
   }
-  if (!("color" in data) || !isString(data.color)) {
+  if ("color" in data && (!isString(data.color) || data.color.length !== 7)) {
     return false;
   }
   return true;

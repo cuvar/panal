@@ -7,7 +7,7 @@ type Props = {
 
 export default function CalendarItem(props: Props) {
   const containerRef = useRef(null);
-  const defaultColor = "1f2937"; // = bg-gray-800
+  const defaultColor = "#1f2937"; // = bg-gray-800
 
   useEffect(() => {
     if (!containerRef.current) {
