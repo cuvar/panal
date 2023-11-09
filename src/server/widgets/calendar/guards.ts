@@ -2,17 +2,18 @@ import { isDate, isNumber, isObject, isString } from "~/utils/guards/base";
 import type {
   CalendarEntry,
   CalendarWidgetConfig,
+  CalendarWidgetConfigItem,
   CalendarWidgetData,
 } from "./types";
 
 /**
- * Checks whether data is of type CalendarWidgetConfig
+ * Checks whether data is of type CalendarWidgetConfigItem
  * @param {unknown} data Unkown type to be checked
- * @returns {boolean} Whether data is of type CalendarWidgetConfig
+ * @returns {boolean} Whether data is of type CalendarWidgetConfigItem
  */
-export function isCalendarWidgetConfig(
+export function isCalendarWidgetConfigItem(
   data: unknown,
-): data is CalendarWidgetConfig {
+): data is CalendarWidgetConfigItem {
   if (!isObject(data)) {
     return false;
   }
@@ -22,7 +23,23 @@ export function isCalendarWidgetConfig(
   if (!("daysInAdvance" in data) || !isNumber(data.daysInAdvance)) {
     return false;
   }
+  if ("color" in data && (!isString(data.color) || data.color.length !== 7)) {
+    return false;
+  }
   return true;
+}
+
+/**
+ * Checks whether data is of type CalendarWidgetConfig
+ * @param {unknown} data Unkown type to be checked
+ * @returns {boolean} Whether data is of type CalendarWidgetConfig
+ */
+export function isCalendarWidgetConfig(
+  data: unknown,
+): data is CalendarWidgetConfig {
+  return (
+    Array.isArray(data) && data.every((d) => isCalendarWidgetConfigItem(d))
+  );
 }
 
 /**
@@ -70,6 +87,9 @@ export function isCalendarEntry(data: unknown): data is CalendarEntry {
     return false;
   }
   if (!("duration" in data) || !isNumber(data.duration)) {
+    return false;
+  }
+  if ("color" in data && (!isString(data.color) || data.color.length !== 7)) {
     return false;
   }
   return true;

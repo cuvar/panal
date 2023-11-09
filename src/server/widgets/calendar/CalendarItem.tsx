@@ -2,13 +2,12 @@ import { useEffect, useRef } from "react";
 import { type CalendarEntry } from "./types";
 
 type Props = {
-  color: string;
   entry: CalendarEntry;
 };
 
 export default function CalendarItem(props: Props) {
   const containerRef = useRef(null);
-  const defaultColor = "1f2937"; // = bg-gray-800
+  const defaultColor = "#1f2937"; // = bg-gray-800
 
   useEffect(() => {
     if (!containerRef.current) {
@@ -16,8 +15,8 @@ export default function CalendarItem(props: Props) {
     }
 
     (containerRef.current as HTMLDivElement).style.backgroundColor =
-      props.color ?? defaultColor;
-  }, []);
+      props.entry.color ?? defaultColor;
+  }, [props.entry.color]);
 
   return (
     <div

@@ -1,12 +1,12 @@
-export type CalendarWidgetConfig = {
+export type CalendarWidgetConfig = CalendarWidgetConfigItem[];
+export type CalendarWidgetConfigItem = {
   url: string;
   daysInAdvance: number;
-  color: string;
+  color?: string;
 };
 
 export type CalendarWidgetData = {
   entries: CalendarEntry[][];
-  color: string;
 };
 
 export type CalendarEntry = {
@@ -14,4 +14,5 @@ export type CalendarEntry = {
   start: Date;
   end: Date;
   duration: number;
+  color?: string;
 };

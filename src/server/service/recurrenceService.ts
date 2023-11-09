@@ -63,6 +63,7 @@ export function filterInRangeRecurrences(
  * @param {Date} date The date to check
  * @param {Date} rangeStart Start of range
  * @param {Date} rangeEnd End of range
+ * @param color Color for <CalendarItem/>
  * @returns {CalendarEntry} List of valid recurrence
  */
 export function getValidRecurrenceEvent(
@@ -70,6 +71,7 @@ export function getValidRecurrenceEvent(
   date: Date,
   rangeStart: Date,
   rangeEnd: Date,
+  color?: string,
 ) {
   let curEvent = event;
   let curDuration =
@@ -117,6 +119,7 @@ export function getValidRecurrenceEvent(
     start: startDate,
     end: endDate,
     duration: curDuration,
+    color: color,
   };
   return newEvent;
 }
