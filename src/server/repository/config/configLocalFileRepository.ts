@@ -72,7 +72,9 @@ export class ConfigLocalFileRepository implements ConfigRepository {
 
   async set(id: string, data: WidgetConfig): Promise<void> {
     try {
-      const response = await this.reader.read(this.file);
+      const fileContents = await this.reader.read(this.file);
+      const response = JSON.parse(fileContents);
+
       if (!response) {
         throw new AppError("No widgets found", null, true);
       }

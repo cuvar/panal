@@ -94,9 +94,11 @@ export const configRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const widget = {
+        id: input.id,
         type: input.type,
         data: JSON.parse(input.data),
       };
+
       try {
         if (!WidgetConfig.validate(widget)) {
           throw new AppError(`Cannot parse widget config`);
