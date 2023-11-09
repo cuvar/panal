@@ -37,6 +37,7 @@ const Home: NextPage = () => {
         setLayoutData(data.layout);
         Log(data);
       },
+      refetchOnWindowFocus: false,
     },
   );
   const widgetConfigQuery = api.config.getConfigForWidget.useQuery(
@@ -47,6 +48,7 @@ const Home: NextPage = () => {
         setTextAreaInput(toProperJsonStringFormat(data.data));
         Log(data);
       },
+      refetchOnWindowFocus: false,
     },
   );
 
