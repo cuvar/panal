@@ -12,7 +12,7 @@ describe("CalendarWidget guards", () => {
       {
         url: "https://google.com/",
         daysInAdvance: 7,
-        color: "aabbcc",
+        color: "#aabbcc",
       },
     ];
     // act
