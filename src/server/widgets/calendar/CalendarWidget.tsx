@@ -6,7 +6,6 @@ type Props = WidgetProps & {
   data: CalendarWidgetData;
 };
 
-// todo: load calendar data
 export default function CalendarWidget(props: Props) {
   return (
     <div className="h-full w-full">
@@ -17,7 +16,7 @@ export default function CalendarWidget(props: Props) {
               {new Date(entry[0]?.start ?? "").toDateString()}
             </p>
             {entry.map((e, index) => (
-              <CalendarItem key={index} color={props.data.color} entry={e} />
+              <CalendarItem key={index} color={e.color} entry={e} />
             ))}
           </div>
         ))}

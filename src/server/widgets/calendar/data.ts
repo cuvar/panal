@@ -4,9 +4,14 @@ import {
   filterFutureEvents,
   getDatesIncludingRecurrences,
   groupCalendarWidgetByDay,
+  sortCalendarEntries,
 } from "~/server/service/dateManipulationService";
 import Log from "~/utils/log";
-import type { CalendarWidgetConfig, CalendarWidgetData } from "./types";
+import type {
+  CalendarEntry,
+  CalendarWidgetConfig,
+  CalendarWidgetData,
+} from "./types";
 
 /**
  * Compute data for link widget
@@ -19,18 +24,31 @@ export default async function computeCalendarWidgetData(
   fetcher: Fetcher,
 ): Promise<CalendarWidgetData> {
   try {
-    const res = await fetcher.fetch(config.url);
-    const data = ical.parseICS(res);
-    const calendarData = getDatesIncludingRecurrences(
-      data,
-      config.daysInAdvance,
-    );
-    const futureDates = filterFutureEvents(calendarData, config.daysInAdvance);
-    const groupedData = groupCalendarWidgetByDay(futureDates);
+    const icsResults: Promise<CalendarEntry[]>[] = config.map(async (conf) => {
+      const res = await fetcher.fetch(conf.url);
+      const data = ical.parseICS(res);
+      const calendarData = getDatesIncludingRecurrences(
+        data,
+        conf.daysInAdvance,
+        conf.color,
+      );
+      const futureDates = filterFutureEvents(calendarData, conf.daysInAdvance);
+      return futureDates;
+    });
 
-    return { entries: groupedData, color: config.color };
+    const promises = await Promise.all(icsResults);
+
+    const calendarData = promises.reduce((prev, cur) => {
+      prev = prev.concat(cur);
+      return prev;
+    });
+
+    const sorted = sortCalendarEntries(calendarData);
+    const groupedData = groupCalendarWidgetByDay(sorted);
+
+    return { entries: groupedData };
   } catch (error) {
     Log(error, "error");
-    return { entries: [], color: config.color };
+    return { entries: [] };
   }
 }

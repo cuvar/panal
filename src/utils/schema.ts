@@ -106,18 +106,20 @@ export const calendarEntrySchema: z.ZodType<CalendarEntry> = z.object({
   start: z.date(),
   end: z.date(),
   duration: z.number(),
+  color: z.string().length(7),
 });
 
 export const calendarWidgetDataSchema: z.ZodType<CalendarWidgetData> = z.object(
   {
     entries: z.array(z.array(calendarEntrySchema)),
-    color: z.string().length(6),
   },
 );
 
 export const calendarWidgetConfigSchema: z.ZodType<CalendarWidgetConfig> =
-  z.object({
-    url: z.string(),
-    daysInAdvance: z.number(),
-    color: z.string().length(6),
-  });
+  z.array(
+    z.object({
+      url: z.string(),
+      daysInAdvance: z.number(),
+      color: z.string(),
+    }),
+  );

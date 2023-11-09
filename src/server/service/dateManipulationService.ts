@@ -64,11 +64,25 @@ export function groupCalendarWidgetByDay(
 }
 
 /**
+ * Sorts calendar entries ascending
+ * @param {CalendarEntry[]} entries All filteres events
+ * @returns {CalendarEntry[]} Grouped calendar data by day
+ */
+export function sortCalendarEntries(entries: CalendarEntry[]): CalendarEntry[] {
+  const sorted = entries.sort((a, b) => a.start.getTime() - b.start.getTime());
+  return sorted;
+}
+
+/**
  * Transforms calendar data to internal format.
  * @param {CalendarComponent} event External calendar data
+ * @param color Color for <CalendarItem/>
  * @returns {CalendarEntry} Internal calendar data
  */
-export function toInternal(event: CalendarComponent): CalendarEntry {
+export function toInternal(
+  event: CalendarComponent,
+  color: string,
+): CalendarEntry {
   const startDate = new Date(event.start!); // todo: get rid of !
   const endDate = new Date(event.end!);
   const duration = endDate.getTime() - startDate.getTime();
@@ -78,6 +92,7 @@ export function toInternal(event: CalendarComponent): CalendarEntry {
     start: startDate,
     end: endDate,
     duration: duration,
+    color: color,
   };
   return newEvent;
 }
@@ -86,11 +101,13 @@ export function toInternal(event: CalendarComponent): CalendarEntry {
  * Returns all dates with or without a recurrence.
  * @param {FullCalendar} data Parsed data from ical.parseICS
  * @param {number} daysInAdvance Days in advance that should be included
+ * @param color Color for <CalendarItem/>
  * @returns {CalendarEntry[]} List of dates with or without a recurrence
  */
 export function getDatesIncludingRecurrences(
   data: FullCalendar,
   daysInAdvance: number,
+  color: string,
 ): CalendarEntry[] {
   const datesWithRecurrences: CalendarEntry[] = [];
 
@@ -101,7 +118,9 @@ export function getDatesIncludingRecurrences(
   const rangeEnd = new Date(todayPlusNDays);
 
   const events = filterValidEvents(data).map((e) => transformEventTimeData(e));
-  const internal = getNonRecurringEvents(events).map((e) => toInternal(e));
+  const internal = getNonRecurringEvents(events).map((e) =>
+    toInternal(e, color),
+  );
   datesWithRecurrences.push(...internal);
 
   const recurringEvents = getRecurringEvents(events);
@@ -119,7 +138,13 @@ export function getDatesIncludingRecurrences(
     dates.push(...inRange);
 
     for (const date of dates) {
-      const result = getValidRecurrenceEvent(event, date, rangeStart, rangeEnd);
+      const result = getValidRecurrenceEvent(
+        event,
+        date,
+        rangeStart,
+        rangeEnd,
+        color,
+      );
       if (result) {
         datesWithRecurrences.push(result);
       }
