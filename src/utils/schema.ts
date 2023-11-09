@@ -1,24 +1,6 @@
 import type GridLayout from "react-grid-layout";
 import { z } from "zod";
 import type {
-  CalendarEntry,
-  CalendarWidgetConfig,
-  CalendarWidgetData,
-} from "~/server/widgets/calendar/types";
-import type {
-  LinkWidgetConfig,
-  LinkWidgetData,
-} from "~/server/widgets/links/types";
-import type {
-  SearchEngine,
-  SearchWidgetConfig,
-  SearchWidgetData,
-} from "~/server/widgets/search/types";
-import type {
-  TimeWidgetConfig,
-  TimeWidgetData,
-} from "~/server/widgets/time/types";
-import type {
   Positioning,
   ScreenSizePositioning,
   WidgetType,
@@ -68,58 +50,3 @@ export const widgetTypeSchema: z.ZodType<WidgetType> = z.enum([
   "links",
   "time",
 ]);
-
-export const linkWidgetDataSchema: z.ZodType<LinkWidgetConfig> = z.array(
-  z.object({
-    text: z.string(),
-    href: z.string(),
-    tab: z.enum(["new", "same"]),
-  }),
-);
-
-export const linkWidgetConfigSchema: z.ZodType<LinkWidgetData> = z.array(
-  z.object({
-    text: z.string(),
-    href: z.string(),
-    tab: z.enum(["new", "same"]),
-  }),
-);
-
-export const searchEngineSchema: z.ZodType<SearchEngine> = z.object({
-  key: z.enum(["google", "duckduckgo", "ecosia", "gdrive"]),
-  displayName: z.string(),
-  url: z.string(),
-});
-
-export const searchWidgetDataSchema: z.ZodType<SearchWidgetData> = z.object({
-  searchEngines: z.array(searchEngineSchema),
-});
-
-export const searchWidgetConfigSchema: z.ZodType<SearchWidgetConfig> =
-  z.array(searchEngineSchema);
-
-export const timeWidgetDataSchema: z.ZodType<TimeWidgetData> = z.object({});
-export const timeWidgetConfigSchema: z.ZodType<TimeWidgetConfig> = z.object({});
-
-export const calendarEntrySchema: z.ZodType<CalendarEntry> = z.object({
-  title: z.string(),
-  start: z.date(),
-  end: z.date(),
-  duration: z.number(),
-  color: z.string().length(7),
-});
-
-export const calendarWidgetDataSchema: z.ZodType<CalendarWidgetData> = z.object(
-  {
-    entries: z.array(z.array(calendarEntrySchema)),
-  },
-);
-
-export const calendarWidgetConfigSchema: z.ZodType<CalendarWidgetConfig> =
-  z.array(
-    z.object({
-      url: z.string(),
-      daysInAdvance: z.number(),
-      color: z.string().length(7).optional(),
-    }),
-  );

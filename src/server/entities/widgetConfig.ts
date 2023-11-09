@@ -1,17 +1,15 @@
 import { z } from "zod";
 import { isObject, isString } from "~/utils/guards/base";
 import { isFittingDataPaylod, isWidgetType } from "~/utils/guards/widgets";
-import {
-  calendarWidgetConfigSchema,
-  linkWidgetConfigSchema,
-  searchWidgetConfigSchema,
-  timeWidgetConfigSchema,
-  widgetTypeSchema,
-} from "~/utils/schema";
+import { widgetTypeSchema } from "~/utils/schema";
 import type { WidgetType } from "~/utils/types/widget";
+import { calendarWidgetConfigSchema } from "../widgets/calendar/schema";
 import type { CalendarWidgetConfig } from "../widgets/calendar/types";
+import { linkWidgetConfigSchema } from "../widgets/links/schema";
 import type { LinkWidgetConfig } from "../widgets/links/types";
+import { searchWidgetConfigSchema } from "../widgets/search/schema";
 import type { SearchWidgetConfig } from "../widgets/search/types";
+import { timeWidgetConfigSchema } from "../widgets/time/schema";
 import type { TimeWidgetConfig } from "../widgets/time/types";
 
 export class WidgetConfig {
