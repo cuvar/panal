@@ -19,7 +19,7 @@ type Props = {
 };
 
 export default function WidgetWrapper(props: Props) {
-  const getConfigQuery = api.config.getDataForWidget.useQuery({
+  const getConfigQuery = api.data.getDataForWidget.useQuery({
     id: props.widget.id,
   });
 
