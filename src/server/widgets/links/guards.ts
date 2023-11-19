@@ -28,10 +28,22 @@ export function isLinkWidgetLink(data: unknown): data is LinkWidgetLink {
  * @returns {boolean} Whether data is of type LinkWidgetData
  */
 export function isLinkWidgetData(data: unknown): data is LinkWidgetData {
-  return (
-    Array.isArray(data) &&
-    data.every((linkWidgetLink) => isLinkWidgetLink(linkWidgetLink))
-  );
+  if (!isObject(data)) {
+    return false;
+  }
+  if ("title" in data && typeof data.title !== "string") {
+    return false;
+  }
+
+  if (!("links" in data) || !Array.isArray(data.links)) {
+    return false;
+  }
+
+  if (!data.links.every((linkWidgetLink) => isLinkWidgetLink(linkWidgetLink))) {
+    return false;
+  }
+
+  return true;
 }
 
 /**
@@ -40,8 +52,20 @@ export function isLinkWidgetData(data: unknown): data is LinkWidgetData {
  * @returns {boolean} Whether data is of type LinkWidgetConfig
  */
 export function isLinkWidgetConfig(data: unknown): data is LinkWidgetConfig {
-  return (
-    Array.isArray(data) &&
-    data.every((linkWidgetLink) => isLinkWidgetLink(linkWidgetLink))
-  );
+  if (!isObject(data)) {
+    return false;
+  }
+  if ("title" in data && typeof data.title !== "string") {
+    return false;
+  }
+
+  if (!("links" in data) || !Array.isArray(data.links)) {
+    return false;
+  }
+
+  if (!data.links.every((linkWidgetLink) => isLinkWidgetLink(linkWidgetLink))) {
+    return false;
+  }
+
+  return true;
 }

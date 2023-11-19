@@ -23,23 +23,26 @@ import {
 describe("guards - widgets:", () => {
   it("isFittingDataPaylod works correctly", () => {
     // arrange
-    const input: LinkWidgetConfig = [
-      {
-        text: "GitHub",
-        href: "https://github.com/cuvar",
-        tab: "new",
-      },
-      {
-        text: "Google Calendar",
-        href: "https://calendar.google.com/",
-        tab: "new",
-      },
-      {
-        text: "Panal repo",
-        href: "https://github.com/cuvar/panal",
-        tab: "same",
-      },
-    ];
+    const input: LinkWidgetConfig = {
+      title: "hello",
+      links: [
+        {
+          text: "GitHub",
+          href: "https://github.com/cuvar",
+          tab: "new",
+        },
+        {
+          text: "Google Calendar",
+          href: "https://calendar.google.com/",
+          tab: "new",
+        },
+        {
+          text: "Panal repo",
+          href: "https://github.com/cuvar/panal",
+          tab: "same",
+        },
+      ],
+    };
     // act
     const result = isFittingDataPaylod(input, "links");
     // assert
