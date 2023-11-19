@@ -1,5 +1,6 @@
 import { createTRPCRouter } from "~/server/api/trpc";
 import { configRouter } from "./routers/config";
+import { dataRouter } from "./routers/data";
 import { layoutRouter } from "./routers/layout";
 
 /**
@@ -9,6 +10,7 @@ import { layoutRouter } from "./routers/layout";
  */
 export const appRouter = createTRPCRouter({
   config: configRouter,
+  data: dataRouter,
   layout: layoutRouter,
 });
 
