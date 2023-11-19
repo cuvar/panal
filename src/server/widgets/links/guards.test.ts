@@ -7,7 +7,7 @@ import {
   isLinkWidgetData,
   isLinkWidgetLink,
 } from "./guards";
-import type { LinkWidgetData, LinkWidgetLink } from "./types";
+import type { LinkWidgetConfig, LinkWidgetData, LinkWidgetLink } from "./types";
 
 describe("LinkWidget guards", () => {
   it("isLinkWidgetLink works correctly", () => {
@@ -37,13 +37,16 @@ describe("LinkWidget guards", () => {
 
   it("isLinkWidgetData works correctly", () => {
     // arrange
-    const input: LinkWidgetData = [
-      {
-        text: "string",
-        href: "string",
-        tab: "new",
-      },
-    ];
+    const input: LinkWidgetData = {
+      title: "helllo",
+      links: [
+        {
+          text: "string",
+          href: "string",
+          tab: "new",
+        },
+      ],
+    };
     // act
     const result = isLinkWidgetData(input);
     // assert
@@ -64,13 +67,16 @@ describe("LinkWidget guards", () => {
 
   it("isLinkWidgetConfig works correctly", () => {
     // arrange
-    const input: LinkWidgetData = [
-      {
-        text: "string",
-        href: "string",
-        tab: "new",
-      },
-    ];
+    const input: LinkWidgetConfig = {
+      title: "helllo",
+      links: [
+        {
+          text: "string",
+          href: "string",
+          tab: "new",
+        },
+      ],
+    };
     // act
     const result = isLinkWidgetConfig(input);
     // assert
