@@ -71,7 +71,7 @@ export class ConfigUpstashRepository implements ConfigRepository {
   }
 
   async set(id: string, data: WidgetConfig): Promise<void> {
-    const key = UPSTASH_PREFIX + id;
+    const key = UPSTASH_PREFIX + UPSTASH_WIDGET_PREFIX + id;
 
     try {
       await this.redis.set(key, JSON.stringify(data));
@@ -82,7 +82,7 @@ export class ConfigUpstashRepository implements ConfigRepository {
 
   async setAll(data: WidgetConfig[]): Promise<void> {
     for (const config of data) {
-      const key = UPSTASH_PREFIX + config.id;
+      const key = UPSTASH_PREFIX + UPSTASH_WIDGET_PREFIX + config.id;
       try {
         await this.redis.set(key, JSON.stringify(data));
       } catch (error) {

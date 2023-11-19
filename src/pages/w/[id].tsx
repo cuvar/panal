@@ -62,7 +62,7 @@ const Home: NextPage = () => {
     },
     onError: (error) => {
       setToastType("error");
-      setToastText(`Saving failed`);
+      setToastText(`Saving config failed`);
       setTimeout(() => {
         setToastText("");
       }, 1500);
@@ -80,7 +80,7 @@ const Home: NextPage = () => {
     },
     onError: (error) => {
       setToastType("error");
-      setToastText(`Saving failed`);
+      setToastText(`Saving layout failed`);
       setTimeout(() => {
         setToastText("");
       }, 1500);
@@ -226,7 +226,7 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-5 flex w-full justify-end">
+            <div className="mt-5 flex w-full justify-end space-x-2">
               <Button handler={onClickSaveConfig}>Save Config</Button>
               <Button handler={onClickSaveLayout}>Save Layout</Button>
             </div>
