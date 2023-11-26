@@ -9,6 +9,8 @@ import {
   cogIcon,
   crossIcon,
   ellipsisIcon,
+  eyeIcon,
+  eyeOffIcon,
   penIcon,
   signOutIcon,
 } from "~/utils/icons";
@@ -16,6 +18,7 @@ import Log from "~/utils/log";
 import {
   editModeAtom,
   editedWidgetLayoutAtom,
+  showHiddenWidgetsAtom,
   toastTextAtom,
   toastTypeAtom,
   widgetLayoutAtom,
@@ -30,6 +33,9 @@ export default function Menu() {
   const [editedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
   const [, setToastText] = useAtom(toastTextAtom);
   const [, setToastType] = useAtom(toastTypeAtom);
+  const [showHiddenWidgets, setShowHiddenWidgets] = useAtom(
+    showHiddenWidgetsAtom,
+  );
 
   const setWidgetLayoutMutation = api.layout.setAll.useMutation({
     onSuccess: () => {
@@ -103,8 +109,18 @@ export default function Menu() {
     setShowMenu(false);
   }
 
+  function handleShowHidden() {
+    setShowMenu(false);
+    setShowHiddenWidgets(!showHiddenWidgets);
+  }
+
   return (
-    <div className="z-50 space-x-2">
+    <div className="z-50 space-x-4">
+      {editMode && (
+        <button onClick={handleShowHidden}>
+          {showHiddenWidgets ? eyeOffIcon : eyeIcon}
+        </button>
+      )}
       <button onClick={handleEllipsisClick} ref={menuButtonRef}>
         {ellipsisIcon}
       </button>

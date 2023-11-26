@@ -10,7 +10,7 @@ export interface LayoutRepository {
   get(id: string): Promise<AdjustedWidgetLayout>;
   getAll(): Promise<AdjustedWidgetLayout[]>;
   setAll(widgets: AdjustedWidgetLayout[]): Promise<void>;
-  set(id: string, widgets: AdjustedWidgetLayout): Promise<void>;
+  set(id: string, widget: AdjustedWidgetLayout): Promise<void>;
 }
 
 /**

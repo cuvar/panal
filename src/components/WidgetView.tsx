@@ -55,7 +55,7 @@ export default function WidgetView(props: Props) {
   }
 
   return (
-    <div className="h-screen w-full max-w-[1280px]">
+    <div className="z-10 h-screen w-full max-w-[1280px]">
       <ResponsiveGridLayout
         className="layout"
         breakpoints={{ ...adjustedBreakpoints }}
@@ -66,6 +66,7 @@ export default function WidgetView(props: Props) {
         compactType={null}
         autoSize={false}
         onLayoutChange={handleLayoutChange}
+        isDroppable={true}
       >
         {props.layout.map(
           (widget) =>

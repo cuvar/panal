@@ -2,9 +2,9 @@ import { isEmptyPositioning } from "~/utils/helper";
 import type { ScreenSizePositioning } from "~/utils/types/widget";
 
 /**
- * Returns an array of ScreenSizes to hide the widget
+ * Returns an array of ScreenSizes in which a widget is hidden
  * @param {ScreenSizePositioning} layout Layout to get hiding classes from
- * @returns {string[]} Array of ScreenSizes to hide the widget
+ * @returns {string[]} Array of ScreenSizes in which a widget is hidden
  */
 export default function getHidingClasses(
   layout: ScreenSizePositioning,
