@@ -34,6 +34,21 @@ export function isEmptyPositioning(positioning: Positioning): boolean {
 }
 
 /**
+ * Check if two widgets overlap
+ * @param {Positioning} w1 The first widget
+ * @param {Positioning} w2 The second widget
+ * @returns {boolean} True if the widgets overlap, false otherwise
+ */
+export function overlaps(w1: Positioning, w2: Positioning): boolean {
+  return !(
+    w2.x >= w1.x + w1.w ||
+    w2.x + w2.w <= w1.x ||
+    w2.y >= w1.y + w1.h ||
+    w2.y + w2.h <= w1.y
+  );
+}
+
+/**
  * Turns a given WidgetType into an appropriate display name.
  * @param {WidgetType} type WidgetType for which the display name is required
  * @returns {string} Display name for WidgetType

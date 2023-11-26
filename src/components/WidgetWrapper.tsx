@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import Link from "next/link";
 import mapWidgets from "~/client/services/mapWidgetsService";
+import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
 import { type AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
 import ErrorWidget from "~/server/widgets/ErrorWidget";
 import LoadingWidget from "~/server/widgets/LoadingWidget";
@@ -22,16 +23,25 @@ type Props = {
 export default function WidgetWrapper(props: Props) {
   const [, setToastText] = useAtom(toastTextAtom);
   const [, setToastType] = useAtom(toastTypeAtom);
-  const [editedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
+  const [, setEditedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
   const currentScreenSize = useDetectScreenSize();
 
+  const getAllLayoutsQuery = api.layout.getAll.useQuery(undefined, {
+    enabled: false,
+  });
   const getConfigQuery = api.data.getDataForWidget.useQuery({
     id: props.widget.id,
   });
-  const hideWidgetMutation = api.layout.hideWidget.useMutation({
-    onSuccess: () => {
+  const hideWidgetMutation = api.layout.setHide.useMutation({
+    onSuccess: async () => {
+      const res = await getAllLayoutsQuery.refetch();
       setToastType("success");
       setToastText(`Hid widget successfully`);
+      if (res.data) {
+        const transformed = transformLayoutsForGrid(res.data, false);
+        setEditedWidgetLayout(transformed);
+      }
+
       // location.reload();
       setTimeout(() => {
         setToastText("");
@@ -48,7 +58,6 @@ export default function WidgetWrapper(props: Props) {
   });
 
   function handleHideWidget() {
-    Log("hide widget");
     hideWidgetMutation.mutate({
       hide: true,
       screenSize: currentScreenSize,

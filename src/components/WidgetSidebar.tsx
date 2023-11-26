@@ -1,18 +1,57 @@
+import { useAtom } from "jotai";
+import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
+import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
 import type { AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
 import { api } from "~/utils/api";
 import { getNameForWidgetType } from "~/utils/helper";
 import { useDetectScreenSize } from "~/utils/hooks";
 import Log from "~/utils/log";
+import {
+  editedWidgetLayoutAtom,
+  toastTextAtom,
+  toastTypeAtom,
+  widgetLayoutAtom,
+} from "~/utils/store";
 
 export default function WidgetSidebar() {
+  const [, setToastText] = useAtom(toastTextAtom);
+  const [, setToastType] = useAtom(toastTypeAtom);
+  const [, setEditedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
+  const [, setWidgetLayout] = useAtom(widgetLayoutAtom);
+
   const currentScreenSize = useDetectScreenSize();
+
+  const getAllLayoutsQuery = api.layout.getAll.useQuery(undefined, {
+    enabled: false,
+  });
   const getHiddenLayoutsQuery = api.layout.getAllHidden.useQuery({
     screenSize: currentScreenSize,
   });
 
-  const hideWidgetMutation = api.layout.hideWidget.useMutation({
-    onSuccess: () => {
-      Log("success");
+  const hideWidgetMutation = api.layout.setHide.useMutation({
+    onSuccess: async () => {
+      const res = await getAllLayoutsQuery.refetch();
+      setToastType("success");
+      setToastText(`Revealed widget successfully`);
+      if (res.data) {
+        const transformed = transformLayoutsForGrid(res.data, false);
+        Log(transformed);
+        setEditedWidgetLayout(transformed);
+        setWidgetLayout(makeLayoutsStatic(transformed, true));
+      }
+
+      // location.reload();
+      setTimeout(() => {
+        setToastText("");
+      }, 1500);
+    },
+    onError: (error) => {
+      setToastType("error");
+      setToastText(`Revealing failed`);
+      setTimeout(() => {
+        setToastText("");
+      }, 1500);
+      Log(error, "error");
     },
   });
 

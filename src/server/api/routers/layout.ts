@@ -3,7 +3,7 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
 import { getLayoutRepository } from "~/server/repository/layout/layoutRepository";
-import adjustLayoutValues from "~/server/service/adjustLayoutValuesService";
+import hideWidget from "~/server/service/hideWidgetService";
 import transformWidgetLayout from "~/server/service/transformWidgetLayoutService";
 import updateWidgetLayoutService from "~/server/service/updateWidgetLayoutService";
 import AppError from "~/utils/error";
@@ -15,7 +15,6 @@ import {
   widgetLayoutSchema,
   widgetTypeSchema,
 } from "~/utils/schema";
-import { HidingInfo, Positioning } from "~/utils/types/widget";
 
 export const layoutRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
@@ -117,7 +116,7 @@ export const layoutRouter = createTRPCRouter({
         });
       }
     }),
-  hideWidget: protectedProcedure
+  setHide: protectedProcedure
     .input(
       z.object({
         screenSize: screenSizeSchema,
@@ -126,15 +125,14 @@ export const layoutRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input }) => {
-      const newLayout: Positioning | HidingInfo = input.hide
-        ? { x: 0, y: 0, h: 0, w: 0 }
-        : { x: 0, y: 0, h: 2, w: 1 }; // TODO: adjust and get right values
-
-      input.widget.layout[input.screenSize] = newLayout;
-      const adjusted = adjustLayoutValues(input.widget as AdjustedWidgetLayout);
-
       try {
-        await getLayoutRepository().set(input.widget.id, adjusted);
+        const awc = new AdjustedWidgetLayout(
+          input.widget.id,
+          input.widget.type,
+          input.widget.layout,
+        );
+        const res = await hideWidget(awc, input.screenSize, input.hide);
+        return res;
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({
