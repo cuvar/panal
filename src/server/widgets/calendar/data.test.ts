@@ -3,11 +3,11 @@
  */
 
 import { MockICSFetcher } from "~/server/driver/Fetcher/MockICSFetcher";
-import computeCalendarWidgetData from "../calendar/data";
+import computeDataCalendarWidget from "../calendar/data";
 import type { CalendarWidgetConfig } from "./types";
 
 describe("CalendarWidget data", () => {
-  it("computeCalendarWidgetData works correctly with color", async () => {
+  it("computeDataCalendarWidget works correctly with color", async () => {
     // arrange
     const number = 10;
     const mockFetcher = new MockICSFetcher(number);
@@ -20,13 +20,13 @@ describe("CalendarWidget data", () => {
     ];
 
     // act
-    const result = await computeCalendarWidgetData(input, mockFetcher);
+    const result = await computeDataCalendarWidget(input, mockFetcher);
 
     // assert
     expect(result.entries.length).toBeGreaterThanOrEqual(number - 1); // there seems to be an issue with result.entries.length being 9 or 10 randomly
   });
 
-  it("computeCalendarWidgetData works correctly without color", async () => {
+  it("computeDataCalendarWidget works correctly without color", async () => {
     // arrange
     const number = 10;
     const mockFetcher = new MockICSFetcher(number);
@@ -38,7 +38,7 @@ describe("CalendarWidget data", () => {
     ];
 
     // act
-    const result = await computeCalendarWidgetData(input, mockFetcher);
+    const result = await computeDataCalendarWidget(input, mockFetcher);
 
     // assert
     expect(result.entries.length).toBeGreaterThanOrEqual(number - 1); // there seems to be an issue with result.entries.length being 9 or 10 randomly

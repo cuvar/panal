@@ -2,11 +2,11 @@
  * @jest-environment node
  */
 
-import computeLinkWidgetData from "../links/data";
+import computeDataLinkWidget from "../links/data";
 import type { LinkWidgetConfig, LinkWidgetData } from "../links/types";
 
 describe("LinkWidget data", () => {
-  it("computeLinkWidgetData works correctly", () => {
+  it("computeDataLinkWidget works correctly", () => {
     // arrange
     const input: LinkWidgetConfig = {
       title: "string",
@@ -30,7 +30,7 @@ describe("LinkWidget data", () => {
       ],
     };
     // act
-    const result = computeLinkWidgetData(input);
+    const result = computeDataLinkWidget(input);
     // assert
     expect(result).toStrictEqual(expected);
   });

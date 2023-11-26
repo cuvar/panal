@@ -5,7 +5,7 @@ import type { LinkWidgetConfig, LinkWidgetData } from "./types";
  * @param {LinkWidgetConfig} config config for link widget
  * @returns {LinkWidgetData} data for link widget
  */
-export default function computeLinkWidgetData(
+export default function computeDataLinkWidget(
   config: LinkWidgetConfig,
 ): LinkWidgetData {
   return config;

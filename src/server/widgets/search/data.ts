@@ -5,7 +5,7 @@ import type { SearchWidgetConfig, SearchWidgetData } from "./types";
  * @param {SearchWidgetConfig} config config for link widget
  * @returns {SearchWidgetData} data for link widget
  */
-export default function computeSearchWidgetData(
+export default function computeDataSearchWidget(
   config: SearchWidgetConfig,
 ): SearchWidgetData {
   return {

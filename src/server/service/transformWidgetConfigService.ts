@@ -2,13 +2,13 @@ import Log from "~/utils/log";
 import { ICSFetcher } from "../driver/Fetcher/ICSFetcher";
 import { type WidgetConfig } from "../entities/widgetConfig";
 import { WidgetData } from "../entities/widgetData";
-import computeCalendarWidgetData from "../widgets/calendar/data";
+import computeDataCalendarWidget from "../widgets/calendar/data";
 import { isCalendarWidgetConfig } from "../widgets/calendar/guards";
-import computeLinkWidgetData from "../widgets/links/data";
+import computeDataLinkWidget from "../widgets/links/data";
 import { isLinkWidgetConfig } from "../widgets/links/guards";
-import computeSearchWidgetData from "../widgets/search/data";
+import computeDataSearchWidget from "../widgets/search/data";
 import { isSearchWidgetConfig } from "../widgets/search/guards";
-import computeTimeWidgetData from "../widgets/time/data";
+import computeDataTimeWidget from "../widgets/time/data";
 import { isTimeWidgetConfig } from "../widgets/time/guards";
 
 /**
@@ -25,16 +25,16 @@ export default async function transformWidgetConfig(
 
     try {
       if (widget.type === "calendar" && isCalendarWidgetConfig(widget.data)) {
-        data = await computeCalendarWidgetData(widget.data, new ICSFetcher());
+        data = await computeDataCalendarWidget(widget.data, new ICSFetcher());
       } else if (widget.type === "links" && isLinkWidgetConfig(widget.data)) {
-        data = computeLinkWidgetData(widget.data);
+        data = computeDataLinkWidget(widget.data);
       } else if (
         widget.type === "search" &&
         isSearchWidgetConfig(widget.data)
       ) {
-        data = computeSearchWidgetData(widget.data);
+        data = computeDataSearchWidget(widget.data);
       } else if (widget.type === "time" && isTimeWidgetConfig(widget.data)) {
-        data = computeTimeWidgetData(widget.data);
+        data = computeDataTimeWidget(widget.data);
       } else {
         data = {};
       }
