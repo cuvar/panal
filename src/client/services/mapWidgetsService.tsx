@@ -1,13 +1,13 @@
 import { type AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
 import { type WidgetData } from "~/server/entities/widgetData";
-import CalendarWidget from "~/server/widgets/calendar/CalendarWidget";
 import { type CalendarWidgetData } from "~/server/widgets/calendar/types";
-import LinkCollectionWidget from "~/server/widgets/links/LinkWidget/LinkCollectionWidget";
+import CalendarWidget from "~/server/widgets/calendar/widget";
+import LinkCollectionWidget from "~/server/widgets/links/LinkCollectionWidget";
 import { type LinkWidgetData } from "~/server/widgets/links/types";
-import SearchWidget from "~/server/widgets/search/SearchWidget";
 import { type SearchWidgetData } from "~/server/widgets/search/types";
-import TimeWidget from "~/server/widgets/time/TimeWidget";
+import SearchWidget from "~/server/widgets/search/widget";
 import { type TimeWidgetData } from "~/server/widgets/time/types";
+import TimeWidget from "~/server/widgets/time/widget";
 
 /**
  * Turns Layout and WidgetData data into an actual widget component
