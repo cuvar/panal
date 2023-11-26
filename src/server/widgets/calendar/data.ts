@@ -19,7 +19,7 @@ import type {
  * @param {Fetcher} fetcher Fetcher for ICS file
  * @returns {CalendarWidgetData} Data for link widget
  */
-export default async function computeCalendarWidgetData(
+export default async function computeDataCalendarWidget(
   config: CalendarWidgetConfig,
   fetcher: Fetcher,
 ): Promise<CalendarWidgetData> {

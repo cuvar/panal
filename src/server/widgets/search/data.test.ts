@@ -2,11 +2,11 @@
  * @jest-environment node
  */
 
-import computeSearchWidgetData from "./data";
+import computeDataSearchWidget from "./data";
 import type { SearchWidgetConfig, SearchWidgetData } from "./types";
 
 describe("SearchWidget data", () => {
-  it("computeSearchWidgetData works correctly", () => {
+  it("computeDataSearchWidget works correctly", () => {
     // arrange
     const input: SearchWidgetConfig = [
       {
@@ -25,7 +25,7 @@ describe("SearchWidget data", () => {
       ],
     };
     // act
-    const result = computeSearchWidgetData(input);
+    const result = computeDataSearchWidget(input);
     // assert
     expect(result).toStrictEqual(expected);
   });

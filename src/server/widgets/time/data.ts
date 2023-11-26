@@ -5,7 +5,7 @@ import type { TimeWidgetConfig, TimeWidgetData } from "./types";
  * @param {TimeWidgetConfig} _config config for link widget
  * @returns {TimeWidgetData} data for link widget
  */
-export default function computeTimeWidgetData(
+export default function computeDataTimeWidget(
   _config: TimeWidgetConfig,
 ): TimeWidgetData {
   return {} as TimeWidgetData;

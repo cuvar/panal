@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDetectScreenSize } from "~/utils/hooks";
 import type { WidgetProps } from "~/utils/types/widget";
-import type { LinkWidgetData } from "../types";
-import LinkWidget from "./LinkWidget";
+import type { LinkWidgetData } from "./types";
+import LinkWidget from "./widget";
 
 type Props = WidgetProps & {
   data: LinkWidgetData;
