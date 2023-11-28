@@ -14,6 +14,7 @@ import {
   toastTextAtom,
   toastTypeAtom,
 } from "~/utils/store";
+import GhostButton from "./Button/GhostButton";
 
 type Props = {
   editMode: boolean;
@@ -42,7 +43,6 @@ export default function WidgetWrapper(props: Props) {
         setEditedWidgetLayout(transformed);
       }
 
-      // location.reload();
       setTimeout(() => {
         setToastText("");
       }, 1500);
@@ -69,9 +69,9 @@ export default function WidgetWrapper(props: Props) {
     <div className={`flex h-full w-full items-center justify-center`}>
       {props.editMode && (
         <div className="absolute z-20 flex h-full w-full items-start justify-end space-x-6 rounded-md bg-white bg-opacity-30 px-2 pt-2">
-          <button className="text-black" onClick={handleHideWidget}>
+          <GhostButton className="text-black" onClick={handleHideWidget}>
             {eyeOffIcon}
-          </button>
+          </GhostButton>
           <Link href={`/w/${props.widget.id}`} className="text-black">
             {cogIcon}
           </Link>

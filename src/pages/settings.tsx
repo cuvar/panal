@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import type { NextPage } from "next";
 import { useState } from "react";
-import Button from "~/components/Button";
+import Button from "~/components/Button/GhostButton";
 import SiteWrapper from "~/components/SiteWrapper";
 import Textarea from "~/components/Textarea";
 import ErrorPage from "~/sites/Error";

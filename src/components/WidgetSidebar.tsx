@@ -5,19 +5,23 @@ import type { AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayou
 import { api } from "~/utils/api";
 import { getNameForWidgetType } from "~/utils/helper";
 import { useDetectScreenSize } from "~/utils/hooks";
+import { crossIcon } from "~/utils/icons";
 import Log from "~/utils/log";
 import {
   editedWidgetLayoutAtom,
+  showHiddenWidgetsAtom,
   toastTextAtom,
   toastTypeAtom,
   widgetLayoutAtom,
 } from "~/utils/store";
+import GhostButton from "./Button/GhostButton";
 
 export default function WidgetSidebar() {
   const [, setToastText] = useAtom(toastTextAtom);
   const [, setToastType] = useAtom(toastTypeAtom);
   const [, setEditedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
   const [, setWidgetLayout] = useAtom(widgetLayoutAtom);
+  const [, setShowHiddenWidgets] = useAtom(showHiddenWidgetsAtom);
 
   const currentScreenSize = useDetectScreenSize();
 
@@ -30,6 +34,7 @@ export default function WidgetSidebar() {
 
   const hideWidgetMutation = api.layout.setHide.useMutation({
     onSuccess: async () => {
+      await getHiddenLayoutsQuery.refetch();
       const res = await getAllLayoutsQuery.refetch();
       setToastType("success");
       setToastText(`Revealed widget successfully`);
@@ -37,10 +42,9 @@ export default function WidgetSidebar() {
         const transformed = transformLayoutsForGrid(res.data, false);
         Log(transformed);
         setEditedWidgetLayout(transformed);
-        setWidgetLayout(makeLayoutsStatic(transformed, true));
+        setWidgetLayout(makeLayoutsStatic(transformed, false));
       }
 
-      // location.reload();
       setTimeout(() => {
         setToastText("");
       }, 1500);
@@ -63,8 +67,16 @@ export default function WidgetSidebar() {
     });
   }
 
+  function handleCloseSidebar() {
+    setShowHiddenWidgets(false);
+  }
+
   return (
-    <div className="absolute left-0 z-20 mx-4 h-full w-60 rounded-md bg-panal-700 px-4 py-2">
+    <div className="fixed bottom-0 left-0 top-0 z-20 w-60 bg-panal-700 px-4 py-2">
+      <div className="mt-2 flex w-full justify-end">
+        <GhostButton onClick={handleCloseSidebar}>{crossIcon}</GhostButton>
+      </div>
+      <h2 className="my-2 font-bold">Hidden widgets</h2>
       {!getHiddenLayoutsQuery.data ? (
         <div>no widgets</div>
       ) : (

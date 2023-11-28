@@ -23,6 +23,7 @@ import {
   toastTypeAtom,
   widgetLayoutAtom,
 } from "~/utils/store";
+import GhostButton from "./Button/GhostButton";
 
 export default function Menu() {
   const [showMenu, setShowMenu] = useState(false);
@@ -117,13 +118,13 @@ export default function Menu() {
   return (
     <div className="z-50 space-x-4">
       {editMode && (
-        <button onClick={handleShowHidden}>
+        <GhostButton onClick={handleShowHidden}>
           {showHiddenWidgets ? eyeOffIcon : eyeIcon}
-        </button>
+        </GhostButton>
       )}
-      <button onClick={handleEllipsisClick} ref={menuButtonRef}>
+      <GhostButton onClick={handleEllipsisClick} ref={menuButtonRef}>
         {ellipsisIcon}
-      </button>
+      </GhostButton>
       <div
         tabIndex={0}
         ref={popoverRef}

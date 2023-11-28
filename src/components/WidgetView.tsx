@@ -17,8 +17,10 @@ import { useDetectScreenSize } from "~/utils/hooks";
 import {
   editModeAtom,
   editedWidgetLayoutAtom,
+  showHiddenWidgetsAtom,
   widgetLayoutAtom,
 } from "~/utils/store";
+import WidgetSidebar from "./WidgetSidebar";
 import WidgetWrapper from "./WidgetWrapper";
 
 type Props = {
@@ -31,6 +33,7 @@ export default function WidgetView(props: Props) {
   const [editMode] = useAtom(editModeAtom);
   const [widgetLayout, setWidgetLayout] = useAtom(widgetLayoutAtom);
   const [, setEditedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
+  const [showHiddenWidgets] = useAtom(showHiddenWidgetsAtom);
 
   const adjustedBreakpoints = Object.entries(BREAKPOINTS).reduce(
     (acc, [key, value]) => {
@@ -56,6 +59,10 @@ export default function WidgetView(props: Props) {
 
   return (
     <div className="z-10 h-screen w-full max-w-[1280px]">
+      {showHiddenWidgets && <WidgetSidebar />}
+      {showHiddenWidgets && (
+        <div className="fixed left-0 top-0 z-10 h-screen w-screen bg-black opacity-60"></div>
+      )}
       <ResponsiveGridLayout
         className="layout"
         breakpoints={{ ...adjustedBreakpoints }}
