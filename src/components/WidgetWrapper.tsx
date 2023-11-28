@@ -1,5 +1,6 @@
 import { useAtom } from "jotai";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import mapWidgets from "~/client/services/mapWidgetsService";
 import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
 import { type AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
@@ -14,7 +15,6 @@ import {
   toastTextAtom,
   toastTypeAtom,
 } from "~/utils/store";
-import GhostButton from "./Button/GhostButton";
 
 type Props = {
   editMode: boolean;
@@ -26,6 +26,7 @@ export default function WidgetWrapper(props: Props) {
   const [, setToastType] = useAtom(toastTypeAtom);
   const [, setEditedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
   const currentScreenSize = useDetectScreenSize();
+  const router = useRouter();
 
   const getAllLayoutsQuery = api.layout.getAll.useQuery(undefined, {
     enabled: false,
@@ -65,14 +66,26 @@ export default function WidgetWrapper(props: Props) {
     });
   }
 
+  function handleNavigate(path: string) {
+    void (async () => await router.push(path))();
+  }
+
   return (
     <div className={`flex h-full w-full items-center justify-center`}>
       {props.editMode && (
         <div className="absolute z-20 flex h-full w-full items-start justify-end space-x-6 rounded-md bg-white bg-opacity-30 px-2 pt-2">
-          <GhostButton className="text-black" onClick={handleHideWidget}>
+          <button
+            className="text-black"
+            onTouchStart={handleHideWidget}
+            onClick={handleHideWidget}
+          >
             {eyeOffIcon}
-          </GhostButton>
-          <Link href={`/w/${props.widget.id}`} className="text-black">
+          </button>
+          <Link
+            href={`/w/${props.widget.id}`}
+            onTouchStart={() => handleNavigate(`/w/${props.widget.id}`)}
+            className="text-black"
+          >
             {cogIcon}
           </Link>
         </div>
