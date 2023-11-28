@@ -84,9 +84,6 @@ export default function WidgetSidebar() {
           <div className="contents" key={widget.id}>
             <div
               className="droppable-element my-2 rounded-md px-4 py-4 hover:bg-panal-500"
-              // draggable={true}
-              // unselectable="on"
-              // onDragStart={(e) => e.dataTransfer.setData("text/plain", "")}
               onClick={() => handleAddToLayout(widget)}
             >
               {getNameForWidgetType(widget.type)}

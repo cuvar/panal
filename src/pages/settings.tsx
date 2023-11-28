@@ -88,7 +88,7 @@ const Home: NextPage = () => {
             changeHandler={(e) => setTextAreaContent(e.target.value)}
           />
           <div className="flex w-full justify-end space-x-2">
-            <Button handler={() => handleSave()}>Save</Button>
+            <Button onClick={() => handleSave()}>Save</Button>
           </div>
         </div>
       </div>

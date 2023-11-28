@@ -227,8 +227,8 @@ const Home: NextPage = () => {
               </div>
             </div>
             <div className="mt-5 flex w-full justify-end space-x-2">
-              <Button handler={onClickSaveConfig}>Save Config</Button>
-              <Button handler={onClickSaveLayout}>Save Layout</Button>
+              <Button onClick={onClickSaveConfig}>Save Config</Button>
+              <Button onClick={onClickSaveLayout}>Save Layout</Button>
             </div>
           </div>
         )}
