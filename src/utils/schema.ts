@@ -5,6 +5,7 @@ import type {
   ScreenSizePositioning,
   WidgetType,
 } from "~/utils/types/widget";
+import { ScreenSize } from "./types/types";
 
 export const positioningSchema: z.ZodType<Positioning> = z.object({
   x: z.number(),
@@ -49,4 +50,13 @@ export const widgetTypeSchema: z.ZodType<WidgetType> = z.enum([
   "search",
   "links",
   "time",
+]);
+
+export const screenSizeSchema: z.ZodType<ScreenSize> = z.enum([
+  "xl",
+  "lg",
+  "md",
+  "sm",
+  "xs",
+  "xss",
 ]);

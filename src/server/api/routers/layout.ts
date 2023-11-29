@@ -3,12 +3,15 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
 import { getLayoutRepository } from "~/server/repository/layout/layoutRepository";
+import hideWidget from "~/server/service/hideWidgetService";
 import transformWidgetLayout from "~/server/service/transformWidgetLayoutService";
 import updateWidgetLayoutService from "~/server/service/updateWidgetLayoutService";
 import AppError from "~/utils/error";
+import { isEmptyPositioning } from "~/utils/helper";
 import Log from "~/utils/log";
 import {
   screenSizePositioningSchema,
+  screenSizeSchema,
   widgetLayoutSchema,
   widgetTypeSchema,
 } from "~/utils/schema";
@@ -89,6 +92,52 @@ export const layoutRouter = createTRPCRouter({
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Unable to update widget config",
+        });
+      }
+    }),
+  getAllHidden: protectedProcedure
+    .input(z.object({ screenSize: screenSizeSchema }))
+    .query(async ({ input }) => {
+      try {
+        const storedLayouts = await getLayoutRepository().getAll();
+        const layoutData = transformWidgetLayout(storedLayouts);
+        const hiddenWidgets = layoutData.filter((widget) => {
+          if (isEmptyPositioning(widget.layout[input.screenSize])) {
+            return true;
+          }
+          return false;
+        });
+        return hiddenWidgets;
+      } catch (error) {
+        Log(error, "error");
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Unable to get hidden widget layouts",
+        });
+      }
+    }),
+  setHide: protectedProcedure
+    .input(
+      z.object({
+        screenSize: screenSizeSchema,
+        hide: z.boolean(),
+        widget: AdjustedWidgetLayout.getSchema(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      try {
+        const awc = new AdjustedWidgetLayout(
+          input.widget.id,
+          input.widget.type,
+          input.widget.layout,
+        );
+        const res = await hideWidget(awc, input.screenSize, input.hide);
+        return res;
+      } catch (error) {
+        Log(error, "error");
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Unable to update hiding status of widget layout",
         });
       }
     }),
