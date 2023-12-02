@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Footer from "~/components/Footer";
 import Navbar from "~/components/Navbar";
-import Login from "~/sites/Login";
+import Login from "~/sites/Landing";
 import Toast from "./Toast";
 
 type Props = {
