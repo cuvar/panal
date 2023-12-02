@@ -1,9 +1,9 @@
 import { env } from "~/env.mjs";
 import { REPO_LAYOUT_FILE } from "~/utils/const";
 import AppError from "~/utils/error";
-import { type Reader } from "../../driver/Reader/Reader";
-import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
-import { parseAdjustedWidgetLayout } from "../../service/parseWidgetConfigService";
+import { type Reader } from "../../../driver/Reader/Reader";
+import { parseAdjustedWidgetLayout } from "../../config/services/parseWidgetConfigService";
+import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import type { LayoutRepository } from "./layoutRepository";
 
 export class LayoutLocalFileRepository implements LayoutRepository {

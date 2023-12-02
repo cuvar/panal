@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
 import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
-import type { AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
+import type { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { api } from "~/utils/api";
 import { getNameForWidgetType } from "~/utils/helper";
 import { useDetectScreenSize } from "~/utils/hooks";

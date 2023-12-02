@@ -12,7 +12,7 @@ import { useAtom } from "jotai";
 import { useEffect } from "react";
 import getHidingClasses from "~/client/services/getHidingClassesService";
 import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
-import { type AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
+import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { useDetectScreenSize } from "~/utils/hooks";
 import {
   editModeAtom,

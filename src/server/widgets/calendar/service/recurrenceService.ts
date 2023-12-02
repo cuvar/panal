@@ -1,5 +1,5 @@
 import type { CalendarComponent } from "ical";
-import type { CalendarEntry } from "../widgets/calendar/types";
+import type { CalendarEntry } from "../types";
 
 /**
  * Gets all events that do not have a recurrence rule.

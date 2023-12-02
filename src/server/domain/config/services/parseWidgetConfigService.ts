@@ -1,6 +1,6 @@
-import { AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
-import { UserWidgetLayout } from "../entities/userWidgetLayout";
-import { WidgetConfig } from "../entities/widgetConfig";
+import { AdjustedWidgetLayout } from "../../layout/adjustedWidgetLayout";
+import { UserWidgetLayout } from "../../layout/userWidgetLayout";
+import { WidgetConfig } from "../widgetConfig";
 
 /**
  * Parses a string into a UserWidgetLayout[].

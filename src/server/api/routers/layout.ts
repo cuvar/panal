@@ -1,11 +1,11 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
-import { getLayoutRepository } from "~/server/repository/layout/layoutRepository";
-import hideWidget from "~/server/service/hideWidgetService";
-import transformWidgetLayout from "~/server/service/transformWidgetLayoutService";
-import updateWidgetLayoutService from "~/server/service/updateWidgetLayoutService";
+import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { getLayoutRepository } from "~/server/domain/layout/repo/layoutRepository";
+import hideWidget from "~/server/domain/layout/services/hideWidgetService";
+import transformWidgetLayout from "~/server/domain/layout/services/transformWidgetLayoutService";
+import updateWidgetLayoutService from "~/server/domain/layout/services/updateWidgetLayoutService";
 import AppError from "~/utils/error";
 import { isEmptyPositioning } from "~/utils/helper";
 import Log from "~/utils/log";

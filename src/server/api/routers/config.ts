@@ -1,9 +1,9 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { WidgetConfig } from "~/server/entities/widgetConfig";
-import { getConfigRepository } from "~/server/repository/config/configRepository";
-import { parseWidgetConfigArray } from "~/server/service/parseWidgetConfigService";
+import { getConfigRepository } from "~/server/domain/config/repo/configRepository";
+import { parseWidgetConfigArray } from "~/server/domain/config/services/parseWidgetConfigService";
+import { WidgetConfig } from "~/server/domain/config/widgetConfig";
 import AppError from "~/utils/error";
 import Log from "~/utils/log";
 import { widgetTypeSchema } from "~/utils/schema";

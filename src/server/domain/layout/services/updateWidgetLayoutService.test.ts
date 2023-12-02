@@ -4,7 +4,7 @@
 
 import type GridLayout from "react-grid-layout";
 import type { ScreenSizePositioning } from "~/utils/types/widget";
-import { AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
+import { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import updateWidgetLayoutService from "./updateWidgetLayoutService";
 
 describe("updateWidgetLayoutService", () => {

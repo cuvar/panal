@@ -1,5 +1,5 @@
-import { type AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
-import { type WidgetData } from "~/server/entities/widgetData";
+import { type WidgetData } from "~/server/domain/config/widgetData";
+import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { type CalendarWidgetData } from "~/server/widgets/calendar/types";
 import CalendarWidget from "~/server/widgets/calendar/widget";
 import LinkCollectionWidget from "~/server/widgets/links/LinkCollectionWidget";

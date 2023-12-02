@@ -2,8 +2,8 @@ import { Redis } from "@upstash/redis";
 import { env } from "~/env.mjs";
 import { UPSTASH_LAYOUT_KEY } from "~/utils/const";
 import AppError from "~/utils/error";
-import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
-import { parseAdjustedWidgetLayout } from "../../service/parseWidgetConfigService";
+import { parseAdjustedWidgetLayout } from "../../config/services/parseWidgetConfigService";
+import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import type { LayoutRepository } from "./layoutRepository";
 
 export class LayoutUpstashRepository implements LayoutRepository {

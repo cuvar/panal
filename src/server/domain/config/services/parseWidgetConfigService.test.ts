@@ -3,8 +3,8 @@
  */
 
 import type { ScreenSizePositioning } from "~/utils/types/widget";
-import { AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
-import { UserWidgetLayout } from "../entities/userWidgetLayout";
+import { AdjustedWidgetLayout } from "../../layout/adjustedWidgetLayout";
+import { UserWidgetLayout } from "../../layout/userWidgetLayout";
 import parseUserWidgetLayout, {
   parseAdjustedWidgetLayout,
 } from "./parseWidgetConfigService";

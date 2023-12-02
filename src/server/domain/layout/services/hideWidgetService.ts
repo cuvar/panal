@@ -3,8 +3,8 @@ import AppError from "~/utils/error";
 import Log from "~/utils/log";
 import type { ScreenSize } from "~/utils/types/types";
 import type { HidingInfo, Positioning } from "~/utils/types/widget";
-import type { AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
-import { getLayoutRepository } from "../repository/layout/layoutRepository";
+import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
+import { getLayoutRepository } from "../repo/layoutRepository";
 import adjustLayoutValues from "./adjustLayoutValuesService";
 
 /**

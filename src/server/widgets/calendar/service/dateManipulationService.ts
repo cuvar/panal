@@ -1,5 +1,5 @@
 import type { CalendarComponent, FullCalendar } from "ical";
-import type { CalendarEntry } from "../widgets/calendar/types";
+import type { CalendarEntry } from "../types";
 import {
   filterInRangeRecurrences,
   getNonRecurringEvents,
@@ -21,7 +21,7 @@ export function filterFutureEvents(
     return a.start.getTime() - new Date(b.start).getTime();
   });
 
-  const todayPlusNDays = new Date();
+  const todayPlusNDays = getTodayMorning();
   todayPlusNDays.setDate(new Date().getDate() + days);
 
   // filter only next `DAYS` days
@@ -39,6 +39,20 @@ export function filterFutureEvents(
   return futureDates;
 }
 
+/**
+ * Returns a date object of today morning at 0:00.
+ * This is necessary to include events of today that are already running and passed.
+ * @returns {Date} Today morning
+ */
+function getTodayMorning() {
+  const now = new Date();
+  const todayMorning = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+  );
+  return todayMorning;
+}
 /**
  * Groups calendar data by day.
  * @param {CalendarEntry[]} data All events from the calendar
@@ -76,14 +90,14 @@ export function sortCalendarEntries(entries: CalendarEntry[]): CalendarEntry[] {
 /**
  * Transforms calendar data to internal format.
  * @param {CalendarComponent} event External calendar data
- * @param color Color for <CalendarItem/>
+ * @param {string?} color Color for <CalendarItem/>
  * @returns {CalendarEntry} Internal calendar data
  */
 export function toInternal(
   event: CalendarComponent,
   color?: string,
 ): CalendarEntry {
-  const startDate = new Date(event.start!); // todo: get rid of !
+  const startDate = new Date(event.start!);
   const endDate = new Date(event.end!);
   const duration = endDate.getTime() - startDate.getTime();
 
@@ -101,7 +115,7 @@ export function toInternal(
  * Returns all dates with or without a recurrence.
  * @param {FullCalendar} data Parsed data from ical.parseICS
  * @param {number} daysInAdvance Days in advance that should be included
- * @param color Color for <CalendarItem/>
+ * @param {string?} color Color for <CalendarItem/>
  * @returns {CalendarEntry[]} List of dates with or without a recurrence
  */
 export function getDatesIncludingRecurrences(
