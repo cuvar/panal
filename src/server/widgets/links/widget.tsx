@@ -1,25 +1,35 @@
-import { linkIcon } from "~/utils/icons";
+import { useDetectScreenSize } from "~/utils/hooks";
+import type { WidgetProps } from "~/utils/types/widget";
+import LinkItem from "./LinkItem";
+import type { LinkWidgetData } from "./types";
 
-type Props = {
-  text: string;
-  href: string;
-  tab?: "new" | "same";
+type Props = WidgetProps & {
+  data: LinkWidgetData;
 };
 
-export default function LinkWidget(props: Props) {
+export default function LinkCollectionWidget(props: Props) {
+  const currentScreenSize = useDetectScreenSize();
+
+  const widgetWidth = props.widget.layout[currentScreenSize].w + 1;
+  const widgetHeight = props.widget.layout[currentScreenSize].h;
+
   return (
-    <>
-      <a
-        href={props.href}
-        target={props.tab === "same" ? "_self" : "_blank"}
-        rel={props.tab === "same" ? "" : "noopener noreferrer"}
-        className="flex h-14 w-14 items-center justify-center rounded-md bg-teal-200 p-5 text-black hover:bg-teal-300"
+    <div className="flex h-full w-full flex-col space-y-2">
+      <p className="text-md text-center text-slate-300">{props.data.title}</p>
+      <div
+        className={`grid w-full grid-cols-${widgetWidth} md:grid-cols-${widgetWidth} grid-rows-${widgetHeight} place-items-center`}
       >
-        {linkIcon}
-      </a>
-      <span className="h-10 w-full whitespace-pre-wrap text-center text-sm">
-        {props.text}
-      </span>
-    </>
+        {props.data.links
+          .slice(0, widgetWidth * widgetHeight)
+          .map((link, index) => (
+            <div
+              key={index}
+              className="flex w-20 flex-col items-center justify-center overflow-hidden text-ellipsis whitespace-nowrap"
+            >
+              <LinkItem text={link.text} href={link.href} tab={link.tab} />
+            </div>
+          ))}
+      </div>
+    </div>
   );
 }

@@ -21,18 +21,20 @@ export function filterFutureEvents(
     return a.start.getTime() - new Date(b.start).getTime();
   });
 
-  const todayPlusNDays = getTodayMorning();
-  todayPlusNDays.setDate(new Date().getDate() + days);
+  const today = getTodayMorning();
+  const todayPlusNDays = new Date(today);
+  todayPlusNDays.setDate(todayPlusNDays.getDate() + days);
 
-  // filter only next `DAYS` days
+  const filterStart = today.getTime();
+  const filterEnd = todayPlusNDays.getTime();
 
+  console.log(today.toLocaleString());
+  console.log(todayPlusNDays.toLocaleString());
   const futureDates = calendarData.filter((item) => {
-    // const thisDate = new Date().toISOString().split("T")[0];
-    const now = new Date().getTime();
     return (
-      (item.start.getTime() >= now &&
-        item.start.getTime() < todayPlusNDays.getTime()) || // following events
-      (item.start.getTime() <= now && item.end.getTime() >= now) // currently running event
+      (item.start.getTime() >= filterStart &&
+        item.start.getTime() < filterEnd) || // following events
+      (item.start.getTime() <= filterStart && item.end.getTime() >= filterStart) // currently running event
     );
   });
 
