@@ -18,16 +18,22 @@ export default function CalendarItem(props: Props) {
       props.entry.color ?? defaultColor;
   }, [props.entry.color]);
 
+  const formatedStart = formatDate(props.entry.start);
+  const formatedEnd = formatDate(props.entry.end);
   return (
     <div
       ref={containerRef}
       className="my-2 flex flex-col rounded-md p-2 text-xs"
     >
-      <div>{props.entry.title}</div>
+      <div className="font-bold">{props.entry.title}</div>
       <div className="flex space-x-2">
-        <div>{formatDate(props.entry.start)}</div>
-        <span>-</span>
-        <div>{formatDate(props.entry.end)}</div>
+        {formatedStart == formatedEnd && isWholeDay(props.entry.duration) ? (
+          <div className="">full-day</div>
+        ) : (
+          <div className="">
+            {formatedStart}-{formatedEnd}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -44,4 +50,8 @@ function formatDate(date: Date): string {
 
 function dateIsValid(date: Date) {
   return !Number.isNaN(new Date(date).getTime());
+}
+
+function isWholeDay(duration: number) {
+  return duration == 24 * 60 * 60 * 1000;
 }
