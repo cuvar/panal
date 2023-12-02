@@ -28,8 +28,6 @@ export function filterFutureEvents(
   const filterStart = today.getTime();
   const filterEnd = todayPlusNDays.getTime();
 
-  console.log(today.toLocaleString());
-  console.log(todayPlusNDays.toLocaleString());
   const futureDates = calendarData.filter((item) => {
     return (
       (item.start.getTime() >= filterStart &&
