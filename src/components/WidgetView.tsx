@@ -20,6 +20,7 @@ import {
   showHiddenWidgetsAtom,
   widgetLayoutAtom,
 } from "~/utils/store";
+import ResizeHandle from "./ResizeHandle";
 import WidgetSidebar from "./WidgetSidebar";
 import WidgetWrapper from "./WidgetWrapper";
 
@@ -74,6 +75,7 @@ export default function WidgetView(props: Props) {
         autoSize={false}
         onLayoutChange={handleLayoutChange}
         isDroppable={true}
+        resizeHandle={<ResizeHandle />}
       >
         {props.layout.map(
           (widget) =>
