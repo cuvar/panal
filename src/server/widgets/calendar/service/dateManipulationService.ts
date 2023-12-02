@@ -21,7 +21,7 @@ export function filterFutureEvents(
     return a.start.getTime() - new Date(b.start).getTime();
   });
 
-  const todayPlusNDays = new Date();
+  const todayPlusNDays = getTodayMorning();
   todayPlusNDays.setDate(new Date().getDate() + days);
 
   // filter only next `DAYS` days
@@ -39,6 +39,20 @@ export function filterFutureEvents(
   return futureDates;
 }
 
+/**
+ * Returns a date object of today morning at 0:00.
+ * This is necessary to include events of today that are already running and passed.
+ * @returns {Date} Today morning
+ */
+function getTodayMorning() {
+  const now = new Date();
+  const todayMorning = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+  );
+  return todayMorning;
+}
 /**
  * Groups calendar data by day.
  * @param {CalendarEntry[]} data All events from the calendar
