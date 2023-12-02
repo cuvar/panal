@@ -1,4 +1,4 @@
-import { WidgetConfig } from "~/server/entities/widgetConfig";
+import { WidgetConfig } from "~/server/domain/config/widgetConfig";
 import { generateUniqueID } from "~/utils/helper";
 import { type ConfigRepository } from "./configRepository";
 

@@ -1,11 +1,11 @@
 import type GridLayout from "react-grid-layout";
-import { type AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
+import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { isScreenSize } from "~/utils/guards/other";
 import { isEmptyPositioning } from "~/utils/helper";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
-} from "../../server/service/computeSizeForWidgetService";
+} from "../../server/domain/layout/services/computeSizeForWidgetService";
 
 /**
  * Transforms AdjustedWidgetLayout[] into GridLayout.Layouts for react-grid-layout

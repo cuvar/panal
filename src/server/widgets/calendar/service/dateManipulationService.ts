@@ -1,5 +1,5 @@
 import type { CalendarComponent, FullCalendar } from "ical";
-import type { CalendarEntry } from "../widgets/calendar/types";
+import type { CalendarEntry } from "../types";
 import {
   filterInRangeRecurrences,
   getNonRecurringEvents,

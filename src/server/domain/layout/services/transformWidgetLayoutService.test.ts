@@ -2,8 +2,8 @@
  * @jest-environment node
  */
 
-import { AdjustedWidgetLayout } from "../entities/adjustedWidgetLayout";
-import { UserWidgetLayout } from "../entities/userWidgetLayout";
+import { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
+import { UserWidgetLayout } from "../userWidgetLayout";
 import transformWidgetLayout from "./transformWidgetLayoutService";
 
 describe("transformWidgetLayoutService", () => {

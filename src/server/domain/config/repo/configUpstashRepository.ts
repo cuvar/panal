@@ -1,6 +1,6 @@
 import { Redis } from "@upstash/redis";
 import { env } from "~/env.mjs";
-import { WidgetConfig } from "~/server/entities/widgetConfig";
+import { WidgetConfig } from "~/server/domain/config/widgetConfig";
 import { UPSTASH_PREFIX, UPSTASH_WIDGET_PREFIX } from "~/utils/const";
 import AppError from "~/utils/error";
 import { type ConfigRepository } from "./configRepository";

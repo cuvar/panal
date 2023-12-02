@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import mapWidgets from "~/client/services/mapWidgetsService";
 import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
-import { type AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
+import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import ErrorWidget from "~/server/widgets/ErrorWidget";
 import LoadingWidget from "~/server/widgets/LoadingWidget";
 import { api } from "~/utils/api";

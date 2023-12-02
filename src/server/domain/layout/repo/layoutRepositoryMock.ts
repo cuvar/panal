@@ -1,5 +1,5 @@
 import AppError from "~/utils/error";
-import { type AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
+import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import type { LayoutRepository } from "./layoutRepository";
 
 export class LayoutRepositoryMock implements LayoutRepository {

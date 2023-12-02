@@ -1,4 +1,4 @@
-import { type WidgetConfig } from "~/server/entities/widgetConfig";
+import { type WidgetConfig } from "~/server/domain/config/widgetConfig";
 import { isCalendarWidgetConfig } from "~/server/widgets/calendar/guards";
 import { isLinkWidgetConfig } from "~/server/widgets/links/guards";
 import { isSearchWidgetConfig } from "~/server/widgets/search/guards";

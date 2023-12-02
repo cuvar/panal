@@ -3,7 +3,7 @@
  */
 
 import type GridLayout from "react-grid-layout";
-import { AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
+import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import transformLayoutsForGrid from "./transformLayoutsService";
 
 describe("transformLayoutsService", () => {

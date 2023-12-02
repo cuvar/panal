@@ -1,7 +1,7 @@
 import { env } from "~/env.mjs";
 import AppError from "~/utils/error";
-import { FileReader } from "../../driver/Reader/FileReader";
-import type { AdjustedWidgetLayout } from "../../entities/adjustedWidgetLayout";
+import { FileReader } from "../../../driver/Reader/FileReader";
+import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import { LayoutLocalFileRepository } from "./layoutLocalFileRepository";
 import { LayoutRepositoryMock } from "./layoutRepositoryMock";
 import { LayoutUpstashRepository } from "./layoutUpstashRepository";

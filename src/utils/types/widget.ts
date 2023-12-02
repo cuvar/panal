@@ -1,4 +1,4 @@
-import { type AdjustedWidgetLayout } from "~/server/entities/adjustedWidgetLayout";
+import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import type { ScreenSize } from "./types";
 
 // general

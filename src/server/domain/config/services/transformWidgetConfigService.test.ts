@@ -3,7 +3,7 @@
  */
 
 import type { WidgetType } from "~/utils/types/widget";
-import { WidgetData } from "../entities/widgetData";
+import { WidgetData } from "../widgetData";
 import transformWidgetConfig from "./transformWidgetConfigService";
 
 describe("transformWidgetConfigService", () => {

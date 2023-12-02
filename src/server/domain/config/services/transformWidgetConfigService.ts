@@ -1,15 +1,15 @@
 import Log from "~/utils/log";
-import { ICSFetcher } from "../driver/Fetcher/ICSFetcher";
-import { type WidgetConfig } from "../entities/widgetConfig";
-import { WidgetData } from "../entities/widgetData";
-import computeDataCalendarWidget from "../widgets/calendar/data";
-import { isCalendarWidgetConfig } from "../widgets/calendar/guards";
-import computeDataLinkWidget from "../widgets/links/data";
-import { isLinkWidgetConfig } from "../widgets/links/guards";
-import computeDataSearchWidget from "../widgets/search/data";
-import { isSearchWidgetConfig } from "../widgets/search/guards";
-import computeDataTimeWidget from "../widgets/time/data";
-import { isTimeWidgetConfig } from "../widgets/time/guards";
+import { ICSFetcher } from "../../../driver/Fetcher/ICSFetcher";
+import computeDataCalendarWidget from "../../../widgets/calendar/data";
+import { isCalendarWidgetConfig } from "../../../widgets/calendar/guards";
+import computeDataLinkWidget from "../../../widgets/links/data";
+import { isLinkWidgetConfig } from "../../../widgets/links/guards";
+import computeDataSearchWidget from "../../../widgets/search/data";
+import { isSearchWidgetConfig } from "../../../widgets/search/guards";
+import computeDataTimeWidget from "../../../widgets/time/data";
+import { isTimeWidgetConfig } from "../../../widgets/time/guards";
+import { type WidgetConfig } from "../widgetConfig";
+import { WidgetData } from "../widgetData";
 
 /**
  * Transforms the given WidgetConfig[] into a WidgetData[]

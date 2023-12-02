@@ -5,7 +5,7 @@ import {
   getDatesIncludingRecurrences,
   groupCalendarWidgetByDay,
   sortCalendarEntries,
-} from "~/server/service/dateManipulationService";
+} from "~/server/widgets/calendar/service/dateManipulationService";
 import Log from "~/utils/log";
 import type {
   CalendarEntry,

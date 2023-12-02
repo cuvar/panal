@@ -1,8 +1,8 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { getConfigRepository } from "~/server/repository/config/configRepository";
-import transformWidgetConfig from "~/server/service/transformWidgetConfigService";
+import { getConfigRepository } from "~/server/domain/config/repo/configRepository";
+import transformWidgetConfig from "~/server/domain/config/services/transformWidgetConfigService";
 import AppError from "~/utils/error";
 import Log from "~/utils/log";
 

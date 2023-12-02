@@ -1,7 +1,7 @@
 import { env } from "~/env.mjs";
+import { parseWidgetConfigArray } from "~/server/domain/config/services/parseWidgetConfigService";
+import { type WidgetConfig } from "~/server/domain/config/widgetConfig";
 import { type Reader } from "~/server/driver/Reader/Reader";
-import { type WidgetConfig } from "~/server/entities/widgetConfig";
-import { parseWidgetConfigArray } from "~/server/service/parseWidgetConfigService";
 import { REPO_CONFIG_FILE } from "~/utils/const";
 import AppError from "~/utils/error";
 import { type ConfigRepository } from "./configRepository";
