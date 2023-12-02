@@ -1,17 +1,21 @@
-import type { MutableRefObject } from "react";
+import { forwardRef } from "react";
 
-type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  ref?: MutableRefObject<HTMLButtonElement | null>;
-};
+type Props = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export default function GhostButton(props: Props) {
+const GhostButton = forwardRef(function GhostButton(
+  props: Props,
+  ref: unknown,
+) {
   return (
     <button
       onClick={props.onClick}
-      ref={props.ref}
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      ref={ref}
       className={`rounded-md p-1 hover:bg-neutral-200 hover:bg-opacity-20 active:bg-opacity-40 ${props.className}`}
     >
       {props.children}
     </button>
   );
-}
+});
+export default GhostButton;
