@@ -22,7 +22,7 @@ export const env = createEnv({
     USERNAME: z.string().min(1),
     PASSWORD: z.string().min(1),
     EMAIL: z.string().email(),
-    WIDGET_STORE: z.enum(["mock", "upstash", "file"]),
+    WIDGET_STORE: z.enum(["mock", "upstash", "file", "demo"]),
     UPSTASH_ENDPOINT:
       process.env.WIDGET_STORE === "upstash"
         ? z.string().url()
