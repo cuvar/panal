@@ -2,6 +2,7 @@ import { env } from "~/env.mjs";
 import { type WidgetConfig } from "~/server/domain/config/widgetConfig";
 import { FileReader } from "~/server/driver/Reader/FileReader";
 import AppError from "~/utils/error";
+import { ConfigDemoRepository } from "./configDemoRepository";
 import { ConfigLocalFileRepository } from "./configLocalFileRepository";
 import { ConfigRepositoryMock } from "./configRepositoryMock";
 import { ConfigUpstashRepository } from "./configUpstashRepository";
@@ -25,6 +26,8 @@ export function getConfigRepository(): ConfigRepository {
     repo = new ConfigLocalFileRepository(new FileReader());
   } else if (env.WIDGET_STORE == "mock") {
     repo = new ConfigRepositoryMock();
+  } else if (env.WIDGET_STORE == "demo") {
+    repo = new ConfigDemoRepository();
   }
 
   if (!repo) {

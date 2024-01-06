@@ -2,6 +2,7 @@ import { env } from "~/env.mjs";
 import AppError from "~/utils/error";
 import { FileReader } from "../../../driver/Reader/FileReader";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
+import { LayoutDemoRepository } from "./layoutDemoRepository";
 import { LayoutLocalFileRepository } from "./layoutLocalFileRepository";
 import { LayoutRepositoryMock } from "./layoutRepositoryMock";
 import { LayoutUpstashRepository } from "./layoutUpstashRepository";
@@ -25,6 +26,8 @@ export function getLayoutRepository(): LayoutRepository {
     repo = new LayoutLocalFileRepository(new FileReader());
   } else if (env.WIDGET_STORE == "mock") {
     repo = new LayoutRepositoryMock();
+  } else if (env.WIDGET_STORE == "demo") {
+    repo = new LayoutDemoRepository(new FileReader());
   }
 
   if (!repo) {
