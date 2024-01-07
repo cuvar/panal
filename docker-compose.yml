@@ -1,0 +1,8 @@
+version: '3'
+services:
+  nextjs-docker:
+    image: docker.vaevo.de/vaevo/weinevo:latest
+    restart: always
+    ports:
+      - "127.0.0.1:3000:3000"
+

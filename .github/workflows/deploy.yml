@@ -1,0 +1,64 @@
+name: Deploy Docker Image
+
+on:
+  push:
+    branches:
+      - "main"
+
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: "${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - # Manual checkout is required as we manually create the .env file
+        # from repository secrets & variables later -> Git context not feasible
+        name: Checkout #
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ vars.DOCKER_REGISTRY_HOST }}
+          username: ${{ vars.DOCKER_REGISTRY_USERNAME }}
+          password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+      - name: Write environment variables to .env file
+        uses: iamsauravsharma/create-dotenv@v2.0.1
+        with:
+          input-prefix: "ENV_KEY_"
+        env:
+          ENV_KEY_BASE_URL: ${{ secrets.BASE_URL }}
+          ENV_KEY_NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+          ENV_KEY_NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          ENV_KEY_USERNAME: ${{ secrets.USERNAME }}
+          ENV_KEY_PASSWORD: ${{ secrets.PASSWORD }}
+          ENV_KEY_EMAIL: ${{ secrets.EMAIL }}
+          ENV_KEY_WIDGET_STORE: ${{ secrets.WIDGET_STORE }}
+          ENV_KEY_UPSTASH_ENDPOINT: ${{ secrets.UPSTASH_ENDPOINT }}
+          ENV_KEY_UPSTASH_TOKEN: ${{ secrets.UPSTASH_TOKEN }}
+          ENV_KEY_NEXT_PUBLIC_PANAL_DEBUG: ${{ secrets.NEXT_PUBLIC_PANAL_DEBUG }}
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: docker.vaevo.de/vaevo/weinevo:latest
+  deploy-via-ssh:
+    needs: docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: "just-a-placeholder-so-we-dont-get-errors"
+      - name: Adding Known Hosts
+        run: echo '${{ vars.SSH_KNOWN_HOSTS }}' >> ~/.ssh/known_hosts
+      - name: Build and restart
+        run: ssh ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} "cd weinevo; docker compose pull; docker compose up -d --force-recreate"
