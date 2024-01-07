@@ -1,4 +1,5 @@
 import ical from "ical";
+import { env } from "~/env.mjs";
 import type { Fetcher } from "~/server/driver/Fetcher/Fetcher";
 import {
   filterFutureEvents,
@@ -25,7 +26,10 @@ export default async function computeDataCalendarWidget(
 ): Promise<CalendarWidgetData> {
   try {
     const icsResults: Promise<CalendarEntry[]>[] = config.map(async (conf) => {
-      const res = await fetcher.fetch(conf.url);
+      const requestURL = conf.url.startsWith("/")
+        ? env.BASE_URL + conf.url
+        : conf.url;
+      const res = await fetcher.fetch(requestURL);
       const data = ical.parseICS(res);
       const calendarData = getDatesIncludingRecurrences(
         data,
