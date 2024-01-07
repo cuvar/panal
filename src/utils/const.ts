@@ -45,5 +45,7 @@ export const REPO_LAYOUT_FILE = "./store.layout.json";
 export const REPO_CONFIG_FILE = "./store.config.json";
 
 export const UPSTASH_PREFIX = "panal-";
+export const UPSTASH_DEMO_PREFIX = UPSTASH_PREFIX + "demo-";
 export const UPSTASH_WIDGET_PREFIX = "widget-";
 export const UPSTASH_LAYOUT_KEY = UPSTASH_PREFIX + "widgets-layout";
+export const UPSTASH_DEMO_LAYOUT_KEY = UPSTASH_PREFIX + "demo-widgets-layout";
