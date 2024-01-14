@@ -6,16 +6,6 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 
 # Set the platform to build image for
-ARG TARGETPLATFORM
-ENV TARGETPLATFORM=${TARGETPLATFORM:-linux/amd64}
-
-# Install additional tools needed if on arm64 / armv7
-RUN \
-  case "${TARGETPLATFORM}" in \
-  'linux/arm64') apk add --no-cache python3 make g++ ;; \
-  'linux/arm/v8') apk add --no-cache python3 make g++ ;; \
-  esac
-
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
