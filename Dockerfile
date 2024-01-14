@@ -13,7 +13,7 @@ ENV TARGETPLATFORM=${TARGETPLATFORM:-linux/amd64}
 RUN \
   case "${TARGETPLATFORM}" in \
   'linux/arm64') apk add --no-cache python3 make g++ ;; \
-  'linux/arm/v7') apk add --no-cache python3 make g++ ;; \
+  'linux/arm/v8') apk add --no-cache python3 make g++ ;; \
   esac
 
 WORKDIR /app
