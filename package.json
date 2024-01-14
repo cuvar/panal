@@ -6,6 +6,9 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "docker:build": "docker build . -t cuvar/panal",
+    "docker:publish": "npm run docker:build && docker push cuvar/panal",
+    "docker:run": "npm run docker:build && docker run -p 3000:3000 cuvar/panal",
     "lint": "next lint --quiet",
     "lint:full": "next lint",
     "start": "next start",
