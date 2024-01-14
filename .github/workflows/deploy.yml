@@ -37,10 +37,9 @@ jobs:
           ENV_KEY_USERNAME: ${{ secrets.USERNAME }}
           ENV_KEY_PASSWORD: ${{ secrets.PASSWORD }}
           ENV_KEY_EMAIL: ${{ secrets.EMAIL }}
-          ENV_KEY_WIDGET_STORE: ${{ secrets.WIDGET_STORE }}
+          ENV_KEY_WIDGET_STORE: ${{ vars.WIDGET_STORE }}
           ENV_KEY_UPSTASH_ENDPOINT: ${{ secrets.UPSTASH_ENDPOINT }}
           ENV_KEY_UPSTASH_TOKEN: ${{ secrets.UPSTASH_TOKEN }}
-          ENV_KEY_NEXT_PUBLIC_PANAL_DEBUG: ${{ secrets.NEXT_PUBLIC_PANAL_DEBUG }}
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
