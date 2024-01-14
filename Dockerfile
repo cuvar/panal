@@ -4,6 +4,18 @@ FROM node:18-alpine AS base
 FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
+
+# Set the platform to build image for
+ARG TARGETPLATFORM
+ENV TARGETPLATFORM=${TARGETPLATFORM:-linux/amd64}
+
+# Install additional tools needed if on arm64 / armv7
+RUN \
+  case "${TARGETPLATFORM}" in \
+  'linux/arm64') apk add --no-cache python3 make g++ ;; \
+  'linux/arm/v7') apk add --no-cache python3 make g++ ;; \
+  esac
+
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
