@@ -13,7 +13,7 @@ jobs:
       USERNAME: ${{ secrets.USERNAME }}
       PASSWORD: ${{ secrets.PASSWORD }}
       EMAIL: ${{ secrets.EMAIL }}
-      WIDGET_STORE: ${{ secrets.WIDGET_STORE }}
+      WIDGET_STORE: ${{ vars.WIDGET_STORE }}
       UPSTASH_ENDPOINT: ${{ secrets.UPSTASH_ENDPOINT }}
       UPSTASH_TOKEN: ${{ secrets.UPSTASH_TOKEN }}
 
