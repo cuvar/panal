@@ -25,7 +25,6 @@ jobs:
       - name: Set environment variables for next build
         run: |
           cat << EOF >> $GITHUB_ENV
-          BASE_URL=${{ vars.BASE_URL }}
           NEXTAUTH_URL=${{ vars.NEXTAUTH_URL }}
           NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}
           USERNAME=${{ vars.USERNAME }}
