@@ -24,16 +24,14 @@ jobs:
           password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
       - name: Set environment variables for next build
         run: |
-          cat << EOF >> $GITHUB_ENV
-          NEXTAUTH_URL=${{ vars.NEXTAUTH_URL }}
-          NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}
-          USERNAME=${{ vars.USERNAME }}
-          PASSWORD=${{ secrets.PASSWORD }}
-          EMAIL=${{ vars.EMAIL }}
-          WIDGET_STORE=${{ vars.WIDGET_STORE }}
-          UPSTASH_ENDPOINT=${{ vars.UPSTASH_ENDPOINT }}
-          UPSTASH_TOKEN=${{ secrets.UPSTASH_TOKEN }}
-          EOF
+          echo "NEXTAUTH_URL=${{ vars.NEXTAUTH_URL }}" >> "$GITHUB_ENV"
+          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" >> "$GITHUB_ENV"
+          echo "USERNAME=${{ vars.USERNAME }}" >> "$GITHUB_ENV"
+          echo "PASSWORD=${{ secrets.PASSWORD }}" >> "$GITHUB_ENV"
+          echo "EMAIL=${{ vars.EMAIL }}" >> "$GITHUB_ENV"
+          echo "WIDGET_STORE=${{ vars.WIDGET_STORE }}" >> "$GITHUB_ENV"
+          echo "UPSTASH_ENDPOINT=${{ vars.UPSTASH_ENDPOINT }}" >> "$GITHUB_ENV"
+          echo "UPSTASH_TOKEN=${{ secrets.UPSTASH_TOKEN }}" >> "$GITHUB_ENV"
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
