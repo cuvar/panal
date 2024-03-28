@@ -22,17 +22,6 @@ jobs:
         with:
           username: ${{ vars.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
-      - name: Write stub environment variables to .env file
-        uses: iamsauravsharma/create-dotenv@v2.0.1
-        with:
-          input-prefix: "ENV_KEY_"
-        env:
-          ENV_KEY_NEXTAUTH_URL: "http://localhost:3000"
-          ENV_KEY_NEXTAUTH_SECRET: "secret"
-          ENV_KEY_USERNAME: "username"
-          ENV_KEY_PASSWORD: "password"
-          ENV_KEY_EMAIL: "build@pipeline.de"
-          ENV_KEY_WIDGET_STORE: file
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
