@@ -17,7 +17,7 @@ export const env = createEnv({
       // Since NextAuth.js automatically uses the VERCEL_URL if present.
       (str) => process.env.VERCEL_URL ?? str,
       // VERCEL_URL doesn't include `https` so it cant be validated as a URL
-      process.env.VERCEL ? z.string().min(1) : z.string().url()
+      process.env.VERCEL ? z.string().min(1) : z.string().url(),
     ),
     USERNAME: z.string().min(1),
     PASSWORD: z.string().min(1),
@@ -26,11 +26,11 @@ export const env = createEnv({
     UPSTASH_ENDPOINT:
       process.env.WIDGET_STORE === "upstash"
         ? z.string().url()
-        : z.string().url().optional(),
+        : z.string().optional(),
     UPSTASH_TOKEN:
       process.env.WIDGET_STORE === "upstash"
         ? z.string().min(1)
-        : z.string().min(1).optional(),
+        : z.string().optional(),
   },
 
   /**
