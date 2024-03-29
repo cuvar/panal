@@ -1,0 +1,10 @@
+version: "3"
+services:
+  panal:
+    container_name: panal
+    image: cuvar/panal
+    restart: always
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      - NODE_ENV=production

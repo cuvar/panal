@@ -31,8 +31,8 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
-# do not commit any .env files to git, except for the .env.example file. https://create.t3.gg/en/usage/env-variables#using-environment-variables
-.env
+# do not commit any .env*.local files to git, except for the .env.example file. https://create.t3.gg/en/usage/env-variables#using-environment-variables
+# you should include .env, .env.development, .env.production as they provide good defaults: https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#default-environment-variables
 .env*.local
 
 # vercel
