@@ -12,6 +12,9 @@ WORKDIR /app
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  # --maxsockets 1 is supposed to prevent "npm ERR! network Client network
+  # socket disconnected before secure TLS connection was established", see
+  # https://github.com/actions/runner-images/issues/3737
   elif [ -f package-lock.json ]; then npm ci --maxsockets 1; \
   elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
