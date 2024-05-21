@@ -2,12 +2,13 @@ import Head from "next/head";
 import Footer from "~/components/Footer";
 import Link from "~/components/Link";
 import Navbar from "~/components/Navbar";
+import { APP_NAME } from "~/utils/const";
 
 export default function Login() {
   return (
     <>
       <Head>
-        <title>panal</title>
+        <title>{APP_NAME}</title>
         <meta
           name="description"
           content="a simple dashboard for more productivity"

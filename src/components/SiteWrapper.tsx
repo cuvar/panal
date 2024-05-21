@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Navbar from "~/components/Navbar";
 import Login from "~/sites/Landing";
+import { APP_NAME } from "~/utils/const";
 import Toast from "./Toast";
 
 type Props = {
@@ -17,7 +18,7 @@ export default function SiteWrapper(props: Props) {
   return (
     <>
       <Head>
-        <title>panal</title>
+        <title>{APP_NAME}</title>
       </Head>
       <div className="flex min-h-screen flex-col justify-between text-gray-100">
         <Navbar sesh={data} />
