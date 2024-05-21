@@ -75,7 +75,7 @@ export default function WidgetWrapper(props: Props) {
       {props.editMode && (
         <div className="absolute z-20 flex h-full w-full items-start justify-end space-x-6 rounded-md bg-foreground bg-opacity-30 px-2 pt-2">
           <button
-            className="text-black"
+            className="text-inverted"
             onTouchStart={handleHideWidget}
             onClick={handleHideWidget}
           >
@@ -84,7 +84,7 @@ export default function WidgetWrapper(props: Props) {
           <Link
             href={`/w/${props.widget.id}`}
             onTouchStart={() => handleNavigate(`/w/${props.widget.id}`)}
-            className="text-black"
+            className="text-inverted"
           >
             {cogIcon}
           </Link>

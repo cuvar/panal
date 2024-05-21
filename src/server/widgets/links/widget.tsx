@@ -15,7 +15,7 @@ export default function LinkCollectionWidget(props: Props) {
 
   return (
     <div className="flex h-full w-full flex-col space-y-2">
-      <p className="text-md text-center text-slate-300">{props.data.title}</p>
+      <p className="text-md text-center text-foreground">{props.data.title}</p>
       <div
         className={`grid w-full grid-cols-${widgetWidth} md:grid-cols-${widgetWidth} grid-rows-${widgetHeight} place-items-center`}
       >

@@ -13,7 +13,7 @@ export default function Link(props: Props) {
         href={props.href}
         target="_blank"
         rel="noopener noreferrer"
-        className={`hover:text-gray-400 hover:underline active:text-gray-500 ${props.className}`}
+        className={`hover:underline hover:opacity-80 ${props.className}`}
       >
         {props.children}
       </a>

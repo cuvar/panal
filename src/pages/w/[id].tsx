@@ -191,7 +191,7 @@ const Home: NextPage = () => {
                                     <p>{key}</p>
                                     <input
                                       type="number"
-                                      className="w-10 rounded-sm text-right text-black"
+                                      className="text-inverted w-10 rounded-sm text-right"
                                       value={value}
                                       onChange={(e) =>
                                         handleLayoutInputChange(

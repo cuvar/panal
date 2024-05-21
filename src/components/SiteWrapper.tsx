@@ -20,7 +20,7 @@ export default function SiteWrapper(props: Props) {
       <Head>
         <title>{APP_NAME}</title>
       </Head>
-      <div className="flex min-h-screen flex-col justify-between text-gray-100">
+      <div className="flex min-h-screen flex-col justify-between text-foreground">
         <Navbar sesh={data} />
         <main className="flex h-full w-full flex-col items-center bg-background px-5 py-5 md:py-10">
           {props.children}

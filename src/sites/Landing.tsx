@@ -14,7 +14,7 @@ export default function Login() {
           content="a simple dashboard for more productivity"
         />
       </Head>
-      <div className="flex h-full min-h-screen flex-col justify-between text-gray-100 ">
+      <div className="flex h-full min-h-screen flex-col justify-between text-foreground ">
         <Navbar sesh={null} />
         <main className="flex h-full flex-col items-center bg-background px-5">
           <div className="flex h-screen w-screen flex-col items-center justify-center sm:flex-row">
