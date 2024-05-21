@@ -133,26 +133,26 @@ export default function Menu() {
         }`}
       >
         <button
-          className="flex justify-start space-x-2 rounded-md px-4 py-2 hover:bg-slate-700 active:bg-slate-800"
+          className="flex justify-start space-x-2 rounded-md px-4 py-2 hover:bg-background active:bg-slate-800"
           onClick={() => handleLogout()}
           onFocus={() => setShowMenu(true)}
         >
           <span>{signOutIcon}</span>
           <span>Sign Out</span>
         </button>
-        <hr className="border-slate-700" />
+        <hr className="border-background" />
         <Link
-          className="flex justify-start space-x-2 rounded-md px-4 py-2 hover:bg-slate-700 active:bg-slate-800"
+          className="flex justify-start space-x-2 rounded-md px-4 py-2 hover:bg-background active:bg-slate-800"
           href="/settings"
           onFocus={() => setShowMenu(true)}
         >
           <span>{cogIcon}</span>
           <span>Settings</span>
         </Link>
-        <hr className="border-slate-700" />
+        <hr className="border-background" />
         {editMode ? (
           <button
-            className="flex justify-start space-x-2 rounded-md px-4 py-2 hover:bg-slate-700 active:bg-slate-800"
+            className="flex justify-start space-x-2 rounded-md px-4 py-2 hover:bg-background active:bg-slate-800"
             onClick={() => handleSaveLayout()}
             onFocus={() => setShowMenu(true)}
           >

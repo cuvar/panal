@@ -78,7 +78,7 @@ const Home: NextPage = () => {
   return (
     <SiteWrapper>
       <div className="flex h-screen w-full sm:space-x-8">
-        <ul className="hidden border-r-2 border-r-panal-100 py-2 pr-8 sm:block">
+        <ul className="hidden border-r-2 border-r-foreground py-2 pr-8 sm:block">
           <li>Sidebar</li>
         </ul>
         <div className="flex w-full flex-col space-y-4">
