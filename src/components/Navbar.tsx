@@ -14,7 +14,7 @@ export default function Navbar(props: Props) {
   }
 
   return (
-    <nav className="flex h-20 w-full items-center justify-between bg-panal-700 px-5 py-5">
+    <nav className="flex h-20 w-full items-center justify-between px-5 py-5">
       <Link href="/">panal</Link>
       {!props.sesh && (
         <GhostButton className="px-4 py-2" onClick={login}>

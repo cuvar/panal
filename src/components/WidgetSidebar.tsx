@@ -72,7 +72,7 @@ export default function WidgetSidebar() {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 top-0 z-20 w-60 bg-panal-700 px-4 py-2">
+    <div className="fixed bottom-0 left-0 top-0 z-20 w-60 bg-background px-4 py-2">
       <div className="mt-2 flex w-full justify-end">
         <GhostButton onClick={handleCloseSidebar}>{crossIcon}</GhostButton>
       </div>
@@ -83,7 +83,7 @@ export default function WidgetSidebar() {
         getHiddenLayoutsQuery.data.map((widget) => (
           <div className="contents" key={widget.id}>
             <div
-              className="droppable-element my-2 rounded-md px-4 py-4 hover:bg-panal-500"
+              className="droppable-element my-2 rounded-md px-4 py-4 hover:bg-background"
               onClick={() => handleAddToLayout(widget)}
             >
               {getNameForWidgetType(widget.type)}
