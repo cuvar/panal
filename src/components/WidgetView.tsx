@@ -62,7 +62,7 @@ export default function WidgetView(props: Props) {
     <div className="z-10 h-screen w-full max-w-[1280px]">
       {showHiddenWidgets && <WidgetSidebar />}
       {showHiddenWidgets && (
-        <div className="fixed left-0 top-0 z-10 h-screen w-screen bg-black opacity-60"></div>
+        <div className="fixed left-0 top-0 z-10 h-screen w-screen bg-background opacity-60"></div>
       )}
       <ResponsiveGridLayout
         className="layout"
