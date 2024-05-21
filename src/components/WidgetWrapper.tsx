@@ -73,7 +73,7 @@ export default function WidgetWrapper(props: Props) {
   return (
     <div className={`flex h-full w-full items-center justify-center`}>
       {props.editMode && (
-        <div className="absolute z-20 flex h-full w-full items-start justify-end space-x-6 rounded-md bg-white bg-opacity-30 px-2 pt-2">
+        <div className="absolute z-20 flex h-full w-full items-start justify-end space-x-6 rounded-md bg-foreground bg-opacity-30 px-2 pt-2">
           <button
             className="text-black"
             onTouchStart={handleHideWidget}

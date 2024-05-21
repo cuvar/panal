@@ -106,7 +106,7 @@ export default function SearchWidget(props: Props) {
   return (
     <div className="flex w-full flex-col">
       <div
-        className="mb-2 flex items-center justify-between rounded-full bg-white"
+        className="mb-2 flex items-center justify-between rounded-full bg-foreground"
         id="searchbar-container"
       >
         <a
@@ -141,7 +141,7 @@ export default function SearchWidget(props: Props) {
             singleEngine.key === currentEngine ? (
               <button
                 key={index}
-                className="rounded-md bg-panal-200 p-1 px-2 text-xs text-white hover:bg-panal-300 active:bg-panal-400"
+                className="bg-panal-200 hover:bg-panal-300 active:bg-panal-400 rounded-md p-1 px-2 text-xs text-foreground"
                 onClick={() => searchWithEngine(singleEngine.key)}
               >
                 {singleEngine.displayName}

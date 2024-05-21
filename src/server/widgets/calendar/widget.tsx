@@ -9,7 +9,7 @@ type Props = WidgetProps & {
 export default function CalendarWidget(props: Props) {
   return (
     <div className="h-full w-full">
-      <div className="h-full w-full overflow-y-scroll rounded-md bg-white p-2">
+      <div className="h-full w-full overflow-y-scroll rounded-md bg-foreground p-2">
         {props.data.entries.map((entry, index) => (
           <div key={index} className="mb-4">
             <p className="text-sm leading-none text-black">

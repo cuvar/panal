@@ -10,8 +10,8 @@ import type { ToastColor, ToastType } from "~/utils/types/types";
 
 export default function Toast() {
   const toastMap: Record<ToastType, ToastColor> = {
-    error: { bg: "bg-red-600", text: "text-white" },
-    success: { bg: "bg-green-700", text: "text-white" },
+    error: { bg: "bg-red-600", text: "text-foreground" },
+    success: { bg: "bg-green-700", text: "text-foreground" },
     info: { bg: "bg-gray-200", text: "text-black" },
     warning: { bg: "bg-yellow-500", text: "text-black" },
   };

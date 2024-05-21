@@ -14,7 +14,7 @@ export default function Textarea(props: Props) {
       name=""
       id=""
       rows={isMobile ? 20 : props.maxCols ?? 30}
-      className="w-full max-w-3xl overflow-x-scroll whitespace-nowrap rounded-lg bg-slate-900 px-2 py-2 font-mono text-white"
+      className="w-full max-w-3xl overflow-x-scroll whitespace-nowrap rounded-lg bg-slate-900 px-2 py-2 font-mono text-foreground"
       value={props.value}
       onChange={props.changeHandler}
     ></textarea>
