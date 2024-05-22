@@ -2,8 +2,9 @@ import type { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { APP_NAME } from "~/utils/const";
-import GhostButton from "./Button/GhostButton";
 import Menu from "./Menu";
+import WidgetSidebar from "./WidgetSidebar";
+import { Button } from "./ui/button";
 
 type Props = {
   sesh: Session | null;
@@ -17,12 +18,16 @@ export default function Navbar(props: Props) {
   return (
     <nav className="flex h-20 w-full items-center justify-between px-5 py-5">
       <Link href="/">{APP_NAME}</Link>
-      {!props.sesh && (
-        <GhostButton className="px-4 py-2" onClick={login}>
+      {props.sesh ? (
+        <div className="flex items-center space-x-2">
+          <WidgetSidebar />
+          <Menu />
+        </div>
+      ) : (
+        <Button variant="ghost" onClick={login}>
           Sign in
-        </GhostButton>
+        </Button>
       )}
-      {props.sesh ? <Menu /> : null}
     </nav>
   );
 }

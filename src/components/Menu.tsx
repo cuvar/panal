@@ -22,11 +22,11 @@ import Log from "~/utils/log";
 import {
   editModeAtom,
   editedWidgetLayoutAtom,
-  showHiddenWidgetsAtom,
   toastTextAtom,
   toastTypeAtom,
   widgetLayoutAtom,
 } from "~/utils/store";
+import { Button } from "./ui/button";
 
 export default function NewMenu() {
   const [editMode, setEditMode] = useAtom(editModeAtom);
@@ -34,9 +34,6 @@ export default function NewMenu() {
   const [editedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
   const [, setToastText] = useAtom(toastTextAtom);
   const [, setToastType] = useAtom(toastTypeAtom);
-  const [showHiddenWidgets, setShowHiddenWidgets] = useAtom(
-    showHiddenWidgetsAtom,
-  );
 
   const router = useRouter();
 
@@ -79,17 +76,15 @@ export default function NewMenu() {
     setWidgetLayoutMutation.mutate({ layout: editedWidgetLayout });
   }
 
-  function handleShowHidden() {
-    setShowHiddenWidgets(!showHiddenWidgets);
-  }
-
   function handleNavigate(path: string) {
     void router.push(path);
   }
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>{ellipsisIcon}</DropdownMenuTrigger>
+      <DropdownMenuTrigger>
+        <Button variant={"ghost"}>{ellipsisIcon}</Button>
+      </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem onClick={() => handleEditLayout()}>
           {editMode ? (
