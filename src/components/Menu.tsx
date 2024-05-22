@@ -26,7 +26,6 @@ import {
   toastTypeAtom,
   widgetLayoutAtom,
 } from "~/utils/store";
-import { Button } from "./ui/button";
 
 export default function NewMenu() {
   const [editMode, setEditMode] = useAtom(editModeAtom);
@@ -82,9 +81,7 @@ export default function NewMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button variant={"ghost"}>{ellipsisIcon}</Button>
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger>{ellipsisIcon}</DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem onClick={() => handleEditLayout()}>
           {editMode ? (

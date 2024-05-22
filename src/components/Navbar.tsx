@@ -19,7 +19,7 @@ export default function Navbar(props: Props) {
     <nav className="flex h-20 w-full items-center justify-between px-5 py-5">
       <Link href="/">{APP_NAME}</Link>
       {props.sesh ? (
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-4">
           <WidgetSidebar />
           <Menu />
         </div>

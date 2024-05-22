@@ -15,6 +15,7 @@ import {
   toastTextAtom,
   toastTypeAtom,
 } from "~/utils/store";
+import { Button } from "./ui/button";
 
 type Props = {
   editMode: boolean;
@@ -74,13 +75,15 @@ export default function WidgetWrapper(props: Props) {
     <div className={`flex h-full w-full items-center justify-center`}>
       {props.editMode && (
         <div className="absolute z-20 flex h-full w-full items-start justify-end space-x-6 rounded-md bg-foreground bg-opacity-30 px-2 pt-2">
-          <button
+          <Button
             className="text-inverted"
             onTouchStart={handleHideWidget}
             onClick={handleHideWidget}
+            variant="ghost"
+            size={"sm"}
           >
             {eyeOffIcon}
-          </button>
+          </Button>
           <Link
             href={`/w/${props.widget.id}`}
             onTouchStart={() => handleNavigate(`/w/${props.widget.id}`)}
