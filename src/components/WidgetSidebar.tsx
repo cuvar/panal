@@ -79,10 +79,12 @@ export default function WidgetSidebar() {
           <SheetTitle>Hidden widgets</SheetTitle>
           <SheetDescription></SheetDescription>
         </SheetHeader>
-        <div>
+        <div className="h-full">
           {!getHiddenLayoutsQuery.data ||
           getHiddenLayoutsQuery.data.length === 0 ? (
-            <div>No hidden widgets</div>
+            <div className="flex h-full items-center justify-center">
+              No hidden widgets
+            </div>
           ) : (
             getHiddenLayoutsQuery.data.map((widget) => (
               <div className="contents" key={widget.id}>
