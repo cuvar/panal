@@ -8,6 +8,16 @@ const config = {
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
+  safelist: [
+    {
+      pattern: /(row|col|grid)-(span|start|end|rows|cols)-[1-2]?[0-9]/,
+      variants: ["md"],
+    },
+    {
+      pattern: /hidden|block/,
+      variants: ["xl", "lg", "md", "sm", "xs"],
+    },
+  ],
   prefix: "",
   theme: {
     container: {
