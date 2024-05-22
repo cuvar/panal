@@ -1,9 +1,9 @@
 import type { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { APP_NAME } from "~/utils/const";
 import GhostButton from "./Button/GhostButton";
 import Menu from "./Menu";
-import { APP_NAME } from "~/utils/const";
 
 type Props = {
   sesh: Session | null;
