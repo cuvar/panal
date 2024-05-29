@@ -3,18 +3,18 @@ import { z } from "zod";
 import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
 import { isEmptyPositioning } from "~/lib/service/positioning.service";
+import {
+  screenSizePositioningSchema,
+  screenSizeSchema,
+  widgetLayoutSchema,
+  widgetTypeSchema,
+} from "~/lib/types/schema";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { getLayoutRepository } from "~/server/domain/layout/repo/layoutRepository";
 import hideWidget from "~/server/domain/layout/services/hideWidgetService";
 import transformWidgetLayout from "~/server/domain/layout/services/transformWidgetLayoutService";
 import updateWidgetLayoutService from "~/server/domain/layout/services/updateWidgetLayoutService";
-import {
-  screenSizePositioningSchema,
-  screenSizeSchema,
-  widgetLayoutSchema,
-  widgetTypeSchema,
-} from "~/utils/schema";
 
 export const layoutRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {

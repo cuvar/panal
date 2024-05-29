@@ -1,6 +1,6 @@
 import { z } from "zod";
+import { widgetTypeSchema } from "~/lib/types/schema";
 import type { WidgetType } from "~/lib/types/widget";
-import { widgetTypeSchema } from "~/utils/schema";
 import { calendarWidgetDataSchema } from "../../widgets/calendar/schema";
 import type { CalendarWidgetData } from "../../widgets/calendar/types";
 import { linkWidgetDataSchema } from "../../widgets/links/schema";

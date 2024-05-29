@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { isObject, isString } from "~/lib/guards/base";
 import { isFittingDataPaylod, isWidgetType } from "~/lib/guards/widgets";
+import { widgetTypeSchema } from "~/lib/types/schema";
 import type { WidgetType } from "~/lib/types/widget";
-import { widgetTypeSchema } from "~/utils/schema";
 import { calendarWidgetConfigSchema } from "../../widgets/calendar/schema";
 import type { CalendarWidgetConfig } from "../../widgets/calendar/types";
 import { linkWidgetConfigSchema } from "../../widgets/links/schema";
