@@ -5,3 +5,8 @@ yarn-error.log
 dist
 examples
 packages
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
