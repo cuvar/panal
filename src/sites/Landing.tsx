@@ -1,3 +1,4 @@
+import PlausibleProvider from "next-plausible";
 import Head from "next/head";
 import Footer from "~/components/Footer";
 import Link from "~/components/Link";
@@ -6,7 +7,7 @@ import { APP_NAME } from "~/utils/const";
 
 export default function Login() {
   return (
-    <>
+    <PlausibleProvider domain="panal.dyme.one">
       <Head>
         <title>{APP_NAME}</title>
         <meta
@@ -44,6 +45,6 @@ export default function Login() {
         </main>
         <Footer />
       </div>
-    </>
+    </PlausibleProvider>
   );
 }
