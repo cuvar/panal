@@ -6,10 +6,10 @@ import Separator from "~/components/Separator";
 import SiteWrapper from "~/components/SiteWrapper";
 import Textarea from "~/components/Textarea";
 import { Button } from "~/components/ui/button";
+import { api } from "~/lib/api/api";
 import Log from "~/lib/log/log";
 import { toastTextAtom, toastTypeAtom } from "~/lib/ui/store";
 import ErrorPage from "~/sites/Error";
-import { api } from "~/utils/api";
 import { getNameForWidgetType, toProperJsonStringFormat } from "~/utils/helper";
 import { type ScreenSize } from "~/utils/types/types";
 import {

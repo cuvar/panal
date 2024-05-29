@@ -3,18 +3,18 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import mapWidgets from "~/client/services/mapWidgetsService";
 import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
+import { api } from "~/lib/api/api";
+import Log from "~/lib/log/log";
 import { useDetectScreenSize } from "~/lib/ui/hooks";
 import { cogIcon, eyeOffIcon } from "~/lib/ui/icons";
-import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
-import ErrorWidget from "~/server/widgets/ErrorWidget";
-import LoadingWidget from "~/server/widgets/LoadingWidget";
-import { api } from "~/utils/api";
-import Log from "~/lib/log/log";
 import {
   editedWidgetLayoutAtom,
   toastTextAtom,
   toastTypeAtom,
 } from "~/lib/ui/store";
+import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import ErrorWidget from "~/server/widgets/ErrorWidget";
+import LoadingWidget from "~/server/widgets/LoadingWidget";
 
 type Props = {
   editMode: boolean;

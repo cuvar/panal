@@ -1,9 +1,7 @@
 import { useAtom } from "jotai";
 import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
 import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
-import type { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
-import { api } from "~/utils/api";
-import { getNameForWidgetType } from "~/utils/helper";
+import { api } from "~/lib/api/api";
 import Log from "~/lib/log/log";
 import {
   editedWidgetLayoutAtom,
@@ -11,6 +9,8 @@ import {
   toastTypeAtom,
   widgetLayoutAtom,
 } from "~/lib/ui/store";
+import type { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { getNameForWidgetType } from "~/utils/helper";
 
 import {
   Sheet,

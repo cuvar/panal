@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { api } from "~/lib/api/api";
 import Log from "~/lib/log/log";
 import {
   checkIcon,
@@ -25,7 +26,6 @@ import {
   toastTypeAtom,
   widgetLayoutAtom,
 } from "~/lib/ui/store";
-import { api } from "~/utils/api";
 
 export default function NewMenu() {
   const [editMode, setEditMode] = useAtom(editModeAtom);

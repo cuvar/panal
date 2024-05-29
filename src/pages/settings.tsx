@@ -4,12 +4,12 @@ import { useState } from "react";
 import SiteWrapper from "~/components/SiteWrapper";
 import Textarea from "~/components/Textarea";
 import { Button } from "~/components/ui/button";
-import ErrorPage from "~/sites/Error";
-import LoadingSpinner from "~/sites/Loading";
-import { api } from "~/utils/api";
-import { toProperJsonStringFormat } from "~/utils/helper";
+import { api } from "~/lib/api/api";
 import Log from "~/lib/log/log";
 import { toastTextAtom, toastTypeAtom } from "~/lib/ui/store";
+import ErrorPage from "~/sites/Error";
+import LoadingSpinner from "~/sites/Loading";
+import { toProperJsonStringFormat } from "~/utils/helper";
 
 const Home: NextPage = () => {
   const [, setToastText] = useAtom(toastTextAtom);

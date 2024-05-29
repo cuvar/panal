@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import SiteWrapper from "~/components/SiteWrapper";
 import WidgetView from "~/components/WidgetView";
+import { api } from "~/lib/api/api";
+import Log from "~/lib/log/log";
 import ErrorPage from "~/sites/Error";
 import LoadingSpinner from "~/sites/Loading";
-import { api } from "~/utils/api";
-import Log from "~/lib/log/log";
 
 const Home: NextPage = () => {
   const widgetLayoutQuery = api.layout.getAll.useQuery(undefined, {
