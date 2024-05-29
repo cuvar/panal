@@ -1,15 +1,15 @@
 import { type ErrorCodes } from "./codes";
 
 export default class AppError extends Error {
-  code: ErrorCodes;
+  code: ErrorCodes[];
   constructor(code: ErrorCodes, error?: unknown) {
     super(code);
 
     if (error instanceof AppError) {
-      this.message = code + ",\n" + error.code;
+      this.code = error.code;
     } else {
-      this.message = code;
+      this.code = [];
     }
-    this.code = code;
+    this.code.push(code);
   }
 }

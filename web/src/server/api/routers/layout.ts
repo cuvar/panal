@@ -25,6 +25,14 @@ export const layoutRouter = createTRPCRouter({
       return layoutData;
     } catch (error) {
       Log(error, "error");
+      if (
+        error instanceof AppError &&
+        error.code[0] &&
+        error.code[0] == codes.WIDGET_NONE_FOUND
+      ) {
+        return [];
+      }
+
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
         message: "Unable to get widget layout",
