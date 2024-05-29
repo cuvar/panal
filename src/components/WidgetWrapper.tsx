@@ -15,7 +15,6 @@ import {
   toastTextAtom,
   toastTypeAtom,
 } from "~/utils/store";
-import { Button } from "./ui/button";
 
 type Props = {
   editMode: boolean;
@@ -60,7 +59,7 @@ export default function WidgetWrapper(props: Props) {
   });
 
   function handleHideWidget() {
-    hideWidgetMutation.mutate({
+    void hideWidgetMutation.mutate({
       hide: true,
       screenSize: currentScreenSize,
       widget: props.widget,
@@ -68,29 +67,31 @@ export default function WidgetWrapper(props: Props) {
   }
 
   function handleNavigate(path: string) {
-    void (async () => await router.push(path))();
+    console.log("navigating to", path);
+    void router.push(path);
   }
 
   return (
     <div className={`flex h-full w-full items-center justify-center`}>
       {props.editMode && (
-        <div className="absolute z-20 flex h-full w-full items-start justify-end space-x-6 rounded-md bg-foreground bg-opacity-30 px-2 pt-2">
-          <Button
-            className="text-inverted"
-            onTouchStart={handleHideWidget}
-            onClick={handleHideWidget}
-            variant="ghost"
-            size={"sm"}
-          >
-            {eyeOffIcon}
-          </Button>
-          <Link
-            href={`/w/${props.widget.id}`}
-            onTouchStart={() => handleNavigate(`/w/${props.widget.id}`)}
-            className="text-inverted"
-          >
-            {cogIcon}
-          </Link>
+        <div className="absolute z-20 flex h-full w-full justify-end rounded-md bg-white bg-opacity-30">
+          <div className="bg-primary-500 z-50 mr-2 mt-2 flex h-fit items-start justify-end space-x-2">
+            <button
+              className="rounded-md bg-primary p-1 text-inverted"
+              onTouchStart={handleHideWidget}
+              onClick={handleHideWidget}
+            >
+              {eyeOffIcon}
+            </button>
+            <Link
+              href={`/w/${props.widget.id}`}
+              onTouchStart={() => handleNavigate(`/w/${props.widget.id}`)}
+              onClick={() => handleNavigate(`/w/${props.widget.id}`)}
+              className="rounded-md bg-primary p-1 text-inverted"
+            >
+              {cogIcon}
+            </Link>
+          </div>
         </div>
       )}
       {getConfigQuery.isLoading && <LoadingWidget />}

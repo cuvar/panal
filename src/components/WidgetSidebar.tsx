@@ -33,9 +33,16 @@ export default function WidgetSidebar() {
   const getAllLayoutsQuery = api.layout.getAll.useQuery(undefined, {
     enabled: false,
   });
-  const getHiddenLayoutsQuery = api.layout.getAllHidden.useQuery({
-    screenSize: currentScreenSize,
-  });
+  const getHiddenLayoutsQuery = api.layout.getAllHidden.useQuery(
+    {
+      screenSize: currentScreenSize,
+    },
+    {
+      onSuccess: (data) => {
+        Log(data);
+      },
+    },
+  );
 
   const hideWidgetMutation = api.layout.setHide.useMutation({
     onSuccess: async () => {
