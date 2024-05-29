@@ -1,9 +1,15 @@
+import { type ErrorCodes } from "./codes";
+
 export default class AppError extends Error {
-  isFatal: boolean;
-  constructor(message: string, error?: unknown, isFatal = false) {
-    super(message);
-    this.message =
-      error instanceof Error ? message + ",\n" + error.message : message;
-    this.isFatal = isFatal;
+  code: ErrorCodes;
+  constructor(code: ErrorCodes, error?: unknown) {
+    super(code);
+
+    if (error instanceof AppError) {
+      this.message = code + ",\n" + error.code;
+    } else {
+      this.message = code;
+    }
+    this.code = code;
   }
 }

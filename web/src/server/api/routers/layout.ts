@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
 import { isEmptyPositioning } from "~/lib/service/positioning.service";
@@ -36,9 +37,7 @@ export const layoutRouter = createTRPCRouter({
       try {
         const data = await getLayoutRepository().get(input.id);
         if (!data) {
-          throw new AppError(
-            `No adjusted widget config for widget with ID ${input.id}`,
-          );
+          throw new AppError(codes.WIDGET_CONFIG_ADJUSTED_MISSING);
         }
         return data;
       } catch (error) {

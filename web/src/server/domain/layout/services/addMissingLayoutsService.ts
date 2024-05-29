@@ -1,4 +1,5 @@
 import { BREAKPOINTS_ORDER } from "~/lib/basic/const";
+import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import {
   isPartialScreenSizePositioning,
@@ -30,7 +31,7 @@ export default function addMissingLayouts(
         );
         const replacementLayout = layout[replacementScreen];
         if (replacementLayout == undefined) {
-          throw new AppError("No replacement layout found");
+          throw new AppError(codes.SERVICE_REPLACEMENT_SCREEN_FAILED);
         }
 
         return {
@@ -47,7 +48,7 @@ export default function addMissingLayouts(
 
       return newLayout as ScreenSizePositioning;
     } catch (error) {
-      throw new AppError("Cannot add missing layouts", error, true);
+      throw new AppError(codes.SERVICE_ADD_MISSING_LAYOUT_FAILED, error);
     }
   }
 
@@ -93,5 +94,5 @@ export function getReplacementScreenSize(
     }
   }
 
-  throw new AppError("No replacement screen size found");
+  throw new AppError(codes.SERVICE_REPLACEMENT_SCREEN_FAILED);
 }

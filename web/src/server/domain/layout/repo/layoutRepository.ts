@@ -1,4 +1,5 @@
 import { env } from "~/env.mjs";
+import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import { FileReader } from "../../../driver/Reader/FileReader";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
@@ -28,7 +29,7 @@ export function getLayoutRepository(): LayoutRepository {
   }
 
   if (!repo) {
-    throw new AppError("Widget repository not defined", null, true);
+    throw new AppError(codes.REPOSITORY_MISSING, null);
   }
 
   return repo;

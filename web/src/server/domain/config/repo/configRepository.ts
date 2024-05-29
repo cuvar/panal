@@ -1,4 +1,5 @@
 import { env } from "~/env.mjs";
+import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import { type WidgetConfig } from "~/server/domain/config/widgetConfig";
 import { FileReader } from "~/server/driver/Reader/FileReader";
@@ -28,7 +29,7 @@ export function getConfigRepository(): ConfigRepository {
   }
 
   if (!repo) {
-    throw new AppError("Widget repository not defined", null, true);
+    throw new AppError(codes.REPOSITORY_NOT_IMPLEMENTED);
   }
 
   return repo;

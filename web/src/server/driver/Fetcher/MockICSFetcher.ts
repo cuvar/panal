@@ -1,4 +1,5 @@
 import * as ics from "ics";
+import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import type { Fetcher } from "./Fetcher";
 
@@ -13,7 +14,7 @@ export class MockICSFetcher implements Fetcher {
 
     const res = ics.createEvents(events);
     if (res.error) {
-      throw new AppError("cannot fetch for MockICSFetcher", res.error);
+      throw new AppError(codes.FETCH_FAILED, res.error);
     }
     return Promise.resolve(res.value ?? "");
   }

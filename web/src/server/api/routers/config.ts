@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
 import { widgetTypeSchema } from "~/lib/types/schema";
@@ -27,9 +28,7 @@ export const configRouter = createTRPCRouter({
       try {
         const data = await getConfigRepository().get(input.id);
         if (!data) {
-          throw new AppError(
-            `No adjusted widget config for widget with ID ${input.id}`,
-          );
+          throw new AppError(codes.WIDGET_CONFIG_ADJUSTED_MISSING);
         }
         return data;
       } catch (error) {
@@ -50,7 +49,7 @@ export const configRouter = createTRPCRouter({
       try {
         const parsed = parseWidgetConfigArray(JSON.stringify(input.widgets));
         if (parsed === null) {
-          throw new AppError("Cannot parse widget config");
+          throw new AppError(codes.WIDGET_CONFIG_PARSE_ISSUE);
         }
 
         await getConfigRepository().setAll(parsed);
@@ -79,7 +78,7 @@ export const configRouter = createTRPCRouter({
 
       try {
         if (!WidgetConfig.validate(widget)) {
-          throw new AppError(`Cannot parse widget config`);
+          throw new AppError(codes.WIDGET_CONFIG_PARSE_ISSUE);
         }
         await getConfigRepository().set(input.id, widget);
       } catch (error) {

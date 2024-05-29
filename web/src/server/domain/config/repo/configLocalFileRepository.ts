@@ -1,9 +1,10 @@
 import { env } from "~/env.mjs";
+import { REPO_CONFIG_FILE } from "~/lib/basic/const";
+import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import { parseWidgetConfigArray } from "~/server/domain/config/services/parseWidgetConfigService";
 import { type WidgetConfig } from "~/server/domain/config/widgetConfig";
 import { type Reader } from "~/server/driver/Reader/Reader";
-import { REPO_CONFIG_FILE } from "~/lib/basic/const";
 import { type ConfigRepository } from "./configRepository";
 
 export class ConfigLocalFileRepository implements ConfigRepository {
@@ -12,7 +13,7 @@ export class ConfigLocalFileRepository implements ConfigRepository {
 
   constructor(reader: Reader) {
     if (env.WIDGET_STORE !== "file") {
-      throw new AppError("Widget store is not set to 'file'", null, true);
+      throw new AppError(codes.REPOSITORY_WRONG_CONFIGURATION);
     }
 
     this.file = REPO_CONFIG_FILE;
@@ -25,25 +26,25 @@ export class ConfigLocalFileRepository implements ConfigRepository {
       const response = JSON.parse(fileContents);
 
       if (!response) {
-        throw new AppError("No widgets found", null, true);
+        throw new AppError(codes.WIDGET_NONE_FOUND);
       }
       if (typeof response !== "object") {
-        throw new AppError("Invalid response from local file", null, true);
+        throw new AppError(codes.REPOSITORY_INVALID_RESPONSE);
       }
 
       const config = parseWidgetConfigArray(JSON.stringify(response));
       if (!config) {
-        throw new AppError("Invalid widget config", null, true);
+        throw new AppError(codes.WIDGET_CONFIG_INVALID);
       }
 
       const foundItem = config.find((c) => c.id === id);
       if (!foundItem) {
-        throw new AppError(`No widget config for id ${id}`, null, true);
+        throw new AppError(codes.WIDGET_CONFIG_MISSING);
       }
 
       return foundItem;
     } catch (error) {
-      throw new AppError("Cannot get widget config through redis", error, true);
+      throw new AppError(codes.REPOSITORY_GET_FAILED, error);
     }
   }
 
@@ -53,20 +54,20 @@ export class ConfigLocalFileRepository implements ConfigRepository {
       const response = JSON.parse(fileContents);
 
       if (!response) {
-        throw new AppError("No widgets found", null, true);
+        throw new AppError(codes.WIDGET_NONE_FOUND);
       }
       if (typeof response !== "object") {
-        throw new AppError("Invalid response from local file", null, true);
+        throw new AppError(codes.REPOSITORY_INVALID_RESPONSE);
       }
 
       const config = parseWidgetConfigArray(JSON.stringify(response));
       if (!config) {
-        throw new AppError("Invalid widget config", null, true);
+        throw new AppError(codes.WIDGET_CONFIG_INVALID);
       }
 
       return config;
     } catch (error) {
-      throw new AppError("Cannot get widget config through redis", error, true);
+      throw new AppError(codes.REPOSITORY_GET_ALL_FAILED, error);
     }
   }
 
@@ -76,15 +77,15 @@ export class ConfigLocalFileRepository implements ConfigRepository {
       const response = JSON.parse(fileContents);
 
       if (!response) {
-        throw new AppError("No widgets found", null, true);
+        throw new AppError(codes.WIDGET_NONE_FOUND);
       }
       if (typeof response !== "object") {
-        throw new AppError("Invalid response from local file", null, true);
+        throw new AppError(codes.REPOSITORY_INVALID_RESPONSE);
       }
 
       const currentConfig = parseWidgetConfigArray(JSON.stringify(response));
       if (!currentConfig) {
-        throw new AppError("Invalid widget config", null, true);
+        throw new AppError(codes.WIDGET_CONFIG_INVALID);
       }
 
       const foundItem = currentConfig.find((c) => c.id === id);
@@ -96,11 +97,7 @@ export class ConfigLocalFileRepository implements ConfigRepository {
 
       await this.reader.write(this.file, JSON.stringify(currentConfig));
     } catch (error) {
-      throw new AppError(
-        "Cannot set widget config through local file",
-        error,
-        true,
-      );
+      throw new AppError(codes.REPOSITORY_SET_FAILED, error);
     }
   }
 
@@ -108,11 +105,7 @@ export class ConfigLocalFileRepository implements ConfigRepository {
     try {
       await this.reader.write(this.file, JSON.stringify(data));
     } catch (error) {
-      throw new AppError(
-        "Cannot set all widget configs through local file",
-        error,
-        true,
-      );
+      throw new AppError(codes.REPOSITORY_SET_ALL_FAILED, error);
     }
   }
 }

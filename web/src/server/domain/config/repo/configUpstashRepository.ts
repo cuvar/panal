@@ -1,8 +1,9 @@
 import { Redis } from "@upstash/redis";
 import { env } from "~/env.mjs";
+import { UPSTASH_PREFIX, UPSTASH_WIDGET_PREFIX } from "~/lib/basic/const";
+import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import { WidgetConfig } from "~/server/domain/config/widgetConfig";
-import { UPSTASH_PREFIX, UPSTASH_WIDGET_PREFIX } from "~/lib/basic/const";
 import { type ConfigRepository } from "./configRepository";
 
 export class ConfigUpstashRepository implements ConfigRepository {
@@ -10,11 +11,11 @@ export class ConfigUpstashRepository implements ConfigRepository {
 
   constructor() {
     if (env.WIDGET_STORE !== "upstash") {
-      throw new AppError("Widget store is not set to 'upstash'", null, true);
+      throw new AppError(codes.REPOSITORY_WRONG_CONFIGURATION);
     }
 
     if (!env.UPSTASH_ENDPOINT || !env.UPSTASH_TOKEN) {
-      throw new AppError("Upstash credentials are not set", null, true);
+      throw new AppError(codes.REPOSITORY_MISSING_CREDENTIALS);
     }
 
     this.redis = new Redis({
@@ -29,17 +30,17 @@ export class ConfigUpstashRepository implements ConfigRepository {
     try {
       const response = await this.redis.get(key);
       if (!response) {
-        throw new AppError("No widgets found", null, true);
+        throw new AppError(codes.WIDGET_NONE_FOUND);
       }
       if (typeof response !== "object") {
-        throw new AppError("Invalid response from Upstash", null, true);
+        throw new AppError(codes.REPOSITORY_INVALID_RESPONSE);
       }
       if (!WidgetConfig.validate(response)) {
-        throw new AppError("Invalid widget config", null, true);
+        throw new AppError(codes.WIDGET_CONFIG_INVALID);
       }
       return new WidgetConfig(response.id, response.type, response.data);
     } catch (error) {
-      throw new AppError("Cannot get widget config through redis", error, true);
+      throw new AppError(codes.REPOSITORY_GET_FAILED, error);
     }
   }
 
@@ -51,13 +52,13 @@ export class ConfigUpstashRepository implements ConfigRepository {
       const response = await this.redis.mget(...keys);
 
       if (!response) {
-        throw new AppError("No widgets found", null, true);
+        throw new AppError(codes.WIDGET_NONE_FOUND);
       }
       if (!Array.isArray(response)) {
-        throw new AppError("Invalid response from Upstash", null, true);
+        throw new AppError(codes.REPOSITORY_INVALID_RESPONSE);
       }
       if (!WidgetConfig.isWidgetConfigArray(response)) {
-        throw new AppError("Invalid widget config", null, true);
+        throw new AppError(codes.WIDGET_CONFIG_INVALID);
       }
 
       const mapped = response.map((r) => {
@@ -66,7 +67,7 @@ export class ConfigUpstashRepository implements ConfigRepository {
 
       return mapped;
     } catch (error) {
-      throw new AppError("Cannot get widget config through redis", error, true);
+      throw new AppError(codes.REPOSITORY_GET_FAILED, error);
     }
   }
 
@@ -76,7 +77,7 @@ export class ConfigUpstashRepository implements ConfigRepository {
     try {
       await this.redis.set(key, JSON.stringify(data));
     } catch (error) {
-      throw new AppError("Cannot set widget config through redis", error, true);
+      throw new AppError(codes.REPOSITORY_SET_FAILED, error);
     }
   }
 
@@ -86,11 +87,7 @@ export class ConfigUpstashRepository implements ConfigRepository {
       try {
         await this.redis.set(key, JSON.stringify(data));
       } catch (error) {
-        throw new AppError(
-          "Cannot set all widget configs through redis",
-          error,
-          true,
-        );
+        throw new AppError(codes.REPOSITORY_SET_ALL_FAILED, error);
       }
     }
   }
