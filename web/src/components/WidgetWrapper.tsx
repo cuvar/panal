@@ -14,7 +14,7 @@ import {
 } from "~/lib/ui/store";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import ErrorWidget from "~/server/widgets/ErrorWidget";
-import LoadingWidget from "~/server/widgets/LoadingWidget";
+import { Skeleton } from "./ui/skeleton";
 
 type Props = {
   editMode: boolean;
@@ -94,7 +94,9 @@ export default function WidgetWrapper(props: Props) {
           </div>
         </div>
       )}
-      {getConfigQuery.isLoading && <LoadingWidget />}
+      {getConfigQuery.isLoading && (
+        <Skeleton className="h-full w-full rounded-md" />
+      )}
       {getConfigQuery.error && <ErrorWidget msg={"Data cannot be loaded"} />}
       {!getConfigQuery.isLoading &&
         getConfigQuery.data &&
