@@ -19,11 +19,14 @@ const MyApp: AppType<{ session: Session | null }> = ({
           name="viewport"
           content="minimum-scale=1, maximum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
         />
-        <meta name="application-name" content="vocab" />
+        <meta name="application-name" content="panal" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="vocab" />
-        <meta name="description" content="Simple vocabulary app" />
+        <meta name="apple-mobile-web-app-title" content="panal" />
+        <meta
+          name="description"
+          content="widget-based dashboard for increased productivity"
+        />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <link rel="apple-touch-icon" sizes="192x192" href="/icon-192x192.png" />
