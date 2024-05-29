@@ -1,8 +1,8 @@
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Navbar from "~/components/Navbar";
+import { APP_NAME } from "~/lib/basic/const";
 import Login from "~/sites/Landing";
-import { APP_NAME } from "~/utils/const";
 import Toast from "./Toast";
 
 type Props = {

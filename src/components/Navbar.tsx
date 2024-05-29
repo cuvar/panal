@@ -1,7 +1,7 @@
 import type { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { APP_NAME } from "~/utils/const";
+import { APP_NAME } from "~/lib/basic/const";
 import Menu from "./Menu";
 import WidgetSidebar from "./WidgetSidebar";
 import { Button } from "./ui/button";
