@@ -24,12 +24,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: cd web
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
           cache-dependency-path: "web/package-lock.json"
+      - run: cd web
       - run: npm ci
       - run: npm run lint
