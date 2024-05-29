@@ -13,7 +13,7 @@ export default function LinkItem(props: Props) {
         href={props.href}
         target={props.tab === "same" ? "_self" : "_blank"}
         rel={props.tab === "same" ? "" : "noopener noreferrer"}
-        className="flex h-14 w-14 items-center justify-center rounded-md bg-teal-200 p-5 text-black hover:bg-teal-300"
+        className="flex h-14 w-14 items-center justify-center rounded-md bg-primary p-5 text-foreground hover:opacity-80"
       >
         {linkIcon}
       </a>

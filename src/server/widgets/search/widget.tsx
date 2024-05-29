@@ -95,18 +95,18 @@ export default function SearchWidget(props: Props) {
     if (useOutline) {
       inputContainer.classList.add("outline");
       inputContainer.classList.add("outline-2");
-      inputContainer.classList.add("outline-panal-100");
+      inputContainer.classList.add("outline-primary");
     } else {
       inputContainer.classList.remove("outline");
       inputContainer.classList.remove("outline-2");
-      inputContainer.classList.remove("outline-panal-100");
+      inputContainer.classList.remove("outline-primary");
     }
   }
 
   return (
     <div className="flex w-full flex-col">
       <div
-        className="mb-2 flex items-center justify-between rounded-full bg-white"
+        className="mb-2 flex items-center justify-between rounded-full bg-foreground"
         id="searchbar-container"
       >
         <a
@@ -114,7 +114,7 @@ export default function SearchWidget(props: Props) {
           target="_blank"
           id="searchButton"
           rel="noopener noreferrer"
-          className="pl-2 text-black "
+          className="text-inverted pl-2"
           onClick={handleSearch}
         >
           {searchIcon}
@@ -122,13 +122,13 @@ export default function SearchWidget(props: Props) {
         <input
           type="text"
           id="searchbar"
-          className="w-full rounded-r-full py-2 pr-1 text-black focus:outline-none"
+          className="text-inverted w-full rounded-r-full bg-inherit py-2 pr-1 focus:outline-none"
           placeholder="Search"
           onKeyDown={(event) => handleKeyDown(event)}
           onFocus={() => setOutline(true)}
           onBlur={() => setOutline(false)}
         />
-        <kbd className="flex pl-2 pr-4 font-sans text-xs font-semibold text-slate-500">
+        <kbd className="text-inverted flex pl-2 pr-4 font-sans text-xs font-semibold">
           <abbr title="Command" className="no-underline">
             ⌘
           </abbr>{" "}
@@ -141,7 +141,7 @@ export default function SearchWidget(props: Props) {
             singleEngine.key === currentEngine ? (
               <button
                 key={index}
-                className="rounded-md bg-panal-200 p-1 px-2 text-xs text-white hover:bg-panal-300 active:bg-panal-400"
+                className="rounded-md bg-primary p-1 px-2 text-xs text-foreground hover:opacity-80"
                 onClick={() => searchWithEngine(singleEngine.key)}
               >
                 {singleEngine.displayName}
@@ -149,7 +149,7 @@ export default function SearchWidget(props: Props) {
             ) : (
               <button
                 key={index}
-                className="rounded-md bg-gray-100 p-1 px-2 text-xs text-black hover:bg-gray-300 active:bg-gray-400"
+                className="text-inverted rounded-md bg-foreground p-1 px-2 text-xs hover:opacity-80"
                 onClick={() => searchWithEngine(singleEngine.key)}
               >
                 {singleEngine.displayName}

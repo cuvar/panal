@@ -2,10 +2,10 @@ import { useAtom } from "jotai";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState, type ChangeEvent } from "react";
-import Button from "~/components/Button/GhostButton";
 import Separator from "~/components/Separator";
 import SiteWrapper from "~/components/SiteWrapper";
 import Textarea from "~/components/Textarea";
+import { Button } from "~/components/ui/button";
 import ErrorPage from "~/sites/Error";
 import { api } from "~/utils/api";
 import { getNameForWidgetType, toProperJsonStringFormat } from "~/utils/helper";
@@ -191,7 +191,7 @@ const Home: NextPage = () => {
                                     <p>{key}</p>
                                     <input
                                       type="number"
-                                      className="w-10 rounded-sm text-right text-black"
+                                      className="text-inverted w-10 rounded-sm text-right"
                                       value={value}
                                       onChange={(e) =>
                                         handleLayoutInputChange(
@@ -227,8 +227,12 @@ const Home: NextPage = () => {
               </div>
             </div>
             <div className="mt-5 flex w-full justify-end space-x-2">
-              <Button onClick={onClickSaveConfig}>Save Config</Button>
-              <Button onClick={onClickSaveLayout}>Save Layout</Button>
+              <Button variant="ghost" onClick={onClickSaveConfig}>
+                Save Config
+              </Button>
+              <Button variant="ghost" onClick={onClickSaveLayout}>
+                Save Layout
+              </Button>
             </div>
           </div>
         )}

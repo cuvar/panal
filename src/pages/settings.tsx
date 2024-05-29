@@ -1,9 +1,9 @@
 import { useAtom } from "jotai";
 import type { NextPage } from "next";
 import { useState } from "react";
-import Button from "~/components/Button/GhostButton";
 import SiteWrapper from "~/components/SiteWrapper";
 import Textarea from "~/components/Textarea";
+import { Button } from "~/components/ui/button";
 import ErrorPage from "~/sites/Error";
 import LoadingSpinner from "~/sites/Loading";
 import { api } from "~/utils/api";
@@ -75,12 +75,26 @@ const Home: NextPage = () => {
     }
   }
 
+  const sidebarItems = [
+    {
+      title: "Widget Config",
+      href: "/",
+    },
+  ];
+
   return (
     <SiteWrapper>
       <div className="flex h-screen w-full sm:space-x-8">
-        <ul className="hidden border-r-2 border-r-panal-100 py-2 pr-8 sm:block">
-          <li>Sidebar</li>
-        </ul>
+        <div className="mx-2 hidden min-w-60 px-4 py-4 text-sm sm:block">
+          {sidebarItems.map((item, index) => (
+            <button
+              key={index}
+              className="w-full rounded-md bg-gray-700 px-4 py-2 text-left"
+            >
+              {item.title}
+            </button>
+          ))}
+        </div>
         <div className="flex w-full flex-col space-y-4">
           <h1 className="text-2xl font-bold">Widget Config</h1>
           <Textarea

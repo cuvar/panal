@@ -4,33 +4,45 @@ import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
 import type { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { api } from "~/utils/api";
 import { getNameForWidgetType } from "~/utils/helper";
-import { useDetectScreenSize } from "~/utils/hooks";
-import { crossIcon } from "~/utils/icons";
 import Log from "~/utils/log";
 import {
   editedWidgetLayoutAtom,
-  showHiddenWidgetsAtom,
   toastTextAtom,
   toastTypeAtom,
   widgetLayoutAtom,
 } from "~/utils/store";
-import GhostButton from "./Button/GhostButton";
+
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "~/components/ui/sheet";
+import { eyeIcon } from "~/utils/icons";
 
 export default function WidgetSidebar() {
   const [, setToastText] = useAtom(toastTextAtom);
   const [, setToastType] = useAtom(toastTypeAtom);
   const [, setEditedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
   const [, setWidgetLayout] = useAtom(widgetLayoutAtom);
-  const [, setShowHiddenWidgets] = useAtom(showHiddenWidgetsAtom);
 
-  const currentScreenSize = useDetectScreenSize();
+  const currentScreenSize = "sm";
 
   const getAllLayoutsQuery = api.layout.getAll.useQuery(undefined, {
     enabled: false,
   });
-  const getHiddenLayoutsQuery = api.layout.getAllHidden.useQuery({
-    screenSize: currentScreenSize,
-  });
+  const getHiddenLayoutsQuery = api.layout.getAllHidden.useQuery(
+    {
+      screenSize: currentScreenSize,
+    },
+    {
+      onSuccess: (data) => {
+        Log(data);
+      },
+    },
+  );
 
   const hideWidgetMutation = api.layout.setHide.useMutation({
     onSuccess: async () => {
@@ -66,32 +78,35 @@ export default function WidgetSidebar() {
       widget: widget,
     });
   }
-
-  function handleCloseSidebar() {
-    setShowHiddenWidgets(false);
-  }
-
   return (
-    <div className="fixed bottom-0 left-0 top-0 z-20 w-60 bg-panal-700 px-4 py-2">
-      <div className="mt-2 flex w-full justify-end">
-        <GhostButton onClick={handleCloseSidebar}>{crossIcon}</GhostButton>
-      </div>
-      <h2 className="my-2 font-bold">Hidden widgets</h2>
-      {!getHiddenLayoutsQuery.data ? (
-        <div>no widgets</div>
-      ) : (
-        getHiddenLayoutsQuery.data.map((widget) => (
-          <div className="contents" key={widget.id}>
-            <div
-              className="droppable-element my-2 rounded-md px-4 py-4 hover:bg-panal-500"
-              onClick={() => handleAddToLayout(widget)}
-            >
-              {getNameForWidgetType(widget.type)}
+    <Sheet>
+      <SheetTrigger>{eyeIcon}</SheetTrigger>
+      <SheetContent side={"left"}>
+        <SheetHeader>
+          <SheetTitle>Hidden widgets</SheetTitle>
+          <SheetDescription></SheetDescription>
+        </SheetHeader>
+        <div className="h-full">
+          {!getHiddenLayoutsQuery.data ||
+          getHiddenLayoutsQuery.data.length === 0 ? (
+            <div className="flex h-full items-center justify-center">
+              No hidden widgets
             </div>
-            <hr />
-          </div>
-        ))
-      )}
-    </div>
+          ) : (
+            getHiddenLayoutsQuery.data.map((widget) => (
+              <div className="contents" key={widget.id}>
+                <div
+                  className="droppable-element my-2 rounded-md px-4 py-4 hover:bg-background"
+                  onClick={() => handleAddToLayout(widget)}
+                >
+                  {getNameForWidgetType(widget.type)}
+                </div>
+                <hr />
+              </div>
+            ))
+          )}
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }

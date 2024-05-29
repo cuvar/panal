@@ -10,10 +10,10 @@ import type { ToastColor, ToastType } from "~/utils/types/types";
 
 export default function Toast() {
   const toastMap: Record<ToastType, ToastColor> = {
-    error: { bg: "bg-red-600", text: "text-white" },
-    success: { bg: "bg-green-700", text: "text-white" },
-    info: { bg: "bg-gray-200", text: "text-black" },
-    warning: { bg: "bg-yellow-500", text: "text-black" },
+    error: { bg: "bg-red-600", text: "text-foreground" },
+    success: { bg: "bg-green-700", text: "text-foreground" },
+    info: { bg: "bg-foreground", text: "text-inverted" },
+    warning: { bg: "bg-yellow-500", text: "text-inverted" },
   };
 
   const toastIconMap: Record<ToastType, JSX.Element> = {
@@ -31,7 +31,7 @@ export default function Toast() {
   return (
     <div
       id=""
-      className={`fixed bottom-16 my-2 flex items-center space-x-2 rounded-xl bg-gray-200 px-8 py-2 text-lg text-black shadow-xl ${visibleClass} 
+      className={`text-inverted fixed bottom-16 my-2 flex items-center space-x-2 rounded-xl bg-foreground px-8 py-2 text-lg shadow-xl ${visibleClass} 
       ${toastMap[toastType].bg} ${toastMap[toastType].text}`}
     >
       <span>{toastIconMap[toastType]}</span>

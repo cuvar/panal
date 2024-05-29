@@ -1,3 +1,3 @@
 export default function Separator() {
-  return <hr className="border-panal-200 rounded-full my-5"/>
+  return <hr className="my-5 rounded-full border-foreground" />;
 }
