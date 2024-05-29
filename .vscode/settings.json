@@ -1,12 +1,12 @@
 {
   // put this in your settings object
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true
+    "source.organizeImports": "always"
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "files.autoSave": "onFocusChange",
   "editor.tabSize": 2,
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": true
 }
