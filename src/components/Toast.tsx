@@ -1,4 +1,5 @@
 import { useAtom } from "jotai";
+import type { ToastColor, ToastType } from "~/lib/types/types";
 import {
   checkedIcon,
   crossRoundIcon,
@@ -6,7 +7,6 @@ import {
   warningIcon,
 } from "~/lib/ui/icons";
 import { toastTextAtom, toastTypeAtom } from "~/lib/ui/store";
-import type { ToastColor, ToastType } from "~/utils/types/types";
 
 export default function Toast() {
   const toastMap: Record<ToastType, ToastColor> = {

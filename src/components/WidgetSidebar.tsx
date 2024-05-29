@@ -10,7 +10,6 @@ import {
   widgetLayoutAtom,
 } from "~/lib/ui/store";
 import type { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
-import { getNameForWidgetType } from "~/utils/helper";
 
 import {
   Sheet,
@@ -20,6 +19,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/components/ui/sheet";
+import { getNameForWidgetType } from "~/lib/service/widget.service";
 import { eyeIcon } from "~/lib/ui/icons";
 
 export default function WidgetSidebar() {

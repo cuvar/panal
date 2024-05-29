@@ -1,4 +1,4 @@
-import { isObject, isString } from "~/utils/guards/base";
+import { isObject, isString } from "~/lib/guards/base";
 import type {
   SearchEngine,
   SearchWidgetConfig,

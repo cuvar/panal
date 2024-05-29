@@ -3,11 +3,10 @@
  */
 
 import {
-  generateUniqueID,
   isEmptyPositioning,
-  isSameSet,
   overlaps,
-} from "./helper";
+} from "~/lib/service/positioning.service";
+import { generateUniqueID } from "~/lib/service/widget.service";
 
 describe("helper functions", () => {
   it("generateUniqueID works correctly", () => {
@@ -16,26 +15,6 @@ describe("helper functions", () => {
     const result = generateUniqueID();
     // assert
     expect(result).toHaveLength(24);
-  });
-
-  it("isSameSet works correctly", () => {
-    // arrange
-    const arr1 = [1, 2, 3];
-    const arr2 = [1, 2, 3];
-    // act
-    const result = isSameSet(arr1, arr2);
-    // assert
-    expect(result).toBe(true);
-  });
-
-  it("isSameSet fails correctly", () => {
-    // arrange
-    const arr1 = [1, 2, 3];
-    const arr2 = [1, 2, 4];
-    // act
-    const result = isSameSet(arr1, arr2);
-    // assert
-    expect(result).toBe(false);
   });
 
   it("isEmptyPositioning works correctly", () => {

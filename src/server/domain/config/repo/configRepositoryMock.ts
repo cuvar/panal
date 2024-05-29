@@ -1,5 +1,5 @@
+import { generateUniqueID } from "~/lib/service/widget.service";
 import { WidgetConfig } from "~/server/domain/config/widgetConfig";
-import { generateUniqueID } from "~/utils/helper";
 import { type ConfigRepository } from "./configRepository";
 
 export class ConfigRepositoryMock implements ConfigRepository {

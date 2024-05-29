@@ -1,8 +1,8 @@
 import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/lib/basic/const";
-import { isScreenSize } from "~/utils/guards/other";
-import { isHidingInfo } from "~/utils/guards/widgets";
-import type { ScreenSize } from "~/utils/types/types";
-import type { HidingInfo, Positioning, WidgetType } from "~/utils/types/widget";
+import { isScreenSize } from "~/lib/guards/other";
+import { isHidingInfo } from "~/lib/guards/widgets";
+import type { ScreenSize } from "~/lib/types/types";
+import type { HidingInfo, Positioning, WidgetType } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import {
   getMinHeightForWidget,

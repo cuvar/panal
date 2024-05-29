@@ -3,7 +3,7 @@ import { isCalendarWidgetConfig } from "~/server/widgets/calendar/guards";
 import { isLinkWidgetConfig } from "~/server/widgets/links/guards";
 import { isSearchWidgetConfig } from "~/server/widgets/search/guards";
 import { isTimeWidgetConfig } from "~/server/widgets/time/guards";
-import { BREAKPOINTS_ORDER } from "../../lib/basic/const";
+import { BREAKPOINTS_ORDER } from "../basic/const";
 import type {
   HidingInfo,
   Layout,

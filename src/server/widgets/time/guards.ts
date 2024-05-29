@@ -1,4 +1,4 @@
-import { isObject } from "~/utils/guards/base";
+import { isObject } from "~/lib/guards/base";
 import type { TimeWidgetConfig, TimeWidgetData } from "./types";
 
 /**

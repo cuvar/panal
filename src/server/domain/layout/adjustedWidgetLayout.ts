@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { isObject, isString } from "~/utils/guards/base";
-import { isScreenSizePositioning, isWidgetType } from "~/utils/guards/widgets";
+import { isObject, isString } from "~/lib/guards/base";
+import { isScreenSizePositioning, isWidgetType } from "~/lib/guards/widgets";
+import type { ScreenSize } from "~/lib/types/types";
+import type { ScreenSizePositioning, WidgetType } from "~/lib/types/widget";
 import { screenSizePositioningSchema, widgetTypeSchema } from "~/utils/schema";
-import type { ScreenSize } from "~/utils/types/types";
-import type { ScreenSizePositioning, WidgetType } from "~/utils/types/widget";
 
 export class AdjustedWidgetLayout {
   id: string;

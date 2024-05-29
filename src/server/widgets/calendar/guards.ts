@@ -1,4 +1,4 @@
-import { isDate, isNumber, isObject, isString } from "~/utils/guards/base";
+import { isDate, isNumber, isObject, isString } from "~/lib/guards/base";
 import type {
   CalendarEntry,
   CalendarWidgetConfig,

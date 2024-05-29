@@ -3,12 +3,12 @@
  */
 
 import { describe, expect, test } from "@jest/globals";
-import type { ScreenSize } from "~/utils/types/types";
+import type { ScreenSize } from "~/lib/types/types";
 import type {
   Layout,
   PartialScreenSizePositioning,
   ScreenSizePositioning,
-} from "~/utils/types/widget";
+} from "~/lib/types/widget";
 import addMissingLayouts, {
   getReplacementScreenSize,
 } from "./addMissingLayoutsService";

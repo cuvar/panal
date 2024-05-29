@@ -1,6 +1,6 @@
 import { useState } from "react";
+import type { WidgetProps } from "~/lib/types/widget";
 import { searchIcon } from "~/lib/ui/icons";
-import type { WidgetProps } from "~/utils/types/widget";
 import type { SearchEngine, SearchWidgetData } from "./types";
 
 const fallbackEngine: SearchEngine = {

@@ -2,8 +2,7 @@ import type GridLayout from "react-grid-layout";
 import { BREAKPOINTS_ORDER } from "~/lib/basic/const";
 import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
-import { isSameSet } from "~/utils/helper";
-import type { ScreenSize } from "~/utils/types/types";
+import type { ScreenSize } from "~/lib/types/types";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 
 /**
@@ -21,8 +20,10 @@ export default function updateWidgetLayoutService(
     Log(error, "error");
     return widgetLayout;
   }
-
-  if (!isSameSet(BREAKPOINTS_ORDER, Object.keys(newLayouts))) {
+  const isSameSet = BREAKPOINTS_ORDER.every((item) =>
+    Object.keys(newLayouts).includes(item),
+  );
+  if (!isSameSet) {
     Log(
       new AppError("newLayouts is invalid because of missing screen sizes"),
       "error",

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { WidgetProps } from "~/utils/types/widget";
+import type { WidgetProps } from "~/lib/types/widget";
 import { type TimeWidgetData } from "./types";
 
 type Props = WidgetProps & {

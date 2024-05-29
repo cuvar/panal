@@ -7,16 +7,17 @@ import SiteWrapper from "~/components/SiteWrapper";
 import Textarea from "~/components/Textarea";
 import { Button } from "~/components/ui/button";
 import { api } from "~/lib/api/api";
+import { toProperJsonStringFormat } from "~/lib/basic/string";
 import Log from "~/lib/log/log";
-import { toastTextAtom, toastTypeAtom } from "~/lib/ui/store";
-import ErrorPage from "~/sites/Error";
-import { getNameForWidgetType, toProperJsonStringFormat } from "~/utils/helper";
-import { type ScreenSize } from "~/utils/types/types";
+import { getNameForWidgetType } from "~/lib/service/widget.service";
+import { type ScreenSize } from "~/lib/types/types";
 import {
   type Positioning,
   type ScreenSizePositioning,
   type WidgetType,
-} from "~/utils/types/widget";
+} from "~/lib/types/widget";
+import { toastTextAtom, toastTypeAtom } from "~/lib/ui/store";
+import ErrorPage from "~/sites/Error";
 
 const Home: NextPage = () => {
   const id = useRouter().query.id;

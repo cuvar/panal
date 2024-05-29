@@ -1,5 +1,5 @@
 import AppError from "~/lib/error/error";
-import { generateUniqueID } from "~/utils/helper";
+import { generateUniqueID } from "~/lib/service/widget.service";
 import { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import type { UserWidgetLayout } from "../userWidgetLayout";
 import addMissingLayouts from "./addMissingLayoutsService";

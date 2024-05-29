@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import type GridLayout from "react-grid-layout";
-import type { ToastType } from "../../utils/types/types";
+import type { ToastType } from "../types/types";
 
 export const toastTextAtom = atom("");
 export const toastTypeAtom = atom<ToastType>("info");

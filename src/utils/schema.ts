@@ -4,8 +4,8 @@ import type {
   Positioning,
   ScreenSizePositioning,
   WidgetType,
-} from "~/utils/types/widget";
-import { ScreenSize } from "./types/types";
+} from "~/lib/types/widget";
+import { ScreenSize } from "../lib/types/types";
 
 export const positioningSchema: z.ZodType<Positioning> = z.object({
   x: z.number(),

@@ -3,9 +3,9 @@ import AppError from "~/lib/error/error";
 import {
   isPartialScreenSizePositioning,
   isScreenSizePositioning,
-} from "~/utils/guards/widgets";
-import type { ScreenSize } from "~/utils/types/types";
-import type { Layout, ScreenSizePositioning } from "~/utils/types/widget";
+} from "~/lib/guards/widgets";
+import type { ScreenSize } from "~/lib/types/types";
+import type { Layout, ScreenSizePositioning } from "~/lib/types/widget";
 
 /**
  * Adds layouts for missing ScreenSizes to the given layout

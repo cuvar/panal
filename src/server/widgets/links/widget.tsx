@@ -1,5 +1,5 @@
+import type { WidgetProps } from "~/lib/types/widget";
 import { useDetectScreenSize } from "~/lib/ui/hooks";
-import type { WidgetProps } from "~/utils/types/widget";
 import LinkItem from "./LinkItem";
 import type { LinkWidgetData } from "./types";
 

@@ -5,11 +5,11 @@ import SiteWrapper from "~/components/SiteWrapper";
 import Textarea from "~/components/Textarea";
 import { Button } from "~/components/ui/button";
 import { api } from "~/lib/api/api";
+import { toProperJsonStringFormat } from "~/lib/basic/string";
 import Log from "~/lib/log/log";
 import { toastTextAtom, toastTypeAtom } from "~/lib/ui/store";
 import ErrorPage from "~/sites/Error";
 import LoadingSpinner from "~/sites/Loading";
-import { toProperJsonStringFormat } from "~/utils/helper";
 
 const Home: NextPage = () => {
   const [, setToastText] = useAtom(toastTextAtom);

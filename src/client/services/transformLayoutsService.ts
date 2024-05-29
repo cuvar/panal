@@ -1,7 +1,7 @@
 import type GridLayout from "react-grid-layout";
+import { isScreenSize } from "~/lib/guards/other";
+import { isEmptyPositioning } from "~/lib/service/positioning.service";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
-import { isScreenSize } from "~/utils/guards/other";
-import { isEmptyPositioning } from "~/utils/helper";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
