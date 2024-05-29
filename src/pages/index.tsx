@@ -4,7 +4,7 @@ import WidgetView from "~/components/WidgetView";
 import ErrorPage from "~/sites/Error";
 import LoadingSpinner from "~/sites/Loading";
 import { api } from "~/utils/api";
-import Log from "~/utils/log";
+import Log from "~/lib/log/log";
 
 const Home: NextPage = () => {
   const widgetLayoutQuery = api.layout.getAll.useQuery(undefined, {

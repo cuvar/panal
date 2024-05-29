@@ -8,8 +8,8 @@ import ErrorPage from "~/sites/Error";
 import LoadingSpinner from "~/sites/Loading";
 import { api } from "~/utils/api";
 import { toProperJsonStringFormat } from "~/utils/helper";
-import Log from "~/utils/log";
-import { toastTextAtom, toastTypeAtom } from "~/utils/store";
+import Log from "~/lib/log/log";
+import { toastTextAtom, toastTypeAtom } from "~/lib/ui/store";
 
 const Home: NextPage = () => {
   const [, setToastText] = useAtom(toastTextAtom);

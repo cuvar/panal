@@ -1,4 +1,5 @@
 import ical from "ical";
+import Log from "~/lib/log/log";
 import type { Fetcher } from "~/server/driver/Fetcher/Fetcher";
 import {
   filterFutureEvents,
@@ -6,7 +7,6 @@ import {
   groupCalendarWidgetByDay,
   sortCalendarEntries,
 } from "~/server/widgets/calendar/service/dateManipulationService";
-import Log from "~/utils/log";
 import type {
   CalendarEntry,
   CalendarWidgetConfig,

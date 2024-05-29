@@ -1,7 +1,7 @@
 import { Redis } from "@upstash/redis";
 import { env } from "~/env.mjs";
-import { UPSTASH_LAYOUT_KEY } from "~/utils/const";
-import AppError from "~/utils/error";
+import AppError from "~/lib/error/error";
+import { UPSTASH_LAYOUT_KEY } from "~/lib/basic/const";
 import { parseAdjustedWidgetLayout } from "../../config/services/parseWidgetConfigService";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import type { LayoutRepository } from "./layoutRepository";

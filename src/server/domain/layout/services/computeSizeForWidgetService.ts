@@ -1,4 +1,4 @@
-import { MIN_WIDGET_HEIGHT, MIN_WIDGET_WIDTH } from "~/utils/const";
+import { MIN_WIDGET_HEIGHT, MIN_WIDGET_WIDTH } from "~/lib/basic/const";
 import type { WidgetType } from "~/utils/types/widget";
 
 /**

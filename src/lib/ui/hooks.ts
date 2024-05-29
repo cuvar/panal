@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { BREAKPOINTS } from "./const";
-import type { ScreenSize } from "./types/types";
+import type { ScreenSize } from "../../utils/types/types";
+import { BREAKPOINTS } from "../basic/const";
 
 /**
  * Hook for detecting whether the current screen size is mobile

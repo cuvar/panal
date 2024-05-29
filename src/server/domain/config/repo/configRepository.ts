@@ -1,7 +1,7 @@
 import { env } from "~/env.mjs";
+import AppError from "~/lib/error/error";
 import { type WidgetConfig } from "~/server/domain/config/widgetConfig";
 import { FileReader } from "~/server/driver/Reader/FileReader";
-import AppError from "~/utils/error";
 import { ConfigLocalFileRepository } from "./configLocalFileRepository";
 import { ConfigRepositoryMock } from "./configRepositoryMock";
 import { ConfigUpstashRepository } from "./configUpstashRepository";

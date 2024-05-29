@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { searchIcon } from "~/utils/icons";
+import { searchIcon } from "~/lib/ui/icons";
 import type { WidgetProps } from "~/utils/types/widget";
 import type { SearchEngine, SearchWidgetData } from "./types";
 
@@ -114,7 +114,7 @@ export default function SearchWidget(props: Props) {
           target="_blank"
           id="searchButton"
           rel="noopener noreferrer"
-          className="text-inverted pl-2"
+          className="pl-2 text-inverted"
           onClick={handleSearch}
         >
           {searchIcon}
@@ -122,13 +122,13 @@ export default function SearchWidget(props: Props) {
         <input
           type="text"
           id="searchbar"
-          className="text-inverted w-full rounded-r-full bg-inherit py-2 pr-1 focus:outline-none"
+          className="w-full rounded-r-full bg-inherit py-2 pr-1 text-inverted focus:outline-none"
           placeholder="Search"
           onKeyDown={(event) => handleKeyDown(event)}
           onFocus={() => setOutline(true)}
           onBlur={() => setOutline(false)}
         />
-        <kbd className="text-inverted flex pl-2 pr-4 font-sans text-xs font-semibold">
+        <kbd className="flex pl-2 pr-4 font-sans text-xs font-semibold text-inverted">
           <abbr title="Command" className="no-underline">
             ⌘
           </abbr>{" "}
@@ -149,7 +149,7 @@ export default function SearchWidget(props: Props) {
             ) : (
               <button
                 key={index}
-                className="text-inverted rounded-md bg-foreground p-1 px-2 text-xs hover:opacity-80"
+                className="rounded-md bg-foreground p-1 px-2 text-xs text-inverted hover:opacity-80"
                 onClick={() => searchWithEngine(singleEngine.key)}
               >
                 {singleEngine.displayName}

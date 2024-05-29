@@ -1,4 +1,4 @@
-import { linkIcon } from "~/utils/icons";
+import { linkIcon } from "~/lib/ui/icons";
 
 type Props = {
   text: string;

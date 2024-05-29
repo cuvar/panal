@@ -1,4 +1,4 @@
-import Log from "~/utils/log";
+import Log from "~/lib/log/log";
 import { ICSFetcher } from "../../../driver/Fetcher/ICSFetcher";
 import computeDataCalendarWidget from "../../../widgets/calendar/data";
 import { isCalendarWidgetConfig } from "../../../widgets/calendar/guards";

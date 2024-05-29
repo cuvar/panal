@@ -1,6 +1,6 @@
 import { env } from "~/env.mjs";
-import { REPO_LAYOUT_FILE } from "~/utils/const";
-import AppError from "~/utils/error";
+import AppError from "~/lib/error/error";
+import { REPO_LAYOUT_FILE } from "~/lib/basic/const";
 import { type Reader } from "../../../driver/Reader/Reader";
 import { parseAdjustedWidgetLayout } from "../../config/services/parseWidgetConfigService";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";

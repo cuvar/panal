@@ -1,9 +1,9 @@
 import { env } from "~/env.mjs";
+import AppError from "~/lib/error/error";
 import { parseWidgetConfigArray } from "~/server/domain/config/services/parseWidgetConfigService";
 import { type WidgetConfig } from "~/server/domain/config/widgetConfig";
 import { type Reader } from "~/server/driver/Reader/Reader";
-import { REPO_CONFIG_FILE } from "~/utils/const";
-import AppError from "~/utils/error";
+import { REPO_CONFIG_FILE } from "~/lib/basic/const";
 import { type ConfigRepository } from "./configRepository";
 
 export class ConfigLocalFileRepository implements ConfigRepository {

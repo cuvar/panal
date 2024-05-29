@@ -1,5 +1,5 @@
-import { BREAKPOINTS_ORDER } from "~/utils/const";
-import AppError from "~/utils/error";
+import { BREAKPOINTS_ORDER } from "~/lib/basic/const";
+import AppError from "~/lib/error/error";
 import {
   isPartialScreenSizePositioning,
   isScreenSizePositioning,

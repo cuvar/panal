@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/utils/const";
+import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/lib/basic/const";
 import type { ScreenSizePositioning, WidgetType } from "~/utils/types/widget";
 import { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import adjustLayoutValues from "./adjustLayoutValuesService";

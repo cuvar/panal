@@ -1,8 +1,8 @@
 import type GridLayout from "react-grid-layout";
-import { BREAKPOINTS_ORDER } from "~/utils/const";
-import AppError from "~/utils/error";
+import { BREAKPOINTS_ORDER } from "~/lib/basic/const";
+import AppError from "~/lib/error/error";
+import Log from "~/lib/log/log";
 import { isSameSet } from "~/utils/helper";
-import Log from "~/utils/log";
 import type { ScreenSize } from "~/utils/types/types";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 

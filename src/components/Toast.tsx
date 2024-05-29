@@ -4,8 +4,8 @@ import {
   crossRoundIcon,
   infoIcon,
   warningIcon,
-} from "~/utils/icons";
-import { toastTextAtom, toastTypeAtom } from "~/utils/store";
+} from "~/lib/ui/icons";
+import { toastTextAtom, toastTypeAtom } from "~/lib/ui/store";
 import type { ToastColor, ToastType } from "~/utils/types/types";
 
 export default function Toast() {
@@ -31,7 +31,7 @@ export default function Toast() {
   return (
     <div
       id=""
-      className={`text-inverted fixed bottom-16 my-2 flex items-center space-x-2 rounded-xl bg-foreground px-8 py-2 text-lg shadow-xl ${visibleClass} 
+      className={`fixed bottom-16 my-2 flex items-center space-x-2 rounded-xl bg-foreground px-8 py-2 text-lg text-inverted shadow-xl ${visibleClass} 
       ${toastMap[toastType].bg} ${toastMap[toastType].text}`}
     >
       <span>{toastIconMap[toastType]}</span>

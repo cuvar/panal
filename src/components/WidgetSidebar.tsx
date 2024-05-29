@@ -4,13 +4,13 @@ import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
 import type { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { api } from "~/utils/api";
 import { getNameForWidgetType } from "~/utils/helper";
-import Log from "~/utils/log";
+import Log from "~/lib/log/log";
 import {
   editedWidgetLayoutAtom,
   toastTextAtom,
   toastTypeAtom,
   widgetLayoutAtom,
-} from "~/utils/store";
+} from "~/lib/ui/store";
 
 import {
   Sheet,
@@ -20,7 +20,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/components/ui/sheet";
-import { eyeIcon } from "~/utils/icons";
+import { eyeIcon } from "~/lib/ui/icons";
 
 export default function WidgetSidebar() {
   const [, setToastText] = useAtom(toastTextAtom);

@@ -1,4 +1,4 @@
-import AppError from "~/utils/error";
+import AppError from "~/lib/error/error";
 import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import type { LayoutRepository } from "./layoutRepository";
 

@@ -6,11 +6,11 @@ import Separator from "~/components/Separator";
 import SiteWrapper from "~/components/SiteWrapper";
 import Textarea from "~/components/Textarea";
 import { Button } from "~/components/ui/button";
+import Log from "~/lib/log/log";
+import { toastTextAtom, toastTypeAtom } from "~/lib/ui/store";
 import ErrorPage from "~/sites/Error";
 import { api } from "~/utils/api";
 import { getNameForWidgetType, toProperJsonStringFormat } from "~/utils/helper";
-import Log from "~/utils/log";
-import { toastTextAtom, toastTypeAtom } from "~/utils/store";
 import { type ScreenSize } from "~/utils/types/types";
 import {
   type Positioning,
@@ -191,7 +191,7 @@ const Home: NextPage = () => {
                                     <p>{key}</p>
                                     <input
                                       type="number"
-                                      className="text-inverted w-10 rounded-sm text-right"
+                                      className="w-10 rounded-sm text-right text-inverted"
                                       value={value}
                                       onChange={(e) =>
                                         handleLayoutInputChange(

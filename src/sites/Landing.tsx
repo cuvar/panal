@@ -3,7 +3,7 @@ import Head from "next/head";
 import Footer from "~/components/Footer";
 import Link from "~/components/Link";
 import Navbar from "~/components/Navbar";
-import { APP_NAME } from "~/utils/const";
+import { APP_NAME } from "~/lib/basic/const";
 
 export default function Login() {
   return (

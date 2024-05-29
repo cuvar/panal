@@ -1,4 +1,4 @@
-import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/utils/const";
+import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/lib/basic/const";
 import { isScreenSize } from "~/utils/guards/other";
 import { isHidingInfo } from "~/utils/guards/widgets";
 import type { ScreenSize } from "~/utils/types/types";

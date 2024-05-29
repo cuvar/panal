@@ -1,4 +1,4 @@
-import type { ScreenSize } from "./types/types";
+import type { ScreenSize } from "../../utils/types/types";
 
 export const APP_NAME = "panal";
 

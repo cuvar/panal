@@ -1,5 +1,5 @@
 import { env } from "~/env.mjs";
-import AppError from "~/utils/error";
+import AppError from "~/lib/error/error";
 import { FileReader } from "../../../driver/Reader/FileReader";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import { LayoutLocalFileRepository } from "./layoutLocalFileRepository";

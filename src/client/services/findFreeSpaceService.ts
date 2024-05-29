@@ -1,4 +1,4 @@
-import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/utils/const";
+import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/lib/basic/const";
 import { overlaps } from "~/utils/helper";
 import type { ScreenSize } from "~/utils/types/types";
 import type { Positioning } from "~/utils/types/widget";

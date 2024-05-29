@@ -6,19 +6,19 @@ import {
   BREAKPOINT_COLS,
   GRID_MAX_ROW,
   GRID_ROW_HEIGHT,
-} from "~/utils/const";
+} from "~/lib/basic/const";
 
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 import getHidingClasses from "~/client/services/getHidingClassesService";
 import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
+import { useDetectScreenSize } from "~/lib/ui/hooks";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
-import { useDetectScreenSize } from "~/utils/hooks";
 import {
   editModeAtom,
   editedWidgetLayoutAtom,
   widgetLayoutAtom,
-} from "~/utils/store";
+} from "~/lib/ui/store";
 import ResizeHandle from "./ResizeHandle";
 import WidgetWrapper from "./WidgetWrapper";
 

@@ -1,11 +1,11 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import AppError from "~/lib/error/error";
+import Log from "~/lib/log/log";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { getConfigRepository } from "~/server/domain/config/repo/configRepository";
 import { parseWidgetConfigArray } from "~/server/domain/config/services/parseWidgetConfigService";
 import { WidgetConfig } from "~/server/domain/config/widgetConfig";
-import AppError from "~/utils/error";
-import Log from "~/utils/log";
 import { widgetTypeSchema } from "~/utils/schema";
 
 export const configRouter = createTRPCRouter({

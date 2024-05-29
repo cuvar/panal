@@ -1,4 +1,4 @@
-import AppError from "~/utils/error";
+import AppError from "~/lib/error/error";
 import { generateUniqueID } from "~/utils/helper";
 import { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import type { UserWidgetLayout } from "../userWidgetLayout";

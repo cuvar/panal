@@ -1,5 +1,5 @@
 import type { ChangeEvent } from "react";
-import { useDetectMobile } from "~/utils/hooks";
+import { useDetectMobile } from "~/lib/ui/hooks";
 
 type Props = {
   value: string;

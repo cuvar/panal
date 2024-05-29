@@ -1,5 +1,5 @@
 import * as ics from "ics";
-import AppError from "~/utils/error";
+import AppError from "~/lib/error/error";
 import type { Fetcher } from "./Fetcher";
 
 export class MockICSFetcher implements Fetcher {

@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import AppError from "~/utils/error";
+import AppError from "~/lib/error/error";
 import type { Reader } from "./Reader";
 
 export class FileReader implements Reader {

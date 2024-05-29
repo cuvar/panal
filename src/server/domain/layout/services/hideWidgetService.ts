@@ -1,6 +1,6 @@
 import findFreeSpace from "~/client/services/findFreeSpaceService";
-import AppError from "~/utils/error";
-import Log from "~/utils/log";
+import AppError from "~/lib/error/error";
+import Log from "~/lib/log/log";
 import type { ScreenSize } from "~/utils/types/types";
 import type { HidingInfo, Positioning } from "~/utils/types/widget";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
