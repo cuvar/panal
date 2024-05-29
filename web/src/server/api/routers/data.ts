@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
@@ -26,9 +27,7 @@ export const dataRouter = createTRPCRouter({
       try {
         const data = await getConfigRepository().get(input.id);
         if (!data) {
-          throw new AppError(
-            `No adjusted widget config for widget with ID ${input.id}`,
-          );
+          throw new AppError(codes.WIDGET_CONFIG_ADJUSTED_MISSING);
         }
         const configData = await transformWidgetConfig([data]);
         return configData[0]!;

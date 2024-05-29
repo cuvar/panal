@@ -1,5 +1,6 @@
 import type GridLayout from "react-grid-layout";
 import { BREAKPOINTS_ORDER } from "~/lib/basic/const";
+import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
 import type { ScreenSize } from "~/lib/types/types";
@@ -16,7 +17,7 @@ export default function updateWidgetLayoutService(
   widgetLayout: AdjustedWidgetLayout[],
 ): AdjustedWidgetLayout[] {
   if (!newLayouts) {
-    const error = new AppError("`newLayouts` is undefined");
+    const error = new AppError(codes.SERVICE_UPDATE_LAYOUT_MISSING_LAYOUTS);
     Log(error, "error");
     return widgetLayout;
   }
@@ -24,15 +25,12 @@ export default function updateWidgetLayoutService(
     Object.keys(newLayouts).includes(item),
   );
   if (!isSameSet) {
-    Log(
-      new AppError("newLayouts is invalid because of missing screen sizes"),
-      "error",
-    );
+    Log(new AppError(codes.SERVICE_UPDATE_LAYOUT_MISSING_SCREENSIZE), "error");
   }
   BREAKPOINTS_ORDER.forEach((breakpoint) => {
     if (!newLayouts[breakpoint]) {
       Log(
-        new AppError(breakpoint + " does not exist in `newLayouts`"),
+        new AppError(codes.SERVICE_UPDATE_LAYOUT_MISSING_BREAKPOINT),
         "error",
       );
       return;
@@ -57,7 +55,7 @@ function updateForScreenSize(
   newLayouts[breakpoint]?.forEach((layout) => {
     const widget = widgetLayout.find((widget) => widget.id === layout.i);
     if (!widget) {
-      const error = new AppError("Widget could not be found");
+      const error = new AppError(codes.WIDGET_NOT_FOUND);
       Log(error, "error");
       return;
     }

@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
 import { isEmptyPositioning } from "~/lib/service/positioning.service";
@@ -24,6 +25,14 @@ export const layoutRouter = createTRPCRouter({
       return layoutData;
     } catch (error) {
       Log(error, "error");
+      if (
+        error instanceof AppError &&
+        error.code[0] &&
+        error.code[0] == codes.WIDGET_NONE_FOUND
+      ) {
+        return [];
+      }
+
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
         message: "Unable to get widget layout",
@@ -36,9 +45,7 @@ export const layoutRouter = createTRPCRouter({
       try {
         const data = await getLayoutRepository().get(input.id);
         if (!data) {
-          throw new AppError(
-            `No adjusted widget config for widget with ID ${input.id}`,
-          );
+          throw new AppError(codes.WIDGET_CONFIG_ADJUSTED_MISSING);
         }
         return data;
       } catch (error) {

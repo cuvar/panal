@@ -1,6 +1,7 @@
 import { env } from "~/env.mjs";
-import AppError from "~/lib/error/error";
 import { REPO_LAYOUT_FILE } from "~/lib/basic/const";
+import { codes } from "~/lib/error/codes";
+import AppError from "~/lib/error/error";
 import { type Reader } from "../../../driver/Reader/Reader";
 import { parseAdjustedWidgetLayout } from "../../config/services/parseWidgetConfigService";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
@@ -12,7 +13,7 @@ export class LayoutLocalFileRepository implements LayoutRepository {
 
   constructor(reader: Reader) {
     if (env.WIDGET_STORE !== "file") {
-      throw new AppError("Widget store is not set to 'file'", null, true);
+      throw new AppError(codes.REPOSITORY_WRONG_CONFIGURATION);
     }
 
     this.file = REPO_LAYOUT_FILE;
@@ -24,15 +25,11 @@ export class LayoutLocalFileRepository implements LayoutRepository {
       const data = await this.getAll();
       const res = data.find((d) => d.id == id);
       if (!res) {
-        throw new AppError(`No widget config for id ${id}`);
+        throw new AppError(codes.WIDGET_NOT_FOUND);
       }
       return res;
     } catch (error) {
-      throw new AppError(
-        "Cannot get widget layout through local file",
-        error,
-        true,
-      );
+      throw new AppError(codes.REPOSITORY_GET_FAILED, error);
     }
   }
 
@@ -42,23 +39,19 @@ export class LayoutLocalFileRepository implements LayoutRepository {
       const response = JSON.parse(fileContents);
 
       if (!response) {
-        throw new AppError("No widgets found", null, true);
+        throw new AppError(codes.WIDGET_NONE_FOUND);
       }
       if (typeof response !== "object") {
-        throw new AppError("Invalid response from local file", null, true);
+        throw new AppError(codes.REPOSITORY_INVALID_RESPONSE);
       }
       const config = parseAdjustedWidgetLayout(JSON.stringify(response));
       if (!config) {
-        throw new AppError("Invalid widget config", null, true);
+        throw new AppError(codes.WIDGET_CONFIG_INVALID);
       }
 
       return config;
     } catch (error) {
-      throw new AppError(
-        "Cannot get widget config through local file",
-        error,
-        true,
-      );
+      throw new AppError(codes.REPOSITORY_GET_ALL_FAILED, error);
     }
   }
 
@@ -67,18 +60,14 @@ export class LayoutLocalFileRepository implements LayoutRepository {
       const currentAll = await this.getAll();
       const currentConfig = currentAll.find((e) => e.id === id);
       if (!currentConfig) {
-        throw new AppError(`No widget with ID ${id}`);
+        throw new AppError(codes.WIDGET_NOT_FOUND);
       }
 
       currentConfig.layout = widget.layout;
 
       await this.reader.write(this.file, JSON.stringify(currentAll));
     } catch (error) {
-      throw new AppError(
-        "Cannot set widget config through local file",
-        error,
-        true,
-      );
+      throw new AppError(codes.REPOSITORY_SET_FAILED, error);
     }
   }
 
@@ -86,11 +75,7 @@ export class LayoutLocalFileRepository implements LayoutRepository {
     try {
       await this.reader.write(this.file, JSON.stringify(widgets));
     } catch (error) {
-      throw new AppError(
-        "Cannot set widget config through local file",
-        error,
-        true,
-      );
+      throw new AppError(codes.REPOSITORY_SET_ALL_FAILED, error);
     }
   }
 }

@@ -1,3 +1,4 @@
+import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import { generateUniqueID } from "~/lib/service/widget.service";
 import { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
@@ -30,6 +31,6 @@ export default function transformWidgetLayout(
 
     return adjustedWidgetLayout;
   } catch (error) {
-    throw new AppError("Cannot transform widget config", error);
+    throw new AppError(codes.SERVICE_TRANSFORM_CONFIG_FAILED, error);
   }
 }

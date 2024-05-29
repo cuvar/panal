@@ -1,4 +1,5 @@
 import findFreeSpace from "~/client/services/findFreeSpaceService";
+import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
 import type { ScreenSize } from "~/lib/types/types";
@@ -45,6 +46,6 @@ export default async function hideWidget(
     await getLayoutRepository().set(widget.id, adjusted);
     return adjusted;
   } catch (error) {
-    throw new AppError("Cannot hide widget", error);
+    throw new AppError(codes.SERVICE_HIDE_FAILED, error);
   }
 }
