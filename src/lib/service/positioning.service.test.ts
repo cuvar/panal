@@ -6,17 +6,8 @@ import {
   isEmptyPositioning,
   overlaps,
 } from "~/lib/service/positioning.service";
-import { generateUniqueID } from "~/lib/service/widget.service";
 
 describe("helper functions", () => {
-  it("generateUniqueID works correctly", () => {
-    // arrange
-    // act
-    const result = generateUniqueID();
-    // assert
-    expect(result).toHaveLength(24);
-  });
-
   it("isEmptyPositioning works correctly", () => {
     // arrange
     const input = {
