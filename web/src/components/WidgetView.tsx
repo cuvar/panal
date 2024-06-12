@@ -80,9 +80,11 @@ export default function WidgetView(props: Props) {
           {props.layout.map(
             (widget) =>
               !getHidingClasses(widget.layout).includes(currentScreenSize) && (
-                <div key={widget.id} className="flex ">
-                  <WidgetWrapper editMode={editMode} widget={widget} />
-                </div>
+                <WidgetWrapper
+                  key={widget.id}
+                  editMode={editMode}
+                  widget={widget}
+                />
               ),
           )}
         </ResponsiveGridLayout>
