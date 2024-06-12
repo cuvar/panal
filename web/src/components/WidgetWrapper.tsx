@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import React, { forwardRef } from "react";
 import mapWidgets from "~/client/services/mapWidgetsService";
 import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
 import { api } from "~/lib/api/api";
@@ -21,7 +22,10 @@ type Props = {
   widget: AdjustedWidgetLayout;
 };
 
-export default function WidgetWrapper(props: Props) {
+const WidgetWrapper = forwardRef(function InnerWidgetWrapper(
+  props: Props & React.HTMLProps<HTMLDivElement>,
+  ref: React.Ref<HTMLDivElement>,
+) {
   const [, setToastText] = useAtom(toastTextAtom);
   const [, setToastType] = useAtom(toastTypeAtom);
   const [, setEditedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
@@ -71,11 +75,33 @@ export default function WidgetWrapper(props: Props) {
     void router.push(path);
   }
 
+  function handleItemClick(
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
+    parentHandler:
+      | React.MouseEventHandler<HTMLDivElement>
+      | React.TouchEventHandler<HTMLDivElement>,
+  ) {
+    if (!ref || !("current" in ref)) return;
+    if (ref.current!.children[0] === e.target) {
+      e.stopPropagation();
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      parentHandler(e);
+    }
+  }
+
   return (
-    <div className={`flex h-full w-full items-center justify-center`}>
+    <div
+      className={`flex h-full w-full items-center justify-center`}
+      style={{ ...props.style }}
+      ref={ref}
+      onMouseUp={(e) => handleItemClick(e, props.onMouseUp!)}
+      onMouseDown={(e) => handleItemClick(e, props.onMouseDown!)}
+      onTouchEnd={(e) => handleItemClick(e, props.onTouchEnd!)}
+    >
       {props.editMode && (
         <div className="absolute z-20 flex h-full w-full justify-end rounded-md bg-white bg-opacity-30">
-          <div className="bg-primary-500 z-50 mr-2 mt-2 flex h-fit items-start justify-end space-x-2">
+          <div className="bg-primary-500 z-30 mr-2 mt-2 flex h-fit items-start justify-end space-x-2 bg-green-500">
             <button
               className="rounded-md bg-primary p-1 text-inverted"
               onTouchStart={handleHideWidget}
@@ -103,4 +129,6 @@ export default function WidgetWrapper(props: Props) {
         mapWidgets(props.widget, getConfigQuery.data)}
     </div>
   );
-}
+});
+
+export default WidgetWrapper;
