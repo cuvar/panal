@@ -101,7 +101,7 @@ const WidgetWrapper = forwardRef(function InnerWidgetWrapper(
     >
       {props.editMode && (
         <div className="absolute z-20 flex h-full w-full justify-end rounded-md bg-white bg-opacity-30">
-          <div className="bg-primary-500 z-30 mr-2 mt-2 flex h-fit items-start justify-end space-x-2 bg-green-500">
+          <div className="bg-primary-500 z-30 mr-2 mt-2 flex h-fit items-start justify-end space-x-2">
             <button
               className="rounded-md bg-primary p-1 text-inverted"
               onTouchStart={handleHideWidget}
