@@ -1,4 +1,3 @@
-import { useAtom } from "jotai";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState, type ChangeEvent } from "react";
@@ -16,18 +15,17 @@ import {
   type ScreenSizePositioning,
   type WidgetType,
 } from "~/lib/types/widget";
-import { toastTextAtom, toastTypeAtom } from "~/lib/ui/store";
+import { useToast } from "~/lib/ui/hooks";
 import ErrorPage from "~/sites/Error";
 
 const Home: NextPage = () => {
   const id = useRouter().query.id;
-  const [, setToastText] = useAtom(toastTextAtom);
-  const [, setToastType] = useAtom(toastTypeAtom);
   const [widgetType, setWidgetType] = useState<WidgetType | null>(null);
   const [textAreaInput, setTextAreaInput] = useState("");
   const [layoutData, setLayoutData] = useState<ScreenSizePositioning | null>(
     null,
   );
+  const showToast = useToast();
 
   const widgetLayoutQuery = api.layout.getForWidget.useQuery(
     { id: typeof id === "string" ? id : "" },
@@ -55,36 +53,20 @@ const Home: NextPage = () => {
 
   const setWidgetConfigForWidgetMutation = api.config.setForWidget.useMutation({
     onSuccess: (_data) => {
-      setToastType("success");
-      setToastText(`Config saved successfully`);
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
+      showToast(`Config saved successfully`, "success");
     },
     onError: (error) => {
-      setToastType("error");
-      setToastText(`Saving config failed`);
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
+      showToast(`Saving config failed`, "error");
       Log(error);
     },
   });
 
   const setWidgetLayoutForWidgetMutation = api.layout.setForWidget.useMutation({
     onSuccess: (_data) => {
-      setToastType("success");
-      setToastText(`Layout saved successfully`);
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
+      showToast(`Layout saved successfully`, "success");
     },
     onError: (error) => {
-      setToastType("error");
-      setToastText(`Saving layout failed`);
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
+      showToast(`Saving layout failed`, "error");
       Log(error);
     },
   });

@@ -11,6 +11,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { api } from "~/lib/api/api";
 import Log from "~/lib/log/log";
+import { useToast } from "~/lib/ui/hooks";
 import {
   checkIcon,
   cogIcon,
@@ -22,8 +23,6 @@ import {
 import {
   editModeAtom,
   editedWidgetLayoutAtom,
-  toastTextAtom,
-  toastTypeAtom,
   widgetLayoutAtom,
 } from "~/lib/ui/store";
 
@@ -31,27 +30,18 @@ export default function NewMenu() {
   const [editMode, setEditMode] = useAtom(editModeAtom);
   const [, setWidgetLayout] = useAtom(widgetLayoutAtom);
   const [editedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
-  const [, setToastText] = useAtom(toastTextAtom);
-  const [, setToastType] = useAtom(toastTypeAtom);
 
   const router = useRouter();
+  const showToast = useToast();
 
   const setWidgetLayoutMutation = api.layout.setAll.useMutation({
     onSuccess: () => {
       setWidgetLayout(makeLayoutsStatic(editedWidgetLayout, true));
-      setToastType("success");
-      setToastText(`Saved successfully`);
+      showToast(`Saved successfully`, "success");
       location.reload();
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
     },
     onError: (error) => {
-      setToastType("error");
-      setToastText(`Saving failed`);
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
+      showToast(`Saving failed`, "error");
       Log(error, "error");
     },
   });

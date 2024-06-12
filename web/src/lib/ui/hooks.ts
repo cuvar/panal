@@ -1,6 +1,8 @@
+import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { BREAKPOINTS } from "../basic/const";
-import type { ScreenSize } from "../types/types";
+import type { ScreenSize, ToastType } from "../types/types";
+import { toastTextAtom, toastTypeAtom } from "./store";
 
 /**
  * Hook for detecting whether the current screen size is mobile
@@ -43,4 +45,31 @@ export function useForScreenSize<T>(
 ): T | undefined {
   const screenSize = useDetectScreenSize();
   return values[screenSize];
+}
+
+/**
+ * Hook for displaying a toast if the toast is available on the UI
+ * @returns {Function} Function for displaying a toast
+ */
+export function useToast() {
+  const [, setToastText] = useAtom(toastTextAtom);
+  const [, setToastType] = useAtom(toastTypeAtom);
+
+  /**
+   *
+   * @param code
+   * @param text
+   * @param type
+   * @param backendError
+   * @param delay
+   */
+  function showToast(text: string, type: ToastType, delay = 1500) {
+    // if backend error has been supplied, check if it actually contains a valid error code
+    setToastType(type);
+    setToastText(text);
+    setTimeout(() => {
+      setToastText("");
+    }, delay);
+  }
+  return showToast;
 }

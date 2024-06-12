@@ -6,13 +6,9 @@ import mapWidgets from "~/client/services/mapWidgetsService";
 import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
 import { api } from "~/lib/api/api";
 import Log from "~/lib/log/log";
-import { useDetectScreenSize } from "~/lib/ui/hooks";
+import { useDetectScreenSize, useToast } from "~/lib/ui/hooks";
 import { cogIcon, eyeOffIcon } from "~/lib/ui/icons";
-import {
-  editedWidgetLayoutAtom,
-  toastTextAtom,
-  toastTypeAtom,
-} from "~/lib/ui/store";
+import { editedWidgetLayoutAtom } from "~/lib/ui/store";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import ErrorWidget from "~/server/widgets/ErrorWidget";
 import { Skeleton } from "./ui/skeleton";
@@ -26,11 +22,10 @@ const WidgetWrapper = forwardRef(function InnerWidgetWrapper(
   props: Props & React.HTMLProps<HTMLDivElement>,
   ref: React.Ref<HTMLDivElement>,
 ) {
-  const [, setToastText] = useAtom(toastTextAtom);
-  const [, setToastType] = useAtom(toastTypeAtom);
   const [, setEditedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
   const currentScreenSize = useDetectScreenSize();
   const router = useRouter();
+  const showToast = useToast();
 
   const getAllLayoutsQuery = api.layout.getAll.useQuery(undefined, {
     enabled: false,
@@ -41,23 +36,14 @@ const WidgetWrapper = forwardRef(function InnerWidgetWrapper(
   const hideWidgetMutation = api.layout.setHide.useMutation({
     onSuccess: async () => {
       const res = await getAllLayoutsQuery.refetch();
-      setToastType("success");
-      setToastText(`Hid widget successfully`);
+      showToast(`Hid widget successfully`, "success");
       if (res.data) {
         const transformed = transformLayoutsForGrid(res.data, false);
         setEditedWidgetLayout(transformed);
       }
-
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
     },
     onError: (error) => {
-      setToastType("error");
-      setToastText(`Hiding failed`);
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
+      showToast(`Hiding failed`, "error");
       Log(error, "error");
     },
   });

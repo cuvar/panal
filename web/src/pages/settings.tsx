@@ -1,4 +1,3 @@
-import { useAtom } from "jotai";
 import type { NextPage } from "next";
 import { useState } from "react";
 import SiteWrapper from "~/components/SiteWrapper";
@@ -7,14 +6,13 @@ import { Button } from "~/components/ui/button";
 import { api } from "~/lib/api/api";
 import { toProperJsonStringFormat } from "~/lib/basic/string";
 import Log from "~/lib/log/log";
-import { toastTextAtom, toastTypeAtom } from "~/lib/ui/store";
+import { useToast } from "~/lib/ui/hooks";
 import ErrorPage from "~/sites/Error";
 import LoadingSpinner from "~/sites/Loading";
 
 const Home: NextPage = () => {
-  const [, setToastText] = useAtom(toastTextAtom);
-  const [, setToastType] = useAtom(toastTypeAtom);
   const [textAreaContent, setTextAreaContent] = useState("");
+  const showToast = useToast();
 
   const widgetConfigQuery = api.config.getAll.useQuery(undefined, {
     onSuccess: (data) => {
@@ -26,18 +24,10 @@ const Home: NextPage = () => {
 
   const setWidgetConfigMutation = api.config.setAll.useMutation({
     onSuccess: (_data) => {
-      setToastType("success");
-      setToastText(`Saved successfully`);
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
+      showToast(`Saved successfully`, "success");
     },
     onError: (error) => {
-      setToastType("error");
-      setToastText(`Saving failed`);
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
+      showToast(`Saving failed`, "error");
       Log(error);
     },
   });
@@ -56,22 +46,17 @@ const Home: NextPage = () => {
       JSON.parse(textAreaContent);
       const parsed = JSON.parse(textAreaContent);
       if (!Array.isArray(parsed)) {
-        setToastType("error");
-        setToastText(`Config must be an array`);
-        setTimeout(() => {
-          setToastText("");
-        }, 3000);
+        showToast(`Config must be an array`, "error");
         return;
       }
 
       setWidgetConfigMutation.mutate({ widgets: parsed });
     } catch (error) {
       Log(error, "error");
-      setToastType("error");
-      setToastText(`Config could not be parsed. There are syntax errors.`);
-      setTimeout(() => {
-        setToastText("");
-      }, 3000);
+      showToast(
+        `Config could not be parsed. There are syntax errors.`,
+        "error",
+      );
     }
   }
 

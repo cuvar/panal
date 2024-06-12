@@ -3,12 +3,7 @@ import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
 import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
 import { api } from "~/lib/api/api";
 import Log from "~/lib/log/log";
-import {
-  editedWidgetLayoutAtom,
-  toastTextAtom,
-  toastTypeAtom,
-  widgetLayoutAtom,
-} from "~/lib/ui/store";
+import { editedWidgetLayoutAtom, widgetLayoutAtom } from "~/lib/ui/store";
 import type { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 
 import {
@@ -20,13 +15,13 @@ import {
   SheetTrigger,
 } from "~/components/ui/sheet";
 import { getNameForWidgetType } from "~/lib/service/widget.service";
+import { useToast } from "~/lib/ui/hooks";
 import { eyeIcon } from "~/lib/ui/icons";
 
 export default function WidgetSidebar() {
-  const [, setToastText] = useAtom(toastTextAtom);
-  const [, setToastType] = useAtom(toastTypeAtom);
   const [, setEditedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
   const [, setWidgetLayout] = useAtom(widgetLayoutAtom);
+  const showToast = useToast();
 
   const currentScreenSize = "sm";
 
@@ -48,25 +43,16 @@ export default function WidgetSidebar() {
     onSuccess: async () => {
       await getHiddenLayoutsQuery.refetch();
       const res = await getAllLayoutsQuery.refetch();
-      setToastType("success");
-      setToastText(`Revealed widget successfully`);
+      showToast("Revealed widget successfully", "success");
       if (res.data) {
         const transformed = transformLayoutsForGrid(res.data, false);
         Log(transformed);
         setEditedWidgetLayout(transformed);
         setWidgetLayout(makeLayoutsStatic(transformed, false));
       }
-
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
     },
     onError: (error) => {
-      setToastType("error");
-      setToastText(`Revealing failed`);
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
+      showToast("Revealing failed", "error");
       Log(error, "error");
     },
   });
