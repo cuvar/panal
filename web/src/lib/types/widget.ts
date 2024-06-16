@@ -13,9 +13,8 @@ export type Positioning = {
 
 export type ScreenSizePositioning = Record<ScreenSize, Positioning>;
 
-export type HidingInfo = { hiding: boolean };
 export type PartialScreenSizePositioning = {
-  [K in ScreenSize]?: Positioning | HidingInfo;
+  [K in ScreenSize]?: Positioning;
 };
 export type Layout = Positioning | PartialScreenSizePositioning;
 

@@ -12,7 +12,6 @@ import type {
 } from "../types/widget";
 import {
   isFittingDataPaylod,
-  isHidingInfo,
   isLayout,
   isPartialScreenSizePositioning,
   isPositioning,
@@ -269,24 +268,6 @@ describe("guards - widgets:", () => {
     };
     // act
     const result = isScreenSizePositioning(input);
-    // assert
-    expect(result).toBe(false);
-  });
-
-  it("isHidingInfo works correctly", () => {
-    // arrange
-    const input = { hiding: true };
-    // act
-    const result = isHidingInfo(input);
-    // assert
-    expect(result).toBe(true);
-  });
-
-  it("isHidingInfo fails correctly", () => {
-    // arrange
-    const input = "lxx";
-    // act
-    const result = isHidingInfo(input);
     // assert
     expect(result).toBe(false);
   });
