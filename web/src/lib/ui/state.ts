@@ -17,9 +17,16 @@ interface HiddenWidgetsState {
 export const useHiddenWidgetsStore = create<HiddenWidgetsState>()((set) => ({
   widgets: [],
   add: (widget, screenSize, hide) =>
-    set((state) => ({
-      widgets: [...state.widgets, { widget, screenSize, hide }],
-    })),
+    set((state) => {
+      const existingId = state.widgets
+        .map((w) => w.widget.id)
+        .includes(widget.id);
+      if (existingId) return state;
+
+      return {
+        widgets: [...state.widgets, { widget, screenSize, hide }],
+      };
+    }),
   remove: (widget, screenSize) =>
     set((state) => {
       // ! Don't know whether this works because of object references
