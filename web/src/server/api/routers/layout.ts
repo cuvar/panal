@@ -12,8 +12,9 @@ import {
 } from "~/lib/types/schema";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { HideInfo } from "~/server/domain/layout/hideInfo";
 import { getLayoutRepository } from "~/server/domain/layout/repo/layoutRepository";
-import hideWidget from "~/server/domain/layout/services/hideWidgetService";
+import { hideWidgets } from "~/server/domain/layout/services/hideWidgetService";
 import transformWidgetLayout from "~/server/domain/layout/services/transformWidgetLayoutService";
 import updateWidgetLayoutService from "~/server/domain/layout/services/updateWidgetLayoutService";
 
@@ -124,27 +125,24 @@ export const layoutRouter = createTRPCRouter({
       }
     }),
   setHide: protectedProcedure
-    .input(
-      z.object({
-        screenSize: screenSizeSchema,
-        hide: z.boolean(),
-        widget: AdjustedWidgetLayout.getSchema(),
-      }),
-    )
+    .input(z.array(HideInfo.getSchema()))
     .mutation(async ({ input }) => {
       try {
-        const awc = new AdjustedWidgetLayout(
-          input.widget.id,
-          input.widget.type,
-          input.widget.layout,
-        );
-        const res = await hideWidget(awc, input.screenSize, input.hide);
+        const mapped = input.map((w) => {
+          const awc = new AdjustedWidgetLayout(
+            w.widget.id,
+            w.widget.type,
+            w.widget.layout,
+          );
+          return new HideInfo(awc, w.screenSize, w.hide);
+        });
+        const res = await hideWidgets(mapped);
         return res;
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "Unable to update hiding status of widget layout",
+          message: "Unable to update hiding status of widget layouts",
         });
       }
     }),

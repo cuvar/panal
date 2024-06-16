@@ -12,6 +12,7 @@ export interface LayoutRepository {
   getAll(): Promise<AdjustedWidgetLayout[]>;
   setAll(widgets: AdjustedWidgetLayout[]): Promise<void>;
   set(id: string, widget: AdjustedWidgetLayout): Promise<void>;
+  setMany(widget: AdjustedWidgetLayout[]): Promise<void>;
 }
 
 /**

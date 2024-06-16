@@ -8,6 +8,7 @@ import { api } from "~/lib/api/api";
 import Log from "~/lib/log/log";
 import { useDetectScreenSize, useToast } from "~/lib/ui/hooks";
 import { cogIcon, eyeOffIcon } from "~/lib/ui/icons";
+import { useHiddenWidgetsStore } from "~/lib/ui/state";
 import { editedWidgetLayoutAtom } from "~/lib/ui/store";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import ErrorWidget from "~/server/widgets/ErrorWidget";
@@ -22,10 +23,14 @@ const WidgetWrapper = forwardRef(function InnerWidgetWrapper(
   props: Props & React.HTMLProps<HTMLDivElement>,
   ref: React.Ref<HTMLDivElement>,
 ) {
-  const [, setEditedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
+  const [editedWidgetLayout, setEditedWidgetLayout] = useAtom(
+    editedWidgetLayoutAtom,
+  );
   const currentScreenSize = useDetectScreenSize();
   const router = useRouter();
   const showToast = useToast();
+
+  const hideWidget = useHiddenWidgetsStore((state) => state.add);
 
   const getAllLayoutsQuery = api.layout.getAll.useQuery(undefined, {
     enabled: false,
@@ -49,11 +54,25 @@ const WidgetWrapper = forwardRef(function InnerWidgetWrapper(
   });
 
   function handleHideWidget() {
-    void hideWidgetMutation.mutate({
-      hide: true,
-      screenSize: currentScreenSize,
-      widget: props.widget,
-    });
+    hideWidget(props.widget, currentScreenSize, true);
+    showToast(`Hid widget`, "success");
+    const layout = editedWidgetLayout[currentScreenSize]?.find(
+      (widget) => widget.i === props.widget.id,
+    );
+    if (!layout) return;
+    const index = editedWidgetLayout[currentScreenSize]?.indexOf(layout) ?? -1;
+    if (index === -1) return;
+
+    editedWidgetLayout[currentScreenSize]?.splice(index, 1);
+
+    setEditedWidgetLayout({ ...editedWidgetLayout });
+
+    // const transformed = transformLayoutsForGrid(res.data, false);
+    // void hideWidgetMutation.mutate({
+    //   hide: true,
+    //   screenSize: currentScreenSize,
+    //   widget: props.widget,
+    // });
   }
 
   function handleNavigate(path: string) {

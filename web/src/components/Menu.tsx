@@ -20,6 +20,7 @@ import {
   penIcon,
   signOutIcon,
 } from "~/lib/ui/icons";
+import { useHiddenWidgetsStore } from "~/lib/ui/state";
 import {
   editModeAtom,
   editedWidgetLayoutAtom,
@@ -33,6 +34,7 @@ export default function NewMenu() {
 
   const router = useRouter();
   const showToast = useToast();
+  const hiddenWidgets = useHiddenWidgetsStore((state) => state.widgets);
 
   const setWidgetLayoutMutation = api.layout.setAll.useMutation({
     onSuccess: () => {
@@ -42,6 +44,16 @@ export default function NewMenu() {
     },
     onError: (error) => {
       showToast(`Saving failed`, "error");
+      Log(error, "error");
+    },
+  });
+
+  const hideWidgetMutation = api.layout.setHide.useMutation({
+    onSuccess: () => {
+      showToast("Revealed widget successfully", "success");
+    },
+    onError: (error) => {
+      showToast("Revealing failed", "error");
       Log(error, "error");
     },
   });
@@ -63,6 +75,7 @@ export default function NewMenu() {
   function handleSaveLayout() {
     setEditMode(false);
     setWidgetLayoutMutation.mutate({ layout: editedWidgetLayout });
+    hideWidgetMutation.mutate(hiddenWidgets);
   }
 
   function handleNavigate(path: string) {

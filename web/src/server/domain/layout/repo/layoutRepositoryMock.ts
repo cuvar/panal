@@ -16,6 +16,10 @@ export class LayoutRepositoryMock implements LayoutRepository {
     //
   }
 
+  async setMany(widgets: AdjustedWidgetLayout[]): Promise<void> {
+    //
+  }
+
   async setAll(widgets: AdjustedWidgetLayout[]): Promise<void> {
     //
   }
