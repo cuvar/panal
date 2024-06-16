@@ -4,7 +4,7 @@ import { type AppType } from "next/app";
 import { api } from "~/lib/api/api";
 
 import Head from "next/head";
-import Providers from "~/lib/ui/providers";
+import Providers from "~/lib/ui/context/providers";
 import "~/styles/globals.css";
 
 const MyApp: AppType<{ session: Session | null }> = ({
