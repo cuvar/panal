@@ -1,10 +1,10 @@
 import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
 
 import { api } from "~/lib/api/api";
 
 import Head from "next/head";
+import Providers from "~/lib/ui/providers";
 import "~/styles/globals.css";
 
 const MyApp: AppType<{ session: Session | null }> = ({
@@ -12,7 +12,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <SessionProvider session={session}>
+    <Providers session={session}>
       <Head>
         <meta name="theme-color" content="#0e3039" />
         <meta
@@ -109,7 +109,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
       </Head>
       <Component {...pageProps} />
-    </SessionProvider>
+    </Providers>
   );
 };
 
