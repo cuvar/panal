@@ -1,7 +1,6 @@
 import { useAtom } from "jotai";
 import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
 import { addWidgetToScreenSize } from "~/client/services/transformLayoutsService";
-import { api } from "~/lib/api/api";
 import { editedWidgetLayoutAtom, widgetLayoutAtom } from "~/lib/ui/store";
 import type { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 
@@ -13,7 +12,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/components/ui/sheet";
-import Log from "~/lib/log/log";
 import { getNameForWidgetType } from "~/lib/service/widget.service";
 import { useDetectScreenSize, useToast } from "~/lib/ui/hooks";
 import { eyeIcon } from "~/lib/ui/icons";
@@ -33,42 +31,8 @@ export default function WidgetSidebar() {
   );
   const unhideWidget = useHiddenWidgetsStore((state) => state.remove);
 
-  // const getAllLayoutsQuery = api.layout.getAll.useQuery(undefined, {
-  //   enabled: false,
-  // });
-
-  const getHiddenLayoutsQuery = api.layout.getAllHidden.useQuery(
-    {
-      screenSize: currentScreenSize,
-    },
-    {
-      onSuccess: (data) => {
-        Log(data);
-      },
-    },
-  );
-
-  // const hideWidgetMutation = api.layout.setHide.useMutation({
-  //   onSuccess: async () => {
-  //     await getHiddenLayoutsQuery.refetch();
-  //     const res = await getAllLayoutsQuery.refetch();
-  //     showToast("Revealed widget successfully", "success");
-  //     if (res.data) {
-  //       const transformed = transformLayoutsForGrid(res.data, false);
-  //       Log(transformed);
-  //       setEditedWidgetLayout(transformed);
-  //       setWidgetLayout(makeLayoutsStatic(transformed, false));
-  //     }
-  //   },
-  //   onError: (error) => {
-  //     showToast("Revealing failed", "error");
-  //     Log(error, "error");
-  //   },
-  // });
-
   function handleAddToLayout(_widget: AdjustedWidgetLayout) {
     unhideWidget(_widget, currentScreenSize);
-    showToast(`Revealed widget`, "success");
     if (!editedWidgetLayout[currentScreenSize]) return;
     const newLayout = addWidgetToScreenSize(
       _widget,
@@ -78,13 +42,8 @@ export default function WidgetSidebar() {
     );
     setEditedWidgetLayout(newLayout);
     setWidgetLayout(makeLayoutsStatic(newLayout, false));
-
-    // hideWidgetMutation.mutate({
-    //   hide: false,
-    //   screenSize: currentScreenSize,
-    //   widget: widget,
-    // });
   }
+
   return (
     <Sheet>
       <SheetTrigger>{eyeIcon}</SheetTrigger>

@@ -3,10 +3,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { forwardRef } from "react";
 import mapWidgets from "~/client/services/mapWidgetsService";
-import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
 import { api } from "~/lib/api/api";
-import Log from "~/lib/log/log";
-import { useDetectScreenSize, useToast } from "~/lib/ui/hooks";
+import { useDetectScreenSize } from "~/lib/ui/hooks";
 import { cogIcon, eyeOffIcon } from "~/lib/ui/icons";
 import { useHiddenWidgetsStore } from "~/lib/ui/state";
 import { editedWidgetLayoutAtom } from "~/lib/ui/store";
@@ -28,34 +26,15 @@ const WidgetWrapper = forwardRef(function InnerWidgetWrapper(
   );
   const currentScreenSize = useDetectScreenSize();
   const router = useRouter();
-  const showToast = useToast();
 
   const hideWidget = useHiddenWidgetsStore((state) => state.add);
 
-  const getAllLayoutsQuery = api.layout.getAll.useQuery(undefined, {
-    enabled: false,
-  });
   const getConfigQuery = api.data.getDataForWidget.useQuery({
     id: props.widget.id,
-  });
-  const hideWidgetMutation = api.layout.setHide.useMutation({
-    onSuccess: async () => {
-      const res = await getAllLayoutsQuery.refetch();
-      showToast(`Hid widget successfully`, "success");
-      if (res.data) {
-        const transformed = transformLayoutsForGrid(res.data, false);
-        setEditedWidgetLayout(transformed);
-      }
-    },
-    onError: (error) => {
-      showToast(`Hiding failed`, "error");
-      Log(error, "error");
-    },
   });
 
   function handleHideWidget() {
     hideWidget(props.widget, currentScreenSize, true);
-    showToast(`Hid widget`, "success");
     const layout = editedWidgetLayout[currentScreenSize]?.find(
       (widget) => widget.i === props.widget.id,
     );
@@ -66,13 +45,6 @@ const WidgetWrapper = forwardRef(function InnerWidgetWrapper(
     editedWidgetLayout[currentScreenSize]?.splice(index, 1);
 
     setEditedWidgetLayout({ ...editedWidgetLayout });
-
-    // const transformed = transformLayoutsForGrid(res.data, false);
-    // void hideWidgetMutation.mutate({
-    //   hide: true,
-    //   screenSize: currentScreenSize,
-    //   widget: props.widget,
-    // });
   }
 
   function handleNavigate(path: string) {
