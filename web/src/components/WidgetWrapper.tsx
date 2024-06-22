@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 import React, { forwardRef } from "react";
 import mapWidgets from "~/client/services/mapWidgetsService";
 import { api } from "~/lib/api/api";
-import { useDetectScreenSize } from "~/lib/ui/hooks";
+import Log from "~/lib/log/log";
+import { useCommandManager, useDetectScreenSize } from "~/lib/ui/hooks";
 import { cogIcon, eyeOffIcon } from "~/lib/ui/icons";
-import { useHiddenWidgetsStore } from "~/lib/ui/state";
 import { editedWidgetLayoutAtom } from "~/lib/ui/store";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import ErrorWidget from "~/server/widgets/ErrorWidget";
@@ -26,15 +26,14 @@ const WidgetWrapper = forwardRef(function InnerWidgetWrapper(
   );
   const currentScreenSize = useDetectScreenSize();
   const router = useRouter();
-
-  const hideWidget = useHiddenWidgetsStore((state) => state.add);
+  const commandManager = useCommandManager();
 
   const getConfigQuery = api.data.getDataForWidget.useQuery({
     id: props.widget.id,
   });
 
   function handleHideWidget() {
-    hideWidget(props.widget, currentScreenSize, true);
+    commandManager.hideWidget(props.widget, currentScreenSize);
     const layout = editedWidgetLayout[currentScreenSize]?.find(
       (widget) => widget.i === props.widget.id,
     );
@@ -48,7 +47,7 @@ const WidgetWrapper = forwardRef(function InnerWidgetWrapper(
   }
 
   function handleNavigate(path: string) {
-    console.log("navigating to", path);
+    Log(`navigating to ${path}`);
     void router.push(path);
   }
 

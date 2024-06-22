@@ -124,7 +124,7 @@ export const layoutRouter = createTRPCRouter({
         });
       }
     }),
-  setHide: protectedProcedure
+  hideWidgets: protectedProcedure
     .input(z.array(HideInfo.getSchema()))
     .mutation(async ({ input }) => {
       try {

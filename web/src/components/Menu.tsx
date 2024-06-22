@@ -11,7 +11,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { api } from "~/lib/api/api";
 import Log from "~/lib/log/log";
-import { useToast } from "~/lib/ui/hooks";
+import { useCommandManager, useToast } from "~/lib/ui/hooks";
 import {
   checkIcon,
   cogIcon,
@@ -34,6 +34,7 @@ export default function NewMenu() {
 
   const router = useRouter();
   const showToast = useToast();
+  const commandManager = useCommandManager();
   const hiddenWidgets = useHiddenWidgetsStore((state) => state.widgets);
 
   const setWidgetLayoutMutation = api.layout.setAll.useMutation({
@@ -48,7 +49,7 @@ export default function NewMenu() {
     },
   });
 
-  const hideWidgetMutation = api.layout.setHide.useMutation({
+  const hideWidgetMutation = api.layout.hideWidgets.useMutation({
     onError: (error) => {
       showToast("Hiding update ", "error");
       Log(error, "error");
@@ -64,15 +65,20 @@ export default function NewMenu() {
   function handleEditLayout() {
     if (editMode) {
       setEditMode(false);
+      commandManager.abortEdit(() => {
+        // TODO: implement
+      });
     } else {
       setEditMode(true);
     }
   }
 
   function handleSaveLayout() {
-    setEditMode(false);
-    setWidgetLayoutMutation.mutate({ layout: editedWidgetLayout });
-    hideWidgetMutation.mutate(hiddenWidgets);
+    commandManager.saveLayout(() => {
+      setEditMode(false);
+      setWidgetLayoutMutation.mutate({ layout: editedWidgetLayout });
+      hideWidgetMutation.mutate(hiddenWidgets);
+    });
   }
 
   function handleNavigate(path: string) {

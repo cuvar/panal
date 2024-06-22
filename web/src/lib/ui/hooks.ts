@@ -1,7 +1,8 @@
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BREAKPOINTS } from "../basic/const";
 import type { ScreenSize, ToastType } from "../types/types";
+import { CommandContext } from "./context/command";
 import { toastTextAtom, toastTypeAtom } from "./store";
 
 /**
@@ -72,4 +73,14 @@ export function useToast() {
     }, delay);
   }
   return showToast;
+}
+
+/**
+ * Hook for getting the command manager instance
+ * @returns {CommandManager} The command manager instance
+ */
+export function useCommandManager() {
+  const commandManager = useContext(CommandContext);
+
+  return commandManager;
 }
