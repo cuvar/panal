@@ -14,7 +14,6 @@ import Log from "~/lib/log/log";
 import { useCommandManager, useToast } from "~/lib/ui/hooks";
 import {
   checkIcon,
-  cogIcon,
   crossIcon,
   ellipsisIcon,
   penIcon,
@@ -109,9 +108,6 @@ export default function NewMenu() {
           </DropdownMenuItem>
         )}
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => handleNavigate("/settings")}>
-          <span>{cogIcon}</span>Settings
-        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => handleLogout()}>
           <span>{signOutIcon}</span>Sign out
