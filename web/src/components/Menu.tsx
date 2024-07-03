@@ -108,7 +108,6 @@ export default function NewMenu() {
           </DropdownMenuItem>
         )}
         <DropdownMenuSeparator />
-        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => handleLogout()}>
           <span>{signOutIcon}</span>Sign out
         </DropdownMenuItem>
