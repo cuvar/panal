@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
@@ -16,11 +17,11 @@ export default class InitEditCommand implements Command {
   run() {
     useBoundStore.getState().initEditMode();
     const widgetLayout = useBoundStore.getState().widgetLayout;
-    // deepcopy necessary because of immer middleware
-    const moveableLayout = makeLayoutsStatic(
-      structuredClone(widgetLayout),
-      false,
-    );
+    const moveableLayout = produce(widgetLayout, (draft) => {
+      const moveableLayout = makeLayoutsStatic(draft, false);
+      return moveableLayout;
+    });
+
     useBoundStore.getState().setEditedWidgetLayout(moveableLayout);
   }
 

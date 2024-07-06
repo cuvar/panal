@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import { type StateCreator } from "zustand";
 import { type ScreenSize } from "~/lib/types/types";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
@@ -33,15 +34,18 @@ const createHiddenWidgetsSlice: StateCreator<HiddenWidgetsSlice> = (set) => ({
   removeHiddenWidget: (widget, screenSize) =>
     set((state) => {
       // ! Don't know whether this works because of object references
-      const hiddenWidget = state.hiddenWidgets.find(
-        (w) => w.widget.id === widget.id && w.screenSize === screenSize,
-      );
-      if (!hiddenWidget) return state;
-      const index = state.hiddenWidgets.indexOf(hiddenWidget);
-      if (index !== -1) {
-        state.hiddenWidgets.splice(index, 1);
-      }
-      return { hiddenWidgets: state.hiddenWidgets };
+      const newState = produce(state.hiddenWidgets, (draft) => {
+        const hiddenWidget = draft.find(
+          (w) => w.widget.id === widget.id && w.screenSize === screenSize,
+        );
+        if (!hiddenWidget) return draft;
+        const index = draft.indexOf(hiddenWidget);
+        if (index !== -1) {
+          draft.splice(index, 1);
+        }
+        return draft;
+      });
+      return { hiddenWidgets: newState };
     }),
   clearHiddenWidgets: () => set({ hiddenWidgets: [] }),
 });

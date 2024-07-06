@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
 import { addWidgetToScreenSize } from "~/client/services/transformLayoutsService";
 import { type ScreenSize } from "~/lib/types/types";
@@ -28,7 +29,6 @@ export default class UnhideWidgetCommand implements Command {
     useBoundStore
       .getState()
       .removeHiddenWidget(this.adjustedWidgetLayout, this.screenSize);
-
     this._updateLayout();
   }
 
@@ -39,17 +39,23 @@ export default class UnhideWidgetCommand implements Command {
       useBoundStore.getState().setEditedWidgetLayout;
     const setWidgetLayout = useBoundStore.getState().setWidgetLayout;
 
-    if (!editMode || !editedWidgetLayout[this.screenSize]) return; // only allow in editMode
-    const newLayout = addWidgetToScreenSize(
-      this.adjustedWidgetLayout,
-      this.screenSize,
-      editedWidgetLayout,
-      false,
-    );
+    const newLayout = produce(editedWidgetLayout, (draft) => {
+      if (!editMode || !editedWidgetLayout[this.screenSize]) return draft;
+      const adjustedLayout = addWidgetToScreenSize(
+        this.adjustedWidgetLayout,
+        this.screenSize,
+        draft,
+        false,
+      );
+      return adjustedLayout;
+    });
+
+    const moveableLayout = produce(newLayout, (draft) => {
+      const moveableLayout = makeLayoutsStatic(draft, false);
+      return moveableLayout;
+    });
 
     setEditedWidgetLayout(newLayout);
-    // deepcopy necessary because of immer middleware
-    const moveableLayout = makeLayoutsStatic(structuredClone(newLayout), false);
     setWidgetLayout(moveableLayout);
   }
 

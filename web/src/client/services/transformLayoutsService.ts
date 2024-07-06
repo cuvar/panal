@@ -70,11 +70,15 @@ export function addWidgetToScreenSize(
     static: makeStatic,
   };
 
+  if (isEmptyPositioning(layout)) {
+    layout.h = layout.minH;
+    layout.w = layout.minW;
+  }
+
   if (
     layouts[screenSize] !== undefined &&
     isScreenSize(screenSize) &&
-    Array.isArray(layouts[screenSize]) &&
-    !isEmptyPositioning(layout)
+    Array.isArray(layouts[screenSize])
   ) {
     layouts[screenSize]!.push(layout);
   }
