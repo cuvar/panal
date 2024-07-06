@@ -80,10 +80,6 @@ export default function NewMenu() {
     });
   }
 
-  function handleNavigate(path: string) {
-    void router.push(path);
-  }
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>{ellipsisIcon}</DropdownMenuTrigger>

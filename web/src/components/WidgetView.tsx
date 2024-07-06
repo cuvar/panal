@@ -31,7 +31,9 @@ export default function WidgetView(props: Props) {
   const currentScreenSize = useDetectScreenSize();
   const [editMode] = useAtom(editModeAtom);
   const [widgetLayout, setWidgetLayout] = useAtom(widgetLayoutAtom);
-  const [, setEditedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
+  const [editedWidgetLayout, setEditedWidgetLayout] = useAtom(
+    editedWidgetLayoutAtom,
+  );
 
   const adjustedBreakpoints = Object.entries(BREAKPOINTS).reduce(
     (acc, [key, value]) => {
@@ -46,6 +48,15 @@ export default function WidgetView(props: Props) {
     setWidgetLayout(transformedLayouts);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode]);
+
+  useEffect(() => {
+    if (editMode) {
+      setWidgetLayout(editedWidgetLayout);
+    }
+    // const transformedLayouts = transformLayoutsForGrid(props.layout, !editMode);
+    // setWidgetLayout(transformedLayouts);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editedWidgetLayout]);
 
   function handleLayoutChange(
     layout: ReactGridLayout.Layout[],
@@ -81,8 +92,12 @@ export default function WidgetView(props: Props) {
             (widget) =>
               !getHidingClasses(widget.layout).includes(currentScreenSize) && (
                 // ! this is needed for ResizeHandle to be visible
-                <div key={widget.id} className="flex">
-                  <WidgetWrapper editMode={editMode} widget={widget} />
+                <div key={widget.id} className="">
+                  <WidgetWrapper
+                    key={widget.id}
+                    editMode={editMode}
+                    widget={widget}
+                  />
                 </div>
               ),
           )}
