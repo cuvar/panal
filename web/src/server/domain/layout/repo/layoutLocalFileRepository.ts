@@ -29,7 +29,7 @@ export class LayoutLocalFileRepository implements LayoutRepository {
       }
       return res;
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_GET_FAILED, error);
+      throw new AppError(codes.REPOSITORY_GET_LAYOUT_FAILED, error);
     }
   }
 
@@ -51,7 +51,7 @@ export class LayoutLocalFileRepository implements LayoutRepository {
 
       return config;
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_GET_ALL_FAILED, error);
+      throw new AppError(codes.REPOSITORY_GET_ALL_LAYOUT_FAILED, error);
     }
   }
 
@@ -67,7 +67,7 @@ export class LayoutLocalFileRepository implements LayoutRepository {
 
       await this.reader.write(this.file, JSON.stringify(currentAll));
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_SET_FAILED, error);
+      throw new AppError(codes.REPOSITORY_SET_LAYOUT_FAILED, error);
     }
   }
 
@@ -86,7 +86,7 @@ export class LayoutLocalFileRepository implements LayoutRepository {
 
       await this.reader.write(this.file, JSON.stringify(currentAll));
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_SET_FAILED, error);
+      throw new AppError(codes.REPOSITORY_SET_MANY_LAYOUT_FAILED, error);
     }
   }
 
@@ -94,7 +94,7 @@ export class LayoutLocalFileRepository implements LayoutRepository {
     try {
       await this.reader.write(this.file, JSON.stringify(widgets));
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_SET_ALL_FAILED, error);
+      throw new AppError(codes.REPOSITORY_SET_ALL_LAYOUT_FAILED, error);
     }
   }
 }

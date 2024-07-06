@@ -34,7 +34,7 @@ export class LayoutUpstashRepository implements LayoutRepository {
       }
       return res;
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_GET_FAILED, error);
+      throw new AppError(codes.REPOSITORY_GET_LAYOUT_FAILED, error);
     }
   }
 
@@ -54,7 +54,7 @@ export class LayoutUpstashRepository implements LayoutRepository {
 
       return config;
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_GET_ALL_FAILED, error);
+      throw new AppError(codes.REPOSITORY_GET_ALL_LAYOUT_FAILED, error);
     }
   }
 
@@ -70,7 +70,7 @@ export class LayoutUpstashRepository implements LayoutRepository {
 
       await this.redis.set(UPSTASH_LAYOUT_KEY, JSON.stringify(currentAll));
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_SET_FAILED, error);
+      throw new AppError(codes.REPOSITORY_SET_LAYOUT_FAILED, error);
     }
   }
 
@@ -89,7 +89,7 @@ export class LayoutUpstashRepository implements LayoutRepository {
 
       await this.redis.set(UPSTASH_LAYOUT_KEY, JSON.stringify(currentAll));
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_SET_FAILED, error);
+      throw new AppError(codes.REPOSITORY_SET_MANY_LAYOUT_FAILED, error);
     }
   }
 
@@ -97,7 +97,7 @@ export class LayoutUpstashRepository implements LayoutRepository {
     try {
       await this.redis.set(UPSTASH_LAYOUT_KEY, JSON.stringify(widgets));
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_SET_ALL_FAILED, error);
+      throw new AppError(codes.REPOSITORY_SET_ALL_LAYOUT_FAILED, error);
     }
   }
 }
