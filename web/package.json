@@ -34,6 +34,7 @@
     "clsx": "^2.1.1",
     "ical": "^0.8.0",
     "ics": "^3.5.0",
+    "immer": "^10.1.1",
     "jest-environment-jsdom": "^29.7.0",
     "jotai": "^2.4.3",
     "lucide-react": "^0.379.0",
