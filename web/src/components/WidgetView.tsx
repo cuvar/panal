@@ -8,16 +8,11 @@ import {
   GRID_ROW_HEIGHT,
 } from "~/lib/basic/const";
 
-import { useAtom } from "jotai";
 import { useEffect } from "react";
 import getHidingClasses from "~/client/services/getHidingClassesService";
-import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
-import { useDetectScreenSize } from "~/lib/ui/hooks";
-import {
-  editModeAtom,
-  editedWidgetLayoutAtom,
-  widgetLayoutAtom,
-} from "~/lib/ui/store";
+import { type RGLayout } from "~/lib/types/types";
+import { useCommandManager, useDetectScreenSize } from "~/lib/ui/hooks";
+import { useBoundStore } from "~/lib/ui/state";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import ResizeHandle from "./ResizeHandle";
 import WidgetWrapper from "./WidgetWrapper";
@@ -28,12 +23,12 @@ type Props = {
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 export default function WidgetView(props: Props) {
+  const editMode = useBoundStore((state) => state.editMode);
+  const widgetLayout = useBoundStore((state) => state.widgetLayout);
+  const editedWidgetLayout = useBoundStore((state) => state.editedWidgetLayout);
+
   const currentScreenSize = useDetectScreenSize();
-  const [editMode] = useAtom(editModeAtom);
-  const [widgetLayout, setWidgetLayout] = useAtom(widgetLayoutAtom);
-  const [editedWidgetLayout, setEditedWidgetLayout] = useAtom(
-    editedWidgetLayoutAtom,
-  );
+  const commandManager = useCommandManager();
 
   const adjustedBreakpoints = Object.entries(BREAKPOINTS).reduce(
     (acc, [key, value]) => {
@@ -44,27 +39,18 @@ export default function WidgetView(props: Props) {
   );
 
   useEffect(() => {
-    const transformedLayouts = transformLayoutsForGrid(props.layout, !editMode);
-    setWidgetLayout(transformedLayouts);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editMode]);
-
-  useEffect(() => {
-    if (editMode) {
-      setWidgetLayout(editedWidgetLayout);
-    }
-    // const transformedLayouts = transformLayoutsForGrid(props.layout, !editMode);
-    // setWidgetLayout(transformedLayouts);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editedWidgetLayout]);
+    commandManager.initLayout(props.layout);
+  }, []);
 
   function handleLayoutChange(
-    layout: ReactGridLayout.Layout[],
-    layouts: ReactGridLayout.Layouts,
+    _layout: ReactGridLayout.Layout[],
+    layouts: RGLayout,
   ) {
-    if (!editMode) return;
-    setEditedWidgetLayout(layouts);
+    if (editMode) {
+      commandManager.updateLayout(layouts);
+    }
   }
+
   return (
     <div className="z-10 h-screen w-full max-w-[1280px]">
       {props.layout.length === 0 ? (
@@ -80,7 +66,7 @@ export default function WidgetView(props: Props) {
           breakpoints={{ ...adjustedBreakpoints }}
           cols={BREAKPOINT_COLS}
           rowHeight={GRID_ROW_HEIGHT}
-          layouts={widgetLayout}
+          layouts={editMode ? editedWidgetLayout : widgetLayout}
           maxRows={GRID_MAX_ROW}
           compactType={null}
           autoSize={false}

@@ -1,7 +1,5 @@
-import { useAtom } from "jotai";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,28 +17,21 @@ import {
   penIcon,
   signOutIcon,
 } from "~/lib/ui/icons";
-import { useHiddenWidgetsStore } from "~/lib/ui/state";
-import {
-  editModeAtom,
-  editedWidgetLayoutAtom,
-  widgetLayoutAtom,
-} from "~/lib/ui/store";
+import { useBoundStore } from "~/lib/ui/state";
 
 export default function NewMenu() {
-  const [editMode, setEditMode] = useAtom(editModeAtom);
-  const [, setWidgetLayout] = useAtom(widgetLayoutAtom);
-  const [editedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
+  const editMode = useBoundStore((state) => state.editMode);
+  const editedWidgetLayout = useBoundStore((state) => state.editedWidgetLayout);
+  const hiddenWidgets = useBoundStore((state) => state.hiddenWidgets);
 
   const router = useRouter();
   const showToast = useToast();
   const commandManager = useCommandManager();
-  const hiddenWidgets = useHiddenWidgetsStore((state) => state.widgets);
 
   const setWidgetLayoutMutation = api.layout.setAll.useMutation({
     onSuccess: () => {
-      setWidgetLayout(makeLayoutsStatic(editedWidgetLayout, true));
       showToast(`Saved successfully`, "success");
-      location.reload();
+      router.reload();
     },
     onError: (error) => {
       showToast(`Saving failed`, "error");
@@ -63,18 +54,15 @@ export default function NewMenu() {
 
   function handleEditLayout() {
     if (editMode) {
-      setEditMode(false);
-      commandManager.abortEdit(() => {
-        // TODO: implement
-      });
+      commandManager.abortEdit();
     } else {
-      setEditMode(true);
+      commandManager.initEdit();
     }
   }
 
   function handleSaveLayout() {
-    commandManager.saveLayout(() => {
-      setEditMode(false);
+    // TODO: COMMAND
+    commandManager.saveEditLayout(() => {
       setWidgetLayoutMutation.mutate({ layout: editedWidgetLayout });
       hideWidgetMutation.mutate(hiddenWidgets);
     });

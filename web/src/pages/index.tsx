@@ -11,6 +11,7 @@ const Home: NextPage = () => {
     onSuccess: (data) => {
       Log(data);
     },
+    refetchOnWindowFocus: false,
   });
 
   if (widgetLayoutQuery.error) {

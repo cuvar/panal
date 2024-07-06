@@ -1,11 +1,3 @@
-import { useAtom } from "jotai";
-import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
-import { addWidgetToScreenSize } from "~/client/services/transformLayoutsService";
-import {
-  editModeAtom,
-  editedWidgetLayoutAtom,
-  widgetLayoutAtom,
-} from "~/lib/ui/store";
 import type { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 
 import Link from "next/link";
@@ -23,19 +15,15 @@ import Log from "~/lib/log/log";
 import { getNameForWidgetType } from "~/lib/service/widget.service";
 import { useCommandManager, useDetectScreenSize } from "~/lib/ui/hooks";
 import { cogIcon, eyeIcon } from "~/lib/ui/icons";
-import { useHiddenWidgetsStore } from "~/lib/ui/state";
+import { useBoundStore } from "~/lib/ui/state";
 import { Button } from "./ui/button";
 
 export default function WidgetSidebar() {
-  const [editMode] = useAtom(editModeAtom);
-  const [editedWidgetLayout, setEditedWidgetLayout] = useAtom(
-    editedWidgetLayoutAtom,
-  );
-  const [, setWidgetLayout] = useAtom(widgetLayoutAtom);
   const commandManager = useCommandManager();
-
   const currentScreenSize = useDetectScreenSize();
-  const allHiddenWidgets = useHiddenWidgetsStore((state) => state.widgets);
+
+  const editMode = useBoundStore((state) => state.editMode);
+  const allHiddenWidgets = useBoundStore((state) => state.hiddenWidgets);
   const hiddenWidgetsForScreen = allHiddenWidgets.filter(
     (w) => w.screenSize === currentScreenSize,
   );
@@ -63,15 +51,6 @@ export default function WidgetSidebar() {
 
   function handleAddToLayout(_widget: AdjustedWidgetLayout) {
     commandManager.unhideWidget(_widget, currentScreenSize);
-    if (!editMode || !editedWidgetLayout[currentScreenSize]) return; // only allow in editMode
-    const newLayout = addWidgetToScreenSize(
-      _widget,
-      currentScreenSize,
-      editedWidgetLayout,
-      false,
-    );
-    setEditedWidgetLayout(newLayout);
-    setWidgetLayout(makeLayoutsStatic(newLayout, false));
   }
 
   return (
