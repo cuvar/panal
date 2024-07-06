@@ -1,7 +1,6 @@
-import type GridLayout from "react-grid-layout";
 import { isScreenSize } from "~/lib/guards/other";
 import { isEmptyPositioning } from "~/lib/service/positioning.service";
-import { type ScreenSize } from "~/lib/types/types";
+import { type RGLayout, type ScreenSize } from "~/lib/types/types";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import {
   getMinHeightForWidget,
@@ -9,16 +8,16 @@ import {
 } from "../../server/domain/layout/services/computeSizeForWidgetService";
 
 /**
- * Transforms AdjustedWidgetLayout[] into GridLayout.Layouts for react-grid-layout
+ * Transforms AdjustedWidgetLayout[] into RGLayout for react-grid-layout
  * @param {AdjustedWidgetLayout[]} data AdjustedWidgetLayout array to transform
  * @param {boolean} makeStatic Indicates if the widgets should be static or not
- * @returns {GridLayout.Layouts} transformed layouts
+ * @returns {RGLayout} transformed layouts
  */
 export default function transformLayoutsForGrid(
   data: AdjustedWidgetLayout[],
   makeStatic: boolean,
-): GridLayout.Layouts {
-  const layouts: GridLayout.Layouts = {
+): RGLayout {
+  const layouts: RGLayout = {
     xl: [],
     lg: [],
     md: [],
@@ -60,9 +59,9 @@ export default function transformLayoutsForGrid(
 export function addWidgetToScreenSize(
   widget: AdjustedWidgetLayout,
   screenSize: ScreenSize,
-  layouts: GridLayout.Layouts,
+  layouts: RGLayout,
   makeStatic: boolean,
-): GridLayout.Layouts {
+): RGLayout {
   const layout = {
     ...widget.layout[screenSize],
     i: widget.id,

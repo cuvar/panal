@@ -1,19 +1,18 @@
-import type GridLayout from "react-grid-layout";
 import { BREAKPOINTS_ORDER } from "~/lib/basic/const";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
-import type { ScreenSize } from "~/lib/types/types";
+import type { RGLayout, ScreenSize } from "~/lib/types/types";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 
 /**
- * Updates the layout values of the given AdjustedWidgetLayout[] with the given GridLayout.Layouts
- * @param {GridLayout.Layouts} newLayouts Layout updates for various ScreenSizes
+ * Updates the layout values of the given AdjustedWidgetLayout[] with the given RGLayout
+ * @param {RGLayout} newLayouts Layout updates for various ScreenSizes
  * @param {AdjustedWidgetLayout[]} widgetLayout AdjustedWidgetLayout[] to update
  * @returns {AdjustedWidgetLayout[]} Updated AdjustedWidgetLayout[]
  */
 export default function updateWidgetLayoutService(
-  newLayouts: GridLayout.Layouts,
+  newLayouts: RGLayout,
   widgetLayout: AdjustedWidgetLayout[],
 ): AdjustedWidgetLayout[] {
   if (!newLayouts) {
@@ -42,13 +41,13 @@ export default function updateWidgetLayoutService(
 }
 
 /**
- * Updates the layout values of the given AdjustedWidgetLayout[] with the given GridLayout.Layouts for the given ScreenSize
- * @param {GridLayout.Layouts} newLayouts new layout values for the given ScreenSize
+ * Updates the layout values of the given AdjustedWidgetLayout[] with the given RGLayout for the given ScreenSize
+ * @param {RGLayout} newLayouts new layout values for the given ScreenSize
  * @param {AdjustedWidgetLayout[]} widgetLayout AdjustedWidgetLayout[] to update
  * @param {ScreenSize} breakpoint given ScreenSize
  */
 function updateForScreenSize(
-  newLayouts: GridLayout.Layouts,
+  newLayouts: RGLayout,
   widgetLayout: AdjustedWidgetLayout[],
   breakpoint: ScreenSize,
 ) {
