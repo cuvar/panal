@@ -7,6 +7,7 @@ import {
 } from "~/components/ui/context-menu";
 import Log from "~/lib/log/log";
 import { useCommandManager, useDetectScreenSize } from "~/lib/ui/hooks";
+import { useBoundStore } from "~/lib/ui/state";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 
 type Props = {
@@ -18,6 +19,7 @@ export default function WidgetContextMenu(props: Props) {
   const currentScreenSize = useDetectScreenSize();
   const router = useRouter();
   const commandManager = useCommandManager();
+  const editMode = useBoundStore((state) => state.editMode);
 
   function handleHideWidget() {
     commandManager.hideWidget(props.widget, currentScreenSize);
@@ -32,9 +34,11 @@ export default function WidgetContextMenu(props: Props) {
     <ContextMenu>
       <ContextMenuTrigger>{props.children}</ContextMenuTrigger>
       <ContextMenuContent>
-        <ContextMenuItem onClick={handleHideWidget}>
-          Hide Widget
-        </ContextMenuItem>
+        {editMode && (
+          <ContextMenuItem onClick={handleHideWidget}>
+            Hide Widget
+          </ContextMenuItem>
+        )}
         <ContextMenuItem
           onClick={() => handleNavigate(`/w/${props.widget.id}`)}
         >
