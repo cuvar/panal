@@ -1,6 +1,8 @@
+import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
+import { addWidgetToScreenSize } from "~/client/services/transformLayoutsService";
 import { type ScreenSize } from "~/lib/types/types";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
-import { useHiddenWidgetsStore } from "../state";
+import { useBoundStore } from "../state";
 import { type Command } from "./command";
 
 export default class UnhideWidgetCommand implements Command {
@@ -23,14 +25,37 @@ export default class UnhideWidgetCommand implements Command {
   }
 
   run() {
-    useHiddenWidgetsStore
+    useBoundStore
       .getState()
-      .remove(this.adjustedWidgetLayout, this.screenSize);
+      .removeHiddenWidget(this.adjustedWidgetLayout, this.screenSize);
+
+    this._updateLayout();
+  }
+
+  _updateLayout() {
+    const editMode = useBoundStore.getState().editMode;
+    const editedWidgetLayout = useBoundStore.getState().editedWidgetLayout;
+    const setEditedWidgetLayout =
+      useBoundStore.getState().setEditedWidgetLayout;
+    const setWidgetLayout = useBoundStore.getState().setWidgetLayout;
+
+    if (!editMode || !editedWidgetLayout[this.screenSize]) return; // only allow in editMode
+    const newLayout = addWidgetToScreenSize(
+      this.adjustedWidgetLayout,
+      this.screenSize,
+      editedWidgetLayout,
+      false,
+    );
+
+    setEditedWidgetLayout(newLayout);
+    // deepcopy necessary because of immer middleware
+    const moveableLayout = makeLayoutsStatic(structuredClone(newLayout), false);
+    setWidgetLayout(moveableLayout);
   }
 
   rollback() {
-    useHiddenWidgetsStore
+    useBoundStore
       .getState()
-      .add(this.adjustedWidgetLayout, this.screenSize, true);
+      .addHiddenWidget(this.adjustedWidgetLayout, this.screenSize, true);
   }
 }

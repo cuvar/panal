@@ -1,3 +1,4 @@
+import { useBoundStore } from "../state";
 import { type Command } from "./command";
 import HideWidgetCommand from "./hideWidgetCommand";
 import UnhideWidgetCommand from "./unhideWidgetCommand";
@@ -8,15 +9,13 @@ export default class AbortEditCommand implements Command {
   session: string;
   history: Command[];
   batch: Command[];
-  callback: () => void;
 
-  constructor(session: string, history: Command[], callback: () => void) {
+  constructor(session: string, history: Command[]) {
     this.name = "abort-edit";
     this.description = "Abort changes made in layout edit mode";
     this.session = session;
     this.history = history;
     this.batch = [];
-    this.callback = callback;
   }
 
   run() {
@@ -33,7 +32,7 @@ export default class AbortEditCommand implements Command {
       command.rollback();
     });
 
-    this.callback();
+    useBoundStore.getState().exitEditMode();
   }
 
   rollback() {

@@ -3,13 +3,16 @@
 // ! -> rollback
 // ! moving widgets should be a command as well
 
-import { type ScreenSize } from "~/lib/types/types";
+import { type RGLayout, type ScreenSize } from "~/lib/types/types";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import AbortEditCommand from "./abortEditCommand";
 import { type Command } from "./command";
 import HideWidgetCommand from "./hideWidgetCommand";
+import InitEditCommand from "./initEditCommand";
+import InitLayoutCommand from "./initLayoutCommand";
 import SaveLayoutCommand from "./saveLayoutCommand";
 import UnhideWidgetCommand from "./unhideWidgetCommand";
+import UpdateLayoutCommand from "./updateLayoutCommand";
 
 export default class CommandManager {
   history: Command[];
@@ -65,18 +68,38 @@ export default class CommandManager {
     this.execute(command);
   }
 
-  saveLayout(callback: () => void) {
+  saveEditLayout(callback: () => void) {
     const command = new SaveLayoutCommand(this.session, this.history, callback);
     this.execute(command);
     this.history.push(command);
     this.refreshSession();
   }
 
-  abortEdit(callback: () => void) {
-    const command = new AbortEditCommand(this.session, this.history, callback);
+  initLayout(adjustedWidgetLayout: AdjustedWidgetLayout[]) {
+    const command = new InitLayoutCommand(this.session, adjustedWidgetLayout);
     this.execute(command);
     this.history.push(command);
     this.refreshSession();
+  }
+
+  updateLayout(layout: RGLayout) {
+    const command = new UpdateLayoutCommand(this.session, layout);
+    this.execute(command);
+    this.history.push(command);
+    this.refreshSession();
+  }
+
+  abortEdit() {
+    const abortCommand = new AbortEditCommand(this.session, this.history);
+    this.execute(abortCommand);
+    this.history.push(abortCommand);
+    this.refreshSession();
+  }
+
+  initEdit() {
+    const command = new InitEditCommand(this.session);
+    this.history.push(command);
+    this.execute(command);
   }
 
   undo() {

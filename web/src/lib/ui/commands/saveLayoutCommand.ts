@@ -1,3 +1,4 @@
+import { useBoundStore } from "../state";
 import { type Command } from "./command";
 import HideWidgetCommand from "./hideWidgetCommand";
 import UnhideWidgetCommand from "./unhideWidgetCommand";
@@ -27,6 +28,8 @@ export default class SaveLayoutCommand implements Command {
           command instanceof UnhideWidgetCommand);
     }) as (HideWidgetCommand | UnhideWidgetCommand)[];
     this.batch = editCommands;
+
+    useBoundStore.getState().exitEditMode();
 
     this.callback();
   }
