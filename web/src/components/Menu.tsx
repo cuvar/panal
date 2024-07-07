@@ -41,7 +41,7 @@ export default function NewMenu() {
 
   const hideWidgetMutation = api.layout.hideWidgets.useMutation({
     onError: (error) => {
-      showToast("Hiding update ", "error");
+      showToast("Hiding widgets failed", "error");
       Log(error, "error");
     },
   });
