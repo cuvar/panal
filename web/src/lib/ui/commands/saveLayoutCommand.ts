@@ -40,6 +40,7 @@ export default class SaveLayoutCommand implements Command {
     });
 
     useBoundStore.getState().setWidgetLayout(staticLayout);
+    // TODO: --> save also adjustedWidgetLayout -> maybe derive from widgetLayout, as widgetLayout is what the user wanted
 
     this.callback();
   }

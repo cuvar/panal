@@ -34,7 +34,7 @@ export default function updateWidgetLayoutService(
       );
       return;
     }
-    updateForScreenSize(newLayouts, widgetLayout, breakpoint);
+    widgetLayout = updateForScreenSize(newLayouts, widgetLayout, breakpoint);
   });
 
   return widgetLayout;
@@ -65,4 +65,5 @@ function updateForScreenSize(
       h: layout.h,
     });
   });
+  return widgetLayout;
 }

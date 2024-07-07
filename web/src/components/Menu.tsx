@@ -23,6 +23,9 @@ export default function NewMenu() {
   const editMode = useBoundStore((state) => state.editMode);
   const editedWidgetLayout = useBoundStore((state) => state.editedWidgetLayout);
   const apparentWidgets = useBoundStore((state) => state.apparentWidgets);
+  const adjustedWidgetLayouts = useBoundStore(
+    (state) => state.adjustedWidgetLayouts,
+  );
 
   const router = useRouter();
   const showToast = useToast();
@@ -63,7 +66,10 @@ export default function NewMenu() {
   function handleSaveLayout() {
     // TODO: COMMAND
     commandManager.saveEditLayout(() => {
-      setWidgetLayoutMutation.mutate({ layout: editedWidgetLayout });
+      setWidgetLayoutMutation.mutate({
+        layout: editedWidgetLayout,
+        awLayout: adjustedWidgetLayouts,
+      });
       hideWidgetMutation.mutate(apparentWidgets);
     });
   }

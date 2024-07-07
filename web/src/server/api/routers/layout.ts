@@ -61,11 +61,14 @@ export const layoutRouter = createTRPCRouter({
     .input(
       z.object({
         layout: widgetLayoutSchema,
+        awLayout: z.array(AdjustedWidgetLayout.getSchema()),
       }),
     )
     .mutation(async ({ input }) => {
       try {
-        const widgetLayout = await getLayoutRepository().getAll();
+        const widgetLayout = input.awLayout.map((w) => {
+          return new AdjustedWidgetLayout(w.id, w.type, w.layout);
+        });
         const updatedWidgets = updateWidgetLayoutService(
           input.layout,
           widgetLayout,
