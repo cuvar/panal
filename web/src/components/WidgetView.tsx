@@ -65,6 +65,7 @@ export default function WidgetView(props: Props) {
           maxRows={GRID_MAX_ROW}
           compactType={null}
           autoSize={false}
+          preventCollision={true}
           onLayoutChange={handleLayoutChange}
           isDroppable={true}
           resizeHandle={<ResizeHandle />}
