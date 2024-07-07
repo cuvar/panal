@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import { type StateCreator } from "zustand";
 import { type ScreenSize } from "~/lib/types/types";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
@@ -21,12 +22,16 @@ const createApparentWidgetsSlice: StateCreator<ApparentWidgetsSlice> = (
   apparentWidgets: [],
   addApparentWidget: (widget, screenSize, visible) =>
     set((state) => {
-      const existingWidget = state.apparentWidgets.find(
-        (w) => w.widget.id == widget.id,
-      ) ?? { widget, screenSize, visible: visible }; // this `visible` value is just a placeholder, below is more relevant
+      const newApparentWidgets = produce(state.apparentWidgets, (draft) => {
+        const existingWidget = draft.find((w) => w.widget.id == widget.id) ?? {
+          widget,
+          screenSize,
+          visible: visible, // this `visible` value is just a placeholder, below is more relevant
+        };
+        existingWidget.visible = visible;
+      });
 
-      existingWidget.visible = visible;
-      return { apparentWidgets: [...state.apparentWidgets, existingWidget] };
+      return { apparentWidgets: newApparentWidgets };
     }),
 });
 
