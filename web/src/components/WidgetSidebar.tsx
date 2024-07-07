@@ -34,12 +34,12 @@ export default function WidgetSidebar() {
 
   useEffect(() => {
     if (getAllHiddenQuery.status == "success") {
-      Log(getAllHiddenQuery.data);
+      Log("getAllHidden", "log", getAllHiddenQuery.data);
       getAllHiddenQuery.data.forEach((widget) => {
         commandManager.hideWidget(widget, currentScreenSize);
       });
     } else if (getAllHiddenQuery.status == "error") {
-      Log(getAllHiddenQuery.error);
+      Log("getAllHidden", "error", getAllHiddenQuery.error);
     }
   }, [
     commandManager,

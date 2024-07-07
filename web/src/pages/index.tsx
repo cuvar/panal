@@ -9,7 +9,7 @@ import LoadingSpinner from "~/sites/Loading";
 const Home: NextPage = () => {
   const widgetLayoutQuery = api.layout.getAll.useQuery(undefined, {
     onSuccess: (data) => {
-      Log(data);
+      Log("all layouts", "log", data);
     },
     refetchOnWindowFocus: false,
   });

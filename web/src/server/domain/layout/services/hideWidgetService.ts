@@ -45,7 +45,7 @@ function getNewLayout(
 
   oldWidget.layout[screen] = newLayout;
   const adjusted = adjustLayoutValues(oldWidget as AdjustedWidgetLayout);
-  Log(adjusted.layout[screen]);
+  Log("getNewLayout", "log", adjusted.layout[screen]);
 
   if (!hide) {
     const currentWidgetsPositionings = allLayouts.map(

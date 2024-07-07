@@ -34,7 +34,7 @@ const Home: NextPage = () => {
       onSuccess: (data) => {
         setWidgetType(data.type);
         setLayoutData(data.layout);
-        Log(data);
+        Log("layout.getForWidget", "log", data);
       },
       refetchOnWindowFocus: false,
     },
@@ -45,7 +45,7 @@ const Home: NextPage = () => {
       enabled: typeof id === "string",
       onSuccess: (data) => {
         setTextAreaInput(toProperJsonStringFormat(data.data));
-        Log(data);
+        Log("config.getConfigForWidget", "log", data);
       },
       refetchOnWindowFocus: false,
     },
