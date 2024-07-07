@@ -2,7 +2,7 @@ import { type RGLayout } from "~/lib/types/types";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 
-export default class UpdateLayoutCommand implements Command {
+export default class UpdateEditLayoutCommand implements Command {
   name: string;
   description: string;
   session: string;

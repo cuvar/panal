@@ -12,7 +12,7 @@ import InitEditCommand from "./initEditCommand";
 import InitLayoutCommand from "./initLayoutCommand";
 import SaveLayoutCommand from "./saveLayoutCommand";
 import UnhideWidgetCommand from "./unhideWidgetCommand";
-import UpdateLayoutCommand from "./updateLayoutCommand";
+import UpdateEditLayoutCommand from "./updateEditLayoutCommand";
 
 export default class CommandManager {
   history: Command[];
@@ -82,8 +82,8 @@ export default class CommandManager {
     this.refreshSession();
   }
 
-  updateLayout(layout: RGLayout) {
-    const command = new UpdateLayoutCommand(this.session, layout);
+  updateEditLayout(layout: RGLayout) {
+    const command = new UpdateEditLayoutCommand(this.session, layout);
     this.execute(command);
     this.history.push(command);
     this.refreshSession();
