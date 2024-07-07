@@ -1,53 +1,33 @@
-import { produce } from "immer";
 import { type StateCreator } from "zustand";
 import { type ScreenSize } from "~/lib/types/types";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
-import { type HideInfo } from "~/server/domain/layout/hideInfo";
+import { type WidgetVisibility } from "~/server/domain/layout/widgetVisibility";
 
-export interface HiddenWidgetsSlice {
-  hiddenWidgets: HideInfo[];
-  addHiddenWidget: (
+export interface ApparentWidgetsSlice {
+  apparentWidgets: WidgetVisibility[];
+  // widgets that should be hidden
+  addApparentWidget: (
     widget: AdjustedWidgetLayout,
     screenSize: ScreenSize,
-    hide: boolean,
+    visible: boolean,
   ) => void;
-  removeHiddenWidget: (
-    widget: AdjustedWidgetLayout,
-    screenSize: ScreenSize,
-  ) => void;
-  clearHiddenWidgets: () => void;
 }
 
-const createHiddenWidgetsSlice: StateCreator<HiddenWidgetsSlice> = (set) => ({
-  hiddenWidgets: [],
-  addHiddenWidget: (widget, screenSize, hide) =>
+// ! should only toggle the `visible` property of the widget WidgetVisibility, only add entries and NOT remove any
+// ! -> this way, re-appearing widgets can be tracked as well
+const createApparentWidgetsSlice: StateCreator<ApparentWidgetsSlice> = (
+  set,
+) => ({
+  apparentWidgets: [],
+  addApparentWidget: (widget, screenSize, visible) =>
     set((state) => {
-      const existingId = state.hiddenWidgets
-        .map((w) => w.widget.id)
-        .includes(widget.id);
-      if (existingId) return state;
+      const existingWidget = state.apparentWidgets.find(
+        (w) => w.widget.id == widget.id,
+      ) ?? { widget, screenSize, visible: visible }; // this `visible` value is just a placeholder, below is more relevant
 
-      return {
-        hiddenWidgets: [...state.hiddenWidgets, { widget, screenSize, hide }],
-      };
+      existingWidget.visible = visible;
+      return { apparentWidgets: [...state.apparentWidgets, existingWidget] };
     }),
-  removeHiddenWidget: (widget, screenSize) =>
-    set((state) => {
-      // ! Don't know whether this works because of object references
-      const newState = produce(state.hiddenWidgets, (draft) => {
-        const hiddenWidget = draft.find(
-          (w) => w.widget.id === widget.id && w.screenSize === screenSize,
-        );
-        if (!hiddenWidget) return draft;
-        const index = draft.indexOf(hiddenWidget);
-        if (index !== -1) {
-          draft.splice(index, 1);
-        }
-        return draft;
-      });
-      return { hiddenWidgets: newState };
-    }),
-  clearHiddenWidgets: () => set({ hiddenWidgets: [] }),
 });
 
-export default createHiddenWidgetsSlice;
+export default createApparentWidgetsSlice;

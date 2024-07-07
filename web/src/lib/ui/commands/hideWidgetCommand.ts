@@ -24,9 +24,13 @@ export default class HideWidgetCommand implements Command {
   }
 
   run() {
+    // could be
+    // 1. unhide a previously hidden widget
+    // 2. first time reveal a widget that was hidden long ago and whose state is persisted
+    // -> solution: take widget and set to false
     useBoundStore
       .getState()
-      .addHiddenWidget(this.adjustedWidgetLayout, this.screenSize, true);
+      .addApparentWidget(this.adjustedWidgetLayout, this.screenSize, false);
 
     this._updateEditedWidgetLayout();
   }
@@ -38,9 +42,16 @@ export default class HideWidgetCommand implements Command {
       const layout = draft[this.screenSize]?.find(
         (widget) => widget.i === this.adjustedWidgetLayout.id,
       );
-      if (!layout) return draft;
+
+      if (!layout) {
+        return draft;
+      }
+
       const index = draft[this.screenSize]?.indexOf(layout) ?? -1;
-      if (index === -1) return draft;
+      if (index === -1) {
+        return draft;
+      }
+
       draft[this.screenSize]?.splice(index, 1);
     });
 
@@ -48,9 +59,10 @@ export default class HideWidgetCommand implements Command {
   }
 
   rollback() {
-    // TODO: implement for editedWidgetLayout
     useBoundStore
       .getState()
-      .removeHiddenWidget(this.adjustedWidgetLayout, this.screenSize);
+      .addApparentWidget(this.adjustedWidgetLayout, this.screenSize, true);
+
+    this._updateEditedWidgetLayout();
   }
 }

@@ -1,12 +1,11 @@
 import { produce } from "immer";
-import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
 import { addWidgetToScreenSize } from "~/client/services/transformLayoutsService";
 import { type ScreenSize } from "~/lib/types/types";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 
-export default class UnhideWidgetCommand implements Command {
+export default class RevealWidgetCommand implements Command {
   name: string;
   description: string;
   adjustedWidgetLayout: AdjustedWidgetLayout;
@@ -18,7 +17,7 @@ export default class UnhideWidgetCommand implements Command {
     screenSize: ScreenSize,
     session: string,
   ) {
-    this.name = "unhide-widget";
+    this.name = "revela-widget";
     this.description = "Reveal the widget";
     this.adjustedWidgetLayout = adjustedWidgetLayout;
     this.screenSize = screenSize;
@@ -26,21 +25,22 @@ export default class UnhideWidgetCommand implements Command {
   }
 
   run() {
+    // could be
+    // 1. unhide a previously hidden widget
+    // 2. first time reveal a widget that was hidden long ago and whose state is persisted
     useBoundStore
       .getState()
-      .removeHiddenWidget(this.adjustedWidgetLayout, this.screenSize);
+      .addApparentWidget(this.adjustedWidgetLayout, this.screenSize, true);
     this._updateLayout();
   }
 
   _updateLayout() {
     const editMode = useBoundStore.getState().editMode;
     const editedWidgetLayout = useBoundStore.getState().editedWidgetLayout;
-    const setEditedWidgetLayout =
-      useBoundStore.getState().setEditedWidgetLayout;
-    const setWidgetLayout = useBoundStore.getState().setWidgetLayout;
+
+    if (!editMode || !editedWidgetLayout[this.screenSize]) return;
 
     const newLayout = produce(editedWidgetLayout, (draft) => {
-      if (!editMode || !editedWidgetLayout[this.screenSize]) return draft;
       const adjustedLayout = addWidgetToScreenSize(
         this.adjustedWidgetLayout,
         this.screenSize,
@@ -50,18 +50,14 @@ export default class UnhideWidgetCommand implements Command {
       return adjustedLayout;
     });
 
-    const moveableLayout = produce(newLayout, (draft) => {
-      const moveableLayout = makeLayoutsStatic(draft, false);
-      return moveableLayout;
-    });
-
-    setEditedWidgetLayout(newLayout);
-    setWidgetLayout(moveableLayout);
+    useBoundStore.getState().setEditedWidgetLayout(newLayout);
   }
 
   rollback() {
     useBoundStore
       .getState()
-      .addHiddenWidget(this.adjustedWidgetLayout, this.screenSize, true);
+      .addApparentWidget(this.adjustedWidgetLayout, this.screenSize, false);
+
+    this._updateLayout();
   }
 }

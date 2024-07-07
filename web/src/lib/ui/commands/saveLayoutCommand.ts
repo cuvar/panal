@@ -1,14 +1,16 @@
+import { produce } from "immer";
+import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 import HideWidgetCommand from "./hideWidgetCommand";
-import UnhideWidgetCommand from "./unhideWidgetCommand";
+import RevealWidgetCommand from "./revealWidgetCommand";
 
 export default class SaveLayoutCommand implements Command {
   name: string;
   description: string;
   session: string;
   history: Command[];
-  batch: Command[];
+  batch: Command[]; // just for tracking
   callback: () => void;
 
   constructor(session: string, history: Command[], callback: () => void) {
@@ -25,11 +27,19 @@ export default class SaveLayoutCommand implements Command {
     const editCommands = this.history.filter((command) => {
       command.session === this.session &&
         (command instanceof HideWidgetCommand ||
-          command instanceof UnhideWidgetCommand);
-    }) as (HideWidgetCommand | UnhideWidgetCommand)[];
+          command instanceof RevealWidgetCommand);
+    }) as (HideWidgetCommand | RevealWidgetCommand)[];
     this.batch = editCommands;
 
     useBoundStore.getState().exitEditMode();
+    const editedWidgetLayout = useBoundStore.getState().editedWidgetLayout;
+
+    const staticLayout = produce(editedWidgetLayout, (draft) => {
+      const moveableLayout = makeLayoutsStatic(draft, true);
+      return moveableLayout;
+    });
+
+    useBoundStore.getState().setWidgetLayout(staticLayout);
 
     this.callback();
   }

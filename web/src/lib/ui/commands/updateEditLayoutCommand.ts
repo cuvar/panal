@@ -7,19 +7,22 @@ export default class UpdateEditLayoutCommand implements Command {
   description: string;
   session: string;
   layout: RGLayout;
+  prevLayout: RGLayout;
 
   constructor(session: string, layout: RGLayout) {
     this.name = "update-layout";
     this.description = "Updates layout during edit mode";
     this.session = session;
     this.layout = layout;
+    this.prevLayout = {};
   }
 
   run() {
+    this.prevLayout = useBoundStore.getState().editedWidgetLayout;
     useBoundStore.getState().setEditedWidgetLayout(this.layout);
   }
 
   rollback() {
-    // TODO: implement rollback -> saveLayoutCommand?
+    useBoundStore.getState().setEditedWidgetLayout(this.prevLayout);
   }
 }

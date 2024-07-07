@@ -1,7 +1,7 @@
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 import HideWidgetCommand from "./hideWidgetCommand";
-import UnhideWidgetCommand from "./unhideWidgetCommand";
+import RevealWidgetCommand from "./revealWidgetCommand";
 
 export default class AbortEditCommand implements Command {
   name: string;
@@ -15,7 +15,7 @@ export default class AbortEditCommand implements Command {
     this.description = "Abort changes made in layout edit mode";
     this.session = session;
     this.history = history;
-    this.batch = [];
+    this.batch = []; // just for tracking
   }
 
   run() {
@@ -23,8 +23,8 @@ export default class AbortEditCommand implements Command {
     const editCommands = this.history.filter((command) => {
       command.session === this.session &&
         (command instanceof HideWidgetCommand ||
-          command instanceof UnhideWidgetCommand);
-    }) as (HideWidgetCommand | UnhideWidgetCommand)[];
+          command instanceof RevealWidgetCommand);
+    }) as (HideWidgetCommand | RevealWidgetCommand)[];
 
     this.batch = editCommands;
 
@@ -36,6 +36,7 @@ export default class AbortEditCommand implements Command {
   }
 
   rollback() {
+    useBoundStore.getState().initEditMode();
     // TODO: implement rollback -> saveLayoutCommand?
     // useHiddenWidgetsStore
     //   .getState()
