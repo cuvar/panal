@@ -55,6 +55,7 @@ export default class HideWidgetCommand implements Command {
       draft[this.screenSize]?.splice(index, 1);
     });
 
+    // TODO: set adjsutedWidgetLayout
     useBoundStore.getState().setEditedWidgetLayout(newState);
   }
 

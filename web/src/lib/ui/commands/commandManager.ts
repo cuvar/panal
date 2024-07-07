@@ -90,8 +90,19 @@ export default class CommandManager {
     this.history.push(command);
   }
 
-  moveWidget(oldItem: ReactGridLayout.Layout, newItem: ReactGridLayout.Layout) {
-    const command = new MoveWidgetCommand(this.session, oldItem, newItem);
+  moveWidget(
+    oldItem: ReactGridLayout.Layout,
+    newItem: ReactGridLayout.Layout,
+    newLayout: ReactGridLayout.Layout[],
+    currentScreenSize: ScreenSize,
+  ) {
+    const command = new MoveWidgetCommand(
+      this.session,
+      oldItem,
+      newItem,
+      newLayout,
+      currentScreenSize,
+    );
     this.execute(command);
     this.history.push(command);
   }

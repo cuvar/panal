@@ -3,6 +3,7 @@ import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 import HideWidgetCommand from "./hideWidgetCommand";
+import MoveWidgetCommand from "./moveWidgetCommand";
 import RevealWidgetCommand from "./revealWidgetCommand";
 
 export default class SaveLayoutCommand implements Command {
@@ -27,8 +28,9 @@ export default class SaveLayoutCommand implements Command {
     const editCommands = this.history.filter((command) => {
       command.session === this.session &&
         (command instanceof HideWidgetCommand ||
-          command instanceof RevealWidgetCommand);
-    }) as (HideWidgetCommand | RevealWidgetCommand)[];
+          command instanceof RevealWidgetCommand ||
+          command instanceof MoveWidgetCommand);
+    }) as (HideWidgetCommand | RevealWidgetCommand | MoveWidgetCommand)[];
     this.batch = editCommands;
 
     useBoundStore.getState().exitEditMode();

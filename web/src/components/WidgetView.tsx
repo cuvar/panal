@@ -11,7 +11,11 @@ import {
 
 import { useEffect } from "react";
 import { type RGLayout } from "~/lib/types/types";
-import { useCommandManager, useDisplayedWidgets } from "~/lib/ui/hooks";
+import {
+  useCommandManager,
+  useDetectScreenSize,
+  useDisplayedWidgets,
+} from "~/lib/ui/hooks";
 import { useBoundStore } from "~/lib/ui/state";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import ResizeHandle from "./ResizeHandle";
@@ -27,6 +31,7 @@ export default function WidgetView(props: Props) {
 
   const { rgLayout, awLayout } = useDisplayedWidgets(props.layout);
   const commandManager = useCommandManager();
+  const currentScreenSize = useDetectScreenSize();
 
   const adjustedBreakpoints = Object.entries(BREAKPOINTS).reduce(
     (acc, [key, value]) => {
@@ -48,14 +53,14 @@ export default function WidgetView(props: Props) {
   }
 
   function handleDragStop(
-    _layout: ReactGridLayout.Layout[],
+    layout: ReactGridLayout.Layout[],
     oldItem: ReactGridLayout.Layout,
     newItem: ReactGridLayout.Layout,
     _placeholder: ReactGridLayout.Layout,
     _event: MouseEvent,
     _element: HTMLElement,
   ) {
-    commandManager.moveWidget(oldItem, newItem);
+    commandManager.moveWidget(oldItem, newItem, layout, currentScreenSize);
   }
 
   return (
