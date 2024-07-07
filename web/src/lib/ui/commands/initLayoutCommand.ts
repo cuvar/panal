@@ -8,23 +8,26 @@ export default class InitLayoutCommand implements Command {
   name: string;
   description: string;
   session: string;
-  adjustedWidgetLayout: AdjustedWidgetLayout[];
+  adjustedWidgetLayouts: AdjustedWidgetLayout[];
   prevLayout: RGLayout;
 
-  constructor(session: string, layout: AdjustedWidgetLayout[]) {
+  constructor(session: string, layouts: AdjustedWidgetLayout[]) {
     this.name = "init-layout";
     this.description = "Initializies layout during initial loading";
     this.session = session;
-    this.adjustedWidgetLayout = layout;
+    this.adjustedWidgetLayouts = layouts;
     this.prevLayout = {};
   }
 
   run() {
     const editMode = false;
     const transformedLayouts = transformLayoutsForGrid(
-      this.adjustedWidgetLayout,
+      this.adjustedWidgetLayouts,
       !editMode,
     );
+    useBoundStore
+      .getState()
+      .setAdjustedWidgteLayouts(this.adjustedWidgetLayouts);
     this.prevLayout = useBoundStore.getState().widgetLayout;
     useBoundStore.getState().setWidgetLayout(transformedLayouts);
   }
