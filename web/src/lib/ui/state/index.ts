@@ -4,18 +4,18 @@ import createEditModeSlice, { type EditModeSlice } from "./editModeSlice";
 import createEditedWidgetLayoutSlice, {
   type EditedWidgetSlice,
 } from "./editedWidgetLayoutSlice";
-import createHiddenWidgetsSlice, {
-  type HiddenWidgetsSlice,
+import createApparentWidgetsSlice, {
+  type ApparentWidgetsSlice,
 } from "./hiddenSlice";
 import createWidgetLayoutSlice, {
   type WidgetLayoutSlice,
 } from "./widgetLayoutSlice";
 
 export const useBoundStore = create<
-  HiddenWidgetsSlice & EditModeSlice & WidgetLayoutSlice & EditedWidgetSlice
+  ApparentWidgetsSlice & EditModeSlice & WidgetLayoutSlice & EditedWidgetSlice
 >()(
   immer((...a) => ({
-    ...createHiddenWidgetsSlice(...a),
+    ...createApparentWidgetsSlice(...a),
     ...createEditModeSlice(...a),
     ...createWidgetLayoutSlice(...a),
     ...createEditedWidgetLayoutSlice(...a),

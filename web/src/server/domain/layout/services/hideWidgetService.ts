@@ -4,20 +4,22 @@ import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
 import type { Positioning } from "~/lib/types/widget";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
-import { type HideInfo } from "../hideInfo";
 import { getLayoutRepository } from "../repo/layoutRepository";
+import { type WidgetVisibility } from "../widgetVisibility";
 import adjustLayoutValues from "./adjustLayoutValuesService";
 
 /**
  * Updates a widgets layout for a specific screen size, depending on whether it should be hidden or revealed
- * @param {HideInfo[]} hideInfo HideInfo of widgets that should be hidden/revealed
+ * @param {WidgetVisibility[]} widgetVisibility WidgetVisibility of widgets that should be hidden/revealed
  * @param widgets
  * @returns {AdjustedWidgetLayout[]} The updated widget layout
  */
-export async function hideWidgets(hideInfo: HideInfo[]) {
+export async function hideWidgets(widgetVisibility: WidgetVisibility[]) {
   try {
     const allLayouts = await getLayoutRepository().getAll();
-    const newLayouts = hideInfo.map((hi) => getNewLayout(hi, allLayouts));
+    const newLayouts = widgetVisibility.map((wi) =>
+      getNewLayout(wi, allLayouts),
+    );
     await getLayoutRepository().setMany(newLayouts);
     return newLayouts;
   } catch (error) {
@@ -32,14 +34,14 @@ export async function hideWidgets(hideInfo: HideInfo[]) {
  * @returns {AdjustedWidgetLayout} The updated widget layout
  */
 function getNewLayout(
-  widget: HideInfo,
+  widget: WidgetVisibility,
   allLayouts: AdjustedWidgetLayout[],
 ): AdjustedWidgetLayout {
   const screen = widget.screenSize;
-  const hide = widget.hide;
+  const visible = widget.visible;
   const oldWidget = widget.widget;
 
-  const newLayout: Positioning = widget.hide
+  const newLayout: Positioning = !widget.visible
     ? { x: 0, y: 0, w: 0, h: 0 }
     : { x: 0, y: 0, w: 1, h: 1 };
 
@@ -47,7 +49,7 @@ function getNewLayout(
   const adjusted = adjustLayoutValues(oldWidget as AdjustedWidgetLayout);
   Log("getNewLayout", "log", adjusted.layout[screen]);
 
-  if (!hide) {
+  if (visible) {
     const currentWidgetsPositionings = allLayouts.map(
       (widget) => widget.layout[screen],
     );

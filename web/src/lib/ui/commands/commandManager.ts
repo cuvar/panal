@@ -10,8 +10,8 @@ import { type Command } from "./command";
 import HideWidgetCommand from "./hideWidgetCommand";
 import InitEditCommand from "./initEditCommand";
 import InitLayoutCommand from "./initLayoutCommand";
+import RevealWidgetCommand from "./revealWidgetCommand";
 import SaveLayoutCommand from "./saveLayoutCommand";
-import UnhideWidgetCommand from "./unhideWidgetCommand";
 import UpdateEditLayoutCommand from "./updateEditLayoutCommand";
 
 export default class CommandManager {
@@ -55,11 +55,11 @@ export default class CommandManager {
     this.execute(command);
   }
 
-  unhideWidget(
+  revealWidget(
     adjustedWidgetLayout: AdjustedWidgetLayout,
     screenSize: ScreenSize,
   ) {
-    const command = new UnhideWidgetCommand(
+    const command = new RevealWidgetCommand(
       adjustedWidgetLayout,
       screenSize,
       this.session,

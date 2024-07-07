@@ -12,11 +12,11 @@ import {
 } from "~/lib/types/schema";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
-import { HideInfo } from "~/server/domain/layout/hideInfo";
 import { getLayoutRepository } from "~/server/domain/layout/repo/layoutRepository";
 import { hideWidgets } from "~/server/domain/layout/services/hideWidgetService";
 import transformWidgetLayout from "~/server/domain/layout/services/transformWidgetLayoutService";
 import updateWidgetLayoutService from "~/server/domain/layout/services/updateWidgetLayoutService";
+import { WidgetVisibility } from "~/server/domain/layout/widgetVisibility";
 
 export const layoutRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
@@ -125,7 +125,7 @@ export const layoutRouter = createTRPCRouter({
       }
     }),
   hideWidgets: protectedProcedure
-    .input(z.array(HideInfo.getSchema()))
+    .input(z.array(WidgetVisibility.getSchema()))
     .mutation(async ({ input }) => {
       try {
         const mapped = input.map((w) => {
@@ -134,7 +134,7 @@ export const layoutRouter = createTRPCRouter({
             w.widget.type,
             w.widget.layout,
           );
-          return new HideInfo(awc, w.screenSize, w.hide);
+          return new WidgetVisibility(awc, w.screenSize, w.visible);
         });
         const res = await hideWidgets(mapped);
         return res;

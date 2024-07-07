@@ -5,22 +5,22 @@ import { screenSizeSchema } from "~/lib/types/schema";
 import type { ScreenSize } from "~/lib/types/types";
 import { AdjustedWidgetLayout } from "./adjustedWidgetLayout";
 
-export class HideInfo {
+export class WidgetVisibility {
   widget: AdjustedWidgetLayout;
   screenSize: ScreenSize;
-  hide: boolean;
+  visible: boolean;
 
   constructor(
     widget: AdjustedWidgetLayout,
     screenSize: ScreenSize,
-    hide: boolean,
+    visible: boolean,
   ) {
     this.widget = widget;
     this.screenSize = screenSize;
-    this.hide = hide;
+    this.visible = visible;
   }
 
-  static validate(input: unknown): input is HideInfo {
+  static validate(input: unknown): input is WidgetVisibility {
     if (!isObject(input)) {
       return false;
     }
@@ -40,7 +40,7 @@ export class HideInfo {
     const schema = z.object({
       widget: AdjustedWidgetLayout.getSchema(),
       screenSize: screenSizeSchema,
-      hide: z.boolean(),
+      visible: z.boolean(),
     });
 
     return schema;

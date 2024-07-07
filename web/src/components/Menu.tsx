@@ -22,7 +22,7 @@ import { useBoundStore } from "~/lib/ui/state";
 export default function NewMenu() {
   const editMode = useBoundStore((state) => state.editMode);
   const editedWidgetLayout = useBoundStore((state) => state.editedWidgetLayout);
-  const hiddenWidgets = useBoundStore((state) => state.hiddenWidgets);
+  const apparentWidgets = useBoundStore((state) => state.apparentWidgets);
 
   const router = useRouter();
   const showToast = useToast();
@@ -64,7 +64,7 @@ export default function NewMenu() {
     // TODO: COMMAND
     commandManager.saveEditLayout(() => {
       setWidgetLayoutMutation.mutate({ layout: editedWidgetLayout });
-      hideWidgetMutation.mutate(hiddenWidgets);
+      hideWidgetMutation.mutate(apparentWidgets);
     });
   }
 

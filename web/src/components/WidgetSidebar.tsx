@@ -23,9 +23,9 @@ export default function WidgetSidebar() {
   const currentScreenSize = useDetectScreenSize();
 
   const editMode = useBoundStore((state) => state.editMode);
-  const allHiddenWidgets = useBoundStore((state) => state.hiddenWidgets);
-  const hiddenWidgetsForScreen = allHiddenWidgets.filter(
-    (w) => w.screenSize === currentScreenSize,
+  const allAppearentWidgets = useBoundStore((state) => state.apparentWidgets);
+  const hiddenWidgetsForScreen = allAppearentWidgets.filter(
+    (w) => w.screenSize === currentScreenSize && !w.visible,
   );
 
   const getAllHiddenQuery = api.layout.getAllHidden.useQuery({
@@ -50,7 +50,7 @@ export default function WidgetSidebar() {
   ]);
 
   function handleAddToLayout(_widget: AdjustedWidgetLayout) {
-    commandManager.unhideWidget(_widget, currentScreenSize);
+    commandManager.revealWidget(_widget, currentScreenSize);
   }
 
   return (
