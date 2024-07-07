@@ -20,7 +20,7 @@ export class AdjustedWidgetLayout {
   }
 
   updateLayoutForScreen(layout: ScreenSizePositioning) {
-    //
+    // TODO:
   }
 
   static validate(input: unknown): input is AdjustedWidgetLayout {
