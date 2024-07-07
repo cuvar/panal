@@ -86,7 +86,6 @@ export default class CommandManager {
     const command = new UpdateEditLayoutCommand(this.session, layout);
     this.execute(command);
     this.history.push(command);
-    this.refreshSession();
   }
 
   abortEdit() {
@@ -97,6 +96,7 @@ export default class CommandManager {
   }
 
   initEdit() {
+    this.refreshSession();
     const command = new InitEditCommand(this.session);
     this.history.push(command);
     this.execute(command);
