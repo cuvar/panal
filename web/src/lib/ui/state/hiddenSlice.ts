@@ -36,8 +36,6 @@ const createApparentWidgetsSlice: StateCreator<ApparentWidgetsSlice> = (
 
         return [...draft, newEntry];
       });
-      console.log("ADWdfghjkloiuzgbnjiuzgbnmkiuzghn");
-      console.log(newApparentWidgets.length);
       return { apparentWidgets: newApparentWidgets };
     }),
 });
