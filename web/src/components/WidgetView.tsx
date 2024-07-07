@@ -1,3 +1,4 @@
+import type ReactGridLayout from "react-grid-layout";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
@@ -46,6 +47,17 @@ export default function WidgetView(props: Props) {
     commandManager.updateEditLayout(layouts);
   }
 
+  function handleDragStop(
+    _layout: ReactGridLayout.Layout[],
+    oldItem: ReactGridLayout.Layout,
+    newItem: ReactGridLayout.Layout,
+    _placeholder: ReactGridLayout.Layout,
+    _event: MouseEvent,
+    _element: HTMLElement,
+  ) {
+    commandManager.moveWidget(oldItem, newItem);
+  }
+
   return (
     <div className="z-10 h-screen w-full max-w-[1280px]">
       {props.layout.length === 0 ? (
@@ -67,6 +79,7 @@ export default function WidgetView(props: Props) {
           autoSize={false}
           preventCollision={true}
           onLayoutChange={handleLayoutChange}
+          onDragStop={handleDragStop}
           isDroppable={true}
           resizeHandle={<ResizeHandle />}
         >

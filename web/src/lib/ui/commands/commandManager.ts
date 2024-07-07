@@ -3,6 +3,7 @@
 // ! -> rollback
 // ! moving widgets should be a command as well
 
+import type ReactGridLayout from "react-grid-layout";
 import { type RGLayout, type ScreenSize } from "~/lib/types/types";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import AbortEditCommand from "./abortEditCommand";
@@ -10,6 +11,7 @@ import { type Command } from "./command";
 import HideWidgetCommand from "./hideWidgetCommand";
 import InitEditCommand from "./initEditCommand";
 import InitLayoutCommand from "./initLayoutCommand";
+import MoveWidgetCommand from "./moveWidgetCommand";
 import RevealWidgetCommand from "./revealWidgetCommand";
 import SaveLayoutCommand from "./saveLayoutCommand";
 import UpdateEditLayoutCommand from "./updateEditLayoutCommand";
@@ -88,10 +90,16 @@ export default class CommandManager {
     this.history.push(command);
   }
 
+  moveWidget(oldItem: ReactGridLayout.Layout, newItem: ReactGridLayout.Layout) {
+    const command = new MoveWidgetCommand(this.session, oldItem, newItem);
+    this.execute(command);
+    this.history.push(command);
+  }
+
   abortEdit() {
-    const abortCommand = new AbortEditCommand(this.session, this.history);
-    this.execute(abortCommand);
-    this.history.push(abortCommand);
+    const command = new AbortEditCommand(this.session, this.history);
+    this.execute(command);
+    this.history.push(command);
     this.refreshSession();
   }
 
