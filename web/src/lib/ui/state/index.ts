@@ -1,15 +1,15 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import createEditModeSlice, { type EditModeSlice } from "./state/editModeSlice";
+import createEditModeSlice, { type EditModeSlice } from "./editModeSlice";
 import createEditedWidgetLayoutSlice, {
   type EditedWidgetSlice,
-} from "./state/editedWidgetLayoutSlice";
+} from "./editedWidgetLayoutSlice";
 import createHiddenWidgetsSlice, {
   type HiddenWidgetsSlice,
-} from "./state/hiddenSlice";
+} from "./hiddenSlice";
 import createWidgetLayoutSlice, {
   type WidgetLayoutSlice,
-} from "./state/widgetLayoutSlice";
+} from "./widgetLayoutSlice";
 
 export const useBoundStore = create<
   HiddenWidgetsSlice & EditModeSlice & WidgetLayoutSlice & EditedWidgetSlice
