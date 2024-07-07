@@ -9,9 +9,7 @@ import {
 } from "~/lib/basic/const";
 
 import { useEffect } from "react";
-import getHidingClasses from "~/client/services/getHidingClassesService";
-import { type RGLayout } from "~/lib/types/types";
-import { useCommandManager, useDetectScreenSize } from "~/lib/ui/hooks";
+import { useCommandManager, useDisplayedWidgets } from "~/lib/ui/hooks";
 import { useBoundStore } from "~/lib/ui/state";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import ResizeHandle from "./ResizeHandle";
@@ -24,10 +22,8 @@ type Props = {
 const ResponsiveGridLayout = WidthProvider(Responsive);
 export default function WidgetView(props: Props) {
   const editMode = useBoundStore((state) => state.editMode);
-  const widgetLayout = useBoundStore((state) => state.widgetLayout);
-  const editedWidgetLayout = useBoundStore((state) => state.editedWidgetLayout);
 
-  const currentScreenSize = useDetectScreenSize();
+  const { rgLayout, awLayout } = useDisplayedWidgets(props.layout);
   const commandManager = useCommandManager();
 
   const adjustedBreakpoints = Object.entries(BREAKPOINTS).reduce(
@@ -42,14 +38,19 @@ export default function WidgetView(props: Props) {
     commandManager.initLayout(props.layout);
   }, []);
 
-  function handleLayoutChange(
-    _layout: ReactGridLayout.Layout[],
-    layouts: RGLayout,
-  ) {
-    if (editMode) {
-      commandManager.updateLayout(layouts);
-    }
-  }
+  // function handleLayoutChange(
+  //   _layout: ReactGridLayout.Layout[],
+  //   layouts: RGLayout,
+  // ) {
+
+  //   // if (editMode) {
+  //   //   console.log(
+  //   //     layouts[currentScreenSize]?.length,
+  //   //     editedWidgetLayout[currentScreenSize]?.length,
+  //   //   );
+  //   //   // commandManager.updateLayout(layouts);
+  //   // }
+  // }
 
   return (
     <div className="z-10 h-screen w-full max-w-[1280px]">
@@ -66,27 +67,24 @@ export default function WidgetView(props: Props) {
           breakpoints={{ ...adjustedBreakpoints }}
           cols={BREAKPOINT_COLS}
           rowHeight={GRID_ROW_HEIGHT}
-          layouts={editMode ? editedWidgetLayout : widgetLayout}
+          layouts={rgLayout}
           maxRows={GRID_MAX_ROW}
           compactType={null}
           autoSize={false}
-          onLayoutChange={handleLayoutChange}
+          // onLayoutChange={handleLayoutChange}
           isDroppable={true}
           resizeHandle={<ResizeHandle />}
         >
-          {props.layout.map(
-            (widget) =>
-              !getHidingClasses(widget.layout).includes(currentScreenSize) && (
-                // ! this is needed for ResizeHandle to be visible
-                <div key={widget.id} className="">
-                  <WidgetWrapper
-                    key={widget.id}
-                    editMode={editMode}
-                    widget={widget}
-                  />
-                </div>
-              ),
-          )}
+          {awLayout.map((widget) => (
+            // ! this is needed for ResizeHandle to be visible
+            <div key={widget.id}>
+              <WidgetWrapper
+                key={widget.id}
+                editMode={editMode}
+                widget={widget}
+              />
+            </div>
+          ))}
         </ResponsiveGridLayout>
       )}
     </div>

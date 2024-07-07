@@ -1,4 +1,5 @@
 import type ReactGridLayout from "react-grid-layout";
+import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 
 export type ScreenSize = "xss" | "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -10,3 +11,8 @@ export type ToastColor =
   | { bg: "bg-foreground"; text: "text-inverted" };
 
 export type RGLayout = ReactGridLayout.Layouts;
+
+export type DisplayedWidgets = {
+  rgLayout: RGLayout;
+  awLayout: AdjustedWidgetLayout[];
+};

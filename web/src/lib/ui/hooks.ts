@@ -1,8 +1,19 @@
+import { useWindowSize } from "@uidotdev/usehooks";
 import { useAtom } from "jotai";
 import { useContext, useEffect, useState } from "react";
+import filterWidgetLayoutByLayout from "~/client/services/filterWidgetLayoutByLayoutService";
+import getHidingClasses from "~/client/services/getHidingClassesService";
+import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { BREAKPOINTS } from "../basic/const";
-import type { ScreenSize, ToastType } from "../types/types";
+import Log from "../log/log";
+import type {
+  DisplayedWidgets,
+  RGLayout,
+  ScreenSize,
+  ToastType,
+} from "../types/types";
 import { CommandContext } from "./context/command";
+import { useBoundStore } from "./state";
 import { toastTextAtom, toastTypeAtom } from "./store";
 
 /**
@@ -24,14 +35,18 @@ export function useDetectMobile() {
  * @returns {ScreenSize} The current screen size
  */
 export function useDetectScreenSize(): ScreenSize {
+  const windowSize = useWindowSize();
   const [screenSize, setScreenSize] = useState<ScreenSize>("xs");
-  const size = Object.entries(BREAKPOINTS).findLast(([_key, value]) => {
-    return window.innerWidth >= value;
-  })?.[0] as ScreenSize;
 
   useEffect(() => {
+    if (!windowSize.width) return;
+
+    const size = Object.entries(BREAKPOINTS).findLast(([_key, value]) => {
+      return windowSize.width! >= value;
+    })?.[0] as ScreenSize;
+
     setScreenSize(size);
-  }, [size]);
+  }, [windowSize]);
 
   return screenSize;
 }
@@ -83,4 +98,49 @@ export function useCommandManager() {
   const commandManager = useContext(CommandContext);
 
   return commandManager;
+}
+
+/**
+ * Calculates the displayed widgets based on the current layout
+ * @param {AdjustedWidgetLayout[]} initialAWLayout Initial AdjustedWidgetLayout
+ * @returns {DisplayedWidgets} Displayed widgets
+ */
+export function useDisplayedWidgets(
+  initialAWLayout: AdjustedWidgetLayout[],
+): DisplayedWidgets {
+  const widgetLayout = useBoundStore((state) => state.widgetLayout);
+  const editedWidgetLayout = useBoundStore((state) => state.editedWidgetLayout);
+  const editMode = useBoundStore((state) => state.editMode);
+  const currentScreenSize = useDetectScreenSize();
+
+  const [rgLayout, setRGLayout] = useState<RGLayout>({});
+  const [awLayout, setAWLayout] = useState<AdjustedWidgetLayout[]>([]);
+
+  useEffect(() => {
+    const layout = editMode ? editedWidgetLayout : widgetLayout;
+    const filteredAWLayout = filterWidgetLayoutByLayout(
+      initialAWLayout,
+      layout,
+      currentScreenSize,
+    );
+    const exceptHding = filteredAWLayout.filter(
+      (widget) => !getHidingClasses(widget.layout).includes(currentScreenSize),
+    );
+
+    Log("useDisplayedWidgets", "log", exceptHding);
+
+    setRGLayout(layout);
+    setAWLayout(exceptHding);
+  }, [
+    currentScreenSize,
+    editMode,
+    editedWidgetLayout,
+    initialAWLayout,
+    widgetLayout,
+  ]);
+
+  return {
+    rgLayout: rgLayout,
+    awLayout: awLayout,
+  };
 }
