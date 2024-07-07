@@ -10,12 +10,8 @@ export class FileReader implements Reader {
       const maxTries = 30;
       let fileContents = Buffer.alloc(0);
       while (i < maxTries || !fileContents.length) {
-        try {
-          fileContents = await fs.readFile(file);
-          break;
-        } catch (error) {
-          i++;
-        }
+        i++;
+        fileContents = await fs.readFile(file);
       }
       return fileContents.toString();
     } catch (error) {
