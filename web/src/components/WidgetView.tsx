@@ -9,6 +9,7 @@ import {
 } from "~/lib/basic/const";
 
 import { useEffect } from "react";
+import { type RGLayout } from "~/lib/types/types";
 import { useCommandManager, useDisplayedWidgets } from "~/lib/ui/hooks";
 import { useBoundStore } from "~/lib/ui/state";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
@@ -38,19 +39,12 @@ export default function WidgetView(props: Props) {
     commandManager.initLayout(props.layout);
   }, []);
 
-  // function handleLayoutChange(
-  //   _layout: ReactGridLayout.Layout[],
-  //   layouts: RGLayout,
-  // ) {
-
-  //   // if (editMode) {
-  //   //   console.log(
-  //   //     layouts[currentScreenSize]?.length,
-  //   //     editedWidgetLayout[currentScreenSize]?.length,
-  //   //   );
-  //   //   // commandManager.updateLayout(layouts);
-  //   // }
-  // }
+  function handleLayoutChange(
+    _layout: ReactGridLayout.Layout[],
+    layouts: RGLayout,
+  ) {
+    commandManager.updateEditLayout(layouts);
+  }
 
   return (
     <div className="z-10 h-screen w-full max-w-[1280px]">
@@ -71,7 +65,7 @@ export default function WidgetView(props: Props) {
           maxRows={GRID_MAX_ROW}
           compactType={null}
           autoSize={false}
-          // onLayoutChange={handleLayoutChange}
+          onLayoutChange={handleLayoutChange}
           isDroppable={true}
           resizeHandle={<ResizeHandle />}
         >
