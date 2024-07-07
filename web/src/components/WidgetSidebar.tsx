@@ -1,7 +1,6 @@
 import type { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 
 import Link from "next/link";
-import { useEffect } from "react";
 import {
   Sheet,
   SheetContent,
@@ -10,8 +9,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/components/ui/sheet";
-import { api } from "~/lib/api/api";
-import Log from "~/lib/log/log";
 import { getNameForWidgetType } from "~/lib/service/widget.service";
 import { useCommandManager, useDetectScreenSize } from "~/lib/ui/hooks";
 import { cogIcon, eyeIcon } from "~/lib/ui/icons";
@@ -24,30 +21,10 @@ export default function WidgetSidebar() {
 
   const editMode = useBoundStore((state) => state.editMode);
   const allAppearentWidgets = useBoundStore((state) => state.apparentWidgets);
+
   const hiddenWidgetsForScreen = allAppearentWidgets.filter(
     (w) => w.screenSize === currentScreenSize && !w.visible,
   );
-
-  const getAllHiddenQuery = api.layout.getAllHidden.useQuery({
-    screenSize: currentScreenSize,
-  });
-
-  useEffect(() => {
-    if (getAllHiddenQuery.status == "success") {
-      Log("getAllHidden", "log", getAllHiddenQuery.data);
-      getAllHiddenQuery.data.forEach((widget) => {
-        commandManager.hideWidget(widget, currentScreenSize);
-      });
-    } else if (getAllHiddenQuery.status == "error") {
-      Log("getAllHidden", "error", getAllHiddenQuery.error);
-    }
-  }, [
-    commandManager,
-    currentScreenSize,
-    getAllHiddenQuery.data,
-    getAllHiddenQuery.error,
-    getAllHiddenQuery.status,
-  ]);
 
   function handleAddToLayout(_widget: AdjustedWidgetLayout) {
     commandManager.revealWidget(_widget, currentScreenSize);

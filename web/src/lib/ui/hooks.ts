@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import filterWidgetLayoutByLayout from "~/client/services/filterWidgetLayoutByLayoutService";
 import getHidingClasses from "~/client/services/getHidingClassesService";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { api } from "../api/api";
 import { BREAKPOINTS } from "../basic/const";
 import Log from "../log/log";
 import type {
@@ -127,7 +128,7 @@ export function useDisplayedWidgets(
       (widget) => !getHidingClasses(widget.layout).includes(currentScreenSize),
     );
 
-    Log("useDisplayedWidgets", "log", exceptHding);
+    Log("useDisplayedWidgets: rgLayout", "log", layout);
 
     setRGLayout(layout);
     setAWLayout(exceptHding);
@@ -143,4 +144,45 @@ export function useDisplayedWidgets(
     rgLayout: rgLayout,
     awLayout: awLayout,
   };
+}
+
+/**
+ * Hook for initializing the application on load
+ */
+export default function useInit() {
+  const [isInit, setIsInit] = useState(false);
+
+  const commandManager = useCommandManager();
+  const currentScreenSize = useDetectScreenSize();
+
+  const getAllHiddenQuery = api.layout.getAllHidden.useQuery(
+    {
+      screenSize: currentScreenSize,
+    },
+    {
+      refetchOnWindowFocus: false,
+    },
+  );
+
+  useEffect(() => {
+    if (isInit) return;
+
+    if (getAllHiddenQuery.status == "success") {
+      Log("getAllHidden", "log", getAllHiddenQuery.data);
+      getAllHiddenQuery.data.forEach((widget) => {
+        commandManager.hideWidget(widget, currentScreenSize);
+      });
+      setIsInit(true);
+    } else if (getAllHiddenQuery.status == "error") {
+      Log("getAllHidden", "error", getAllHiddenQuery.error);
+      setIsInit(true);
+    }
+  }, [
+    commandManager,
+    currentScreenSize,
+    getAllHiddenQuery.data,
+    getAllHiddenQuery.error,
+    getAllHiddenQuery.status,
+    isInit,
+  ]);
 }

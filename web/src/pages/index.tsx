@@ -3,10 +3,13 @@ import SiteWrapper from "~/components/SiteWrapper";
 import WidgetView from "~/components/WidgetView";
 import { api } from "~/lib/api/api";
 import Log from "~/lib/log/log";
+import useInit from "~/lib/ui/hooks";
 import ErrorPage from "~/sites/Error";
 import LoadingSpinner from "~/sites/Loading";
 
 const Home: NextPage = () => {
+  useInit();
+
   const widgetLayoutQuery = api.layout.getAll.useQuery(undefined, {
     onSuccess: (data) => {
       Log("all layouts", "log", data);
