@@ -1,5 +1,8 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
+import createAdjustedWidgetLayoutSlice, {
+  type AdjustedWidgetLayoutSlice,
+} from "./adjustedWidgetLayoutSlice";
 import createEditModeSlice, { type EditModeSlice } from "./editModeSlice";
 import createEditedWidgetLayoutSlice, {
   type EditedWidgetSlice,
@@ -12,12 +15,17 @@ import createWidgetLayoutSlice, {
 } from "./widgetLayoutSlice";
 
 export const useBoundStore = create<
-  ApparentWidgetsSlice & EditModeSlice & WidgetLayoutSlice & EditedWidgetSlice
+  ApparentWidgetsSlice &
+    EditModeSlice &
+    WidgetLayoutSlice &
+    EditedWidgetSlice &
+    AdjustedWidgetLayoutSlice
 >()(
   immer((...a) => ({
     ...createApparentWidgetsSlice(...a),
     ...createEditModeSlice(...a),
     ...createWidgetLayoutSlice(...a),
     ...createEditedWidgetLayoutSlice(...a),
+    ...createAdjustedWidgetLayoutSlice(...a),
   })),
 );
