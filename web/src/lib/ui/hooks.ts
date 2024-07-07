@@ -14,7 +14,7 @@ import type {
 } from "../types/types";
 import { CommandContext } from "./context/command";
 import { useBoundStore } from "./state";
-import { toastTextAtom, toastTypeAtom } from "./store";
+import { toastTextAtom, toastTypeAtom } from "./state/atoms";
 
 /**
  * Hook for detecting whether the current screen size is mobile
