@@ -23,14 +23,21 @@ const createApparentWidgetsSlice: StateCreator<ApparentWidgetsSlice> = (
   addApparentWidget: (widget, screenSize, visible) =>
     set((state) => {
       const newApparentWidgets = produce(state.apparentWidgets, (draft) => {
-        const existingWidget = draft.find((w) => w.widget.id == widget.id) ?? {
+        const existingWidget = draft.find((w) => w.widget.id == widget.id);
+        if (existingWidget) {
+          existingWidget.visible = visible;
+          return draft;
+        }
+        const newEntry = {
           widget,
           screenSize,
           visible: visible, // this `visible` value is just a placeholder, below is more relevant
         };
-        existingWidget.visible = visible;
-      });
 
+        return [...draft, newEntry];
+      });
+      console.log("ADWdfghjkloiuzgbnjiuzgbnmkiuzghn");
+      console.log(newApparentWidgets.length);
       return { apparentWidgets: newApparentWidgets };
     }),
 });

@@ -124,14 +124,28 @@ export function useDisplayedWidgets(
       layout,
       currentScreenSize,
     );
-    const exceptHding = filteredAWLayout.filter(
+    const allExceptHidden = filteredAWLayout.filter(
       (widget) => !getHidingClasses(widget.layout).includes(currentScreenSize),
     );
+
+    const visibleApparentWidgets = useBoundStore
+      .getState()
+      .apparentWidgets.filter((w) => w.visible);
+
+    const notShownVisibleApparentWidgets = visibleApparentWidgets.filter(
+      (w) => {
+        return !allExceptHidden.some((e) => e.id === w.widget.id);
+      },
+    );
+
+    const widgetsToAdd = notShownVisibleApparentWidgets.map((w) => w.widget);
+
+    allExceptHidden.push(...widgetsToAdd);
 
     Log("useDisplayedWidgets: rgLayout", "log", layout);
 
     setRGLayout(layout);
-    setAWLayout(exceptHding);
+    setAWLayout(allExceptHidden);
   }, [
     currentScreenSize,
     editMode,
