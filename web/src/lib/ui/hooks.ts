@@ -7,12 +7,8 @@ import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidget
 import { api } from "../api/api";
 import { BREAKPOINTS } from "../basic/const";
 import Log from "../log/log";
-import type {
-  DisplayedWidgets,
-  RGLayout,
-  ScreenSize,
-  ToastType,
-} from "../types/types";
+import type { ScreenSize, ToastType } from "../types/types";
+import { type DisplayedWidgets, type RGLayout } from "../types/widget";
 import { CommandContext } from "./context/command";
 import { useBoundStore } from "./state";
 import { toastTextAtom, toastTypeAtom } from "./state/atoms";

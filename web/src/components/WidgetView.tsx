@@ -10,7 +10,7 @@ import {
 } from "~/lib/basic/const";
 
 import { useEffect } from "react";
-import { type RGLayout } from "~/lib/types/types";
+import { type RGLayout } from "~/lib/types/widget";
 import {
   useCommandManager,
   useDetectScreenSize,

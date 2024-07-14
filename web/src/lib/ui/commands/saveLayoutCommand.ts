@@ -1,7 +1,7 @@
 import { produce } from "immer";
 import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
 import { transformRGLToAWL } from "~/client/services/transformLayoutsService";
-import { type RGLayout } from "~/lib/types/types";
+import { type RGLayout } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { useBoundStore } from "../state";
 import ChangeWidgetCommand from "./changeWidgetCommand";

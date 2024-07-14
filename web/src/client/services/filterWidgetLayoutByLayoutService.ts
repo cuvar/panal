@@ -1,4 +1,5 @@
-import { type RGLayout, type ScreenSize } from "~/lib/types/types";
+import { type ScreenSize } from "~/lib/types/types";
+import { type RGLayout } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 
 /**

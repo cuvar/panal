@@ -21,3 +21,15 @@ export type Layout = Positioning | PartialScreenSizePositioning;
 export type WidgetProps = {
   widget: AdjustedWidgetLayout;
 };
+
+export type RGLayout = ReactGridLayout.Layouts;
+
+export type DisplayedWidgets = {
+  rgLayout: RGLayout;
+  awLayout: AdjustedWidgetLayout[];
+};
+
+export type LayoutType = {
+  id: string;
+  type: WidgetType;
+};

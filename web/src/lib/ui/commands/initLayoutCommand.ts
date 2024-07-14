@@ -1,5 +1,5 @@
 import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
-import { type LayoutType, type RGLayout } from "~/lib/types/types";
+import { type LayoutType, type RGLayout } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";

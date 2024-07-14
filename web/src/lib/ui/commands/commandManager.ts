@@ -4,7 +4,8 @@
 // ! moving widgets should be a command as well
 
 import type ReactGridLayout from "react-grid-layout";
-import { type RGLayout, type ScreenSize } from "~/lib/types/types";
+import { type ScreenSize } from "~/lib/types/types";
+import { type RGLayout } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import AbortEditCommand from "./abortEditCommand";
 import ChangeWidgetCommand from "./changeWidgetCommand";

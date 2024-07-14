@@ -1,4 +1,4 @@
-import { type RGLayout } from "~/lib/types/types";
+import { type RGLayout } from "~/lib/types/widget";
 
 /**
  * Changes the static property of all layouts to the given value

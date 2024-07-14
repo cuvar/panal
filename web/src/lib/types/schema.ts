@@ -1,10 +1,11 @@
 import { z } from "zod";
 import type {
   Positioning,
+  RGLayout,
   ScreenSizePositioning,
   WidgetType,
 } from "~/lib/types/widget";
-import { type RGLayout, type ScreenSize } from "./types";
+import { type ScreenSize } from "./types";
 
 export const positioningSchema: z.ZodType<Positioning> = z.object({
   x: z.number(),
