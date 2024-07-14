@@ -36,13 +36,6 @@ export default function NewMenu() {
     },
   });
 
-  const hideWidgetMutation = api.layout.hideWidgets.useMutation({
-    onError: (error) => {
-      showToast("Hiding widgets failed", "error");
-      Log(error, "error");
-    },
-  });
-
   function handleLogout() {
     void (async () => {
       await signOut();

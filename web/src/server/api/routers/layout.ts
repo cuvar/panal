@@ -13,10 +13,8 @@ import {
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { getLayoutRepository } from "~/server/domain/layout/repo/layoutRepository";
-import { hideWidgets } from "~/server/domain/layout/services/hideWidgetService";
 import transformWidgetLayout from "~/server/domain/layout/services/transformWidgetLayoutService";
 import updateWidgetLayoutService from "~/server/domain/layout/services/updateWidgetLayoutService";
-import { WidgetVisibility } from "~/server/domain/layout/widgetVisibility";
 
 export const layoutRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
@@ -124,28 +122,6 @@ export const layoutRouter = createTRPCRouter({
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Unable to get hidden widget layouts",
-        });
-      }
-    }),
-  hideWidgets: protectedProcedure
-    .input(z.array(WidgetVisibility.getSchema()))
-    .mutation(async ({ input }) => {
-      try {
-        const mapped = input.map((w) => {
-          const awc = new AdjustedWidgetLayout(
-            w.widget.id,
-            w.widget.type,
-            w.widget.layout,
-          );
-          return new WidgetVisibility(awc, w.screenSize, w.visible);
-        });
-        const res = await hideWidgets(mapped);
-        return res;
-      } catch (error) {
-        Log(error, "error");
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Unable to update hiding status of widget layouts",
         });
       }
     }),
