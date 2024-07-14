@@ -21,12 +21,6 @@ import { useBoundStore } from "~/lib/ui/state";
 
 export default function NewMenu() {
   const editMode = useBoundStore((state) => state.editMode);
-  const editedWidgetLayout = useBoundStore((state) => state.editedWidgetLayout);
-  const apparentWidgets = useBoundStore((state) => state.apparentWidgets);
-  const adjustedWidgetLayouts = useBoundStore(
-    (state) => state.adjustedWidgetLayouts,
-  );
-
   const router = useRouter();
   const showToast = useToast();
   const commandManager = useCommandManager();
@@ -64,13 +58,11 @@ export default function NewMenu() {
   }
 
   function handleSaveLayout() {
-    // TODO: COMMAND
-    commandManager.saveEditLayout(() => {
+    commandManager.saveEditLayout((awl, rgLayout) => {
       setWidgetLayoutMutation.mutate({
-        layout: editedWidgetLayout,
-        awLayout: adjustedWidgetLayouts,
+        layout: rgLayout,
+        awLayout: awl,
       });
-      hideWidgetMutation.mutate(apparentWidgets);
     });
   }
 

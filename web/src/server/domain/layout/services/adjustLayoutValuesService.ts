@@ -1,4 +1,8 @@
-import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/lib/basic/const";
+import {
+  BREAKPOINT_COLS,
+  GRID_MAX_ROW,
+  HIDDEN_POSITIONING,
+} from "~/lib/basic/const";
 import { isScreenSize } from "~/lib/guards/other";
 import type { ScreenSize } from "~/lib/types/types";
 import type { Positioning, WidgetType } from "~/lib/types/widget";
@@ -72,13 +76,7 @@ function adjustBoundsForMinValues(
   // 4. Adjusts positioning values to not be outside of the bounds of the screen
   if (layout.x + layout.w > BREAKPOINT_COLS[screenSize]) {
     layout.x = BREAKPOINT_COLS[screenSize] - layout.w;
-    if (layout.x < 0)
-      return {
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
-      };
+    if (layout.x < 0) return HIDDEN_POSITIONING;
   }
 
   if (layout.y > GRID_MAX_ROW) {

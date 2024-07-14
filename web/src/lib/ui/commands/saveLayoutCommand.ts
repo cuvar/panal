@@ -1,6 +1,8 @@
 import { produce } from "immer";
 import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
 import { transformRGLToAWL } from "~/client/services/transformLayoutsService";
+import { type RGLayout } from "~/lib/types/types";
+import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { useBoundStore } from "../state";
 import ChangeWidgetCommand from "./changeWidgetCommand";
 import { type Command } from "./command";
@@ -13,9 +15,13 @@ export default class SaveLayoutCommand implements Command {
   session: string;
   history: Command[];
   batch: Command[]; // just for tracking
-  callback: () => void;
+  callback: (awLayout: AdjustedWidgetLayout[], rgLayout: RGLayout) => void;
 
-  constructor(session: string, history: Command[], callback: () => void) {
+  constructor(
+    session: string,
+    history: Command[],
+    callback: (awLayout: AdjustedWidgetLayout[], rgLayout: RGLayout) => void,
+  ) {
     this.name = "save-layout";
     this.description = "Save new widget layout after editing";
     this.session = session;
@@ -37,17 +43,17 @@ export default class SaveLayoutCommand implements Command {
     useBoundStore.getState().exitEditMode();
     const editedWidgetLayout = useBoundStore.getState().editedWidgetLayout;
 
-    const staticLayout = produce(editedWidgetLayout, (draft) => {
+    const staticRgLayout = produce(editedWidgetLayout, (draft) => {
       const moveableLayout = makeLayoutsStatic(draft, true);
       return moveableLayout;
     });
+    useBoundStore.getState().setWidgetLayout(staticRgLayout);
 
-    useBoundStore.getState().setWidgetLayout(staticLayout);
-    const currentAWL = useBoundStore.getState().adjustedWidgetLayouts;
-    const awl = transformRGLToAWL(staticLayout, currentAWL);
+    const layoutTypes = useBoundStore.getState().layoutTypes;
+    const awl = transformRGLToAWL(staticRgLayout, layoutTypes);
     useBoundStore.getState().setAdjustedWidgteLayouts(awl);
 
-    this.callback();
+    this.callback(awl, staticRgLayout);
   }
 
   rollback() {

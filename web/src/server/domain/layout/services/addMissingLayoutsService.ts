@@ -1,4 +1,4 @@
-import { BREAKPOINTS_ORDER } from "~/lib/basic/const";
+import { BREAKPOINTS_ORDER, HIDDEN_POSITIONING } from "~/lib/basic/const";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import {
@@ -11,10 +11,12 @@ import type { Layout, ScreenSizePositioning } from "~/lib/types/widget";
 /**
  * Adds layouts for missing ScreenSizes to the given layout
  * @param {Layout} layout Given layout
+ * @param {boolean} withReplacement Indicates whether an (existing) replacement layout should be used. Otherwise it stays hidden for other missing screens
  * @returns {ScreenSizePositioning} layout with all ScreenSizes
  */
 export default function addMissingLayouts(
   layout: Layout,
+  withReplacement = true,
 ): ScreenSizePositioning {
   if (isScreenSizePositioning(layout)) {
     return layout;
@@ -25,11 +27,16 @@ export default function addMissingLayouts(
     );
     try {
       const missingLayouts = missingScreenSizes.map((mss) => {
-        const replacementScreen = getReplacementScreenSize(
-          exisitingScreenSizes,
-          mss,
-        );
-        const replacementLayout = layout[replacementScreen];
+        let replacementLayout = undefined;
+        if (withReplacement) {
+          const replacementScreen = getReplacementScreenSize(
+            exisitingScreenSizes,
+            mss,
+          );
+          replacementLayout = layout[replacementScreen];
+        } else {
+          replacementLayout = HIDDEN_POSITIONING;
+        }
         if (replacementLayout == undefined) {
           throw new AppError(codes.SERVICE_REPLACEMENT_SCREEN_FAILED);
         }

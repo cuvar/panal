@@ -63,6 +63,17 @@ export default function WidgetView(props: Props) {
     commandManager.changeWidget(oldItem, newItem, layout, currentScreenSize);
   }
 
+  function handleResizeStop(
+    layout: ReactGridLayout.Layout[],
+    oldItem: ReactGridLayout.Layout,
+    newItem: ReactGridLayout.Layout,
+    _placeholder: ReactGridLayout.Layout,
+    _event: MouseEvent,
+    _element: HTMLElement,
+  ) {
+    commandManager.changeWidget(oldItem, newItem, layout, currentScreenSize);
+  }
+
   return (
     <div className="z-10 h-screen w-full max-w-[1280px]">
       {props.layout.length === 0 ? (
@@ -84,6 +95,7 @@ export default function WidgetView(props: Props) {
           autoSize={false}
           preventCollision={true}
           onLayoutChange={handleLayoutChange}
+          onResizeStop={handleResizeStop}
           onDragStop={handleDragStop}
           isDroppable={true}
           resizeHandle={<ResizeHandle />}

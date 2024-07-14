@@ -70,7 +70,9 @@ export default class CommandManager {
     this.execute(command);
   }
 
-  saveEditLayout(callback: () => void) {
+  saveEditLayout(
+    callback: (awLayout: AdjustedWidgetLayout[], rgLayout: RGLayout) => void,
+  ) {
     const command = new SaveLayoutCommand(this.session, this.history, callback);
     this.execute(command);
     this.history.push(command);
