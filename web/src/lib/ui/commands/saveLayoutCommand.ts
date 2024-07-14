@@ -1,5 +1,6 @@
 import { produce } from "immer";
 import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
+import { transformRGLToAWL } from "~/client/services/transformLayoutsService";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 import HideWidgetCommand from "./hideWidgetCommand";
@@ -42,7 +43,9 @@ export default class SaveLayoutCommand implements Command {
     });
 
     useBoundStore.getState().setWidgetLayout(staticLayout);
-    // TODO: --> save also adjustedWidgetLayout -> maybe derive from widgetLayout, as widgetLayout is what the user wanted
+    const currentAWL = useBoundStore.getState().adjustedWidgetLayouts;
+    const awl = transformRGLToAWL(staticLayout, currentAWL);
+    useBoundStore.getState().setAdjustedWidgteLayouts(awl);
 
     this.callback();
   }
