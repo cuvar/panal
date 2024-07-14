@@ -1,5 +1,5 @@
 import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
-import { type RGLayout } from "~/lib/types/types";
+import { type LayoutType, type RGLayout } from "~/lib/types/types";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
@@ -28,6 +28,15 @@ export default class InitLayoutCommand implements Command {
     useBoundStore
       .getState()
       .setAdjustedWidgteLayouts(this.adjustedWidgetLayouts);
+
+    const layoutTypes: LayoutType[] = this.adjustedWidgetLayouts.map((item) => {
+      return {
+        id: item.id,
+        type: item.type,
+      };
+    });
+
+    useBoundStore.getState().setLayouTypes(layoutTypes);
     this.prevLayout = useBoundStore.getState().widgetLayout;
     useBoundStore.getState().setWidgetLayout(transformedLayouts);
   }

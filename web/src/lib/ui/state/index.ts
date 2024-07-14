@@ -10,6 +10,7 @@ import createEditedWidgetLayoutSlice, {
 import createApparentWidgetsSlice, {
   type ApparentWidgetsSlice,
 } from "./hiddenSlice";
+import createLayoutTypeSlice, { type LayoutTypeSlice } from "./layoutTypeSlice";
 import createWidgetLayoutSlice, {
   type WidgetLayoutSlice,
 } from "./widgetLayoutSlice";
@@ -19,7 +20,8 @@ export const useBoundStore = create<
     EditModeSlice &
     WidgetLayoutSlice &
     EditedWidgetSlice &
-    AdjustedWidgetLayoutSlice
+    AdjustedWidgetLayoutSlice &
+    LayoutTypeSlice
 >()(
   immer((...a) => ({
     ...createApparentWidgetsSlice(...a),
@@ -27,5 +29,6 @@ export const useBoundStore = create<
     ...createWidgetLayoutSlice(...a),
     ...createEditedWidgetLayoutSlice(...a),
     ...createAdjustedWidgetLayoutSlice(...a),
+    ...createLayoutTypeSlice(...a),
   })),
 );

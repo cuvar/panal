@@ -1,5 +1,6 @@
 import type ReactGridLayout from "react-grid-layout";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { type WidgetType } from "./widget";
 
 export type ScreenSize = "xss" | "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -15,4 +16,9 @@ export type RGLayout = ReactGridLayout.Layouts;
 export type DisplayedWidgets = {
   rgLayout: RGLayout;
   awLayout: AdjustedWidgetLayout[];
+};
+
+export type LayoutType = {
+  id: string;
+  type: WidgetType;
 };
