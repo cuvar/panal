@@ -7,11 +7,11 @@ import type ReactGridLayout from "react-grid-layout";
 import { type RGLayout, type ScreenSize } from "~/lib/types/types";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import AbortEditCommand from "./abortEditCommand";
+import ChangeWidgetCommand from "./changeWidgetCommand";
 import { type Command } from "./command";
 import HideWidgetCommand from "./hideWidgetCommand";
 import InitEditCommand from "./initEditCommand";
 import InitLayoutCommand from "./initLayoutCommand";
-import MoveWidgetCommand from "./moveWidgetCommand";
 import RevealWidgetCommand from "./revealWidgetCommand";
 import SaveLayoutCommand from "./saveLayoutCommand";
 import UpdateEditLayoutCommand from "./updateEditLayoutCommand";
@@ -90,13 +90,13 @@ export default class CommandManager {
     this.history.push(command);
   }
 
-  moveWidget(
+  changeWidget(
     oldItem: ReactGridLayout.Layout,
     newItem: ReactGridLayout.Layout,
     newLayout: ReactGridLayout.Layout[],
     currentScreenSize: ScreenSize,
   ) {
-    const command = new MoveWidgetCommand(
+    const command = new ChangeWidgetCommand(
       this.session,
       oldItem,
       newItem,

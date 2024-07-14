@@ -60,7 +60,7 @@ export default function WidgetView(props: Props) {
     _event: MouseEvent,
     _element: HTMLElement,
   ) {
-    commandManager.moveWidget(oldItem, newItem, layout, currentScreenSize);
+    commandManager.changeWidget(oldItem, newItem, layout, currentScreenSize);
   }
 
   return (

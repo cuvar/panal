@@ -4,7 +4,7 @@ import { type ScreenSize } from "~/lib/types/types";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 
-export default class MoveWidgetCommand implements Command {
+export default class ChangeWidgetCommand implements Command {
   name: string;
   description: string;
   session: string;

@@ -12,6 +12,13 @@ const Home: NextPage = () => {
   const commandManager = useCommandManager();
   const currentScreenSize = useDetectScreenSize();
 
+  const widgetLayoutQuery = api.layout.getAll.useQuery(undefined, {
+    onSuccess: (data) => {
+      Log("all layouts", "log", data);
+    },
+    refetchOnWindowFocus: false,
+  });
+
   const getAllHiddenQuery = api.layout.getAllHidden.useQuery(
     {
       screenSize: currentScreenSize,
@@ -37,13 +44,6 @@ const Home: NextPage = () => {
     getAllHiddenQuery.error,
     getAllHiddenQuery.status,
   ]);
-
-  const widgetLayoutQuery = api.layout.getAll.useQuery(undefined, {
-    onSuccess: (data) => {
-      Log("all layouts", "log", data);
-    },
-    refetchOnWindowFocus: false,
-  });
 
   if (widgetLayoutQuery.error) {
     return <ErrorPage error={""} />;
