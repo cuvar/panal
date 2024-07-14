@@ -74,25 +74,6 @@ export class LayoutUpstashRepository implements LayoutRepository {
     }
   }
 
-  // TODO: check if this works
-  async setMany(widgets: AdjustedWidgetLayout[]): Promise<void> {
-    try {
-      const currentAll = await this.getAll();
-
-      widgets.forEach((widget) => {
-        const currentConfig = currentAll.find((e) => e.id === widget.id);
-        if (!currentConfig) {
-          throw new AppError(codes.WIDGET_NOT_FOUND);
-        }
-        currentConfig.layout = widget.layout;
-      });
-
-      await this.redis.set(UPSTASH_LAYOUT_KEY, JSON.stringify(currentAll));
-    } catch (error) {
-      throw new AppError(codes.REPOSITORY_SET_MANY_LAYOUT_FAILED, error);
-    }
-  }
-
   async setAll(widgets: AdjustedWidgetLayout[]): Promise<void> {
     try {
       await this.redis.set(UPSTASH_LAYOUT_KEY, JSON.stringify(widgets));
