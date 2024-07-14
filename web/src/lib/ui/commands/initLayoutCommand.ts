@@ -27,7 +27,7 @@ export default class InitLayoutCommand implements Command {
     );
     useBoundStore
       .getState()
-      .setAdjustedWidgteLayouts(this.adjustedWidgetLayouts);
+      .setAdjustedWidgetLayouts(this.adjustedWidgetLayouts);
 
     const layoutTypes: LayoutType[] = this.adjustedWidgetLayouts.map((item) => {
       return {

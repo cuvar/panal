@@ -53,7 +53,7 @@ export default class ChangeWidgetCommand implements Command {
       }
     });
 
-    useBoundStore.getState().setAdjustedWidgteLayouts(newAdjustedWidgetLayouts);
+    useBoundStore.getState().setAdjustedWidgetLayouts(newAdjustedWidgetLayouts);
   }
 
   rollback() {

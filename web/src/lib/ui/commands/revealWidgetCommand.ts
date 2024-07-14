@@ -81,7 +81,7 @@ export default class RevealWidgetCommand implements Command {
       !editMode,
     );
 
-    useBoundStore.getState().setAdjustedWidgteLayouts(allAWLayouts);
+    useBoundStore.getState().setAdjustedWidgetLayouts(allAWLayouts);
     useBoundStore.getState().setEditedWidgetLayout(newEditedWidgetLayout);
   }
 

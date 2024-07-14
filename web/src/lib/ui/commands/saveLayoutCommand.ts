@@ -51,7 +51,7 @@ export default class SaveLayoutCommand implements Command {
 
     const layoutTypes = useBoundStore.getState().layoutTypes;
     const awl = transformRGLToAWL(staticRgLayout, layoutTypes);
-    useBoundStore.getState().setAdjustedWidgteLayouts(awl);
+    useBoundStore.getState().setAdjustedWidgetLayouts(awl);
 
     this.callback(awl, staticRgLayout);
   }
