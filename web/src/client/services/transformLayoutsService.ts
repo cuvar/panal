@@ -1,7 +1,12 @@
 import { isScreenSize } from "~/lib/guards/other";
 import { isEmptyPositioning } from "~/lib/service/positioning.service";
-import { type RGLayout } from "~/lib/types/types";
-import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import {
+  type LayoutType,
+  type RGLayout,
+  type ScreenSize,
+} from "~/lib/types/types";
+import { type ScreenSizePositioning } from "~/lib/types/widget";
+import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
@@ -47,4 +52,73 @@ export default function transformLayoutsForGrid(
     });
   });
   return layouts;
+}
+
+/**
+ * Transforms a given React-Grid-Layout layout into an AdjustedWidgetLayout array
+ * @param {RGLayout} data Layout to transform
+ * @param {LayoutType[]} layoutTypes Layout with types to transform
+ * @returns {AdjustedWidgetLayout[]} Transformed layout
+ */
+export function transformRGLToAWL(
+  data: RGLayout,
+  layoutTypes: LayoutType[],
+): AdjustedWidgetLayout[] {
+  const awl: AdjustedWidgetLayout[] = [];
+
+  const entries = Object.entries(data);
+  const groupedById = entries.reduce(
+    (acc, [screenSize, layoutArray]) => {
+      if (!isScreenSize(screenSize) || !Array.isArray(layoutArray)) {
+        return acc;
+      }
+
+      layoutArray.forEach((layout) => {
+        if (layout.i === undefined) return;
+
+        if (acc[layout.i] === undefined) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          acc[layout.i] = {};
+        }
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        (acc[layout.i] as object)[screenSize] = layout;
+      });
+
+      return acc;
+    },
+    {} as Record<string, Record<ScreenSize, ReactGridLayout.Layout>>,
+  );
+
+  Object.entries(groupedById).forEach((entry) => {
+    const id = entry[0];
+    const layoutObject = entry[1];
+
+    const type = layoutTypes.find((item) => item.id === id)?.type;
+
+    if (type === undefined) return;
+
+    const filteredLayoutObject = Object.entries(layoutObject).reduce(
+      (acc, layout) => {
+        const screenSize = layout[0] as ScreenSize;
+        const layoutValue = layout[1];
+
+        acc[screenSize] = {
+          h: layoutValue.h,
+          w: layoutValue.w,
+          x: layoutValue.x,
+          y: layoutValue.y,
+        };
+        return acc;
+      },
+      {} as ScreenSizePositioning,
+    );
+
+    const widget = new AdjustedWidgetLayout(id, type, filteredLayoutObject);
+    awl.push(widget);
+  });
+
+  return awl;
 }
