@@ -7,11 +7,11 @@ import {
 } from "~/lib/types/types";
 import { type ScreenSizePositioning } from "~/lib/types/widget";
 import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
-import addMissingLayouts from "~/server/domain/layout/services/addMissingLayoutsService";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
 } from "../../server/domain/layout/services/computeSizeForWidgetService";
+import addMissingLayouts from "./addMissingLayoutsService";
 
 /**
  * Transforms AdjustedWidgetLayout[] into RGLayout for react-grid-layout
