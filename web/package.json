@@ -14,7 +14,8 @@
     "start": "next start",
     "generate-notice": "generate-attribution",
     "check-license": "license-checker --onlyAllow 'MIT;ISC;0BSD;BSD*;BSD-2-Clause;BSD-3-Clause;Apache-2.0;Python-2.0;MPL-2.0;CC-BY-4.0;CC0-1.0;CC-BY-3.0' --excludePackages 'panal@0.1.0'",
-    "test": "jest --passWithNoTests"
+    "test:all": "env-cmd -f .env.local -- jest --passWithNoTests",
+    "test": "env-cmd -f .env.local -- jest"
   },
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
@@ -33,6 +34,7 @@
     "@upstash/redis": "^1.22.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "env-cmd": "^10.1.0",
     "ical": "^0.8.0",
     "ics": "^3.5.0",
     "immer": "^10.1.1",
