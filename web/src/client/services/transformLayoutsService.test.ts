@@ -390,10 +390,11 @@ describe("transformRGLToAWL", () => {
     // arrange
     const widgetData1 = new AdjustedWidgetLayout("1", "time", {
       xl: {
+        // has been changed to above
         x: 0,
         y: 0,
-        w: 1,
-        h: 1,
+        w: 0,
+        h: 0,
       },
       lg: {
         x: 0,
@@ -452,10 +453,11 @@ describe("transformRGLToAWL", () => {
         h: 4,
       },
       xs: {
+        // has been changed to above
         x: 0,
         y: 0,
-        w: 5,
-        h: 5,
+        w: 0,
+        h: 0,
       },
       xss: {
         x: 0,
@@ -469,13 +471,6 @@ describe("transformRGLToAWL", () => {
     const makeStatic = true;
     const rgLayout: GridLayout.Layouts = {
       xl: [
-        {
-          ...expected[0]!.layout.xl,
-          i: "1",
-          minW: 2,
-          minH: 1,
-          static: makeStatic,
-        },
         {
           ...expected[1]!.layout.xl,
           i: "2",
@@ -536,13 +531,6 @@ describe("transformRGLToAWL", () => {
         {
           ...expected[0]!.layout.xs,
           i: "1",
-          minW: 2,
-          minH: 1,
-          static: makeStatic,
-        },
-        {
-          ...expected[1]!.layout.xs,
-          i: "2",
           minW: 2,
           minH: 1,
           static: makeStatic,

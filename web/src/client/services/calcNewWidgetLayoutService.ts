@@ -1,3 +1,4 @@
+import { HIDDEN_POSITIONING } from "~/lib/basic/const";
 import Log from "~/lib/log/log";
 import { type Positioning } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
@@ -21,7 +22,7 @@ export function calcNewWidgetLayout(
 
   // ! has this any effect?
   const newLayout: Positioning = !visible
-    ? { x: 0, y: 0, w: 0, h: 0 }
+    ? HIDDEN_POSITIONING
     : { x: 0, y: 0, w: 1, h: 1 };
 
   oldWidget.layout[screen] = newLayout;

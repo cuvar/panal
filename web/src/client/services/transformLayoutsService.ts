@@ -7,6 +7,7 @@ import {
 } from "~/lib/types/types";
 import { type ScreenSizePositioning } from "~/lib/types/widget";
 import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import addMissingLayouts from "~/server/domain/layout/services/addMissingLayoutsService";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
@@ -115,8 +116,8 @@ export function transformRGLToAWL(
       },
       {} as ScreenSizePositioning,
     );
-
-    const widget = new AdjustedWidgetLayout(id, type, filteredLayoutObject);
+    const withMissingLayouts = addMissingLayouts(filteredLayoutObject, false);
+    const widget = new AdjustedWidgetLayout(id, type, withMissingLayouts);
     awl.push(widget);
   });
 
