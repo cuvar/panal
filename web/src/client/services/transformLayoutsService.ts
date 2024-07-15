@@ -1,11 +1,13 @@
+import type ReactGridLayout from "react-grid-layout";
 import { isScreenSize } from "~/lib/guards/other";
 import { isEmptyPositioning } from "~/lib/service/positioning.service";
+import { type ScreenSize } from "~/lib/types/types";
 import {
   type LayoutType,
   type RGLayout,
-  type ScreenSize,
-} from "~/lib/types/types";
-import { type ScreenSizePositioning } from "~/lib/types/widget";
+  type ScreenSizePositioning,
+  type WidgetType,
+} from "~/lib/types/widget";
 import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import {
   getMinHeightForWidget,
@@ -34,13 +36,14 @@ export default function transformLayoutsForGrid(
 
   data.forEach((widget) => {
     Object.entries(widget.layout).forEach(([key, value]) => {
-      const layout = {
-        ...value,
-        i: widget.id,
-        minW: getMinWidthForWidget(widget.type),
-        minH: getMinHeightForWidget(widget.type),
-        static: makeStatic,
-      };
+      const layout = withMinValues<ReactGridLayout.Layout>(
+        {
+          ...value,
+          i: widget.id,
+          static: makeStatic,
+        },
+        widget.type,
+      );
 
       if (
         layouts[key] !== undefined &&
@@ -122,4 +125,20 @@ export function transformRGLToAWL(
   });
 
   return awl;
+}
+
+/**
+ * Adds min values to the layout of a widget
+ * @param data
+ * @param type
+ */
+export function withMinValues<T>(
+  data: T,
+  type: WidgetType,
+): T & { minW: number; minH: number } {
+  return {
+    ...data,
+    minW: getMinWidthForWidget(type),
+    minH: getMinHeightForWidget(type),
+  };
 }

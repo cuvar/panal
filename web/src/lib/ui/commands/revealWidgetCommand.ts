@@ -1,8 +1,14 @@
 import { produce } from "immer";
 import { calcNewWidgetLayout } from "~/client/services/calcNewWidgetLayoutService";
-import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
+import transformLayoutsForGrid, {
+  withMinValues,
+} from "~/client/services/transformLayoutsService";
 import { type ScreenSize } from "~/lib/types/types";
-import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import {
+  type Positioning,
+  type ScreenSizePositioning,
+} from "~/lib/types/widget";
+import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { type WidgetVisibility } from "~/server/domain/layout/widgetVisibility";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
@@ -56,7 +62,23 @@ export default class RevealWidgetCommand implements Command {
       this.widgetVisibility,
       (draft) => {
         draft.widget = calcNewWidgetLayout(draft, allAWLayouts);
-        return draft;
+        draft.widget = new AdjustedWidgetLayout(
+          draft.widget.id,
+          draft.widget.type,
+          draft.widget.layout,
+        );
+        const layout = draft.widget.layout;
+        const hasMinValues = {};
+        Object.entries(layout).forEach(([screen, value]) => {
+          const newPositioning = withMinValues<Positioning>(
+            value,
+            draft.widget.type,
+          );
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          hasMinValues[screen] = newPositioning;
+        });
+        draft.widget.layout = hasMinValues as ScreenSizePositioning;
       },
     ).widget;
 
