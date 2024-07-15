@@ -1,8 +1,3 @@
-// TODO: the current display of hidden widgets (means: unhiding) is not working as well as aborting the action
-// ! -> execution
-// ! -> rollback
-// ! moving widgets should be a command as well
-
 import type ReactGridLayout from "react-grid-layout";
 import { type ScreenSize } from "~/lib/types/types";
 import { type RGLayout } from "~/lib/types/widget";

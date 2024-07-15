@@ -19,10 +19,6 @@ export class AdjustedWidgetLayout {
     this.layout = layout;
   }
 
-  updateLayoutForScreen(layout: ScreenSizePositioning) {
-    // TODO:
-  }
-
   static validate(input: unknown): input is AdjustedWidgetLayout {
     if (!isObject(input)) {
       return false;
