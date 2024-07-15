@@ -9,12 +9,12 @@ import findFreeSpace from "./findFreeSpaceService";
 /**
  * Updates a widgets layout for a specific screen size, depending on whether it should be hidden or revealed
  * @param {WidgetVisibility} widgetVisibility HideInfo of widgets that should be hidden/revealed
- * @param {AdjustedWidgetLayout[]} allLayouts All layouts of widgets
+ * @param {Positioning[]} currentWidgetsPositionings The positionings of all widgets
  * @returns {AdjustedWidgetLayout} The updated widget layout
  */
 export function calcNewWidgetLayout(
   widgetVisibility: WidgetVisibility,
-  allLayouts: AdjustedWidgetLayout[],
+  currentWidgetsPositionings: Positioning[],
 ): AdjustedWidgetLayout {
   const screen = widgetVisibility.screenSize;
   const visible = widgetVisibility.visible;
@@ -35,9 +35,6 @@ export function calcNewWidgetLayout(
     return adjustedWidgetLayout;
   }
 
-  const currentWidgetsPositionings = allLayouts.map(
-    (widget) => widget.layout[screen],
-  );
   const layoutToInsert = adjustedWidgetLayout.layout[screen];
   const newSpace = findFreeSpace(
     layoutToInsert,

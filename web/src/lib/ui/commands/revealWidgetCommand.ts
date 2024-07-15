@@ -1,6 +1,7 @@
 import { produce } from "immer";
 import { calcNewWidgetLayout } from "~/client/services/calcNewWidgetLayoutService";
 import transformLayoutsForGrid, {
+  transformRGLToAWL,
   withMinValues,
 } from "~/client/services/transformLayoutsService";
 import { type ScreenSize } from "~/lib/types/types";
@@ -51,17 +52,20 @@ export default class RevealWidgetCommand implements Command {
   _updateLayout() {
     const editMode = useBoundStore.getState().editMode;
     const editedWidgetLayout = useBoundStore.getState().editedWidgetLayout;
-    const allAWLayouts = useBoundStore.getState().adjustedWidgetLayouts;
+    const layoutTypes = useBoundStore.getState().layoutTypes;
 
     if (!editMode || !editedWidgetLayout[this.widgetVisibility.screenSize]) {
       return;
     }
 
+    const allPositionings =
+      editedWidgetLayout[this.widgetVisibility.screenSize] ?? [];
+
     // * 1. get new layout for added widget
     const newLayoutForRevealedWidget = produce(
       this.widgetVisibility,
       (draft) => {
-        draft.widget = calcNewWidgetLayout(draft, allAWLayouts);
+        draft.widget = calcNewWidgetLayout(draft, allPositionings);
         draft.widget = new AdjustedWidgetLayout(
           draft.widget.id,
           draft.widget.type,
@@ -83,7 +87,9 @@ export default class RevealWidgetCommand implements Command {
     ).widget;
 
     // * 2. update adjustedWidgetLayout
-    const newAllAWLayouts = produce(allAWLayouts, (draft) => {
+    const newAwlLayout = transformRGLToAWL(editedWidgetLayout, layoutTypes);
+
+    const newAllAWLayouts = produce(newAwlLayout, (draft) => {
       const existingWidget = draft.find((widget) => {
         return widget.id === newLayoutForRevealedWidget.id;
       });
@@ -103,7 +109,7 @@ export default class RevealWidgetCommand implements Command {
       !editMode,
     );
 
-    useBoundStore.getState().setAdjustedWidgetLayouts(allAWLayouts);
+    useBoundStore.getState().setAdjustedWidgetLayouts(newAwlLayout);
     useBoundStore.getState().setEditedWidgetLayout(newEditedWidgetLayout);
   }
 
