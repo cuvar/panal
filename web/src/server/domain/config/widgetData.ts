@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { widgetTypeSchema } from "~/lib/types/schema";
-import type { WidgetType } from "~/lib/types/widget";
+import {
+  WidgetTypeHelper,
+  type WidgetType,
+} from "~/server/domain/config/widgetType";
 import { calendarWidgetDataSchema } from "../../widgets/calendar/schema";
 import type { CalendarWidgetData } from "../../widgets/calendar/types";
 import { linkWidgetDataSchema } from "../../widgets/links/schema";
@@ -10,34 +12,23 @@ import type { SearchWidgetData } from "../../widgets/search/types";
 import { timeWidgetDataSchema } from "../../widgets/time/schema";
 import type { TimeWidgetData } from "../../widgets/time/types";
 
-export class WidgetData {
+export type WidgetData = {
   id: string;
   type: WidgetType;
   data: LinkWidgetData | SearchWidgetData | CalendarWidgetData | TimeWidgetData;
-  constructor(
-    id: string,
-    type: WidgetType,
-    data:
-      | LinkWidgetData
-      | SearchWidgetData
-      | CalendarWidgetData
-      | TimeWidgetData,
-  ) {
-    this.id = id;
-    this.type = type;
-    this.data = data;
-  }
+};
 
-  static getSchema() {
-    const widgetConfigSchema = z.object({
+export const WidgetDataHelper = {
+  getSchema() {
+    const widgetDataSchema = z.object({
       id: z.string(),
-      type: widgetTypeSchema,
+      type: WidgetTypeHelper.getSchema(),
       data: linkWidgetDataSchema
         .or(searchWidgetDataSchema)
         .or(timeWidgetDataSchema)
         .or(calendarWidgetDataSchema),
     });
 
-    return widgetConfigSchema;
-  }
-}
+    return widgetDataSchema;
+  },
+};

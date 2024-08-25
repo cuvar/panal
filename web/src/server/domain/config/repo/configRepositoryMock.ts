@@ -1,9 +1,9 @@
-import { generateUniqueID } from "~/lib/service/widget.service";
-import { WidgetConfig } from "~/server/domain/config/widgetConfig";
+import { generateUniqueID } from "~/application/widget.service";
+import { type WidgetConfig } from "~/server/domain/config/widgetConfig";
 import { type ConfigRepository } from "./configRepository";
 
 export class ConfigRepositoryMock implements ConfigRepository {
-  wc = new WidgetConfig(generateUniqueID(), "time", {});
+  wc = { id: generateUniqueID(), type: "time", data: {} } as WidgetConfig;
 
   async get(): Promise<WidgetConfig> {
     return Promise.resolve(this.wc);

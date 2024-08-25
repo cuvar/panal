@@ -1,16 +1,15 @@
 import { produce } from "immer";
-import { calcNewWidgetLayout } from "~/client/services/calcNewWidgetLayoutService";
-import transformLayoutsForGrid, {
-  transformRGLToAWL,
-  withMinValues,
-} from "~/client/services/transformLayoutsService";
-import { type ScreenSize } from "~/lib/types/types";
+import { calcNewWidgetLayout } from "~/application/layout/calcNewWidgetLayout.service";
+import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import {
-  type Positioning,
-  type ScreenSizePositioning,
-} from "~/lib/types/widget";
-import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+  awlToRgl,
+  rglToAwl,
+  withMinValues,
+} from "~/server/domain/layout/services/transform.service";
 import { type WidgetVisibility } from "~/server/domain/layout/widgetVisibility";
+import { type ScreenSize } from "~/server/domain/other/screenSize";
+import { type Positioning } from "~/server/domain/positioning/positioning";
+import { type ScreenSizePositioning } from "~/server/domain/positioning/screensizePositioning";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 
@@ -69,11 +68,11 @@ export default class RevealWidgetCommand implements Command {
       this.widgetVisibility,
       (draft) => {
         draft.widget = calcNewWidgetLayout(draft, allPositionings);
-        draft.widget = new AdjustedWidgetLayout(
-          draft.widget.id,
-          draft.widget.type,
-          draft.widget.layout,
-        );
+        draft.widget = {
+          id: draft.widget.id,
+          type: draft.widget.type,
+          layout: draft.widget.layout,
+        } as AdjustedWidgetLayout;
         const layout = draft.widget.layout;
         const hasMinValues = {};
         Object.entries(layout).forEach(([screen, value]) => {
@@ -90,7 +89,7 @@ export default class RevealWidgetCommand implements Command {
     ).widget;
 
     // * 2. update adjustedWidgetLayout
-    const newAwlLayout = transformRGLToAWL(editedWidgetLayout, layoutTypes);
+    const newAwlLayout = rglToAwl(editedWidgetLayout, layoutTypes);
 
     const newAllAWLayouts = produce(newAwlLayout, (draft) => {
       const existingWidget = draft.find((widget) => {
@@ -107,10 +106,7 @@ export default class RevealWidgetCommand implements Command {
     });
 
     // * 3. derive editedWidgetLayout from that
-    const newEditedWidgetLayout = transformLayoutsForGrid(
-      newAllAWLayouts,
-      !editMode,
-    );
+    const newEditedWidgetLayout = awlToRgl(newAllAWLayouts, !editMode);
 
     useBoundStore.getState().setAdjustedWidgetLayouts(newAwlLayout);
     useBoundStore.getState().setEditedWidgetLayout(newEditedWidgetLayout);

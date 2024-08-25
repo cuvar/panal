@@ -1,14 +1,16 @@
 import { useIsClient, useWindowSize } from "@uidotdev/usehooks";
 import { useAtom } from "jotai";
 import { useContext, useEffect, useState } from "react";
-import filterWidgetLayoutByLayout from "~/client/services/filterWidgetLayoutByLayoutService";
-import getHidingClasses from "~/client/services/getHidingClassesService";
+import filterWidgetLayoutByRgl from "~/application/layout/filterWidgetLayoutByLayout.service";
+import getHidingClasses from "~/application/layout/getHidingClasses.service";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { type DisplayedWidgets } from "~/server/domain/layout/displayedWidgets";
+import { type RGLayout } from "~/server/domain/layout/layout";
+import { type ScreenSize } from "~/server/domain/other/screenSize";
 import { api } from "../api/api";
 import { BREAKPOINTS } from "../basic/const";
 import Log from "../log/log";
-import type { ScreenSize, ToastType } from "../types/types";
-import { type DisplayedWidgets, type RGLayout } from "../types/widget";
+import type { ToastType } from "../types/types";
 import { CommandContext } from "./context/command";
 import { useBoundStore } from "./state";
 import { toastTextAtom, toastTypeAtom } from "./state/atoms";
@@ -117,7 +119,7 @@ export function useDisplayedWidgets(
   useEffect(() => {
     const layout = editMode ? editedWidgetLayout : widgetLayout;
     const filteredAWLayout = isClient
-      ? filterWidgetLayoutByLayout(initialAWLayout, layout, currentScreenSize)
+      ? filterWidgetLayoutByRgl(initialAWLayout, layout, currentScreenSize)
       : [];
     const allExceptHidden = filteredAWLayout.filter(
       (widget) => !getHidingClasses(widget.layout).includes(currentScreenSize),

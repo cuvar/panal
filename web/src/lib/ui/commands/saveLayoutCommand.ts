@@ -1,8 +1,8 @@
 import { produce } from "immer";
-import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
-import { transformRGLToAWL } from "~/client/services/transformLayoutsService";
-import { type RGLayout } from "~/lib/types/widget";
+import makeLayoutsStatic from "~/application/layout/makeLayoutsStatic.service";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { type RGLayout } from "~/server/domain/layout/layout";
+import { rglToAwl } from "~/server/domain/layout/services/transform.service";
 import { useBoundStore } from "../state";
 import ChangeWidgetCommand from "./changeWidgetCommand";
 import { type Command } from "./command";
@@ -53,7 +53,7 @@ export default class SaveLayoutCommand implements Command {
     useBoundStore.getState().setWidgetLayout(staticRgLayout);
 
     const layoutTypes = useBoundStore.getState().layoutTypes;
-    const awl = transformRGLToAWL(staticRgLayout, layoutTypes);
+    const awl = rglToAwl(staticRgLayout, layoutTypes);
     useBoundStore.getState().setAdjustedWidgetLayouts(awl);
 
     this.callback(awl, staticRgLayout);

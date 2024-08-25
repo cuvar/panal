@@ -1,6 +1,6 @@
 import { produce } from "immer";
 import type ReactGridLayout from "react-grid-layout";
-import { type ScreenSize } from "~/lib/types/types";
+import { type ScreenSize } from "~/server/domain/other/screenSize";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 

@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useEffect } from "react";
-import SiteWrapper from "~/components/SiteWrapper";
+import SiteWrapper from "~/components/structure/SiteWrapper";
 import WidgetView from "~/components/WidgetView";
 import { api } from "~/lib/api/api";
 import Log from "~/lib/log/log";

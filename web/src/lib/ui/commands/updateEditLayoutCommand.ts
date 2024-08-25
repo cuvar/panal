@@ -1,4 +1,4 @@
-import { type RGLayout } from "~/lib/types/widget";
+import { type RGLayout } from "~/server/domain/layout/layout";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 

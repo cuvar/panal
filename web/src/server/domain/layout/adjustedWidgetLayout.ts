@@ -1,54 +1,44 @@
 import { z } from "zod";
 import { isObject, isString } from "~/lib/guards/base";
-import { isScreenSizePositioning, isWidgetType } from "~/lib/guards/widgets";
 import {
-  screenSizePositioningSchema,
-  widgetTypeSchema,
-} from "~/lib/types/schema";
-import type { ScreenSize } from "~/lib/types/types";
-import type { ScreenSizePositioning, WidgetType } from "~/lib/types/widget";
+  WidgetTypeHelper,
+  type WidgetType,
+} from "~/server/domain/config/widgetType";
+import {
+  ScreenSizePositioningHelper,
+  type ScreenSizePositioning,
+} from "../positioning/screensizePositioning";
 
-export class AdjustedWidgetLayout {
+export type AdjustedWidgetLayout = {
   id: string;
   layout: ScreenSizePositioning;
   type: WidgetType;
+};
 
-  constructor(id: string, type: WidgetType, layout: ScreenSizePositioning) {
-    this.id = id;
-    this.type = type;
-    this.layout = layout;
-  }
-
-  static validate(input: unknown): input is AdjustedWidgetLayout {
+export const AdjustedWidgetLayoutHelper = {
+  validate(input: unknown): input is AdjustedWidgetLayout {
     if (!isObject(input)) {
       return false;
     }
     if (!isString(input.id)) {
       return false;
     }
-    if (!isWidgetType(input.type)) {
+    if (!WidgetTypeHelper.validate(input.type)) {
       return false;
     }
-    if (!isScreenSizePositioning(input.layout)) {
+    if (!ScreenSizePositioningHelper.validate(input.layout)) {
       return false;
     }
     return true;
-  }
+  },
 
-  static getSchema() {
+  getSchema() {
     const adjustedWidgetLayoutSchema = z.object({
       id: z.string(),
-      type: widgetTypeSchema,
-      layout: screenSizePositioningSchema,
+      type: WidgetTypeHelper.getSchema(),
+      layout: ScreenSizePositioningHelper.getSchema(),
     });
 
     return adjustedWidgetLayoutSchema;
-  }
-
-  setLayout(
-    breakpoint: ScreenSize,
-    layout: ScreenSizePositioning[typeof breakpoint],
-  ) {
-    this.layout[breakpoint] = layout;
-  }
-}
+  },
+};

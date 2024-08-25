@@ -1,6 +1,6 @@
 import { type NextPage } from "next";
 import { useSession } from "next-auth/react";
-import SiteWrapper from "~/components/SiteWrapper";
+import SiteWrapper from "~/components/structure/SiteWrapper";
 import Login from "~/sites/Landing";
 
 const Home: NextPage = () => {

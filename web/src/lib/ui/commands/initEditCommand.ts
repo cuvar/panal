@@ -1,6 +1,6 @@
 import { produce } from "immer";
-import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
-import { type RGLayout } from "~/lib/types/widget";
+import makeLayoutsStatic from "~/application/layout/makeLayoutsStatic.service";
+import { type RGLayout } from "~/server/domain/layout/layout";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 

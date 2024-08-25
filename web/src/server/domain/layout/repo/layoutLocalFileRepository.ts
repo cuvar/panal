@@ -3,8 +3,8 @@ import { REPO_LAYOUT_FILE } from "~/lib/basic/const";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import { type Reader } from "../../../driver/Reader/Reader";
-import { parseAdjustedWidgetLayout } from "../../config/services/parseWidgetConfigService";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
+import { parseAdjustedWidgetLayout } from "../services/parse.service";
 import type { LayoutRepository } from "./layoutRepository";
 
 export class LayoutLocalFileRepository implements LayoutRepository {
@@ -44,7 +44,7 @@ export class LayoutLocalFileRepository implements LayoutRepository {
       }
       const config = parseAdjustedWidgetLayout(JSON.stringify(content));
       if (!config) {
-        throw new AppError(codes.WIDGET_CONFIG_INVALID);
+        throw new AppError(codes.WIDGET_LAYOUT_INVALID);
       }
       return config;
     } catch (error) {
