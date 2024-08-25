@@ -11,3 +11,4 @@ widgets.json
 .vscode/*
 store*.json
 todo.txt
+.turbo
