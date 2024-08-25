@@ -3,7 +3,7 @@ import { type RGLayout } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 
 /**
- * filters out all elements in awLayout tha are not in rgLayout - by id
+ * filters out all elements in awLayout that are not in rgLayout - by id
  * @param {AdjustedWidgetLayout[]} awLayout Adjusted widget layout
  * @param {RGLayout} rgLayout React grid layout
  * @param {ScreenSize} currentScreenSize Current screen size
