@@ -1,7 +1,6 @@
 import { BREAKPOINTS_ORDER, HIDDEN_POSITIONING } from "~/lib/basic/const";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
-import {} from "~/lib/guards/widgets";
 import { type Layout } from "~/server/domain/layout/layout";
 import {
   PartialScreenSizePositioningHelper,
