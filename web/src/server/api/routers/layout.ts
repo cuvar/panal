@@ -16,7 +16,7 @@ import {
   AdjustedWidgetLayoutHelper,
 } from "~/server/domain/layout/adjustedWidgetLayout";
 import { getLayoutRepository } from "~/server/domain/layout/repo/layoutRepository";
-import uwlToAwl from "~/server/domain/layout/services/transform.service";
+import { uwlToAwl } from "~/server/domain/layout/services/transform.service";
 import updateWidgetLayoutService from "~/server/domain/layout/services/updateWidgetLayout.service";
 
 export const layoutRouter = createTRPCRouter({

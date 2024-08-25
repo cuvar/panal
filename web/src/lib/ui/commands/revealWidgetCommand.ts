@@ -1,15 +1,16 @@
 import { produce } from "immer";
 import { calcNewWidgetLayout } from "~/application/client/calcNewWidgetLayout.service";
-import transformLayoutsForGrid, {
-  transformRGLToAWL,
-  withMinValues,
-} from "~/application/client/transformLayouts.service";
 import { type ScreenSize } from "~/lib/types/types";
 import {
   type Positioning,
   type ScreenSizePositioning,
 } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import {
+  awlToRgl,
+  rglToAwl,
+  withMinValues,
+} from "~/server/domain/layout/services/transform.service";
 import { type WidgetVisibility } from "~/server/domain/layout/widgetVisibility";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
@@ -90,7 +91,7 @@ export default class RevealWidgetCommand implements Command {
     ).widget;
 
     // * 2. update adjustedWidgetLayout
-    const newAwlLayout = transformRGLToAWL(editedWidgetLayout, layoutTypes);
+    const newAwlLayout = rglToAwl(editedWidgetLayout, layoutTypes);
 
     const newAllAWLayouts = produce(newAwlLayout, (draft) => {
       const existingWidget = draft.find((widget) => {
@@ -107,10 +108,7 @@ export default class RevealWidgetCommand implements Command {
     });
 
     // * 3. derive editedWidgetLayout from that
-    const newEditedWidgetLayout = transformLayoutsForGrid(
-      newAllAWLayouts,
-      !editMode,
-    );
+    const newEditedWidgetLayout = awlToRgl(newAllAWLayouts, !editMode);
 
     useBoundStore.getState().setAdjustedWidgetLayouts(newAwlLayout);
     useBoundStore.getState().setEditedWidgetLayout(newEditedWidgetLayout);

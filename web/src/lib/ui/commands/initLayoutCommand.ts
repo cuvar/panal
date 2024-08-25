@@ -1,6 +1,6 @@
-import transformLayoutsForGrid from "~/application/client/transformLayouts.service";
 import { type LayoutType, type RGLayout } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { awlToRgl } from "~/server/domain/layout/services/transform.service";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 
@@ -24,10 +24,7 @@ export default class InitLayoutCommand implements Command {
 
   run() {
     const editMode = false;
-    const transformedLayouts = transformLayoutsForGrid(
-      this.adjustedWidgetLayouts,
-      !editMode,
-    );
+    const transformedLayouts = awlToRgl(this.adjustedWidgetLayouts, !editMode);
     useBoundStore
       .getState()
       .setAdjustedWidgetLayouts(this.adjustedWidgetLayouts);

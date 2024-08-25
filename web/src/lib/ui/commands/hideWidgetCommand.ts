@@ -1,7 +1,7 @@
 import { produce } from "immer";
-import { transformRGLToAWL } from "~/application/client/transformLayouts.service";
 import { type ScreenSize } from "~/lib/types/types";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { rglToAwl } from "~/server/domain/layout/services/transform.service";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 
@@ -62,7 +62,7 @@ export default class HideWidgetCommand implements Command {
       draft[this.screenSize]?.splice(index, 1);
     });
 
-    const newAwl = transformRGLToAWL(newState, layoutTypes);
+    const newAwl = rglToAwl(newState, layoutTypes);
     useBoundStore.getState().setEditedWidgetLayout(newState);
     useBoundStore.getState().setAdjustedWidgetLayouts(newAwl);
   }
