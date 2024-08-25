@@ -1,8 +1,8 @@
 import { useIsClient, useWindowSize } from "@uidotdev/usehooks";
 import { useAtom } from "jotai";
 import { useContext, useEffect, useState } from "react";
-import filterWidgetLayoutByRgl from "~/application/client/filterWidgetLayoutByRgl.service";
-import getHidingClasses from "~/application/client/getHidingClasses.service";
+import filterWidgetLayoutByRgl from "~/application/layout/filterWidgetLayoutByLayout.service";
+import getHidingClasses from "~/application/layout/getHidingClasses.service";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { api } from "../api/api";
 import { BREAKPOINTS } from "../basic/const";

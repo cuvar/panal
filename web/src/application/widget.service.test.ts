@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { generateUniqueID } from "~/lib/service/widget.service";
+import { generateUniqueID } from "./widget.service";
 
 describe("helper functions", () => {
   it("generateUniqueID works correctly", () => {

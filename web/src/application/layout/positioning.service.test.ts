@@ -5,7 +5,7 @@
 import {
   isEmptyPositioning,
   overlaps,
-} from "~/lib/service/positioning.service";
+} from "./positioning.service";
 
 describe("helper functions", () => {
   it("isEmptyPositioning works correctly", () => {

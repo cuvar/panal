@@ -1,7 +1,7 @@
 import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/lib/basic/const";
-import { overlaps } from "~/lib/service/positioning.service";
 import type { ScreenSize } from "~/lib/types/types";
 import type { Positioning } from "~/lib/types/widget";
+import { overlaps } from "./positioning.service";
 
 /**
  * Finds a free space for a widget to position it
