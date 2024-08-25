@@ -5,9 +5,10 @@
 import type { ScreenSizePositioning } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "../../layout/adjustedWidgetLayout";
 import { type UserWidgetLayout } from "../../layout/userWidgetLayout";
-import parseUserWidgetLayout, {
+import {
   parseAdjustedWidgetLayout,
-} from "./parseWidgetConfig.service";
+  parseUserWidgetLayout,
+} from "./parse.service";
 
 describe("parseWidgetConfigService", () => {
   it("works correctly for parsing UserWidgetLayout", () => {

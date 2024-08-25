@@ -3,8 +3,8 @@ import { env } from "~/env.mjs";
 import { UPSTASH_LAYOUT_KEY } from "~/lib/basic/const";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
-import { parseAdjustedWidgetLayout } from "../../config/services/parseWidgetConfig.service";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
+import { parseAdjustedWidgetLayout } from "../services/parse.service";
 import type { LayoutRepository } from "./layoutRepository";
 
 export class LayoutUpstashRepository implements LayoutRepository {
