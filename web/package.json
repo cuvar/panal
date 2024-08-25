@@ -14,10 +14,12 @@
     "start": "next start",
     "generate-notice": "generate-attribution",
     "check-license": "license-checker --onlyAllow 'MIT;ISC;0BSD;BSD*;BSD-2-Clause;BSD-3-Clause;Apache-2.0;Python-2.0;MPL-2.0;CC-BY-4.0;CC0-1.0;CC-BY-3.0' --excludePackages 'panal@0.1.0'",
-    "test": "jest --passWithNoTests"
+    "test:all": "env-cmd -f .env.local -- jest --passWithNoTests",
+    "test": "env-cmd -f .env.local -- jest"
   },
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
+    "@radix-ui/react-context-menu": "^2.2.1",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-slot": "^1.0.2",
@@ -28,11 +30,14 @@
     "@trpc/next": "^10.34.0",
     "@trpc/react-query": "^10.34.0",
     "@trpc/server": "^10.34.0",
+    "@uidotdev/usehooks": "^2.4.1",
     "@upstash/redis": "^1.22.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "env-cmd": "^10.1.0",
     "ical": "^0.8.0",
     "ics": "^3.5.0",
+    "immer": "^10.1.1",
     "jest-environment-jsdom": "^29.7.0",
     "jotai": "^2.4.3",
     "lucide-react": "^0.379.0",
@@ -46,7 +51,8 @@
     "superjson": "^1.13.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.21.4"
+    "zod": "^3.21.4",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",

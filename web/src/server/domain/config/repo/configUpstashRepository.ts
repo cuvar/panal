@@ -40,7 +40,7 @@ export class ConfigUpstashRepository implements ConfigRepository {
       }
       return new WidgetConfig(response.id, response.type, response.data);
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_GET_FAILED, error);
+      throw new AppError(codes.REPOSITORY_GET_CONFIG_FAILED, error);
     }
   }
 
@@ -67,7 +67,7 @@ export class ConfigUpstashRepository implements ConfigRepository {
 
       return mapped;
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_GET_FAILED, error);
+      throw new AppError(codes.REPOSITORY_GET_ALL_CONFIG_FAILED, error);
     }
   }
 
@@ -77,7 +77,7 @@ export class ConfigUpstashRepository implements ConfigRepository {
     try {
       await this.redis.set(key, JSON.stringify(data));
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_SET_FAILED, error);
+      throw new AppError(codes.REPOSITORY_SET_CONFIG_FAILED, error);
     }
   }
 
@@ -87,7 +87,7 @@ export class ConfigUpstashRepository implements ConfigRepository {
       try {
         await this.redis.set(key, JSON.stringify(data));
       } catch (error) {
-        throw new AppError(codes.REPOSITORY_SET_ALL_FAILED, error);
+        throw new AppError(codes.REPOSITORY_SET_ALL_CONFIG_FAILED, error);
       }
     }
   }

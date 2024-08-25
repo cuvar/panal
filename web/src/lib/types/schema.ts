@@ -1,7 +1,7 @@
-import type GridLayout from "react-grid-layout";
 import { z } from "zod";
 import type {
   Positioning,
+  RGLayout,
   ScreenSizePositioning,
   WidgetType,
 } from "~/lib/types/widget";
@@ -26,7 +26,7 @@ export const gridPositioningSchema: z.ZodType<Positioning & { i: string }> =
     y: z.number(),
   });
 
-export const widgetLayoutSchema: z.ZodType<GridLayout.Layouts> = z.object({
+export const widgetLayoutSchema: z.ZodType<RGLayout> = z.object({
   xl: z.array(gridPositioningSchema),
   lg: z.array(gridPositioningSchema),
   md: z.array(gridPositioningSchema),

@@ -26,6 +26,15 @@ export function isNumber(data: unknown): data is number {
 }
 
 /**
+ * Checks whether data is of type boolean
+ * @param {unknown} data Unkown type to be checked
+ * @returns {boolean} Whether data is of type boolean
+ */
+export function isBoolean(data: unknown): data is boolean {
+  return typeof data === "boolean";
+}
+
+/**
  * Checks whether data is of type Date
  * @param {unknown} data Unkown type to be checked
  * @returns {boolean} Whether data is of type Date

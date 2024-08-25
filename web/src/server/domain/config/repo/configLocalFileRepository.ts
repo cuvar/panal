@@ -44,7 +44,7 @@ export class ConfigLocalFileRepository implements ConfigRepository {
 
       return foundItem;
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_GET_FAILED, error);
+      throw new AppError(codes.REPOSITORY_GET_CONFIG_FAILED, error);
     }
   }
 
@@ -67,7 +67,7 @@ export class ConfigLocalFileRepository implements ConfigRepository {
 
       return config;
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_GET_ALL_FAILED, error);
+      throw new AppError(codes.REPOSITORY_GET_ALL_CONFIG_FAILED, error);
     }
   }
 
@@ -97,7 +97,7 @@ export class ConfigLocalFileRepository implements ConfigRepository {
 
       await this.reader.write(this.file, JSON.stringify(currentConfig));
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_SET_FAILED, error);
+      throw new AppError(codes.REPOSITORY_SET_CONFIG_FAILED, error);
     }
   }
 
@@ -105,7 +105,7 @@ export class ConfigLocalFileRepository implements ConfigRepository {
     try {
       await this.reader.write(this.file, JSON.stringify(data));
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_SET_ALL_FAILED, error);
+      throw new AppError(codes.REPOSITORY_SET_ALL_CONFIG_FAILED, error);
     }
   }
 }

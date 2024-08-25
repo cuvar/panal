@@ -6,7 +6,7 @@ import {
   infoIcon,
   warningIcon,
 } from "~/lib/ui/icons";
-import { toastTextAtom, toastTypeAtom } from "~/lib/ui/store";
+import { toastTextAtom, toastTypeAtom } from "~/lib/ui/state/atoms";
 
 export default function Toast() {
   const toastMap: Record<ToastType, ToastColor> = {

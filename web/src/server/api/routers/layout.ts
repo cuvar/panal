@@ -13,7 +13,6 @@ import {
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { getLayoutRepository } from "~/server/domain/layout/repo/layoutRepository";
-import hideWidget from "~/server/domain/layout/services/hideWidgetService";
 import transformWidgetLayout from "~/server/domain/layout/services/transformWidgetLayoutService";
 import updateWidgetLayoutService from "~/server/domain/layout/services/updateWidgetLayoutService";
 
@@ -60,11 +59,14 @@ export const layoutRouter = createTRPCRouter({
     .input(
       z.object({
         layout: widgetLayoutSchema,
+        awLayout: z.array(AdjustedWidgetLayout.getSchema()),
       }),
     )
     .mutation(async ({ input }) => {
       try {
-        const widgetLayout = await getLayoutRepository().getAll();
+        const widgetLayout = input.awLayout.map((w) => {
+          return new AdjustedWidgetLayout(w.id, w.type, w.layout);
+        });
         const updatedWidgets = updateWidgetLayoutService(
           input.layout,
           widgetLayout,
@@ -120,31 +122,6 @@ export const layoutRouter = createTRPCRouter({
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Unable to get hidden widget layouts",
-        });
-      }
-    }),
-  setHide: protectedProcedure
-    .input(
-      z.object({
-        screenSize: screenSizeSchema,
-        hide: z.boolean(),
-        widget: AdjustedWidgetLayout.getSchema(),
-      }),
-    )
-    .mutation(async ({ input }) => {
-      try {
-        const awc = new AdjustedWidgetLayout(
-          input.widget.id,
-          input.widget.type,
-          input.widget.layout,
-        );
-        const res = await hideWidget(awc, input.screenSize, input.hide);
-        return res;
-      } catch (error) {
-        Log(error, "error");
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Unable to update hiding status of widget layout",
         });
       }
     }),

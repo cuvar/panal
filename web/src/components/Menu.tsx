@@ -1,7 +1,5 @@
-import { useAtom } from "jotai";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,47 +9,29 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { api } from "~/lib/api/api";
 import Log from "~/lib/log/log";
+import { useCommandManager, useToast } from "~/lib/ui/hooks";
 import {
   checkIcon,
-  cogIcon,
   crossIcon,
   ellipsisIcon,
   penIcon,
   signOutIcon,
 } from "~/lib/ui/icons";
-import {
-  editModeAtom,
-  editedWidgetLayoutAtom,
-  toastTextAtom,
-  toastTypeAtom,
-  widgetLayoutAtom,
-} from "~/lib/ui/store";
+import { useBoundStore } from "~/lib/ui/state";
 
 export default function NewMenu() {
-  const [editMode, setEditMode] = useAtom(editModeAtom);
-  const [, setWidgetLayout] = useAtom(widgetLayoutAtom);
-  const [editedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
-  const [, setToastText] = useAtom(toastTextAtom);
-  const [, setToastType] = useAtom(toastTypeAtom);
-
+  const editMode = useBoundStore((state) => state.editMode);
   const router = useRouter();
+  const showToast = useToast();
+  const commandManager = useCommandManager();
 
   const setWidgetLayoutMutation = api.layout.setAll.useMutation({
     onSuccess: () => {
-      setWidgetLayout(makeLayoutsStatic(editedWidgetLayout, true));
-      setToastType("success");
-      setToastText(`Saved successfully`);
-      location.reload();
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
+      showToast(`Saved successfully`, "success");
+      router.reload();
     },
     onError: (error) => {
-      setToastType("error");
-      setToastText(`Saving failed`);
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
+      showToast(`Saving failed`, "error");
       Log(error, "error");
     },
   });
@@ -64,19 +44,19 @@ export default function NewMenu() {
 
   function handleEditLayout() {
     if (editMode) {
-      setEditMode(false);
+      commandManager.abortEdit();
     } else {
-      setEditMode(true);
+      commandManager.initEdit();
     }
   }
 
   function handleSaveLayout() {
-    setEditMode(false);
-    setWidgetLayoutMutation.mutate({ layout: editedWidgetLayout });
-  }
-
-  function handleNavigate(path: string) {
-    void router.push(path);
+    commandManager.saveEditLayout((awl, rgLayout) => {
+      setWidgetLayoutMutation.mutate({
+        layout: rgLayout,
+        awLayout: awl,
+      });
+    });
   }
 
   return (
@@ -102,10 +82,6 @@ export default function NewMenu() {
             <span>Save layout</span>
           </DropdownMenuItem>
         )}
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => handleNavigate("/settings")}>
-          <span>{cogIcon}</span>Settings
-        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => handleLogout()}>
           <span>{signOutIcon}</span>Sign out

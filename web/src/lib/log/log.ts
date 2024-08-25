@@ -6,25 +6,30 @@ type Logtype = "log" | "info" | "warn" | "error";
  * Logs information to the console
  * @param msg Message to log
  * @param type Type of log
+ * @param {...any} args
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function Log(msg: any, type: Logtype = "log") {
+export default function Log(
+  msg: unknown,
+  type: Logtype = "log",
+  ...args: unknown[]
+) {
   if (
     process.env.NODE_ENV !== "production" ||
     env.NEXT_PUBLIC_PANAL_DEBUG == "true"
   ) {
     switch (type) {
       case "log":
-        console.log(msg);
+        console.log(msg, ...args);
         break;
       case "info":
-        console.info(msg);
+        console.info(msg, ...args);
         break;
       case "warn":
-        console.warn(msg);
+        console.warn(msg, ...args);
         break;
       case "error":
-        console.error(msg);
+        console.error(msg, ...args);
         break;
     }
   }

@@ -1,4 +1,5 @@
 import type { ScreenSize } from "../types/types";
+import { type Positioning } from "../types/widget";
 
 export const APP_NAME = "panal";
 
@@ -49,3 +50,5 @@ export const REPO_CONFIG_FILE = "./store.config.json";
 export const UPSTASH_PREFIX = "panal-";
 export const UPSTASH_WIDGET_PREFIX = "widget-";
 export const UPSTASH_LAYOUT_KEY = UPSTASH_PREFIX + "widgets-layout";
+
+export const HIDDEN_POSITIONING: Positioning = { x: 0, y: 0, w: 0, h: 0 };

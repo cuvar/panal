@@ -29,29 +29,39 @@ export class LayoutLocalFileRepository implements LayoutRepository {
       }
       return res;
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_GET_FAILED, error);
+      throw new AppError(codes.REPOSITORY_GET_LAYOUT_FAILED, error);
     }
   }
 
   async getAll(): Promise<AdjustedWidgetLayout[]> {
     try {
-      const fileContents = await this.reader.read(this.file);
-      const response = JSON.parse(fileContents);
-
-      if (!response) {
+      const content = await this._parseFileContent();
+      if (!content) {
         throw new AppError(codes.WIDGET_NONE_FOUND);
       }
-      if (typeof response !== "object") {
+      if (typeof content !== "object") {
         throw new AppError(codes.REPOSITORY_INVALID_RESPONSE);
       }
-      const config = parseAdjustedWidgetLayout(JSON.stringify(response));
+      const config = parseAdjustedWidgetLayout(JSON.stringify(content));
       if (!config) {
         throw new AppError(codes.WIDGET_CONFIG_INVALID);
       }
-
       return config;
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_GET_ALL_FAILED, error);
+      throw new AppError(codes.REPOSITORY_GET_ALL_LAYOUT_FAILED, error);
+    }
+  }
+
+  async _parseFileContent() {
+    try {
+      const fileContents = await this.reader.read(this.file);
+      if (!fileContents) {
+        throw new AppError(codes.REPOSITORY_EMPTY_CONTENT);
+      }
+      const content = JSON.parse(fileContents);
+      return content;
+    } catch (error) {
+      throw new AppError(codes.REPOSITORY_PARSE_FILE_CONTENT_FAILED, error);
     }
   }
 
@@ -67,7 +77,7 @@ export class LayoutLocalFileRepository implements LayoutRepository {
 
       await this.reader.write(this.file, JSON.stringify(currentAll));
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_SET_FAILED, error);
+      throw new AppError(codes.REPOSITORY_SET_LAYOUT_FAILED, error);
     }
   }
 
@@ -75,7 +85,7 @@ export class LayoutLocalFileRepository implements LayoutRepository {
     try {
       await this.reader.write(this.file, JSON.stringify(widgets));
     } catch (error) {
-      throw new AppError(codes.REPOSITORY_SET_ALL_FAILED, error);
+      throw new AppError(codes.REPOSITORY_SET_ALL_LAYOUT_FAILED, error);
     }
   }
 }

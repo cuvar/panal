@@ -1,16 +1,6 @@
-import { useAtom } from "jotai";
-import makeLayoutsStatic from "~/client/services/makeLayoutsStaticService";
-import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
-import { api } from "~/lib/api/api";
-import Log from "~/lib/log/log";
-import {
-  editedWidgetLayoutAtom,
-  toastTextAtom,
-  toastTypeAtom,
-  widgetLayoutAtom,
-} from "~/lib/ui/store";
 import type { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 
+import Link from "next/link";
 import {
   Sheet,
   SheetContent,
@@ -20,88 +10,58 @@ import {
   SheetTrigger,
 } from "~/components/ui/sheet";
 import { getNameForWidgetType } from "~/lib/service/widget.service";
-import { eyeIcon } from "~/lib/ui/icons";
+import { useCommandManager, useDetectScreenSize } from "~/lib/ui/hooks";
+import { cogIcon, eyeIcon } from "~/lib/ui/icons";
+import { useBoundStore } from "~/lib/ui/state";
+import { Button } from "./ui/button";
 
 export default function WidgetSidebar() {
-  const [, setToastText] = useAtom(toastTextAtom);
-  const [, setToastType] = useAtom(toastTypeAtom);
-  const [, setEditedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
-  const [, setWidgetLayout] = useAtom(widgetLayoutAtom);
+  const commandManager = useCommandManager();
+  const currentScreenSize = useDetectScreenSize();
 
-  const currentScreenSize = "sm";
+  const editMode = useBoundStore((state) => state.editMode);
+  const allAppearentWidgets = useBoundStore((state) => state.apparentWidgets);
 
-  const getAllLayoutsQuery = api.layout.getAll.useQuery(undefined, {
-    enabled: false,
-  });
-  const getHiddenLayoutsQuery = api.layout.getAllHidden.useQuery(
-    {
-      screenSize: currentScreenSize,
-    },
-    {
-      onSuccess: (data) => {
-        Log(data);
-      },
-    },
+  const hiddenWidgetsForScreen = allAppearentWidgets.filter(
+    (w) => w.screenSize === currentScreenSize && !w.visible,
   );
 
-  const hideWidgetMutation = api.layout.setHide.useMutation({
-    onSuccess: async () => {
-      await getHiddenLayoutsQuery.refetch();
-      const res = await getAllLayoutsQuery.refetch();
-      setToastType("success");
-      setToastText(`Revealed widget successfully`);
-      if (res.data) {
-        const transformed = transformLayoutsForGrid(res.data, false);
-        Log(transformed);
-        setEditedWidgetLayout(transformed);
-        setWidgetLayout(makeLayoutsStatic(transformed, false));
-      }
-
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
-    },
-    onError: (error) => {
-      setToastType("error");
-      setToastText(`Revealing failed`);
-      setTimeout(() => {
-        setToastText("");
-      }, 1500);
-      Log(error, "error");
-    },
-  });
-
-  function handleAddToLayout(widget: AdjustedWidgetLayout) {
-    hideWidgetMutation.mutate({
-      hide: false,
-      screenSize: currentScreenSize,
-      widget: widget,
-    });
+  function handleAddToLayout(_widget: AdjustedWidgetLayout) {
+    commandManager.revealWidget(_widget, currentScreenSize);
   }
+
   return (
     <Sheet>
-      <SheetTrigger>{eyeIcon}</SheetTrigger>
+      {editMode && <SheetTrigger>{eyeIcon}</SheetTrigger>}
       <SheetContent side={"left"}>
         <SheetHeader>
           <SheetTitle>Hidden widgets</SheetTitle>
           <SheetDescription></SheetDescription>
         </SheetHeader>
-        <div className="h-full">
-          {!getHiddenLayoutsQuery.data ||
-          getHiddenLayoutsQuery.data.length === 0 ? (
+        <div className="flex h-full flex-col space-y-2">
+          {hiddenWidgetsForScreen.length === 0 ? (
             <div className="flex h-full items-center justify-center">
               No hidden widgets
             </div>
           ) : (
-            getHiddenLayoutsQuery.data.map((widget) => (
-              <div className="contents" key={widget.id}>
-                <div
-                  className="droppable-element my-2 rounded-md px-4 py-4 hover:bg-background"
-                  onClick={() => handleAddToLayout(widget)}
+            hiddenWidgetsForScreen.map((hi) => (
+              <div
+                className="flex items-center justify-between"
+                key={hi.widget.id}
+              >
+                <Button
+                  className="droppable-element text-left"
+                  variant={"ghost"}
+                  onClick={() => handleAddToLayout(hi.widget)}
                 >
-                  {getNameForWidgetType(widget.type)}
-                </div>
-                <hr />
+                  {getNameForWidgetType(hi.widget.type)}
+                </Button>
+                <Link
+                  href={`/w/${hi.widget.id}`}
+                  className="rounded-md bg-primary p-1 text-inverted"
+                >
+                  {cogIcon}
+                </Link>
               </div>
             ))
           )}

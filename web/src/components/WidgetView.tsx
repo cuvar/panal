@@ -1,3 +1,4 @@
+import type ReactGridLayout from "react-grid-layout";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
@@ -8,16 +9,14 @@ import {
   GRID_ROW_HEIGHT,
 } from "~/lib/basic/const";
 
-import { useAtom } from "jotai";
 import { useEffect } from "react";
-import getHidingClasses from "~/client/services/getHidingClassesService";
-import transformLayoutsForGrid from "~/client/services/transformLayoutsService";
-import { useDetectScreenSize } from "~/lib/ui/hooks";
+import { type RGLayout } from "~/lib/types/widget";
 import {
-  editModeAtom,
-  editedWidgetLayoutAtom,
-  widgetLayoutAtom,
-} from "~/lib/ui/store";
+  useCommandManager,
+  useDetectScreenSize,
+  useDisplayedWidgets,
+} from "~/lib/ui/hooks";
+import { useBoundStore } from "~/lib/ui/state";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import ResizeHandle from "./ResizeHandle";
 import WidgetWrapper from "./WidgetWrapper";
@@ -28,10 +27,11 @@ type Props = {
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 export default function WidgetView(props: Props) {
+  const editMode = useBoundStore((state) => state.editMode);
+
+  const { rgLayout, awLayout } = useDisplayedWidgets(props.layout);
+  const commandManager = useCommandManager();
   const currentScreenSize = useDetectScreenSize();
-  const [editMode] = useAtom(editModeAtom);
-  const [widgetLayout, setWidgetLayout] = useAtom(widgetLayoutAtom);
-  const [, setEditedWidgetLayout] = useAtom(editedWidgetLayoutAtom);
 
   const adjustedBreakpoints = Object.entries(BREAKPOINTS).reduce(
     (acc, [key, value]) => {
@@ -42,18 +42,38 @@ export default function WidgetView(props: Props) {
   );
 
   useEffect(() => {
-    const transformedLayouts = transformLayoutsForGrid(props.layout, !editMode);
-    setWidgetLayout(transformedLayouts);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editMode]);
+    commandManager.initLayout(props.layout);
+  }, []);
 
   function handleLayoutChange(
-    layout: ReactGridLayout.Layout[],
-    layouts: ReactGridLayout.Layouts,
+    _layout: ReactGridLayout.Layout[],
+    layouts: RGLayout,
   ) {
-    if (!editMode) return;
-    setEditedWidgetLayout(layouts);
+    commandManager.updateEditLayout(layouts);
   }
+
+  function handleDragStop(
+    layout: ReactGridLayout.Layout[],
+    oldItem: ReactGridLayout.Layout,
+    newItem: ReactGridLayout.Layout,
+    _placeholder: ReactGridLayout.Layout,
+    _event: MouseEvent,
+    _element: HTMLElement,
+  ) {
+    commandManager.changeWidget(oldItem, newItem, layout, currentScreenSize);
+  }
+
+  function handleResizeStop(
+    layout: ReactGridLayout.Layout[],
+    oldItem: ReactGridLayout.Layout,
+    newItem: ReactGridLayout.Layout,
+    _placeholder: ReactGridLayout.Layout,
+    _event: MouseEvent,
+    _element: HTMLElement,
+  ) {
+    commandManager.changeWidget(oldItem, newItem, layout, currentScreenSize);
+  }
+
   return (
     <div className="z-10 h-screen w-full max-w-[1280px]">
       {props.layout.length === 0 ? (
@@ -69,24 +89,27 @@ export default function WidgetView(props: Props) {
           breakpoints={{ ...adjustedBreakpoints }}
           cols={BREAKPOINT_COLS}
           rowHeight={GRID_ROW_HEIGHT}
-          layouts={widgetLayout}
+          layouts={rgLayout}
           maxRows={GRID_MAX_ROW}
           compactType={null}
           autoSize={false}
+          preventCollision={true}
           onLayoutChange={handleLayoutChange}
+          onResizeStop={handleResizeStop}
+          onDragStop={handleDragStop}
           isDroppable={true}
           resizeHandle={<ResizeHandle />}
         >
-          {props.layout.map(
-            (widget) =>
-              !getHidingClasses(widget.layout).includes(currentScreenSize) && (
-                <WidgetWrapper
-                  key={widget.id}
-                  editMode={editMode}
-                  widget={widget}
-                />
-              ),
-          )}
+          {awLayout.map((widget) => (
+            // ! this is needed for ResizeHandle to be visible
+            <div key={widget.id}>
+              <WidgetWrapper
+                key={widget.id}
+                editMode={editMode}
+                widget={widget}
+              />
+            </div>
+          ))}
         </ResponsiveGridLayout>
       )}
     </div>
