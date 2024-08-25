@@ -4,7 +4,7 @@ import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
 import type { ScreenSize } from "~/lib/types/types";
 import { type RGLayout } from "~/lib/types/widget";
-import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
+import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 
 /**
  * Updates the layout values of the given AdjustedWidgetLayout[] with the given RGLayout

@@ -6,7 +6,7 @@ import {
 import { isScreenSize } from "~/lib/guards/other";
 import type { ScreenSize } from "~/lib/types/types";
 import type { Positioning, WidgetType } from "~/lib/types/widget";
-import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
+import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
