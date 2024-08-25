@@ -2,9 +2,9 @@ import { BREAKPOINTS_ORDER } from "~/lib/basic/const";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
-import type { ScreenSize } from "~/lib/types/types";
-import { type RGLayout } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { type RGLayout } from "~/server/domain/layout/layout";
+import { type ScreenSize } from "~/server/domain/other/screenSize";
 
 /**
  * Updates the layout values of the given AdjustedWidgetLayout[] with the given RGLayout

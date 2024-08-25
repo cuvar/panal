@@ -1,4 +1,4 @@
-import type { ScreenSizePositioning } from "~/lib/types/widget";
+import { type ScreenSizePositioning } from "~/server/domain/layout/screensizePositioning";
 import { isEmptyPositioning } from "./positioning.service";
 
 /**

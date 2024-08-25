@@ -2,14 +2,14 @@
  * @jest-environment node
  */
 
-import { isScreenSize } from "./other";
+import { ScreenSizeHelper } from "../other/screenSize";
 
 describe("guards - other:", () => {
   it("isScreenSize works correctly", () => {
     // arrange
     const input = "xss";
     // act
-    const result = isScreenSize(input);
+    const result = ScreenSizeHelper.validate(input);
     // assert
     expect(result).toBe(true);
   });
@@ -17,7 +17,7 @@ describe("guards - other:", () => {
     // arrange
     const input = "lxx";
     // act
-    const result = isScreenSize(input);
+    const result = ScreenSizeHelper.validate(input);
     // assert
     expect(result).toBe(false);
   });

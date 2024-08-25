@@ -1,5 +1,3 @@
-export type ScreenSize = "xss" | "xs" | "sm" | "md" | "lg" | "xl";
-
 export type ToastType = "error" | "success" | "info" | "warning";
 export type ToastColor =
   | { bg: "bg-red-600"; text: "text-foreground" }

@@ -1,5 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
-import type { WidgetType } from "~/lib/types/widget";
+import { type WidgetType } from "~/server/domain/config/widgetType";
 
 /**
  * Checks whether input is of type empty Positioning

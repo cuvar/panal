@@ -1,6 +1,6 @@
 import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/lib/basic/const";
-import type { ScreenSize } from "~/lib/types/types";
-import type { Positioning } from "~/lib/types/widget";
+import { type Positioning } from "~/server/domain/layout/positioning";
+import { type ScreenSize } from "~/server/domain/other/screenSize";
 import { overlaps } from "./positioning.service";
 
 /**

@@ -3,11 +3,11 @@ import { z } from "zod";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
-import { widgetTypeSchema } from "~/lib/types/schema";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { getConfigRepository } from "~/server/domain/config/repo/configRepository";
 import { parseWidgetConfigArray } from "~/server/domain/config/services/parse.service";
 import { WidgetConfigHelper } from "~/server/domain/config/widgetConfig";
+import { WidgetTypeHelper } from "~/server/domain/config/widgetType";
 
 export const configRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
@@ -65,7 +65,7 @@ export const configRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
-        type: widgetTypeSchema,
+        type: WidgetTypeHelper.getSchema(),
         data: z.string(),
       }),
     )

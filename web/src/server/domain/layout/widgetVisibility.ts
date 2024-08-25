@@ -1,8 +1,6 @@
 import { z } from "zod";
 import { isBoolean, isObject } from "~/lib/guards/base";
-import { isScreenSize } from "~/lib/guards/other";
-import { screenSizeSchema } from "~/lib/types/schema";
-import type { ScreenSize } from "~/lib/types/types";
+import { type ScreenSize, ScreenSizeHelper } from "../other/screenSize";
 import {
   type AdjustedWidgetLayout,
   AdjustedWidgetLayoutHelper,
@@ -21,7 +19,7 @@ export const WidgetVisibilityHelper = {
     if (!AdjustedWidgetLayoutHelper.validate(input.widget)) {
       return false;
     }
-    if (!isScreenSize(input.screenSize)) {
+    if (!ScreenSizeHelper.validate(input.screenSize)) {
       return false;
     }
     if (!isBoolean(input.hide)) {
@@ -32,7 +30,7 @@ export const WidgetVisibilityHelper = {
   getSchema() {
     const schema = z.object({
       widget: AdjustedWidgetLayoutHelper.getSchema(),
-      screenSize: screenSizeSchema,
+      screenSize: ScreenSizeHelper.getSchema(),
       visible: z.boolean(),
     });
 

@@ -1,6 +1,9 @@
 import { isObject } from "~/lib/guards/base";
-import { isLayout, isWidgetType } from "~/lib/guards/widgets";
-import type { Layout, WidgetType } from "~/lib/types/widget";
+import {
+  WidgetTypeHelper,
+  type WidgetType,
+} from "~/server/domain/config/widgetType";
+import { LayoutHelper, type Layout } from "./layout";
 
 export type UserWidgetLayout = {
   layout: Layout;
@@ -13,11 +16,11 @@ export const UserWidgetLayoutHelper = {
       return false;
     }
 
-    if (!isWidgetType(input.type)) {
+    if (!WidgetTypeHelper.validate(input.type)) {
       return false;
     }
 
-    if (!isLayout(input.layout)) {
+    if (!LayoutHelper.validate(input.layout)) {
       return false;
     }
 

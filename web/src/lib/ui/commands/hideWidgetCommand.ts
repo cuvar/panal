@@ -1,7 +1,7 @@
 import { produce } from "immer";
-import { type ScreenSize } from "~/lib/types/types";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { rglToAwl } from "~/server/domain/layout/services/transform.service";
+import { type ScreenSize } from "~/server/domain/other/screenSize";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 

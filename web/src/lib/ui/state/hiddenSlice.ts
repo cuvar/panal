@@ -1,8 +1,8 @@
 import { produce } from "immer";
 import { type StateCreator } from "zustand";
-import { type ScreenSize } from "~/lib/types/types";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { type WidgetVisibility } from "~/server/domain/layout/widgetVisibility";
+import { type ScreenSize } from "~/server/domain/other/screenSize";
 
 export interface ApparentWidgetsSlice {
   apparentWidgets: WidgetVisibility[];

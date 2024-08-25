@@ -1,24 +1,21 @@
 import type ReactGridLayout from "react-grid-layout";
-import addMissingLayouts from "~/application/client/addMissingLayouts.service";
-import { codes } from "~/lib/error/codes";
-import AppError from "~/lib/error/error";
-import { isScreenSize } from "~/lib/guards/other";
-import { isEmptyPositioning } from "~/lib/service/positioning.service";
-import { generateUniqueID } from "~/lib/service/widget.service";
-import { type ScreenSize } from "~/lib/types/types";
-import {
-  type LayoutType,
-  type RGLayout,
-  type ScreenSizePositioning,
-  type WidgetType,
-} from "~/lib/types/widget";
+import addMissingLayouts from "~/application/layout/addMissingLayouts.service";
+import adjustLayoutValues from "~/application/layout/adjustLayoutValues.service";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
-} from "~/server/domain/layout/services/computeSizeForWidget.service";
+} from "~/application/layout/computeSizeForWidget.service";
+import { isEmptyPositioning } from "~/application/layout/positioning.service";
+import { generateUniqueID } from "~/application/widget.service";
+import { codes } from "~/lib/error/codes";
+import AppError from "~/lib/error/error";
+import { type LayoutType } from "~/lib/types/widget";
+import { type RGLayout } from "~/server/domain/layout/layout";
+import { type WidgetType } from "../../config/widgetType";
+import { ScreenSizeHelper, type ScreenSize } from "../../other/screenSize";
 import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
+import { type ScreenSizePositioning } from "../screensizePositioning";
 import type { UserWidgetLayout } from "../userWidgetLayout";
-import adjustLayoutValues from "./adjustLayoutValues.service";
 
 /**
  * Transforms the given UserWidgetLayout[] into an AdjustedWidgetLayout[]
@@ -81,7 +78,7 @@ export function awlToRgl(
 
       if (
         layouts[key] !== undefined &&
-        isScreenSize(key) &&
+        ScreenSizeHelper.validate(key) &&
         Array.isArray(layouts[key]) &&
         !isEmptyPositioning(layout)
       ) {
@@ -107,7 +104,10 @@ export function rglToAwl(
   const entries = Object.entries(data);
   const groupedById = entries.reduce(
     (acc, [screenSize, layoutArray]) => {
-      if (!isScreenSize(screenSize) || !Array.isArray(layoutArray)) {
+      if (
+        !ScreenSizeHelper.validate(screenSize) ||
+        !Array.isArray(layoutArray)
+      ) {
         return acc;
       }
 

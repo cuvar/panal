@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { widgetTypeSchema } from "~/lib/types/schema";
-import type { WidgetType } from "~/lib/types/widget";
+import {
+  WidgetTypeHelper,
+  type WidgetType,
+} from "~/server/domain/config/widgetType";
 import { calendarWidgetDataSchema } from "../../widgets/calendar/schema";
 import type { CalendarWidgetData } from "../../widgets/calendar/types";
 import { linkWidgetDataSchema } from "../../widgets/links/schema";
@@ -16,17 +18,17 @@ export type WidgetData = {
   data: LinkWidgetData | SearchWidgetData | CalendarWidgetData | TimeWidgetData;
 };
 
-export const WidgetConfigHelper = {
+export const WidgetDataHelper = {
   getSchema() {
-    const widgetConfigSchema = z.object({
+    const widgetDataSchema = z.object({
       id: z.string(),
-      type: widgetTypeSchema,
+      type: WidgetTypeHelper.getSchema(),
       data: linkWidgetDataSchema
         .or(searchWidgetDataSchema)
         .or(timeWidgetDataSchema)
         .or(calendarWidgetDataSchema),
     });
 
-    return widgetConfigSchema;
+    return widgetDataSchema;
   },
 };

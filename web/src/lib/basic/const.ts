@@ -1,5 +1,5 @@
-import type { ScreenSize } from "../types/types";
-import { type Positioning } from "../types/widget";
+import { type Positioning } from "~/server/domain/layout/positioning";
+import { type ScreenSize } from "~/server/domain/other/screenSize";
 
 export const APP_NAME = "panal";
 

@@ -1,11 +1,13 @@
 import { z } from "zod";
 import { isObject, isString } from "~/lib/guards/base";
-import { isScreenSizePositioning, isWidgetType } from "~/lib/guards/widgets";
 import {
-  screenSizePositioningSchema,
-  widgetTypeSchema,
-} from "~/lib/types/schema";
-import type { ScreenSizePositioning, WidgetType } from "~/lib/types/widget";
+  WidgetTypeHelper,
+  type WidgetType,
+} from "~/server/domain/config/widgetType";
+import {
+  ScreenSizePositioningHelper,
+  type ScreenSizePositioning,
+} from "./screensizePositioning";
 
 export type AdjustedWidgetLayout = {
   id: string;
@@ -21,10 +23,10 @@ export const AdjustedWidgetLayoutHelper = {
     if (!isString(input.id)) {
       return false;
     }
-    if (!isWidgetType(input.type)) {
+    if (!WidgetTypeHelper.validate(input.type)) {
       return false;
     }
-    if (!isScreenSizePositioning(input.layout)) {
+    if (!ScreenSizePositioningHelper.validate(input.layout)) {
       return false;
     }
     return true;
@@ -33,8 +35,8 @@ export const AdjustedWidgetLayoutHelper = {
   getSchema() {
     const adjustedWidgetLayoutSchema = z.object({
       id: z.string(),
-      type: widgetTypeSchema,
-      layout: screenSizePositioningSchema,
+      type: WidgetTypeHelper.getSchema(),
+      layout: ScreenSizePositioningHelper.getSchema(),
     });
 
     return adjustedWidgetLayoutSchema;

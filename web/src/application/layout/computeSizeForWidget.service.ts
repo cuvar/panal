@@ -1,5 +1,5 @@
 import { MIN_WIDGET_HEIGHT, MIN_WIDGET_WIDTH } from "~/lib/basic/const";
-import type { WidgetType } from "~/lib/types/widget";
+import { type WidgetType } from "~/server/domain/config/widgetType";
 
 /**
  * Gets the minimum width for a widget of the given type

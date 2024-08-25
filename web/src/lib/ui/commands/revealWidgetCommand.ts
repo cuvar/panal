@@ -1,17 +1,15 @@
 import { produce } from "immer";
-import { calcNewWidgetLayout } from "~/application/client/calcNewWidgetLayout.service";
-import { type ScreenSize } from "~/lib/types/types";
-import {
-  type Positioning,
-  type ScreenSizePositioning,
-} from "~/lib/types/widget";
+import { calcNewWidgetLayout } from "~/application/layout/calcNewWidgetLayout.service";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { type Positioning } from "~/server/domain/layout/positioning";
+import { type ScreenSizePositioning } from "~/server/domain/layout/screensizePositioning";
 import {
   awlToRgl,
   rglToAwl,
   withMinValues,
 } from "~/server/domain/layout/services/transform.service";
 import { type WidgetVisibility } from "~/server/domain/layout/widgetVisibility";
+import { type ScreenSize } from "~/server/domain/other/screenSize";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 

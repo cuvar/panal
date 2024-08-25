@@ -3,10 +3,13 @@ import {
   GRID_MAX_ROW,
   HIDDEN_POSITIONING,
 } from "~/lib/basic/const";
-import { isScreenSize } from "~/lib/guards/other";
-import type { ScreenSize } from "~/lib/types/types";
-import type { Positioning, WidgetType } from "~/lib/types/widget";
+import { type WidgetType } from "~/server/domain/config/widgetType";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { type Positioning } from "~/server/domain/layout/positioning";
+import {
+  ScreenSizeHelper,
+  type ScreenSize,
+} from "~/server/domain/other/screenSize";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
@@ -25,7 +28,7 @@ export default function adjustLayoutValues(
   widget: AdjustedWidgetLayout,
 ): AdjustedWidgetLayout {
   Object.entries(widget.layout).forEach(([key, value]) => {
-    if (isScreenSize(key)) {
+    if (ScreenSizeHelper.validate(key)) {
       widget.layout[key] = adjustBoundsForMinValues(value, widget.type, key);
     }
   });

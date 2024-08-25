@@ -10,7 +10,6 @@ import {
 } from "~/lib/basic/const";
 
 import { useEffect } from "react";
-import { type RGLayout } from "~/lib/types/widget";
 import {
   useCommandManager,
   useDetectScreenSize,
@@ -18,6 +17,7 @@ import {
 } from "~/lib/ui/hooks";
 import { useBoundStore } from "~/lib/ui/state";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { type RGLayout } from "~/server/domain/layout/layout";
 import ResizeHandle from "./ResizeHandle";
 import WidgetWrapper from "./WidgetWrapper";
 

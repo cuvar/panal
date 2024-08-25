@@ -1,6 +1,6 @@
-import { type ScreenSize } from "~/lib/types/types";
-import { type RGLayout } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { type RGLayout } from "~/server/domain/layout/layout";
+import { type ScreenSize } from "~/server/domain/other/screenSize";
 
 /**
  * filters out all elements in awLayout that are not in rgLayout - by id

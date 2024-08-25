@@ -1,5 +1,6 @@
-import { type LayoutType, type RGLayout } from "~/lib/types/widget";
+import { type LayoutType } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { type RGLayout } from "~/server/domain/layout/layout";
 import { awlToRgl } from "~/server/domain/layout/services/transform.service";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";

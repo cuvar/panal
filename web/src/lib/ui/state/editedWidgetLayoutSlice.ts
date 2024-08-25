@@ -1,5 +1,5 @@
 import { type StateCreator } from "zustand";
-import { type RGLayout } from "~/lib/types/widget";
+import { type RGLayout } from "~/server/domain/layout/layout";
 
 export interface EditedWidgetSlice {
   editedWidgetLayout: RGLayout;

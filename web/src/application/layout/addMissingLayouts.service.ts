@@ -1,12 +1,14 @@
 import { BREAKPOINTS_ORDER, HIDDEN_POSITIONING } from "~/lib/basic/const";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
+import {} from "~/lib/guards/widgets";
+import { type Layout } from "~/server/domain/layout/layout";
 import {
-  isPartialScreenSizePositioning,
-  isScreenSizePositioning,
-} from "~/lib/guards/widgets";
-import type { ScreenSize } from "~/lib/types/types";
-import type { Layout, ScreenSizePositioning } from "~/lib/types/widget";
+  PartialScreenSizePositioningHelper,
+  ScreenSizePositioningHelper,
+  type ScreenSizePositioning,
+} from "~/server/domain/layout/screensizePositioning";
+import { type ScreenSize } from "~/server/domain/other/screenSize";
 
 /**
  * Adds layouts for missing ScreenSizes to the given layout
@@ -18,9 +20,9 @@ export default function addMissingLayouts(
   layout: Layout,
   withReplacement = true,
 ): ScreenSizePositioning {
-  if (isScreenSizePositioning(layout)) {
+  if (ScreenSizePositioningHelper.validate(layout)) {
     return layout;
-  } else if (isPartialScreenSizePositioning(layout)) {
+  } else if (PartialScreenSizePositioningHelper.validate(layout)) {
     const exisitingScreenSizes = Object.keys(layout) as ScreenSize[];
     const missingScreenSizes = BREAKPOINTS_ORDER.filter(
       (screenSize) => !exisitingScreenSizes.includes(screenSize),

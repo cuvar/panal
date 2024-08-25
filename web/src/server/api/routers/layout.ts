@@ -1,23 +1,21 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { isEmptyPositioning } from "~/application/layout/positioning.service";
+import updateWidgetLayoutService from "~/application/layout/updateWidgetLayout.service";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
-import { isEmptyPositioning } from "~/lib/service/positioning.service";
-import {
-  screenSizePositioningSchema,
-  screenSizeSchema,
-  widgetLayoutSchema,
-  widgetTypeSchema,
-} from "~/lib/types/schema";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { WidgetTypeHelper } from "~/server/domain/config/widgetType";
 import {
   type AdjustedWidgetLayout,
   AdjustedWidgetLayoutHelper,
 } from "~/server/domain/layout/adjustedWidgetLayout";
 import { getLayoutRepository } from "~/server/domain/layout/repo/layoutRepository";
+import { ScreenSizePositioningHelper } from "~/server/domain/layout/screensizePositioning";
 import { uwlToAwl } from "~/server/domain/layout/services/transform.service";
-import updateWidgetLayoutService from "~/server/domain/layout/services/updateWidgetLayout.service";
+import { widgetLayoutSchema } from "~/server/domain/layout/types";
+import { ScreenSizeHelper } from "~/server/domain/other/screenSize";
 
 export const layoutRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
@@ -91,8 +89,8 @@ export const layoutRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
-        type: widgetTypeSchema,
-        layout: screenSizePositioningSchema,
+        type: WidgetTypeHelper.getSchema(),
+        layout: ScreenSizePositioningHelper.getSchema(),
       }),
     )
     .mutation(async ({ input }) => {
@@ -107,7 +105,7 @@ export const layoutRouter = createTRPCRouter({
       }
     }),
   getAllHidden: protectedProcedure
-    .input(z.object({ screenSize: screenSizeSchema }))
+    .input(z.object({ screenSize: ScreenSizeHelper.getSchema() }))
     .query(async ({ input }) => {
       try {
         const storedLayouts = await getLayoutRepository().getAll();
