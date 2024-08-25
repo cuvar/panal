@@ -75,7 +75,7 @@ export default function WidgetView(props: Props) {
   }
 
   return (
-    <div className="z-10 h-screen w-full max-w-[1280px]">
+    <div className="z-10 h-screen w-full max-w-[1280px] overflow-x-hidden">
       {props.layout.length === 0 ? (
         <div className="flex h-full w-full flex-col items-center justify-center space-y-4 text-foreground">
           <h1 className="text-2xl font-bold">No widgets available.</h1>
