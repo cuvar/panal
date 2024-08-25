@@ -6,9 +6,6 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "docker:build": "turbo: docker:build",
-    "docker:publish": "turbo docker:publish",
-    "docker:run": "turbo docker:run",
     "lint": "turbo lint",
     "lint:full": "turbo lint:full",
     "generate-notice": "turbo generate-notice",
