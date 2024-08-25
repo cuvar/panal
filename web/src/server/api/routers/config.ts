@@ -7,7 +7,7 @@ import { widgetTypeSchema } from "~/lib/types/schema";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { getConfigRepository } from "~/server/domain/config/repo/configRepository";
 import { parseWidgetConfigArray } from "~/server/domain/config/services/parseWidgetConfig.service";
-import { WidgetConfig } from "~/server/domain/config/widgetConfig";
+import { WidgetConfigHelper } from "~/server/domain/config/widgetConfig";
 
 export const configRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
@@ -77,7 +77,7 @@ export const configRouter = createTRPCRouter({
       };
 
       try {
-        if (!WidgetConfig.validate(widget)) {
+        if (!WidgetConfigHelper.validate(widget)) {
           throw new AppError(codes.WIDGET_CONFIG_PARSE_ISSUE);
         }
         await getConfigRepository().set(input.id, widget);

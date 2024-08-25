@@ -9,7 +9,7 @@ import { isSearchWidgetConfig } from "../../../widgets/search/guards";
 import computeDataTimeWidget from "../../../widgets/time/data";
 import { isTimeWidgetConfig } from "../../../widgets/time/guards";
 import { type WidgetConfig } from "../widgetConfig";
-import { WidgetData } from "../widgetData";
+import { type WidgetData } from "../widgetData";
 
 /**
  * Transforms the given WidgetConfig[] into a WidgetData[]
@@ -43,7 +43,11 @@ export default async function transformWidgetConfig(
       data = {};
     }
 
-    widgetData.push(new WidgetData(widget.id, widget.type, data));
+    widgetData.push({
+      id: widget.id,
+      type: widget.type,
+      data: data,
+    } as WidgetData);
   }
   return widgetData;
 }

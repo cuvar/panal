@@ -12,7 +12,7 @@ import type { SearchWidgetConfig } from "../../widgets/search/types";
 import { timeWidgetConfigSchema } from "../../widgets/time/schema";
 import type { TimeWidgetConfig } from "../../widgets/time/types";
 
-export class WidgetConfig {
+export type WidgetConfig = {
   id: string;
   type: WidgetType;
   data:
@@ -20,22 +20,36 @@ export class WidgetConfig {
     | SearchWidgetConfig
     | CalendarWidgetConfig
     | TimeWidgetConfig;
+};
 
-  constructor(
-    id: string,
-    type: WidgetType,
-    data:
-      | LinkWidgetConfig
-      | SearchWidgetConfig
-      | CalendarWidgetConfig
-      | TimeWidgetConfig,
-  ) {
-    this.id = id;
-    this.type = type;
-    this.data = data;
-  }
+export const WidgetConfigHelper = {
+  getSchema() {
+    const widgetConfigSchema = z.object({
+      id: z.string(),
+      type: widgetTypeSchema,
+      data: linkWidgetConfigSchema
+        .or(searchWidgetConfigSchema)
+        .or(timeWidgetConfigSchema)
+        .or(calendarWidgetConfigSchema),
+    });
 
-  static validate(input: unknown): input is WidgetConfig {
+    return widgetConfigSchema;
+  },
+  /**
+   * Checks whether data is of type WidgetConfig[]
+   * @param {unknown} data Unkown type to be checked
+   * @returns {boolean} Whether data is of type WidgetConfig[]
+   */
+  isWidgetConfigArray(data: unknown): data is WidgetConfig[] {
+    if (!Array.isArray(data)) {
+      return false;
+    }
+    if (!data.every((r) => this.validate(r))) {
+      return false;
+    }
+    return true;
+  },
+  validate(input: unknown): input is WidgetConfig {
     if (!isObject(input)) {
       return false;
     }
@@ -50,33 +64,5 @@ export class WidgetConfig {
     }
 
     return true;
-  }
-
-  /**
-   * Checks whether data is of type WidgetConfig[]
-   * @param {unknown} data Unkown type to be checked
-   * @returns {boolean} Whether data is of type WidgetConfig[]
-   */
-  static isWidgetConfigArray(data: unknown): data is WidgetConfig[] {
-    if (!Array.isArray(data)) {
-      return false;
-    }
-    if (!data.every((r) => WidgetConfig.validate(r))) {
-      return false;
-    }
-    return true;
-  }
-
-  static getSchema() {
-    const widgetConfigSchema = z.object({
-      id: z.string(),
-      type: widgetTypeSchema,
-      data: linkWidgetConfigSchema
-        .or(searchWidgetConfigSchema)
-        .or(timeWidgetConfigSchema)
-        .or(calendarWidgetConfigSchema),
-    });
-
-    return widgetConfigSchema;
-  }
-}
+  },
+};

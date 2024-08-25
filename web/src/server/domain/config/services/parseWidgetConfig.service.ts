@@ -1,6 +1,6 @@
 import { AdjustedWidgetLayout } from "../../layout/adjustedWidgetLayout";
 import { UserWidgetLayout } from "../../layout/userWidgetLayout";
-import { WidgetConfig } from "../widgetConfig";
+import { type WidgetConfig, WidgetConfigHelper } from "../widgetConfig";
 
 /**
  * Parses a string into a UserWidgetLayout[].
@@ -62,10 +62,14 @@ export function parseWidgetConfigArray(input: string): WidgetConfig[] | null {
 
   const result: WidgetConfig[] = [];
   for (const widget of parsed) {
-    if (!WidgetConfig.validate(widget)) {
+    if (!WidgetConfigHelper.validate(widget)) {
       return null;
     }
-    result.push(new WidgetConfig(widget.id, widget.type, widget.data));
+    result.push({
+      id: widget.id,
+      type: widget.type,
+      data: widget.data,
+    } as WidgetConfig);
   }
   return result;
 }

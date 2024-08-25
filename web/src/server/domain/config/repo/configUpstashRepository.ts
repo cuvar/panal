@@ -3,7 +3,10 @@ import { env } from "~/env.mjs";
 import { UPSTASH_PREFIX, UPSTASH_WIDGET_PREFIX } from "~/lib/basic/const";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
-import { WidgetConfig } from "~/server/domain/config/widgetConfig";
+import {
+  type WidgetConfig,
+  WidgetConfigHelper,
+} from "~/server/domain/config/widgetConfig";
 import { type ConfigRepository } from "./configRepository";
 
 export class ConfigUpstashRepository implements ConfigRepository {
@@ -35,10 +38,14 @@ export class ConfigUpstashRepository implements ConfigRepository {
       if (typeof response !== "object") {
         throw new AppError(codes.REPOSITORY_INVALID_RESPONSE);
       }
-      if (!WidgetConfig.validate(response)) {
+      if (!WidgetConfigHelper.validate(response)) {
         throw new AppError(codes.WIDGET_CONFIG_INVALID);
       }
-      return new WidgetConfig(response.id, response.type, response.data);
+      return {
+        id: response.id,
+        type: response.type,
+        data: response.data,
+      } as WidgetConfig;
     } catch (error) {
       throw new AppError(codes.REPOSITORY_GET_CONFIG_FAILED, error);
     }
@@ -57,12 +64,12 @@ export class ConfigUpstashRepository implements ConfigRepository {
       if (!Array.isArray(response)) {
         throw new AppError(codes.REPOSITORY_INVALID_RESPONSE);
       }
-      if (!WidgetConfig.isWidgetConfigArray(response)) {
+      if (!WidgetConfigHelper.isWidgetConfigArray(response)) {
         throw new AppError(codes.WIDGET_CONFIG_INVALID);
       }
 
       const mapped = response.map((r) => {
-        return new WidgetConfig(r.id, r.type, r.data);
+        return { id: r.id, type: r.type, data: r.data } as WidgetConfig;
       });
 
       return mapped;

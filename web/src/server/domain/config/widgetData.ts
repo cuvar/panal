@@ -10,25 +10,14 @@ import type { SearchWidgetData } from "../../widgets/search/types";
 import { timeWidgetDataSchema } from "../../widgets/time/schema";
 import type { TimeWidgetData } from "../../widgets/time/types";
 
-export class WidgetData {
+export type WidgetData = {
   id: string;
   type: WidgetType;
   data: LinkWidgetData | SearchWidgetData | CalendarWidgetData | TimeWidgetData;
-  constructor(
-    id: string,
-    type: WidgetType,
-    data:
-      | LinkWidgetData
-      | SearchWidgetData
-      | CalendarWidgetData
-      | TimeWidgetData,
-  ) {
-    this.id = id;
-    this.type = type;
-    this.data = data;
-  }
+};
 
-  static getSchema() {
+export const WidgetConfigHelper = {
+  getSchema() {
     const widgetConfigSchema = z.object({
       id: z.string(),
       type: widgetTypeSchema,
@@ -39,5 +28,5 @@ export class WidgetData {
     });
 
     return widgetConfigSchema;
-  }
-}
+  },
+};
