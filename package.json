@@ -1,0 +1,33 @@
+{
+  "name": "panal",
+  "version": "0.1.0",
+  "private": true,
+  "license": "CC BY-NC 4.0",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "docker:build": "turbo: docker:build",
+    "docker:publish": "turbo docker:publish",
+    "docker:run": "turbo docker:run",
+    "lint": "turbo lint",
+    "lint:full": "turbo lint:full",
+    "generate-notice": "turbo generate-notice",
+    "check-license": "turbo check-license"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.0",
+    "turbo": "^2.0.14",
+    "typescript": "^5.1.6"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "npm@10.2.3",
+  "ct3aMetadata": {
+    "initVersion": "7.19.0"
+  }
+}

@@ -12,3 +12,4 @@ widgets.json
 store*.json
 todo.txt
 .turbo
+node_modules
