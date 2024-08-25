@@ -1,4 +1,4 @@
-import { useWindowSize } from "@uidotdev/usehooks";
+import { useIsClient, useWindowSize } from "@uidotdev/usehooks";
 import { useAtom } from "jotai";
 import { useContext, useEffect, useState } from "react";
 import filterWidgetLayoutByLayout from "~/client/services/filterWidgetLayoutByLayoutService";
@@ -109,17 +109,16 @@ export function useDisplayedWidgets(
   const editedWidgetLayout = useBoundStore((state) => state.editedWidgetLayout);
   const editMode = useBoundStore((state) => state.editMode);
   const currentScreenSize = useDetectScreenSize();
+  const isClient = useIsClient();
 
   const [rgLayout, setRGLayout] = useState<RGLayout>({});
   const [awLayout, setAWLayout] = useState<AdjustedWidgetLayout[]>([]);
 
   useEffect(() => {
     const layout = editMode ? editedWidgetLayout : widgetLayout;
-    const filteredAWLayout = filterWidgetLayoutByLayout(
-      initialAWLayout,
-      layout,
-      currentScreenSize,
-    );
+    const filteredAWLayout = isClient
+      ? filterWidgetLayoutByLayout(initialAWLayout, layout, currentScreenSize)
+      : [];
     const allExceptHidden = filteredAWLayout.filter(
       (widget) => !getHidingClasses(widget.layout).includes(currentScreenSize),
     );
