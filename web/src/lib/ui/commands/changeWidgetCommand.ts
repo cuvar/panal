@@ -4,6 +4,11 @@ import { type ScreenSize } from "~/lib/types/types";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 
+/**
+ * is triggered, when a widget is changed in edit mode
+ * 1. when dragging a widget is stopped
+ * 2. when resizing of a screen is stopped
+ */
 export default class ChangeWidgetCommand implements Command {
   name: string;
   description: string;
