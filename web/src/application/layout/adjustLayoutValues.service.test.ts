@@ -3,8 +3,9 @@
  */
 
 import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/lib/basic/const";
-import type { ScreenSizePositioning, WidgetType } from "~/lib/types/widget";
+import { type WidgetType } from "~/server/domain/config/widgetType";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { type ScreenSizePositioning } from "~/server/domain/positioning/screensizePositioning";
 import adjustLayoutValues from "./adjustLayoutValues.service";
 import {
   getMinHeightForWidget,

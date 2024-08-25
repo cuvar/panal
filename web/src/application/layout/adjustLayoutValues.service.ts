@@ -5,11 +5,11 @@ import {
 } from "~/lib/basic/const";
 import { type WidgetType } from "~/server/domain/config/widgetType";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
-import { type Positioning } from "~/server/domain/layout/positioning";
 import {
   ScreenSizeHelper,
   type ScreenSize,
 } from "~/server/domain/other/screenSize";
+import { type Positioning } from "~/server/domain/positioning/positioning";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,

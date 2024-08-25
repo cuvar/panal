@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import type { ScreenSizePositioning } from "~/lib/types/widget";
+import { type ScreenSizePositioning } from "~/server/domain/positioning/screensizePositioning";
 import getHidingClasses from "./getHidingClasses.service";
 
 describe("getHidingClassesService", () => {

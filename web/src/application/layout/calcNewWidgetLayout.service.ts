@@ -1,8 +1,8 @@
 import { HIDDEN_POSITIONING } from "~/lib/basic/const";
 import Log from "~/lib/log/log";
-import { type Positioning } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { type WidgetVisibility } from "~/server/domain/layout/widgetVisibility";
+import { type Positioning } from "~/server/domain/positioning/positioning";
 import adjustLayoutValues from "./adjustLayoutValues.service";
 import findFreeSpace from "./findFreeSpace.service";
 

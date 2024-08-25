@@ -1,6 +1,6 @@
 import { z } from "zod";
+import { type Positioning } from "../positioning/positioning";
 import { type RGLayout } from "./layout";
-import { type Positioning } from "./positioning";
 
 export const gridPositioningSchema: z.ZodType<Positioning & { i: string }> =
   z.object({
