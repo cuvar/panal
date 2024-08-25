@@ -49,7 +49,7 @@ export class LayoutUpstashRepository implements LayoutRepository {
       }
       const config = parseAdjustedWidgetLayout(JSON.stringify(response));
       if (!config) {
-        throw new AppError(codes.WIDGET_CONFIG_INVALID);
+        throw new AppError(codes.WIDGET_LAYOUT_INVALID);
       }
 
       return config;

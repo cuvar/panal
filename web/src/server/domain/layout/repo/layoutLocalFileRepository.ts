@@ -44,7 +44,7 @@ export class LayoutLocalFileRepository implements LayoutRepository {
       }
       const config = parseAdjustedWidgetLayout(JSON.stringify(content));
       if (!config) {
-        throw new AppError(codes.WIDGET_CONFIG_INVALID);
+        throw new AppError(codes.WIDGET_LAYOUT_INVALID);
       }
       return config;
     } catch (error) {
