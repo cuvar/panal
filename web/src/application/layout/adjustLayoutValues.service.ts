@@ -47,8 +47,8 @@ function adjustBoundsForMinValues(
   type: WidgetType,
   screenSize: ScreenSize,
 ): Positioning {
-  const minWidth = getMinWidthForWidget(type);
-  const minHeight = getMinHeightForWidget(type);
+  const minWidth = getMinWidthForWidget(type, screenSize);
+  const minHeight = getMinHeightForWidget(type, screenSize);
 
   // 1. Changes width and height to meet at least the MIN_WIDTH and MIN_HEIGHT.
   if (layout.w < minWidth && !(layout.w == 0 && layout.h == 0)) {

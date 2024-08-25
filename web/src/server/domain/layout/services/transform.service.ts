@@ -66,7 +66,7 @@ export function awlToRgl(
   };
 
   data.forEach((widget) => {
-    Object.entries(widget.layout).forEach(([key, value]) => {
+    Object.entries(widget.layout).forEach(([screen, value]) => {
       const layout = withMinValues<ReactGridLayout.Layout>(
         {
           ...value,
@@ -74,15 +74,16 @@ export function awlToRgl(
           static: makeStatic,
         },
         widget.type,
+        screen as ScreenSize,
       );
 
       if (
-        layouts[key] !== undefined &&
-        ScreenSizeHelper.validate(key) &&
-        Array.isArray(layouts[key]) &&
+        layouts[screen] !== undefined &&
+        ScreenSizeHelper.validate(screen) &&
+        Array.isArray(layouts[screen]) &&
         !isEmptyPositioning(layout)
       ) {
-        layouts[key]?.push(layout);
+        layouts[screen]?.push(layout);
       }
     });
   });
@@ -169,14 +170,16 @@ export function rglToAwl(
  * Adds min values to the layout of a widget
  * @param data
  * @param type
+ * @param screenSize
  */
 export function withMinValues<T>(
   data: T,
   type: WidgetType,
+  screenSize: ScreenSize,
 ): T & { minW: number; minH: number } {
   return {
     ...data,
-    minW: getMinWidthForWidget(type),
-    minH: getMinHeightForWidget(type),
+    minW: getMinWidthForWidget(type, screenSize),
+    minH: getMinHeightForWidget(type, screenSize),
   };
 }

@@ -79,6 +79,7 @@ export default class RevealWidgetCommand implements Command {
           const newPositioning = withMinValues<Positioning>(
             value,
             draft.widget.type,
+            screen as ScreenSize,
           );
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
