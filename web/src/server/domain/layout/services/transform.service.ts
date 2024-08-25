@@ -11,7 +11,7 @@ import adjustLayoutValues from "./adjustLayoutValues.service";
  * @param {UserWidgetLayout[]} userWidgetLayout UserWidgetLayout[] to transform
  * @returns {AdjustedWidgetLayout[]} AdjustedWidgetLayout[] with unique IDs
  */
-export default function transformWidgetLayout(
+export default function uwlToAwl(
   userWidgetLayout: UserWidgetLayout[],
 ): AdjustedWidgetLayout[] {
   try {

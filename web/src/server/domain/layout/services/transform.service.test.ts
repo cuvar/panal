@@ -4,7 +4,7 @@
 
 import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import { type UserWidgetLayout } from "../userWidgetLayout";
-import transformWidgetLayout from "./transformWidgetLayout.service";
+import uwlToAwl from "./transform.service";
 
 describe("transformWidgetLayoutService", () => {
   it("works correctly", () => {
@@ -84,7 +84,7 @@ describe("transformWidgetLayoutService", () => {
     } as AdjustedWidgetLayout;
 
     // act
-    const res = transformWidgetLayout([input])[0]!;
+    const res = uwlToAwl([input])[0]!;
 
     // assert
     expect(typeof res.id).toBe("string");

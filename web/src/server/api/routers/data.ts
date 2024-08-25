@@ -5,13 +5,13 @@ import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { getConfigRepository } from "~/server/domain/config/repo/configRepository";
-import transformWidgetConfig from "~/server/domain/config/services/transformWidgetConfig.service";
+import widgetConfigToWidgetData from "~/server/domain/config/services/transform.service";
 
 export const dataRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
     try {
       const storedConfigs = await getConfigRepository().getAll();
-      const configData = await transformWidgetConfig(storedConfigs);
+      const configData = await widgetConfigToWidgetData(storedConfigs);
       return configData;
     } catch (error) {
       Log(error, "error");
@@ -29,7 +29,7 @@ export const dataRouter = createTRPCRouter({
         if (!data) {
           throw new AppError(codes.WIDGET_CONFIG_ADJUSTED_MISSING);
         }
-        const configData = await transformWidgetConfig([data]);
+        const configData = await widgetConfigToWidgetData([data]);
         return configData[0]!;
       } catch (error) {
         Log(error, "error");

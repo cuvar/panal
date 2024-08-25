@@ -16,7 +16,7 @@ import { type WidgetData } from "../widgetData";
  * @param {WidgetConfig[]} widgetConfig AdjustedWidgetLayout[] to transform
  * @returns {Promise<WidgetData[]>} WidgetData[] with unique IDs
  */
-export default async function transformWidgetConfig(
+export default async function widgetConfigToWidgetData(
   widgetConfig: WidgetConfig[],
 ): Promise<WidgetData[]> {
   const widgetData: WidgetData[] = [];

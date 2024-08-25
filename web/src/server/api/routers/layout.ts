@@ -16,14 +16,14 @@ import {
   AdjustedWidgetLayoutHelper,
 } from "~/server/domain/layout/adjustedWidgetLayout";
 import { getLayoutRepository } from "~/server/domain/layout/repo/layoutRepository";
-import transformWidgetLayout from "~/server/domain/layout/services/transformWidgetLayout.service";
+import uwlToAwl from "~/server/domain/layout/services/transform.service";
 import updateWidgetLayoutService from "~/server/domain/layout/services/updateWidgetLayout.service";
 
 export const layoutRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
     try {
       const storedLayouts = await getLayoutRepository().getAll();
-      const layoutData = transformWidgetLayout(storedLayouts);
+      const layoutData = uwlToAwl(storedLayouts);
       return layoutData;
     } catch (error) {
       Log(error, "error");
@@ -111,7 +111,7 @@ export const layoutRouter = createTRPCRouter({
     .query(async ({ input }) => {
       try {
         const storedLayouts = await getLayoutRepository().getAll();
-        const layoutData = transformWidgetLayout(storedLayouts);
+        const layoutData = uwlToAwl(storedLayouts);
         const hiddenWidgets = layoutData.filter((widget) => {
           if (isEmptyPositioning(widget.layout[input.screenSize])) {
             return true;
