@@ -1,4 +1,4 @@
-import SiteWrapper from "~/components/SiteWrapper";
+import SiteWrapper from "~/components/structure/SiteWrapper";
 
 export default function ErrorPage(props: { error: string }) {
   return (

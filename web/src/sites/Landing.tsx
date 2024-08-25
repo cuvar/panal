@@ -1,8 +1,8 @@
 import PlausibleProvider from "next-plausible";
 import Head from "next/head";
-import Footer from "~/components/Footer";
 import Link from "~/components/Link";
-import Navbar from "~/components/Navbar";
+import Footer from "~/components/structure/Footer";
+import Navbar from "~/components/structure/Navbar";
 import { APP_NAME } from "~/lib/basic/const";
 
 export default function Login() {

@@ -1,9 +1,9 @@
 import { useSession } from "next-auth/react";
 import Head from "next/head";
-import Navbar from "~/components/Navbar";
+import Navbar from "~/components/structure/Navbar";
+import Toast from "~/components/Toast";
 import { APP_NAME } from "~/lib/basic/const";
 import Login from "~/sites/Landing";
-import Toast from "./Toast";
 
 type Props = {
   children: React.ReactNode;
