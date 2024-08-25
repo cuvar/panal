@@ -5,7 +5,7 @@ import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { getConfigRepository } from "~/server/domain/config/repo/configRepository";
-import transformWidgetConfig from "~/server/domain/config/services/transformWidgetConfigService";
+import transformWidgetConfig from "~/server/domain/config/services/transformWidgetConfig.service";
 
 export const dataRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {

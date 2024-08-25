@@ -10,7 +10,7 @@ import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
-} from "./computeSizeForWidgetService";
+} from "./computeSizeForWidget.service";
 
 /**
  * 1. Changes width and height to meet at least the MIN_WIDTH and MIN_HEIGHT.

@@ -12,8 +12,8 @@ import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayou
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
-} from "../../server/domain/layout/services/computeSizeForWidgetService";
-import addMissingLayouts from "./addMissingLayoutsService";
+} from "~/server/domain/layout/services/computeSizeForWidget.service";
+import addMissingLayouts from "./addMissingLayouts.service";
 
 /**
  * Transforms AdjustedWidgetLayout[] into RGLayout for react-grid-layout

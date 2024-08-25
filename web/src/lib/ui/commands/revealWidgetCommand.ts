@@ -1,9 +1,9 @@
 import { produce } from "immer";
-import { calcNewWidgetLayout } from "~/client/services/calcNewWidgetLayoutService";
+import { calcNewWidgetLayout } from "~/client/services/calcNewWidgetLayout.service";
 import transformLayoutsForGrid, {
   transformRGLToAWL,
   withMinValues,
-} from "~/client/services/transformLayoutsService";
+} from "~/client/services/transformLayouts.service";
 import { type ScreenSize } from "~/lib/types/types";
 import {
   type Positioning,

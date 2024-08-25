@@ -13,8 +13,8 @@ import {
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { getLayoutRepository } from "~/server/domain/layout/repo/layoutRepository";
-import transformWidgetLayout from "~/server/domain/layout/services/transformWidgetLayoutService";
-import updateWidgetLayoutService from "~/server/domain/layout/services/updateWidgetLayoutService";
+import transformWidgetLayout from "~/server/domain/layout/services/transformWidgetLayout.service";
+import updateWidgetLayoutService from "~/server/domain/layout/services/updateWidgetLayout.service";
 
 export const layoutRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {

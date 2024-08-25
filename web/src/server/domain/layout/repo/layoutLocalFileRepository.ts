@@ -3,7 +3,7 @@ import { REPO_LAYOUT_FILE } from "~/lib/basic/const";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import { type Reader } from "../../../driver/Reader/Reader";
-import { parseAdjustedWidgetLayout } from "../../config/services/parseWidgetConfigService";
+import { parseAdjustedWidgetLayout } from "../../config/services/parseWidgetConfig.service";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import type { LayoutRepository } from "./layoutRepository";
 

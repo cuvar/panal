@@ -2,9 +2,9 @@ import { HIDDEN_POSITIONING } from "~/lib/basic/const";
 import Log from "~/lib/log/log";
 import { type Positioning } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
-import adjustLayoutValues from "~/server/domain/layout/services/adjustLayoutValuesService";
+import adjustLayoutValues from "~/server/domain/layout/services/adjustLayoutValues.service";
 import { type WidgetVisibility } from "~/server/domain/layout/widgetVisibility";
-import findFreeSpace from "./findFreeSpaceService";
+import findFreeSpace from "./findFreeSpace.service";
 
 /**
  * Updates a widgets layout for a specific screen size, depending on whether it should be hidden or revealed

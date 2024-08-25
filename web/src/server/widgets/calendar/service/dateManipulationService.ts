@@ -5,7 +5,7 @@ import {
   getNonRecurringEvents,
   getRecurringEvents,
   getValidRecurrenceEvent,
-} from "./recurrenceService";
+} from "./recurrence.service";
 
 /**
  * Filters future events with a given `days` in advance.

@@ -2,7 +2,7 @@ import { env } from "~/env.mjs";
 import { REPO_CONFIG_FILE } from "~/lib/basic/const";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
-import { parseWidgetConfigArray } from "~/server/domain/config/services/parseWidgetConfigService";
+import { parseWidgetConfigArray } from "~/server/domain/config/services/parseWidgetConfig.service";
 import { type WidgetConfig } from "~/server/domain/config/widgetConfig";
 import { type Reader } from "~/server/driver/Reader/Reader";
 import { type ConfigRepository } from "./configRepository";

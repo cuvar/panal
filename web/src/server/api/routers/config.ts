@@ -6,7 +6,7 @@ import Log from "~/lib/log/log";
 import { widgetTypeSchema } from "~/lib/types/schema";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { getConfigRepository } from "~/server/domain/config/repo/configRepository";
-import { parseWidgetConfigArray } from "~/server/domain/config/services/parseWidgetConfigService";
+import { parseWidgetConfigArray } from "~/server/domain/config/services/parseWidgetConfig.service";
 import { WidgetConfig } from "~/server/domain/config/widgetConfig";
 
 export const configRouter = createTRPCRouter({

@@ -1,10 +1,10 @@
-import addMissingLayouts from "~/client/services/addMissingLayoutsService";
+import addMissingLayouts from "~/client/services/addMissingLayouts.service";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import { generateUniqueID } from "~/lib/service/widget.service";
 import { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import type { UserWidgetLayout } from "../userWidgetLayout";
-import adjustLayoutValues from "./adjustLayoutValuesService";
+import adjustLayoutValues from "./adjustLayoutValues.service";
 
 /**
  * Transforms the given UserWidgetLayout[] into an AdjustedWidgetLayout[]
