@@ -4,6 +4,9 @@ import { type RGLayout } from "~/lib/types/widget";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 
+/**
+ * is triggered, when the edit mode is initialized
+ */
 export default class InitEditCommand implements Command {
   name: string;
   description: string;

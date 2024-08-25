@@ -4,6 +4,9 @@ import { type Command } from "./command";
 import HideWidgetCommand from "./hideWidgetCommand";
 import RevealWidgetCommand from "./revealWidgetCommand";
 
+/**
+ * is triggered, when the edit mode is aborted
+ */
 export default class AbortEditCommand implements Command {
   name: string;
   description: string;

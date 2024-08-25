@@ -4,6 +4,9 @@ import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidget
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 
+/**
+ * is triggered, when the app is loaded initially
+ */
 export default class InitLayoutCommand implements Command {
   name: string;
   description: string;

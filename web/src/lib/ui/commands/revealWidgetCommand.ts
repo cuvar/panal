@@ -14,6 +14,9 @@ import { type WidgetVisibility } from "~/server/domain/layout/widgetVisibility";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 
+/**
+ * is triggered, when a widget is revealed in edit mode
+ */
 export default class RevealWidgetCommand implements Command {
   name: string;
   description: string;

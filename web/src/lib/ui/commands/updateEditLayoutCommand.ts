@@ -2,6 +2,9 @@ import { type RGLayout } from "~/lib/types/widget";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 
+/**
+ * is triggered, when the layout is changed (e.g. by resizing the screen)
+ */
 export default class UpdateEditLayoutCommand implements Command {
   name: string;
   description: string;

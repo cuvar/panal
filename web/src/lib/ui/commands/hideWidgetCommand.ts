@@ -5,6 +5,11 @@ import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidget
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
 
+/**
+ * is triggered
+ * 1. when a widget is hidden in edit mode
+ * 2. when the app is loaded initially
+ */
 export default class HideWidgetCommand implements Command {
   name: string;
   description: string;

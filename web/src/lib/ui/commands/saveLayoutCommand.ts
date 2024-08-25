@@ -9,6 +9,9 @@ import { type Command } from "./command";
 import HideWidgetCommand from "./hideWidgetCommand";
 import RevealWidgetCommand from "./revealWidgetCommand";
 
+/**
+ * is triggered, when the edit mode is closed by pressing the save button
+ */
 export default class SaveLayoutCommand implements Command {
   name: string;
   description: string;
