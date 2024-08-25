@@ -6,6 +6,7 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "docs": "turbo docs",
     "lint": "turbo lint",
     "lint:full": "turbo lint:full",
     "generate-notice": "turbo generate-notice",
