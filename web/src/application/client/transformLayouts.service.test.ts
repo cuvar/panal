@@ -7,7 +7,7 @@ import { type LayoutType } from "~/lib/types/widget";
 import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import transformLayoutsForGrid, {
   transformRGLToAWL,
-} from "./transformLayoutsService";
+} from "./transformLayouts.service";
 
 describe("transformLayoutsService", () => {
   it("transforms correctly into gridlayout with static: true", () => {

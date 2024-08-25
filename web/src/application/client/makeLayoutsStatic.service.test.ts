@@ -3,7 +3,7 @@
  */
 
 import type GridLayout from "react-grid-layout";
-import makeLayoutsStatic from "./makeLayoutsStaticService";
+import makeLayoutsStatic from "./makeLayoutsStatic.service";
 
 describe("makeLayoutsStaticService", () => {
   it("adds a static true property", () => {

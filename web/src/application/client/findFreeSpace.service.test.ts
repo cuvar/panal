@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import findFreeSpace from "./findFreeSpaceService";
+import findFreeSpace from "./findFreeSpace.service";
 
 describe("findFreeSpaceService", () => {
   it("returns the original widget position when there is no free space", () => {

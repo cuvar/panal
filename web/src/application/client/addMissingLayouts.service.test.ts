@@ -11,7 +11,7 @@ import type {
 } from "~/lib/types/widget";
 import addMissingLayouts, {
   getReplacementScreenSize,
-} from "./addMissingLayoutsService";
+} from "./addMissingLayouts.service";
 
 describe("addMissingLayoutservice", () => {
   test("works for single Positioning input", () => {

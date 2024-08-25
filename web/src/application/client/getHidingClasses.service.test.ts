@@ -3,7 +3,7 @@
  */
 
 import type { ScreenSizePositioning } from "~/lib/types/widget";
-import getHidingClasses from "./getHidingClassesService";
+import getHidingClasses from "./getHidingClasses.service";
 
 describe("getHidingClassesService", () => {
   it("should return an empty string array", () => {
