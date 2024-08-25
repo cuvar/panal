@@ -2,12 +2,12 @@ import { BREAKPOINTS_ORDER, HIDDEN_POSITIONING } from "~/lib/basic/const";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import { type Layout } from "~/server/domain/layout/layout";
+import { type ScreenSize } from "~/server/domain/other/screenSize";
 import {
   PartialScreenSizePositioningHelper,
   ScreenSizePositioningHelper,
   type ScreenSizePositioning,
-} from "~/server/domain/layout/screensizePositioning";
-import { type ScreenSize } from "~/server/domain/other/screenSize";
+} from "~/server/domain/positioning/screensizePositioning";
 
 /**
  * Adds layouts for missing ScreenSizes to the given layout

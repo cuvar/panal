@@ -5,7 +5,7 @@
 import {
   PositioningHelper,
   type Positioning,
-} from "~/server/domain/layout/positioning";
+} from "~/server/domain/positioning/positioning";
 
 describe("Positioning", () => {
   it("validate works correctly", () => {

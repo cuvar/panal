@@ -1,5 +1,5 @@
-import { type ScreenSizePositioning } from "~/server/domain/layout/screensizePositioning";
-import { isEmptyPositioning } from "./positioning.service";
+import { isEmptyPositioning } from "~/server/domain/positioning/positioning.service";
+import { type ScreenSizePositioning } from "~/server/domain/positioning/screensizePositioning";
 
 /**
  * Returns an array of ScreenSizes in which a widget is hidden

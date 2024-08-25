@@ -2,9 +2,9 @@
  * @jest-environment node
  */
 
-import type { ScreenSizePositioning } from "~/lib/types/widget";
 import { type AdjustedWidgetLayout } from "../../layout/adjustedWidgetLayout";
 import { type UserWidgetLayout } from "../../layout/userWidgetLayout";
+import { type ScreenSizePositioning } from "../../positioning/screensizePositioning";
 import {
   parseAdjustedWidgetLayout,
   parseUserWidgetLayout,

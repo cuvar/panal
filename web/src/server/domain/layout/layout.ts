@@ -1,7 +1,10 @@
 import { isObject } from "~/lib/guards/base";
 import { ScreenSizeHelper } from "../other/screenSize";
-import { PositioningHelper, type Positioning } from "./positioning";
-import { type PartialScreenSizePositioning } from "./screensizePositioning";
+import {
+  PositioningHelper,
+  type Positioning,
+} from "../positioning/positioning";
+import { type PartialScreenSizePositioning } from "../positioning/screensizePositioning";
 
 export type Layout = Positioning | PartialScreenSizePositioning;
 export type RGLayout = ReactGridLayout.Layouts;

@@ -2,8 +2,8 @@
  * @jest-environment node
  */
 
-import type { WidgetType } from "~/lib/types/widget";
 import { type WidgetData } from "../widgetData";
+import { type WidgetType } from "../widgetType";
 import transformWidgetConfig from "./transform.service";
 
 describe("transformWidgetConfigService", () => {

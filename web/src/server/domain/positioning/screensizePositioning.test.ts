@@ -7,7 +7,7 @@ import {
   ScreenSizePositioningHelper,
   type PartialScreenSizePositioning,
   type ScreenSizePositioning,
-} from "~/server/domain/layout/screensizePositioning";
+} from "~/server/domain/positioning/screensizePositioning";
 
 describe("ScreenSizePositioning", () => {
   it("validate works correctly", () => {

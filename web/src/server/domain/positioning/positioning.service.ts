@@ -1,4 +1,4 @@
-import { type Positioning } from "~/lib/types/widget";
+import { type Positioning } from "./positioning";
 
 /**
  * Checks whether input is of type empty Positioning
@@ -17,7 +17,7 @@ export function isEmptyPositioning(positioning: Positioning): boolean {
 /**
  * Check if two widgets overlap
  * @param {Positioning} w1 The first widget
- * @param {Positioning} w2 The second widget
+ * @param w2
  * @returns {boolean} True if the widgets overlap, false otherwise
  */
 export function overlaps(w1: Positioning, w2: Positioning): boolean {

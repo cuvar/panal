@@ -5,7 +5,6 @@ import {
   getMinHeightForWidget,
   getMinWidthForWidget,
 } from "~/application/layout/computeSizeForWidget.service";
-import { isEmptyPositioning } from "~/application/layout/positioning.service";
 import { generateUniqueID } from "~/application/widget.service";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
@@ -13,8 +12,9 @@ import { type RGLayout } from "~/server/domain/layout/layout";
 import { type LayoutType } from "~/server/domain/layout/layoutType";
 import { type WidgetType } from "../../config/widgetType";
 import { ScreenSizeHelper, type ScreenSize } from "../../other/screenSize";
+import { isEmptyPositioning } from "../../positioning/positioning.service";
+import { type ScreenSizePositioning } from "../../positioning/screensizePositioning";
 import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
-import { type ScreenSizePositioning } from "../screensizePositioning";
 import type { UserWidgetLayout } from "../userWidgetLayout";
 
 /**

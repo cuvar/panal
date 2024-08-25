@@ -1,5 +1,5 @@
-import { type WidgetType } from "~/lib/types/widget";
 import { type WidgetData } from "~/server/domain/config/widgetData";
+import { type WidgetType } from "~/server/domain/config/widgetType";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { type CalendarWidgetData } from "~/server/widgets/calendar/types";
 import CalendarWidget from "~/server/widgets/calendar/widget";

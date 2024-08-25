@@ -4,11 +4,11 @@
 
 import { describe, expect, test } from "@jest/globals";
 import { type Layout } from "~/server/domain/layout/layout";
+import { type ScreenSize } from "~/server/domain/other/screenSize";
 import {
   type PartialScreenSizePositioning,
   type ScreenSizePositioning,
-} from "~/server/domain/layout/screensizePositioning";
-import { type ScreenSize } from "~/server/domain/other/screenSize";
+} from "~/server/domain/positioning/screensizePositioning";
 import addMissingLayouts, {
   getReplacementScreenSize,
 } from "./addMissingLayouts.service";

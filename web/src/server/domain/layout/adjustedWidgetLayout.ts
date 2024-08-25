@@ -7,7 +7,7 @@ import {
 import {
   ScreenSizePositioningHelper,
   type ScreenSizePositioning,
-} from "./screensizePositioning";
+} from "../positioning/screensizePositioning";
 
 export type AdjustedWidgetLayout = {
   id: string;
