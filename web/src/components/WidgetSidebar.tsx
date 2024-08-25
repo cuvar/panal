@@ -1,6 +1,7 @@
 import type { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 
 import Link from "next/link";
+import { getNameForWidgetType } from "~/application/widget.service";
 import {
   Sheet,
   SheetContent,
@@ -9,7 +10,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/components/ui/sheet";
-import { getNameForWidgetType } from "~/lib/service/widget.service";
 import { useCommandManager, useDetectScreenSize } from "~/lib/ui/hooks";
 import { cogIcon, eyeIcon } from "~/lib/ui/icons";
 import { useBoundStore } from "~/lib/ui/state";

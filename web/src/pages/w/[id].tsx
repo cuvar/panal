@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState, type ChangeEvent } from "react";
+import { getNameForWidgetType } from "~/application/widget.service";
 import Separator from "~/components/Separator";
 import SiteWrapper from "~/components/SiteWrapper";
 import Textarea from "~/components/Textarea";
@@ -8,14 +9,11 @@ import { Button } from "~/components/ui/button";
 import { api } from "~/lib/api/api";
 import { toProperJsonStringFormat } from "~/lib/basic/string";
 import Log from "~/lib/log/log";
-import { getNameForWidgetType } from "~/lib/service/widget.service";
-import { type ScreenSize } from "~/lib/types/types";
-import {
-  type Positioning,
-  type ScreenSizePositioning,
-  type WidgetType,
-} from "~/lib/types/widget";
 import { useToast } from "~/lib/ui/hooks";
+import { type WidgetType } from "~/server/domain/config/widgetType";
+import { type ScreenSize } from "~/server/domain/other/screenSize";
+import { type Positioning } from "~/server/domain/positioning/positioning";
+import { type ScreenSizePositioning } from "~/server/domain/positioning/screensizePositioning";
 import ErrorPage from "~/sites/Error";
 
 const Home: NextPage = () => {

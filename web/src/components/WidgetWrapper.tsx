@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import mapWidgets from "~/application/client/mapWidgets.service";
+import mapWidgets from "~/application/ui/mapWidgets.service";
 import { api } from "~/lib/api/api";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import ErrorWidget from "~/server/widgets/ErrorWidget";

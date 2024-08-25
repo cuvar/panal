@@ -1,6 +1,5 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { isEmptyPositioning } from "~/application/layout/positioning.service";
 import updateWidgetLayoutService from "~/application/layout/updateWidgetLayout.service";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
@@ -12,10 +11,11 @@ import {
   AdjustedWidgetLayoutHelper,
 } from "~/server/domain/layout/adjustedWidgetLayout";
 import { getLayoutRepository } from "~/server/domain/layout/repo/layoutRepository";
-import { ScreenSizePositioningHelper } from "~/server/domain/layout/screensizePositioning";
 import { uwlToAwl } from "~/server/domain/layout/services/transform.service";
 import { widgetLayoutSchema } from "~/server/domain/layout/types";
 import { ScreenSizeHelper } from "~/server/domain/other/screenSize";
+import { isEmptyPositioning } from "~/server/domain/positioning/positioning.service";
+import { ScreenSizePositioningHelper } from "~/server/domain/positioning/screensizePositioning";
 
 export const layoutRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {

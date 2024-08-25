@@ -1,4 +1,4 @@
-import { generateUniqueID } from "~/lib/service/widget.service";
+import { generateUniqueID } from "~/application/widget.service";
 import { type WidgetConfig } from "~/server/domain/config/widgetConfig";
 import { type ConfigRepository } from "./configRepository";
 
