@@ -1,3 +1,4 @@
+import { type WidgetType } from "~/server/domain/config/widgetType";
 import { type ScreenSize } from "~/server/domain/other/screenSize";
 import { type Positioning } from "~/server/domain/positioning/positioning";
 
@@ -26,20 +27,90 @@ export const BREAKPOINT_COLS: Readonly<Record<ScreenSize, number>> = {
 };
 
 export const MIN_WIDGET_WIDTH = Object.freeze({
-  time: 2,
-  search: 2,
-  links: 1,
-  calendar: 2,
-  default: 1,
-});
+  time: {
+    xss: 2,
+    xs: 2,
+    sm: 2,
+    md: 2,
+    lg: 2,
+    xl: 2,
+  },
+  search: {
+    xss: 2,
+    xs: 2,
+    sm: 2,
+    md: 2,
+    lg: 2,
+    xl: 2,
+  },
+  links: {
+    xss: 1,
+    xs: 1,
+    sm: 1,
+    md: 1,
+    lg: 1,
+    xl: 1,
+  },
+  calendar: {
+    xss: 2,
+    xs: 2,
+    sm: 2,
+    md: 2,
+    lg: 2,
+    xl: 2,
+  },
+  default: {
+    xss: 1,
+    xs: 1,
+    sm: 1,
+    md: 1,
+    lg: 1,
+    xl: 1,
+  },
+} satisfies Record<WidgetType | "default", Record<ScreenSize, number>>);
 
 export const MIN_WIDGET_HEIGHT = Object.freeze({
-  time: 1,
-  search: 1,
-  links: 1,
-  calendar: 1,
-  default: 1,
-});
+  time: {
+    xss: 1,
+    xs: 1,
+    sm: 1,
+    md: 1,
+    lg: 1,
+    xl: 1,
+  },
+  search: {
+    xss: 1,
+    xs: 1,
+    sm: 1,
+    md: 1,
+    lg: 1,
+    xl: 1,
+  },
+  links: {
+    xss: 1,
+    xs: 1,
+    sm: 1,
+    md: 1,
+    lg: 1,
+    xl: 1,
+  },
+  calendar: {
+    xss: 1,
+    xs: 1,
+    sm: 1,
+    md: 1,
+    lg: 1,
+    xl: 1,
+  },
+  default: {
+    xss: 1,
+    xs: 1,
+    sm: 1,
+    md: 1,
+    lg: 1,
+    xl: 1,
+  },
+} satisfies Record<WidgetType | "default", Record<ScreenSize, number>>);
 
 export const GRID_ROW_HEIGHT = 100;
 export const GRID_MAX_ROW = 10;

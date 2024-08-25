@@ -16,8 +16,8 @@ describe("adjustLayoutValuesService", () => {
   it("works for AdjustedWidgetLayout", () => {
     // arrange
     const widgetType: WidgetType = "time";
-    const minWidth = getMinWidthForWidget(widgetType);
-    const minHeight = getMinHeightForWidget(widgetType);
+    const minWidth = getMinWidthForWidget(widgetType, "md");
+    const minHeight = getMinHeightForWidget(widgetType, "md");
     const layoutInput: ScreenSizePositioning = {
       xl: {
         x: 0,

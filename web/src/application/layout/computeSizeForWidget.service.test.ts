@@ -13,7 +13,7 @@ describe("computeSizeForWidgetService", () => {
     const widgetType = "calendar";
 
     // act
-    const result = getMinWidthForWidget(widgetType);
+    const result = getMinWidthForWidget(widgetType, "md");
 
     // assert
     expect(result).toBe(2);
@@ -24,7 +24,7 @@ describe("computeSizeForWidgetService", () => {
     const widgetType = "calendar";
 
     // act
-    const result = getMinHeightForWidget(widgetType);
+    const result = getMinHeightForWidget(widgetType, "md");
 
     // assert
     expect(result).toBe(1);
