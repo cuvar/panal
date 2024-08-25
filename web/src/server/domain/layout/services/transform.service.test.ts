@@ -3,7 +3,7 @@
  */
 
 import type GridLayout from "react-grid-layout";
-import { type LayoutType } from "~/lib/types/widget";
+import { type LayoutType } from "~/server/domain/layout/layoutType";
 import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import { type UserWidgetLayout } from "../userWidgetLayout";
 import { awlToRgl, rglToAwl, uwlToAwl } from "./transform.service";

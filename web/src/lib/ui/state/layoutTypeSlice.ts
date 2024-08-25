@@ -1,5 +1,5 @@
 import { type StateCreator } from "zustand";
-import { type LayoutType } from "~/lib/types/widget";
+import { type LayoutType } from "~/server/domain/layout/layoutType";
 
 export interface LayoutTypeSlice {
   layoutTypes: LayoutType[];
