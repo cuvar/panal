@@ -1,5 +1,5 @@
-import { type Positioning } from "~/server/domain/layout/positioning";
 import { type ScreenSize } from "~/server/domain/other/screenSize";
+import { type Positioning } from "~/server/domain/positioning/positioning";
 
 export const APP_NAME = "panal";
 
