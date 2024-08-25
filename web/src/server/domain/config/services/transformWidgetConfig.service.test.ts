@@ -4,7 +4,7 @@
 
 import type { WidgetType } from "~/lib/types/widget";
 import { WidgetData } from "../widgetData";
-import transformWidgetConfig from "./transformWidgetConfigService";
+import transformWidgetConfig from "./transformWidgetConfig.service";
 
 describe("transformWidgetConfigService", () => {
   it("works correctly", async () => {

@@ -7,7 +7,7 @@ import { AdjustedWidgetLayout } from "../../layout/adjustedWidgetLayout";
 import { UserWidgetLayout } from "../../layout/userWidgetLayout";
 import parseUserWidgetLayout, {
   parseAdjustedWidgetLayout,
-} from "./parseWidgetConfigService";
+} from "./parseWidgetConfig.service";
 
 describe("parseWidgetConfigService", () => {
   it("works correctly for parsing UserWidgetLayout", () => {

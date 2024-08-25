@@ -5,11 +5,11 @@
 import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/lib/basic/const";
 import type { ScreenSizePositioning, WidgetType } from "~/lib/types/widget";
 import { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
-import adjustLayoutValues from "./adjustLayoutValuesService";
+import adjustLayoutValues from "./adjustLayoutValues.service";
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
-} from "./computeSizeForWidgetService";
+} from "./computeSizeForWidget.service";
 
 describe("adjustLayoutValuesService", () => {
   it("works for AdjustedWidgetLayout", () => {

@@ -4,7 +4,7 @@
 
 import { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import { UserWidgetLayout } from "../userWidgetLayout";
-import transformWidgetLayout from "./transformWidgetLayoutService";
+import transformWidgetLayout from "./transformWidgetLayout.service";
 
 describe("transformWidgetLayoutService", () => {
   it("works correctly", () => {

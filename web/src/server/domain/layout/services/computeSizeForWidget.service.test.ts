@@ -5,7 +5,7 @@
 import {
   getMinHeightForWidget,
   getMinWidthForWidget,
-} from "./computeSizeForWidgetService";
+} from "./computeSizeForWidget.service";
 
 describe("computeSizeForWidgetService", () => {
   it("works correctly for width", () => {
