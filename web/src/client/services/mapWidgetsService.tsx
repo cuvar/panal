@@ -1,3 +1,4 @@
+import { type WidgetType } from "~/lib/types/widget";
 import { type WidgetData } from "~/server/domain/config/widgetData";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { type CalendarWidgetData } from "~/server/widgets/calendar/types";
@@ -18,28 +19,22 @@ import TimeWidget from "~/server/widgets/time/widget";
 export default function mapWidgets(
   widget: AdjustedWidgetLayout,
   data: WidgetData,
-): JSX.Element {
-  if (widget.type === "time") {
-    return <TimeWidget widget={widget} data={data.data as TimeWidgetData} />;
-  }
-
-  if (widget.type === "search") {
-    return (
+): React.ReactNode {
+  const widgets: Record<WidgetType, React.ReactNode> = {
+    time: <TimeWidget widget={widget} data={data.data as TimeWidgetData} />,
+    search: (
       <SearchWidget widget={widget} data={data.data as SearchWidgetData} />
-    );
-  }
-  if (widget.type === "links") {
-    return (
+    ),
+    links: (
       <LinkCollectionWidget
         widget={widget}
         data={data.data as LinkWidgetData}
       />
-    );
-  }
-  if (widget.type === "calendar") {
-    return (
+    ),
+    calendar: (
       <CalendarWidget widget={widget} data={data.data as CalendarWidgetData} />
-    );
-  }
-  return <></>;
+    ),
+  };
+
+  return widgets[widget.type] ?? <></>;
 }
