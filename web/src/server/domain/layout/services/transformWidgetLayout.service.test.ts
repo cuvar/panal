@@ -2,8 +2,8 @@
  * @jest-environment node
  */
 
-import { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
-import { UserWidgetLayout } from "../userWidgetLayout";
+import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
+import { type UserWidgetLayout } from "../userWidgetLayout";
 import transformWidgetLayout from "./transformWidgetLayout.service";
 
 describe("transformWidgetLayoutService", () => {
@@ -76,8 +76,12 @@ describe("transformWidgetLayoutService", () => {
       },
     };
 
-    const input = new UserWidgetLayout(widgetType, layoutInput);
-    const expected = new AdjustedWidgetLayout("1", widgetType, layoutExpected);
+    const input = { type: widgetType, layout: layoutInput } as UserWidgetLayout;
+    const expected = {
+      id: "1",
+      type: widgetType,
+      layout: layoutExpected,
+    } as AdjustedWidgetLayout;
 
     // act
     const res = transformWidgetLayout([input])[0]!;

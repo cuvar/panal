@@ -3,28 +3,22 @@ import { isBoolean, isObject } from "~/lib/guards/base";
 import { isScreenSize } from "~/lib/guards/other";
 import { screenSizeSchema } from "~/lib/types/schema";
 import type { ScreenSize } from "~/lib/types/types";
-import { AdjustedWidgetLayout } from "./adjustedWidgetLayout";
+import {
+  type AdjustedWidgetLayout,
+  AdjustedWidgetLayoutHelper,
+} from "./adjustedWidgetLayout";
 
-export class WidgetVisibility {
+export type WidgetVisibility = {
   widget: AdjustedWidgetLayout;
   screenSize: ScreenSize;
   visible: boolean;
-
-  constructor(
-    widget: AdjustedWidgetLayout,
-    screenSize: ScreenSize,
-    visible: boolean,
-  ) {
-    this.widget = widget;
-    this.screenSize = screenSize;
-    this.visible = visible;
-  }
-
-  static validate(input: unknown): input is WidgetVisibility {
+};
+export const WidgetVisibilityHelper = {
+  validate(input: unknown): input is WidgetVisibility {
     if (!isObject(input)) {
       return false;
     }
-    if (!AdjustedWidgetLayout.validate(input.widget)) {
+    if (!AdjustedWidgetLayoutHelper.validate(input.widget)) {
       return false;
     }
     if (!isScreenSize(input.screenSize)) {
@@ -34,15 +28,14 @@ export class WidgetVisibility {
       return false;
     }
     return true;
-  }
-
-  static getSchema() {
+  },
+  getSchema() {
     const schema = z.object({
-      widget: AdjustedWidgetLayout.getSchema(),
+      widget: AdjustedWidgetLayoutHelper.getSchema(),
       screenSize: screenSizeSchema,
       visible: z.boolean(),
     });
 
     return schema;
-  }
-}
+  },
+};

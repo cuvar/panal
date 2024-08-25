@@ -4,7 +4,7 @@
 
 import type GridLayout from "react-grid-layout";
 import type { ScreenSizePositioning } from "~/lib/types/widget";
-import { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
+import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import updateWidgetLayoutService from "./updateWidgetLayout.service";
 
 describe("updateWidgetLayoutService", () => {
@@ -50,11 +50,11 @@ describe("updateWidgetLayoutService", () => {
         h: 0,
       },
     };
-    const widgetConfig: AdjustedWidgetLayout = new AdjustedWidgetLayout(
+    const widgetConfig: AdjustedWidgetLayout = {
       id,
-      widgetType,
-      layoutInput,
-    );
+      type: widgetType,
+      layout: layoutInput,
+    };
     const newLayouts: GridLayout.Layouts = {
       xl: [],
       lg: [{ i: id, x: 1, y: 2, w: 3, h: 4 }],
@@ -71,11 +71,11 @@ describe("updateWidgetLayoutService", () => {
       h: newLayouts.lg![0]!.h,
     };
 
-    const expected: AdjustedWidgetLayout = new AdjustedWidgetLayout(
+    const expected: AdjustedWidgetLayout = {
       id,
-      widgetType,
-      layoutExpected,
-    );
+      type: widgetType,
+      layout: layoutExpected,
+    };
 
     // act
     const result = updateWidgetLayoutService(newLayouts, [widgetConfig]);
@@ -127,11 +127,11 @@ describe("updateWidgetLayoutService", () => {
         h: 0,
       },
     };
-    const widgetConfig: AdjustedWidgetLayout = new AdjustedWidgetLayout(
+    const widgetConfig: AdjustedWidgetLayout = {
       id,
-      widgetType,
-      layoutInput,
-    );
+      type: widgetType,
+      layout: layoutInput,
+    };
     const newLayouts: GridLayout.Layouts = {
       xl: [],
       lg: [{ i: id, x: 1, y: 2, w: 3, h: 4 }],
@@ -188,11 +188,11 @@ describe("updateWidgetLayoutService", () => {
         h: 0,
       },
     };
-    const widgetConfig: AdjustedWidgetLayout = new AdjustedWidgetLayout(
+    const widgetConfig: AdjustedWidgetLayout = {
       id,
-      widgetType,
-      layoutInput,
-    );
+      type: widgetType,
+      layout: layoutInput,
+    };
     const newLayouts: GridLayout.Layouts = {
       xl: [],
       lg: [{ i: id + "any string", x: 1, y: 2, w: 3, h: 4 }],

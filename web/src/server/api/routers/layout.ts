@@ -11,7 +11,10 @@ import {
   widgetTypeSchema,
 } from "~/lib/types/schema";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import {
+  type AdjustedWidgetLayout,
+  AdjustedWidgetLayoutHelper,
+} from "~/server/domain/layout/adjustedWidgetLayout";
 import { getLayoutRepository } from "~/server/domain/layout/repo/layoutRepository";
 import transformWidgetLayout from "~/server/domain/layout/services/transformWidgetLayout.service";
 import updateWidgetLayoutService from "~/server/domain/layout/services/updateWidgetLayout.service";
@@ -59,13 +62,17 @@ export const layoutRouter = createTRPCRouter({
     .input(
       z.object({
         layout: widgetLayoutSchema,
-        awLayout: z.array(AdjustedWidgetLayout.getSchema()),
+        awLayout: z.array(AdjustedWidgetLayoutHelper.getSchema()),
       }),
     )
     .mutation(async ({ input }) => {
       try {
         const widgetLayout = input.awLayout.map((w) => {
-          return new AdjustedWidgetLayout(w.id, w.type, w.layout);
+          return {
+            id: w.id,
+            type: w.type,
+            layout: w.layout,
+          } as AdjustedWidgetLayout;
         });
         const updatedWidgets = updateWidgetLayoutService(
           input.layout,
@@ -89,13 +96,8 @@ export const layoutRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input }) => {
-      const widget = new AdjustedWidgetLayout(
-        input.id,
-        input.type,
-        input.layout,
-      );
       try {
-        await getLayoutRepository().set(widget.id, widget);
+        await getLayoutRepository().set(input.id, input);
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({

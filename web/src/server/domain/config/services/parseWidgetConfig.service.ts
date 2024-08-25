@@ -1,5 +1,11 @@
-import { AdjustedWidgetLayout } from "../../layout/adjustedWidgetLayout";
-import { UserWidgetLayout } from "../../layout/userWidgetLayout";
+import {
+  type AdjustedWidgetLayout,
+  AdjustedWidgetLayoutHelper,
+} from "../../layout/adjustedWidgetLayout";
+import {
+  type UserWidgetLayout,
+  UserWidgetLayoutHelper,
+} from "../../layout/userWidgetLayout";
 import { type WidgetConfig, WidgetConfigHelper } from "../widgetConfig";
 
 /**
@@ -16,10 +22,13 @@ export default function parseUserWidgetLayout(
   }
   const result: UserWidgetLayout[] = [];
   for (const widget of parsed) {
-    if (!UserWidgetLayout.validate(widget)) {
+    if (!UserWidgetLayoutHelper.validate(widget)) {
       return null;
     }
-    result.push(new UserWidgetLayout(widget.type, widget.layout));
+    result.push({
+      type: widget.type,
+      layout: widget.layout,
+    } as UserWidgetLayout);
   }
   return result;
 }
@@ -39,12 +48,14 @@ export function parseAdjustedWidgetLayout(
 
   const result: AdjustedWidgetLayout[] = [];
   for (const widget of parsed) {
-    if (!AdjustedWidgetLayout.validate(widget)) {
+    if (!AdjustedWidgetLayoutHelper.validate(widget)) {
       return null;
     }
-    result.push(
-      new AdjustedWidgetLayout(widget.id, widget.type, widget.layout),
-    );
+    result.push({
+      id: widget.id,
+      type: widget.type,
+      layout: widget.layout,
+    } as AdjustedWidgetLayout);
   }
   return result;
 }

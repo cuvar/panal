@@ -5,21 +5,16 @@ import {
   screenSizePositioningSchema,
   widgetTypeSchema,
 } from "~/lib/types/schema";
-import type { ScreenSize } from "~/lib/types/types";
 import type { ScreenSizePositioning, WidgetType } from "~/lib/types/widget";
 
-export class AdjustedWidgetLayout {
+export type AdjustedWidgetLayout = {
   id: string;
   layout: ScreenSizePositioning;
   type: WidgetType;
+};
 
-  constructor(id: string, type: WidgetType, layout: ScreenSizePositioning) {
-    this.id = id;
-    this.type = type;
-    this.layout = layout;
-  }
-
-  static validate(input: unknown): input is AdjustedWidgetLayout {
+export const AdjustedWidgetLayoutHelper = {
+  validate(input: unknown): input is AdjustedWidgetLayout {
     if (!isObject(input)) {
       return false;
     }
@@ -33,9 +28,9 @@ export class AdjustedWidgetLayout {
       return false;
     }
     return true;
-  }
+  },
 
-  static getSchema() {
+  getSchema() {
     const adjustedWidgetLayoutSchema = z.object({
       id: z.string(),
       type: widgetTypeSchema,
@@ -43,12 +38,5 @@ export class AdjustedWidgetLayout {
     });
 
     return adjustedWidgetLayoutSchema;
-  }
-
-  setLayout(
-    breakpoint: ScreenSize,
-    layout: ScreenSizePositioning[typeof breakpoint],
-  ) {
-    this.layout[breakpoint] = layout;
-  }
-}
+  },
+};

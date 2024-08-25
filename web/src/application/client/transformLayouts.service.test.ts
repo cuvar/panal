@@ -4,7 +4,7 @@
 
 import type GridLayout from "react-grid-layout";
 import { type LayoutType } from "~/lib/types/widget";
-import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import transformLayoutsForGrid, {
   transformRGLToAWL,
 } from "./transformLayouts.service";
@@ -12,82 +12,90 @@ import transformLayoutsForGrid, {
 describe("transformLayoutsService", () => {
   it("transforms correctly into gridlayout with static: true", () => {
     // arrange
-    const widgetData1 = new AdjustedWidgetLayout("1", "time", {
-      xl: {
-        x: 0,
-        y: 0,
-        w: 1,
-        h: 1,
+    const widgetData1: AdjustedWidgetLayout = {
+      id: "1",
+      type: "time",
+      layout: {
+        xl: {
+          x: 0,
+          y: 0,
+          w: 1,
+          h: 1,
+        },
+        lg: {
+          x: 0,
+          y: 0,
+          w: 2,
+          h: 2,
+        },
+        md: {
+          x: 0,
+          y: 0,
+          w: 3,
+          h: 3,
+        },
+        sm: {
+          x: 0,
+          y: 0,
+          w: 4,
+          h: 4,
+        },
+        xs: {
+          x: 0,
+          y: 0,
+          w: 5,
+          h: 5,
+        },
+        xss: {
+          x: 0,
+          y: 0,
+          w: 6,
+          h: 6,
+        },
       },
-      lg: {
-        x: 0,
-        y: 0,
-        w: 2,
-        h: 2,
+    };
+    const widgetData2: AdjustedWidgetLayout = {
+      id: "2",
+      type: "time",
+      layout: {
+        xl: {
+          x: 0,
+          y: 0,
+          w: 1,
+          h: 1,
+        },
+        lg: {
+          x: 0,
+          y: 0,
+          w: 2,
+          h: 2,
+        },
+        md: {
+          x: 0,
+          y: 0,
+          w: 3,
+          h: 3,
+        },
+        sm: {
+          x: 0,
+          y: 0,
+          w: 4,
+          h: 4,
+        },
+        xs: {
+          x: 0,
+          y: 0,
+          w: 5,
+          h: 5,
+        },
+        xss: {
+          x: 0,
+          y: 0,
+          w: 6,
+          h: 6,
+        },
       },
-      md: {
-        x: 0,
-        y: 0,
-        w: 3,
-        h: 3,
-      },
-      sm: {
-        x: 0,
-        y: 0,
-        w: 4,
-        h: 4,
-      },
-      xs: {
-        x: 0,
-        y: 0,
-        w: 5,
-        h: 5,
-      },
-      xss: {
-        x: 0,
-        y: 0,
-        w: 6,
-        h: 6,
-      },
-    });
-    const widgetData2 = new AdjustedWidgetLayout("2", "time", {
-      xl: {
-        x: 0,
-        y: 0,
-        w: 1,
-        h: 1,
-      },
-      lg: {
-        x: 0,
-        y: 0,
-        w: 2,
-        h: 2,
-      },
-      md: {
-        x: 0,
-        y: 0,
-        w: 3,
-        h: 3,
-      },
-      sm: {
-        x: 0,
-        y: 0,
-        w: 4,
-        h: 4,
-      },
-      xs: {
-        x: 0,
-        y: 0,
-        w: 5,
-        h: 5,
-      },
-      xss: {
-        x: 0,
-        y: 0,
-        w: 6,
-        h: 6,
-      },
-    });
+    };
 
     const input: AdjustedWidgetLayout[] = [widgetData1, widgetData2];
     const makeStatic = true;
@@ -199,82 +207,90 @@ describe("transformLayoutsService", () => {
 
   it("transforms correctly into gridlayout with static: false", () => {
     // arrange
-    const widgetData1 = new AdjustedWidgetLayout("1", "time", {
-      xl: {
-        x: 0,
-        y: 0,
-        w: 1,
-        h: 1,
+    const widgetData1: AdjustedWidgetLayout = {
+      id: "1",
+      type: "time",
+      layout: {
+        xl: {
+          x: 0,
+          y: 0,
+          w: 1,
+          h: 1,
+        },
+        lg: {
+          x: 0,
+          y: 0,
+          w: 2,
+          h: 2,
+        },
+        md: {
+          x: 0,
+          y: 0,
+          w: 3,
+          h: 3,
+        },
+        sm: {
+          x: 0,
+          y: 0,
+          w: 4,
+          h: 4,
+        },
+        xs: {
+          x: 0,
+          y: 0,
+          w: 5,
+          h: 5,
+        },
+        xss: {
+          x: 0,
+          y: 0,
+          w: 6,
+          h: 6,
+        },
       },
-      lg: {
-        x: 0,
-        y: 0,
-        w: 2,
-        h: 2,
+    };
+    const widgetData2: AdjustedWidgetLayout = {
+      id: "2",
+      type: "time",
+      layout: {
+        xl: {
+          x: 0,
+          y: 0,
+          w: 1,
+          h: 1,
+        },
+        lg: {
+          x: 0,
+          y: 0,
+          w: 2,
+          h: 2,
+        },
+        md: {
+          x: 0,
+          y: 0,
+          w: 3,
+          h: 3,
+        },
+        sm: {
+          x: 0,
+          y: 0,
+          w: 4,
+          h: 4,
+        },
+        xs: {
+          x: 0,
+          y: 0,
+          w: 5,
+          h: 5,
+        },
+        xss: {
+          x: 0,
+          y: 0,
+          w: 6,
+          h: 6,
+        },
       },
-      md: {
-        x: 0,
-        y: 0,
-        w: 3,
-        h: 3,
-      },
-      sm: {
-        x: 0,
-        y: 0,
-        w: 4,
-        h: 4,
-      },
-      xs: {
-        x: 0,
-        y: 0,
-        w: 5,
-        h: 5,
-      },
-      xss: {
-        x: 0,
-        y: 0,
-        w: 6,
-        h: 6,
-      },
-    });
-    const widgetData2 = new AdjustedWidgetLayout("2", "time", {
-      xl: {
-        x: 0,
-        y: 0,
-        w: 1,
-        h: 1,
-      },
-      lg: {
-        x: 0,
-        y: 0,
-        w: 2,
-        h: 2,
-      },
-      md: {
-        x: 0,
-        y: 0,
-        w: 3,
-        h: 3,
-      },
-      sm: {
-        x: 0,
-        y: 0,
-        w: 4,
-        h: 4,
-      },
-      xs: {
-        x: 0,
-        y: 0,
-        w: 5,
-        h: 5,
-      },
-      xss: {
-        x: 0,
-        y: 0,
-        w: 6,
-        h: 6,
-      },
-    });
+    };
 
     const input: AdjustedWidgetLayout[] = [widgetData1, widgetData2];
     const makeStatic = false;
@@ -388,84 +404,92 @@ describe("transformLayoutsService", () => {
 describe("transformRGLToAWL", () => {
   it("transforms correctly into adjustedWidgetLayout", () => {
     // arrange
-    const widgetData1 = new AdjustedWidgetLayout("1", "time", {
-      xl: {
-        // has been changed to above
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
+    const widgetData1: AdjustedWidgetLayout = {
+      id: "1",
+      type: "time",
+      layout: {
+        xl: {
+          // has been changed to above
+          x: 0,
+          y: 0,
+          w: 0,
+          h: 0,
+        },
+        lg: {
+          x: 0,
+          y: 0,
+          w: 2,
+          h: 2,
+        },
+        md: {
+          x: 0,
+          y: 0,
+          w: 3,
+          h: 3,
+        },
+        sm: {
+          x: 0,
+          y: 0,
+          w: 4,
+          h: 4,
+        },
+        xs: {
+          x: 0,
+          y: 0,
+          w: 5,
+          h: 5,
+        },
+        xss: {
+          x: 0,
+          y: 0,
+          w: 6,
+          h: 6,
+        },
       },
-      lg: {
-        x: 0,
-        y: 0,
-        w: 2,
-        h: 2,
+    };
+    const widgetData2: AdjustedWidgetLayout = {
+      id: "2",
+      type: "time",
+      layout: {
+        xl: {
+          x: 0,
+          y: 0,
+          w: 1,
+          h: 1,
+        },
+        lg: {
+          x: 0,
+          y: 0,
+          w: 2,
+          h: 2,
+        },
+        md: {
+          x: 0,
+          y: 0,
+          w: 3,
+          h: 3,
+        },
+        sm: {
+          x: 0,
+          y: 0,
+          w: 4,
+          h: 4,
+        },
+        xs: {
+          // has been changed to above
+          x: 0,
+          y: 0,
+          w: 0,
+          h: 0,
+        },
+        xss: {
+          x: 0,
+          y: 0,
+          w: 6,
+          h: 6,
+        },
       },
-      md: {
-        x: 0,
-        y: 0,
-        w: 3,
-        h: 3,
-      },
-      sm: {
-        x: 0,
-        y: 0,
-        w: 4,
-        h: 4,
-      },
-      xs: {
-        x: 0,
-        y: 0,
-        w: 5,
-        h: 5,
-      },
-      xss: {
-        x: 0,
-        y: 0,
-        w: 6,
-        h: 6,
-      },
-    });
-    const widgetData2 = new AdjustedWidgetLayout("2", "time", {
-      xl: {
-        x: 0,
-        y: 0,
-        w: 1,
-        h: 1,
-      },
-      lg: {
-        x: 0,
-        y: 0,
-        w: 2,
-        h: 2,
-      },
-      md: {
-        x: 0,
-        y: 0,
-        w: 3,
-        h: 3,
-      },
-      sm: {
-        x: 0,
-        y: 0,
-        w: 4,
-        h: 4,
-      },
-      xs: {
-        // has been changed to above
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
-      },
-      xss: {
-        x: 0,
-        y: 0,
-        w: 6,
-        h: 6,
-      },
-    });
+    };
 
     const expected: AdjustedWidgetLayout[] = [widgetData1, widgetData2];
     const makeStatic = true;

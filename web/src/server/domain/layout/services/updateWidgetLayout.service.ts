@@ -4,7 +4,7 @@ import AppError from "~/lib/error/error";
 import Log from "~/lib/log/log";
 import type { ScreenSize } from "~/lib/types/types";
 import { type RGLayout } from "~/lib/types/widget";
-import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
+import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 
 /**
  * Updates the layout values of the given AdjustedWidgetLayout[] with the given RGLayout
@@ -59,12 +59,12 @@ function updateForScreenSize(
       Log(error, "error");
       return;
     }
-    widget.setLayout(breakpoint, {
+    widget.layout[breakpoint] = {
       x: layout.x,
       y: layout.y,
       w: layout.w,
       h: layout.h,
-    });
+    };
   });
   return widgetLayout;
 }

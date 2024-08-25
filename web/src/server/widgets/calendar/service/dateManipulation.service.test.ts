@@ -16,7 +16,7 @@ import {
   icsDurationToSeconds,
   toInternal,
   transformEventTimeData,
-} from "./dateManipulationService";
+} from "./dateManipulation.service";
 
 describe("dateManipulationService", () => {
   const day = 1000 * 60 * 60 * 24;

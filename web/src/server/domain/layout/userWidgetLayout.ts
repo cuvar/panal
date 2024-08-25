@@ -2,16 +2,13 @@ import { isObject } from "~/lib/guards/base";
 import { isLayout, isWidgetType } from "~/lib/guards/widgets";
 import type { Layout, WidgetType } from "~/lib/types/widget";
 
-export class UserWidgetLayout {
+export type UserWidgetLayout = {
   layout: Layout;
   type: WidgetType;
+};
 
-  constructor(type: WidgetType, layout: Layout) {
-    this.type = type;
-    this.layout = layout;
-  }
-
-  static validate(input: unknown): input is UserWidgetLayout {
+export const UserWidgetLayoutHelper = {
+  validate(input: unknown): input is UserWidgetLayout {
     if (!isObject(input)) {
       return false;
     }
@@ -25,5 +22,5 @@ export class UserWidgetLayout {
     }
 
     return true;
-  }
-}
+  },
+};

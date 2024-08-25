@@ -3,7 +3,7 @@
  */
 
 import type { WidgetType } from "~/lib/types/widget";
-import { WidgetData } from "../widgetData";
+import { type WidgetData } from "../widgetData";
 import transformWidgetConfig from "./transformWidgetConfig.service";
 
 describe("transformWidgetConfigService", () => {
@@ -11,7 +11,7 @@ describe("transformWidgetConfigService", () => {
     // arrange
     const widgetType: WidgetType = "time";
 
-    const input: WidgetData = new WidgetData("1", widgetType, {});
+    const input: WidgetData = { id: "1", type: widgetType, data: {} };
     const expected = input;
 
     // act

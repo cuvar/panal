@@ -9,7 +9,7 @@ import {
   getNonRecurringEvents,
   getRecurringEvents,
   getValidRecurrenceEvent,
-} from "./recurrenceService";
+} from "./recurrence.service";
 
 describe("recurrenceService", () => {
   let events: CalendarComponent[] = [];

@@ -1,15 +1,15 @@
 import { produce } from "immer";
-import { calcNewWidgetLayout } from "~/client/services/calcNewWidgetLayout.service";
+import { calcNewWidgetLayout } from "~/application/client/calcNewWidgetLayout.service";
 import transformLayoutsForGrid, {
   transformRGLToAWL,
   withMinValues,
-} from "~/client/services/transformLayouts.service";
+} from "~/application/client/transformLayouts.service";
 import { type ScreenSize } from "~/lib/types/types";
 import {
   type Positioning,
   type ScreenSizePositioning,
 } from "~/lib/types/widget";
-import { AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
+import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { type WidgetVisibility } from "~/server/domain/layout/widgetVisibility";
 import { useBoundStore } from "../state";
 import { type Command } from "./command";
@@ -69,11 +69,11 @@ export default class RevealWidgetCommand implements Command {
       this.widgetVisibility,
       (draft) => {
         draft.widget = calcNewWidgetLayout(draft, allPositionings);
-        draft.widget = new AdjustedWidgetLayout(
-          draft.widget.id,
-          draft.widget.type,
-          draft.widget.layout,
-        );
+        draft.widget = {
+          id: draft.widget.id,
+          type: draft.widget.type,
+          layout: draft.widget.layout,
+        } as AdjustedWidgetLayout;
         const layout = draft.widget.layout;
         const hasMinValues = {};
         Object.entries(layout).forEach(([screen, value]) => {

@@ -1,8 +1,8 @@
-import addMissingLayouts from "~/client/services/addMissingLayouts.service";
+import addMissingLayouts from "~/application/client/addMissingLayouts.service";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import { generateUniqueID } from "~/lib/service/widget.service";
-import { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
+import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import type { UserWidgetLayout } from "../userWidgetLayout";
 import adjustLayoutValues from "./adjustLayoutValues.service";
 
@@ -20,11 +20,11 @@ export default function transformWidgetLayout(
       const withMissingLayouts = addMissingLayouts(widget.layout);
       const wId = "id" in widget ? (widget.id as string) : generateUniqueID();
 
-      const adjustedConfig = new AdjustedWidgetLayout(
-        wId,
-        widget.type,
-        withMissingLayouts,
-      );
+      const adjustedConfig = {
+        id: wId,
+        type: widget.type,
+        layout: withMissingLayouts,
+      } as AdjustedWidgetLayout;
       const adjusted = adjustLayoutValues(adjustedConfig);
       adjustedWidgetLayout.push(adjusted);
     }

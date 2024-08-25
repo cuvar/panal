@@ -4,7 +4,7 @@
 
 import { BREAKPOINT_COLS, GRID_MAX_ROW } from "~/lib/basic/const";
 import type { ScreenSizePositioning, WidgetType } from "~/lib/types/widget";
-import { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
+import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import adjustLayoutValues from "./adjustLayoutValues.service";
 import {
   getMinHeightForWidget,
@@ -94,16 +94,16 @@ describe("adjustLayoutValuesService", () => {
       },
     };
 
-    const input: AdjustedWidgetLayout = new AdjustedWidgetLayout(
-      "1",
-      widgetType,
-      layoutInput,
-    );
-    const expected: AdjustedWidgetLayout = new AdjustedWidgetLayout(
-      "1",
-      widgetType,
-      layoutExpected,
-    );
+    const input: AdjustedWidgetLayout = {
+      id: "1",
+      type: widgetType,
+      layout: layoutInput,
+    };
+    const expected: AdjustedWidgetLayout = {
+      id: "1",
+      type: widgetType,
+      layout: layoutExpected,
+    };
 
     // act
     const result = adjustLayoutValues(input);

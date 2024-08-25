@@ -3,8 +3,8 @@
  */
 
 import type { ScreenSizePositioning } from "~/lib/types/widget";
-import { AdjustedWidgetLayout } from "../../layout/adjustedWidgetLayout";
-import { UserWidgetLayout } from "../../layout/userWidgetLayout";
+import { type AdjustedWidgetLayout } from "../../layout/adjustedWidgetLayout";
+import { type UserWidgetLayout } from "../../layout/userWidgetLayout";
 import parseUserWidgetLayout, {
   parseAdjustedWidgetLayout,
 } from "./parseWidgetConfig.service";
@@ -40,7 +40,10 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new UserWidgetLayout(widgetType, layoutInput);
+    const expected: UserWidgetLayout = {
+      type: widgetType,
+      layout: layoutInput,
+    };
     const input = JSON.stringify([expected]);
     // act
     const result = parseUserWidgetLayout(input);
@@ -80,7 +83,10 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new UserWidgetLayout(widgetType, layoutInput);
+    const expected: UserWidgetLayout = {
+      type: widgetType,
+      layout: layoutInput,
+    };
     const input = JSON.stringify(expected);
     // act
     const result = parseUserWidgetLayout(input);
@@ -132,7 +138,11 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new AdjustedWidgetLayout(id, widgetType, layoutInput);
+    const expected: AdjustedWidgetLayout = {
+      id,
+      type: widgetType,
+      layout: layoutInput,
+    };
     const input = JSON.stringify([expected]);
     // act
     const result = parseAdjustedWidgetLayout(input);
@@ -185,7 +195,11 @@ describe("parseWidgetConfigService", () => {
       },
     };
 
-    const expected = new AdjustedWidgetLayout(id, widgetType, layoutInput);
+    const expected: AdjustedWidgetLayout = {
+      id: id,
+      type: widgetType,
+      layout: layoutInput,
+    };
     const input = JSON.stringify(expected);
     // act
     const result = parseAdjustedWidgetLayout(input);
