@@ -9,7 +9,7 @@ import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidget
  * @param {ScreenSize} currentScreenSize Current screen size
  * @returns {AdjustedWidgetLayout[]} Filteres AdjustedWidgetLayout
  */
-export default function filterWidgetLayoutByLayout(
+export default function filterWidgetLayoutByRgl(
   awLayout: AdjustedWidgetLayout[],
   rgLayout: RGLayout,
   currentScreenSize: ScreenSize,

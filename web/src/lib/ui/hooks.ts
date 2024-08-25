@@ -1,7 +1,7 @@
 import { useIsClient, useWindowSize } from "@uidotdev/usehooks";
 import { useAtom } from "jotai";
 import { useContext, useEffect, useState } from "react";
-import filterWidgetLayoutByLayout from "~/application/client/filterWidgetLayoutByLayout.service";
+import filterWidgetLayoutByRgl from "~/application/client/filterWidgetLayoutByRgl.service";
 import getHidingClasses from "~/application/client/getHidingClasses.service";
 import { type AdjustedWidgetLayout } from "~/server/domain/layout/adjustedWidgetLayout";
 import { api } from "../api/api";
@@ -117,7 +117,7 @@ export function useDisplayedWidgets(
   useEffect(() => {
     const layout = editMode ? editedWidgetLayout : widgetLayout;
     const filteredAWLayout = isClient
-      ? filterWidgetLayoutByLayout(initialAWLayout, layout, currentScreenSize)
+      ? filterWidgetLayoutByRgl(initialAWLayout, layout, currentScreenSize)
       : [];
     const allExceptHidden = filteredAWLayout.filter(
       (widget) => !getHidingClasses(widget.layout).includes(currentScreenSize),
