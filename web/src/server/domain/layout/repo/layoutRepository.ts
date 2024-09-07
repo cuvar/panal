@@ -4,6 +4,7 @@ import AppError from "~/lib/error/error";
 import { FileReader } from "../../../driver/Reader/FileReader";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import { LayoutLocalFileRepository } from "./layoutLocalFileRepository";
+import { LayoutMongoRepository } from "./layoutMongoRepository";
 import { LayoutRepositoryMock } from "./layoutRepositoryMock";
 import { LayoutUpstashRepository } from "./layoutUpstashRepository";
 
@@ -22,6 +23,8 @@ export function getLayoutRepository(): LayoutRepository {
   let repo: LayoutRepository | null = null;
   if (env.WIDGET_STORE == "upstash") {
     repo = new LayoutUpstashRepository();
+  } else if (env.WIDGET_STORE == "mongodb") {
+    repo = new LayoutMongoRepository();
   } else if (env.WIDGET_STORE == "file") {
     repo = new LayoutLocalFileRepository(new FileReader());
   } else if (env.WIDGET_STORE == "mock") {
