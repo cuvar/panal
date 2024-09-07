@@ -31,6 +31,10 @@ export const env = createEnv({
       process.env.WIDGET_STORE === "upstash"
         ? z.string().min(1)
         : z.string().optional(),
+    MONGODB_TOKEN:
+      process.env.WIDGET_STORE === "upstash"
+        ? z.string().min(1)
+        : z.string().optional(),
   },
 
   /**
@@ -54,6 +58,7 @@ export const env = createEnv({
     UPSTASH_ENDPOINT: process.env.UPSTASH_ENDPOINT,
     UPSTASH_TOKEN: process.env.UPSTASH_TOKEN,
     NEXT_PUBLIC_PANAL_DEBUG: process.env.NEXT_PUBLIC_PANAL_DEBUG,
+    MONGODB_TOKEN: process.env.MONGODB_TOKEN,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
