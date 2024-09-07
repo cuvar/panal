@@ -21,7 +21,7 @@ jobs:
       WIDGET_STORE: ${{ vars.WIDGET_STORE }}
       UPSTASH_ENDPOINT: ${{ secrets.UPSTASH_ENDPOINT }}
       UPSTASH_TOKEN: ${{ secrets.UPSTASH_TOKEN }}
-      MONGODB_TOKEN: ${{ secrets.MONGODB_TOKEN }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     strategy:
       matrix:
