@@ -1,4 +1,4 @@
-import { useIsClient, useWindowSize } from "@uidotdev/usehooks";
+import { useIsClient } from "@uidotdev/usehooks";
 import { useAtom } from "jotai";
 import { useContext, useEffect, useState } from "react";
 import filterWidgetLayoutByRgl from "~/application/layout/filterWidgetLayoutByLayout.service";
@@ -8,12 +8,12 @@ import { type DisplayedWidgets } from "~/server/domain/layout/displayedWidgets";
 import { type RGLayout } from "~/server/domain/layout/layout";
 import { type ScreenSize } from "~/server/domain/other/screenSize";
 import { api } from "../api/api";
-import { BREAKPOINTS } from "../basic/const";
 import Log from "../log/log";
 import type { ToastType } from "../types/types";
 import { CommandContext } from "./context/command";
 import { useBoundStore } from "./state";
 import { toastTextAtom, toastTypeAtom } from "./state/atoms";
+import { getScreenSize } from "./utils";
 
 /**
  * Hook for detecting whether the current screen size is mobile
@@ -34,18 +34,18 @@ export function useDetectMobile() {
  * @returns {ScreenSize} The current screen size
  */
 export function useDetectScreenSize(): ScreenSize {
-  const windowSize = useWindowSize();
-  const [screenSize, setScreenSize] = useState<ScreenSize>("xs");
+  const [screenSize, setScreenSize] = useState<ScreenSize>("xss");
 
   useEffect(() => {
-    if (!windowSize.width) return;
-
-    const size = Object.entries(BREAKPOINTS).findLast(([_key, value]) => {
-      return windowSize.width! >= value;
-    })?.[0] as ScreenSize;
-
-    setScreenSize(size);
-  }, [windowSize]);
+    const windowSize =
+      typeof window === "undefined"
+        ? { width: 0 }
+        : { width: window.innerWidth };
+    if (windowSize.width) {
+      const size = getScreenSize(windowSize.width);
+      setScreenSize(size);
+    }
+  }, []);
 
   return screenSize;
 }
