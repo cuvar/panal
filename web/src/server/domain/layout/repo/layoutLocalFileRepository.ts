@@ -5,9 +5,9 @@ import AppError from "~/lib/error/error";
 import { type Reader } from "../../../driver/Reader/Reader";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import { parseAdjustedWidgetLayout } from "../services/parse.service";
-import type { LayoutRepository } from "./layoutRepository";
+import type { ILayoutRepository } from "./layoutRepository";
 
-export class LayoutLocalFileRepository implements LayoutRepository {
+export class LayoutLocalFileRepository implements ILayoutRepository {
   private file: string;
   private reader: Reader;
 
@@ -18,6 +18,10 @@ export class LayoutLocalFileRepository implements LayoutRepository {
 
     this.file = REPO_LAYOUT_FILE;
     this.reader = reader;
+  }
+
+  async init(): Promise<void> {
+    // TODO: implement
   }
 
   async get(id: string): Promise<AdjustedWidgetLayout> {

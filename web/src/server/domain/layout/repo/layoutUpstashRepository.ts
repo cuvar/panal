@@ -5,9 +5,9 @@ import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import type { AdjustedWidgetLayout } from "../adjustedWidgetLayout";
 import { parseAdjustedWidgetLayout } from "../services/parse.service";
-import type { LayoutRepository } from "./layoutRepository";
+import type { ILayoutRepository } from "./layoutRepository";
 
-export class LayoutUpstashRepository implements LayoutRepository {
+export class LayoutUpstashRepository implements ILayoutRepository {
   private redis;
 
   constructor() {
@@ -23,6 +23,10 @@ export class LayoutUpstashRepository implements LayoutRepository {
       url: env.UPSTASH_ENDPOINT,
       token: env.UPSTASH_TOKEN,
     });
+  }
+
+  async init(): Promise<void> {
+    // no needed
   }
 
   async get(id: string): Promise<AdjustedWidgetLayout> {
