@@ -10,7 +10,7 @@ import widgetConfigToWidgetData from "~/server/domain/config/services/transform.
 export const dataRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
     try {
-      const storedConfigs = await getConfigRepository().getAll();
+      const storedConfigs = await (await getConfigRepository()).getAll();
       const configData = await widgetConfigToWidgetData(storedConfigs);
       return configData;
     } catch (error) {
@@ -25,7 +25,7 @@ export const dataRouter = createTRPCRouter({
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
       try {
-        const data = await getConfigRepository().get(input.id);
+        const data = await (await getConfigRepository()).get(input.id);
         if (!data) {
           throw new AppError(codes.WIDGET_CONFIG_ADJUSTED_MISSING);
         }

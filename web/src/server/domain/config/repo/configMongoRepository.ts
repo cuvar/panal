@@ -7,9 +7,9 @@ import {
   type WidgetConfig,
   WidgetConfigHelper,
 } from "~/server/domain/config/widgetConfig";
-import { type ConfigRepository } from "./configRepository";
+import { type IConfigRepository } from "./configRepository";
 
-export class ConfigMongoRepository implements ConfigRepository {
+export class ConfigMongoRepository implements IConfigRepository {
   private redis;
 
   constructor() {
@@ -25,6 +25,10 @@ export class ConfigMongoRepository implements ConfigRepository {
       url: env.UPSTASH_ENDPOINT,
       token: env.UPSTASH_TOKEN,
     });
+  }
+
+  async init() {
+    // TODO: implement
   }
 
   async get(id: string): Promise<WidgetConfig> {

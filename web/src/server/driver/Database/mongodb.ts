@@ -4,9 +4,15 @@ import { env } from "~/env.mjs";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import { type Positioning } from "~/server/domain/positioning/positioning";
+import { type IDatabase } from "./database";
 
-export default class MongoDatabase {
+export default class MongoDatabase implements IDatabase {
   static #instance: MongoDatabase;
+  private _hasBeenInitialized: boolean;
+
+  private constructor() {
+    this._hasBeenInitialized = false;
+  }
 
   public static get instance(): MongoDatabase {
     if (!MongoDatabase.#instance) {
@@ -17,16 +23,14 @@ export default class MongoDatabase {
   }
 
   async initialize() {
+    if (!this._hasBeenInitialized) return;
     if (!env.DATABASE_URL) {
       throw new AppError(codes.DATABASE_MISSING_URL);
     }
     await mongoose.connect(env.DATABASE_URL);
+    this._hasBeenInitialized = true;
   }
 }
-
-/**
- *
- */
 
 export const BoundsMongodbSchema = new Schema<Positioning>({
   x: { type: Number, required: true },
