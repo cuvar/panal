@@ -1,12 +1,13 @@
 import { Redis } from "@upstash/redis";
 import { env } from "~/env.mjs";
-import { UPSTASH_PREFIX, UPSTASH_WIDGET_PREFIX } from "~/lib/basic/const";
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import {
   type WidgetConfig,
   WidgetConfigHelper,
 } from "~/server/domain/config/widgetConfig";
+import { WidgetModel } from "~/server/driver/Database/mongodb";
+import { type WidgetType, WidgetTypeHelper } from "../widgetType";
 import { type IConfigRepository } from "./configRepository";
 
 export class ConfigMongoRepository implements IConfigRepository {
@@ -32,91 +33,88 @@ export class ConfigMongoRepository implements IConfigRepository {
   }
 
   async get(id: string): Promise<WidgetConfig> {
-    const key = UPSTASH_PREFIX + UPSTASH_WIDGET_PREFIX + id;
-
     try {
-      const response = await this.redis.get(key);
-      if (!response) {
-        throw new AppError(codes.WIDGET_NONE_FOUND);
+      const data = await WidgetModel.findById(id).exec();
+
+      if (!data) {
+        throw new AppError(codes.WIDGET_NOT_FOUND);
       }
-      if (typeof response !== "object") {
-        throw new AppError(codes.REPOSITORY_INVALID_RESPONSE);
+
+      if (!WidgetTypeHelper.validate(data.type)) {
+        throw new AppError(codes.VALIDATION_WIDGETTYPE_FAILED);
       }
-      if (!WidgetConfigHelper.validate(response)) {
+
+      const config = {
+        id: data.id as string,
+        config: data.config as object,
+        type: data.type as WidgetType,
+      };
+
+      if (!WidgetConfigHelper.validate(config)) {
         throw new AppError(codes.WIDGET_CONFIG_INVALID);
       }
-      return {
-        id: response.id,
-        type: response.type,
-        data: response.data,
-      } as WidgetConfig;
+      return config as WidgetConfig;
     } catch (error) {
       throw new AppError(codes.REPOSITORY_GET_CONFIG_FAILED, error);
     }
   }
 
   async getAll(): Promise<WidgetConfig[]> {
-    const key = UPSTASH_PREFIX + UPSTASH_WIDGET_PREFIX;
-
     try {
-      const keys = await this.getKeysWithPrefix(key);
-      const response = await this.redis.mget(...keys);
+      const response = await WidgetModel.find().exec();
 
-      if (!response) {
-        throw new AppError(codes.WIDGET_NONE_FOUND);
-      }
-      if (!Array.isArray(response)) {
-        throw new AppError(codes.REPOSITORY_INVALID_RESPONSE);
-      }
-      if (!WidgetConfigHelper.isWidgetConfigArray(response)) {
+      const data = response.map((e) => {
+        if (!WidgetTypeHelper.validate(e.type)) {
+          throw new AppError(codes.VALIDATION_WIDGETTYPE_FAILED);
+        }
+
+        return {
+          id: e.id as string,
+          data: e.config as object,
+          type: e.type as WidgetType,
+        } satisfies WidgetConfig;
+      });
+
+      if (!WidgetConfigHelper.isWidgetConfigArray(data)) {
         throw new AppError(codes.WIDGET_CONFIG_INVALID);
       }
 
-      const mapped = response.map((r) => {
-        return { id: r.id, type: r.type, data: r.data } as WidgetConfig;
-      });
-
-      return mapped;
+      return data;
     } catch (error) {
       throw new AppError(codes.REPOSITORY_GET_ALL_CONFIG_FAILED, error);
     }
   }
 
-  async set(id: string, data: WidgetConfig): Promise<void> {
-    const key = UPSTASH_PREFIX + UPSTASH_WIDGET_PREFIX + id;
-
+  async set(id: string, widget: WidgetConfig): Promise<void> {
     try {
-      await this.redis.set(key, JSON.stringify(data));
+      await WidgetModel.updateOne(
+        { id: id },
+        {
+          id: id,
+          data: widget.data,
+          type: widget.type,
+        },
+      ).exec();
     } catch (error) {
       throw new AppError(codes.REPOSITORY_SET_CONFIG_FAILED, error);
     }
   }
 
   async setAll(data: WidgetConfig[]): Promise<void> {
-    for (const config of data) {
-      const key = UPSTASH_PREFIX + UPSTASH_WIDGET_PREFIX + config.id;
-      try {
-        await this.redis.set(key, JSON.stringify(data));
-      } catch (error) {
-        throw new AppError(codes.REPOSITORY_SET_ALL_CONFIG_FAILED, error);
-      }
-    }
-  }
-
-  async getKeysWithPrefix(prefix: string) {
-    let cursor = 0;
-    const keys: string[] = [];
-    const pattern = `${prefix}*`;
-
-    do {
-      const result = await this.redis.scan(cursor, {
-        match: pattern,
+    try {
+      const pUpdates = data.map(async (widget) => {
+        return WidgetModel.updateOne(
+          { id: widget.id },
+          {
+            id: widget.id,
+            data: widget.data,
+            type: widget.type,
+          },
+        ).exec();
       });
-
-      cursor = +result[0];
-      keys.push(...result[1]);
-    } while (cursor !== 0);
-
-    return keys;
+      await Promise.all(pUpdates);
+    } catch (error) {
+      throw new AppError(codes.REPOSITORY_SET_ALL_CONFIG_FAILED, error);
+    }
   }
 }
