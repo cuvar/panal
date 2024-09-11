@@ -51,18 +51,18 @@ export const LayoutMongodbSchema = new Schema({
 export const TypeMongodbEnum = ["calendar", "search", "links", "time"];
 
 export const UserMongodbSchema = new Schema({
-  id: ObjectId,
+  id: { type: ObjectId, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   name: { type: String, required: true },
 });
 
 export const WidgetMongoSchema = new Schema({
-  id: ObjectId,
-  type: { type: String, enum: TypeMongodbEnum },
+  id: { type: ObjectId, required: true, unique: true },
+  type: { type: String, enum: TypeMongodbEnum, required: true },
   user: { type: UserMongodbSchema, required: true },
-  config: Object,
+  config: { type: Object, required: true },
   layout: { type: LayoutMongodbSchema, required: true },
 });
 
-export const UserModelMongodb = model("User", UserMongodbSchema);
-export const WidgetModelMongodb = model("Widget", WidgetMongoSchema);
+export const UserModel = model("User", UserMongodbSchema);
+export const WidgetModel = model("Widget", WidgetMongoSchema);
