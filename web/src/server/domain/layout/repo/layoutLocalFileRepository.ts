@@ -21,7 +21,7 @@ export class LayoutLocalFileRepository implements ILayoutRepository {
   }
 
   async init(): Promise<void> {
-    // TODO: implement
+    // not needed
   }
 
   async get(id: string): Promise<AdjustedWidgetLayout> {
