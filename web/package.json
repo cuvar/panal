@@ -41,6 +41,8 @@
     "jest-environment-jsdom": "^29.7.0",
     "jotai": "^2.4.3",
     "lucide-react": "^0.379.0",
+    "mongodb": "^6.8.1",
+    "mongoose": "^8.6.1",
     "next": "^13.4.13",
     "next-auth": "^4.22.4",
     "next-plausible": "^3.12.0",

@@ -5,9 +5,9 @@ import AppError from "~/lib/error/error";
 import { parseWidgetConfigArray } from "~/server/domain/config/services/parse.service";
 import { type WidgetConfig } from "~/server/domain/config/widgetConfig";
 import { type Reader } from "~/server/driver/Reader/Reader";
-import { type ConfigRepository } from "./configRepository";
+import { type IConfigRepository } from "./configRepository";
 
-export class ConfigLocalFileRepository implements ConfigRepository {
+export class ConfigLocalFileRepository implements IConfigRepository {
   private file: string;
   private reader: Reader;
 
@@ -18,6 +18,10 @@ export class ConfigLocalFileRepository implements ConfigRepository {
 
     this.file = REPO_CONFIG_FILE;
     this.reader = reader;
+  }
+
+  async init() {
+    // not needed
   }
 
   async get(id: string): Promise<WidgetConfig> {

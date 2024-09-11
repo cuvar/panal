@@ -20,7 +20,7 @@ import { ScreenSizePositioningHelper } from "~/server/domain/positioning/screens
 export const layoutRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
     try {
-      const storedLayouts = await getLayoutRepository().getAll();
+      const storedLayouts = await (await getLayoutRepository()).getAll();
       const layoutData = uwlToAwl(storedLayouts);
       return layoutData;
     } catch (error) {
@@ -43,7 +43,7 @@ export const layoutRouter = createTRPCRouter({
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
       try {
-        const data = await getLayoutRepository().get(input.id);
+        const data = await (await getLayoutRepository()).get(input.id);
         if (!data) {
           throw new AppError(codes.WIDGET_CONFIG_ADJUSTED_MISSING);
         }
@@ -76,7 +76,7 @@ export const layoutRouter = createTRPCRouter({
           input.layout,
           widgetLayout,
         );
-        await getLayoutRepository().setAll(updatedWidgets);
+        await (await getLayoutRepository()).setAll(updatedWidgets);
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({
@@ -95,7 +95,7 @@ export const layoutRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       try {
-        await getLayoutRepository().set(input.id, input);
+        await (await getLayoutRepository()).set(input.id, input);
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({
@@ -108,7 +108,7 @@ export const layoutRouter = createTRPCRouter({
     .input(z.object({ screenSize: ScreenSizeHelper.getSchema() }))
     .query(async ({ input }) => {
       try {
-        const storedLayouts = await getLayoutRepository().getAll();
+        const storedLayouts = await (await getLayoutRepository()).getAll();
         const layoutData = uwlToAwl(storedLayouts);
         const hiddenWidgets = layoutData.filter((widget) => {
           if (isEmptyPositioning(widget.layout[input.screenSize])) {

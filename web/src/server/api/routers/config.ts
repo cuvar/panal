@@ -12,7 +12,7 @@ import { WidgetTypeHelper } from "~/server/domain/config/widgetType";
 export const configRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async () => {
     try {
-      const configData = await getConfigRepository().getAll();
+      const configData = await (await getConfigRepository()).getAll();
       return configData;
     } catch (error) {
       Log(error, "error");
@@ -26,7 +26,7 @@ export const configRouter = createTRPCRouter({
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
       try {
-        const data = await getConfigRepository().get(input.id);
+        const data = await (await getConfigRepository()).get(input.id);
         if (!data) {
           throw new AppError(codes.WIDGET_CONFIG_ADJUSTED_MISSING);
         }
@@ -52,7 +52,7 @@ export const configRouter = createTRPCRouter({
           throw new AppError(codes.WIDGET_CONFIG_PARSE_ISSUE);
         }
 
-        await getConfigRepository().setAll(parsed);
+        await (await getConfigRepository()).setAll(parsed);
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({
@@ -80,7 +80,7 @@ export const configRouter = createTRPCRouter({
         if (!WidgetConfigHelper.validate(widget)) {
           throw new AppError(codes.WIDGET_CONFIG_PARSE_ISSUE);
         }
-        await getConfigRepository().set(input.id, widget);
+        await (await getConfigRepository()).set(input.id, widget);
       } catch (error) {
         Log(error, "error");
         throw new TRPCError({

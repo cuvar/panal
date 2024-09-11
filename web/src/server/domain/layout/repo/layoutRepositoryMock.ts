@@ -1,9 +1,13 @@
 import { codes } from "~/lib/error/codes";
 import AppError from "~/lib/error/error";
 import { type AdjustedWidgetLayout } from "../adjustedWidgetLayout";
-import type { LayoutRepository } from "./layoutRepository";
+import type { ILayoutRepository } from "./layoutRepository";
 
-export class LayoutRepositoryMock implements LayoutRepository {
+export class LayoutRepositoryMock implements ILayoutRepository {
+  async init(): Promise<void> {
+    // no needed
+  }
+
   get(id: string): Promise<AdjustedWidgetLayout> {
     throw new AppError(codes.REPOSITORY_NOT_IMPLEMENTED);
   }

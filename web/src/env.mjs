@@ -22,12 +22,16 @@ export const env = createEnv({
     USERNAME: z.string().min(1),
     PASSWORD: z.string().min(1),
     EMAIL: z.string().email(),
-    WIDGET_STORE: z.enum(["mock", "upstash", "file"]),
+    WIDGET_STORE: z.enum(["mock", "upstash", "file", "mongodb"]),
     UPSTASH_ENDPOINT:
       process.env.WIDGET_STORE === "upstash"
         ? z.string().url()
         : z.string().optional(),
     UPSTASH_TOKEN:
+      process.env.WIDGET_STORE === "upstash"
+        ? z.string().min(1)
+        : z.string().optional(),
+    DATABASE_URL:
       process.env.WIDGET_STORE === "upstash"
         ? z.string().min(1)
         : z.string().optional(),
@@ -54,6 +58,7 @@ export const env = createEnv({
     UPSTASH_ENDPOINT: process.env.UPSTASH_ENDPOINT,
     UPSTASH_TOKEN: process.env.UPSTASH_TOKEN,
     NEXT_PUBLIC_PANAL_DEBUG: process.env.NEXT_PUBLIC_PANAL_DEBUG,
+    DATABASE_URL: process.env.DATABASE_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
